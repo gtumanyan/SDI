@@ -24,6 +24,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4962CB7A-5AC4-4143-BB7B-B94CCD87C6E0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -73,25 +74,25 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>..\..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
-    <OutDir>..\..\resources\</OutDir>
+    <OutDir>..\..\res\</OutDir>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>..\..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
-    <OutDir>..\..\resources\</OutDir>
+    <OutDir>..\..\res\</OutDir>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>..\..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
-    <OutDir>..\..\resources\</OutDir>
+    <OutDir>..\..\res\</OutDir>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>..\..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
-    <OutDir>..\..\resources\</OutDir>
+    <OutDir>..\..\res\</OutDir>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

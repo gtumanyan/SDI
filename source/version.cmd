@@ -50,7 +50,7 @@ if defined APPVEYOR (
 
 @rem Create version.h.
 @echo>version.h.new #define SDI_VERSION _T("%description%")
-@echo>>version.h.new #define SDI_VERSIONINFO %major%%minor%%n%%BUILD_NUMBER%
+@echo>>version.h.new #define SDI_VERSIONINFO %major%.%minor%.%BUILD_NUMBER%-%n%
 @echo>>version.h.new #define SDI_DATE _T("%DATE%")
 @echo>>version.h.new #define SDI_FILEFLAGS %flags%
 @echo>>version.h.new #define SDI_COPYRIGHT _T("Public Domain; Author Greg Tumanyan 2020-%year%")
