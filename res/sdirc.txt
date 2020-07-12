@@ -1,0 +1,160 @@
+/*
+This file is part of Snappy Driver Installer.
+
+Snappy Driver Installer is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Snappy Driver Installer is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#include "resources.h"
+
+#define _WIN32_IE 0x0700
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+    FILEVERSION NSSM_VERSIONINFO
+    PRODUCTVERSION SDI_VERSIONINFO
+    FILEFLAGSMASK VS_FF_DEBUG | VS_FF_PRERELEASE
+#ifdef _DEBUG
+    FILEFLAGS SDI_FILEFLAGS | VS_FF_DEBUG
+#else
+    FILEFLAGS SDI_FILEFLAGS
+#endif
+    FILEOS VOS__WINDOWS32
+    FILETYPE VFT_APP
+    FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+#ifdef UNICODE
+        BLOCK "040904B0"
+#else
+        BLOCK "040904E4"
+#endif
+        BEGIN
+            VALUE "Comments", "http://nssm.cc/"
+            VALUE "CompanyName", "Greg Tumanyan"
+            VALUE "FileDescription", "The snappy drivers installerr"
+            VALUE "FileVersion", SDI_VERSION
+            VALUE "LegalCopyright", SDI_COPYRIGHT
+            VALUE "OriginalFileName", "SDI.exe"
+            VALUE "ProductName", SDI " " SDI_CONFIGURATION
+            VALUE "ProductVersion", SDI_VERSION
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+#ifdef UNICODE
+        VALUE "Translation", 0x0409, 0x04B0, 0x040C, 0x04B0, 0x0410, 0x04B0
+#else
+        VALUE "Translation", 0x0409, 0x04E4, 0x040C, 0x04E4, 0x0410, 0x04E4
+#endif
+    END
+END
+
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "winres.h"
+#include <commctrl.h>
+#undef APSTUDIO_HIDDEN_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+
+IDI_ICON1       ICON        "icon.ico"
+IDR_UP          RESFILE     "up.webp"
+IDR_DOWN        RESFILE     "down.webp"
+IDR_UP_H        RESFILE     "up.webp"
+IDR_DOWN_H      RESFILE     "down.webp"
+IDR_LOGO        RESFILE     "logo.webp"
+IDR_PATREON     RESFILE     "patreon.webp"
+IDR_LICENSE     RESFILE     "gpl-3.0.txt"
+IDR_THEME       RESFILE     "..\\tools\\themes\\metallic.txt"
+IDR_LANG        RESFILE     "..\\tools\\langs\\english.txt"
+IDR_INSTALL64   RESFILE     "install64.exe"
+IDR_CLI_HELP    RESFILE     "CLI.txt"
+
+#define SIZEY 270
+#define LISTY SIZEY-53
+#define POSY1 SIZEY-42
+#define POSY2 SIZEY-22
+
+IDD_DIALOG1 DIALOGEX DISCARDABLE 0, 0, 340, 349
+STYLE DS_MODALFRAME|WS_POPUP|WS_CAPTION|WS_SYSMENU|DS_CENTER
+CAPTION "Snappy Driver Installer License"
+{
+    LTEXT           "Please read the following License Agreement carefully before using this program.",0,10,10,300,20
+    DEFPUSHBUTTON   "&Decline", IDCANCEL, 10, 318, 70, 20
+    PUSHBUTTON      "&Accept",  IDOK,     87, 318, 70, 20
+    EDITTEXT        IDC_EDIT1, 10, 30, 320, 300-30, WS_HSCROLL|WS_VSCROLL|ES_MULTILINE|ES_READONLY
+}
+
+IDD_DIALOG2 DIALOGEX 0, 0, 383, SIZEY
+FONT 8, "MS Shell Dlg"
+STYLE DS_CENTER | DS_MODALFRAME |WS_CAPTION |WS_VISIBLE|WS_POPUP|WS_SYSMENU
+CAPTION "Update"
+{
+    CHECKBOX        "Only update", IDONLYUPDATE,5, POSY1-20,300,14,BS_AUTOCHECKBOX
+
+    PUSHBUTTON      "Check All",   IDCHECKALL,                        5, POSY1,  70, 14
+    PUSHBUTTON      "Uncheck All", IDUNCHECKALL,                     77, POSY1,  70, 14
+    PUSHBUTTON      "Check only needed for this PC", IDCHECKTHISPC,   5, POSY2, 142, 14
+
+    DEFPUSHBUTTON   "OK",     IDOK,     110+100, POSY2, 50, 14,BS_DEFPUSHBUTTON
+    PUSHBUTTON      "Cancel", IDCANCEL, 163+100, POSY2, 50, 14
+    PUSHBUTTON      "Accept", IDACCEPT, 216+100, POSY2, 50, 14
+
+    CONTROL         "", IDLIST, WC_LISTVIEW, WS_TABSTOP | WS_BORDER | LVS_REPORT|LVS_SINGLESEL,
+        5, 5, 369, LISTY-20, WS_EX_LEFT|LVS_EX_CHECKBOXES
+
+    LTEXT           "Total download size: xx MB", IDTOTALSIZE, 210, POSY1, 150, 14
+}
+
+//#define VER_FILEVERSION             1,18,11,SVN_REV
+//#define VER_FILEVERSION_STR         "1.18 " SVN_REV2 "\0"
+
+#define VER_PRODUCTVERSION          VER_FILEVERSION
+#define VER_PRODUCTVERSION_STR      VER_FILEVERSION_STR
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     VER_FILEVERSION
+PRODUCTVERSION  VER_PRODUCTVERSION
+FILEOS          VOS__WINDOWS32
+FILETYPE        VFT_APP
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "FileDescription",  "Snappy Driver Installer"
+            VALUE "FileVersion",      VER_FILEVERSION_STR
+            VALUE "LegalCopyright",   "GNU GPL v3"
+            VALUE "OriginalFilename", "SDI_" SVN_REV2 ".exe"
+            VALUE "ProductName",      "Snappy Driver Installer"
+            VALUE "ProductVersion",   SVN_REV2
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252, // English
+                             0x419, 1200, // Russian
+                             0x415, 1200, // Polish
+                             0x40E, 1200, // Hungarian
+                             0x422, 1200  // Ukrainian
+    END
+END

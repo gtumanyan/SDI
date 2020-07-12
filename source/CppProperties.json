@@ -1,0 +1,29 @@
+{
+  "configurations": [
+    {
+      "inheritEnvironments": [
+        "msvc_x64"
+      ],
+      "name": "x64-Debug",
+      "includePath": [
+        "D:\\vcpkg-master\\installed\\x64-windows\\include\\boost\\thread",
+        "D:\\vcpkg-master\\installed\\x64-windows\\include\\boost\\thread",
+        "D:\\vcpkg-master\\installed\\x86-windows\\include\\boost\\thread",
+        "D:\\vcpkg-master\\installed\\x64-windows\\include\\boost\\thread",
+        "D:\\vcpkg-master\\packages\\boost-thread_x64-windows\\include\\boost\\thread",
+        "${workspaceRoot}\\..\\external\\libwebp-1.0.3-windows-x64\\include",
+        "${workspaceRoot}\\..\\resources",
+        "${workspaceRoot}\\..\\..\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.23.28105\\include",
+        "${env.INCLUDE}",
+        "${workspaceRoot}\\**"
+      ],
+      "defines": [
+        "WIN32",
+        "_DEBUG",
+        "UNICODE",
+        "_UNICODE"
+      ],
+      "intelliSenseMode": "windows-msvc-x64"
+    }
+  ]
+}

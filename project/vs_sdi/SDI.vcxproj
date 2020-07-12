@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\baseboard.cpp" />
+    <ClCompile Include="..\..\source\cli.cpp" />
+    <ClCompile Include="..\..\source\common.cpp" />
+    <ClCompile Include="..\..\source\draw.cpp" />
+    <ClCompile Include="..\..\source\enum.cpp" />
+    <ClCompile Include="..\..\source\gui.cpp" />
+    <ClCompile Include="..\..\source\indexing.cpp" />
+    <ClCompile Include="..\..\source\install.cpp" />
+    <ClCompile Include="..\..\source\langlist.cpp" />
+    <ClCompile Include="..\..\source\logging.cpp" />
+    <ClCompile Include="..\..\source\main.cpp" />
+    <ClCompile Include="..\..\source\manager.cpp" />
+    <ClCompile Include="..\..\source\matcher.cpp" />
+    <ClCompile Include="..\..\source\model.cpp" />
+    <ClCompile Include="..\..\source\script.cpp" />
+    <ClCompile Include="..\..\source\settings.cpp" />
+    <ClCompile Include="..\..\source\system.cpp" />
+    <ClCompile Include="..\..\source\theme.cpp" />
+    <ClCompile Include="..\..\source\themelist.cpp" />
+    <ClCompile Include="..\..\source\update.cpp" />
+    <ClCompile Include="..\..\source\usbwizard.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\res\wizards.h" />
+    <ClInclude Include="..\..\source\7zip.h" />
+    <ClInclude Include="..\..\source\cli.h" />
+    <ClInclude Include="..\..\source\common.h" />
+    <ClInclude Include="..\..\source\com_header.h" />
+    <ClInclude Include="..\..\source\device.h" />
+    <ClInclude Include="..\..\source\draw.h" />
+    <ClInclude Include="..\..\source\enum.h" />
+    <ClInclude Include="..\..\source\gui.h" />
+    <ClInclude Include="..\..\source\indexing.h" />
+    <ClInclude Include="..\..\source\install.h" />
+    <ClInclude Include="..\..\source\langlist.h" />
+    <ClInclude Include="..\..\source\logging.h" />
+    <ClInclude Include="..\..\source\main.h" />
+    <ClInclude Include="..\..\source\manager.h" />
+    <ClInclude Include="..\..\source\matcher.h" />
+    <ClInclude Include="..\..\source\model.h" />
+    <ClInclude Include="..\..\source\settings.h" />
+    <ClInclude Include="..\..\source\system.h" />
+    <ClInclude Include="..\..\source\theme.h" />
+    <ClInclude Include="..\..\source\themelist.h" />
+    <ClInclude Include="..\..\source\update.h" />
+    <ClInclude Include="..\..\source\version.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\res\cli.txt" />
+    <Text Include="..\..\res\gpl-3.0.txt" />
+    <Text Include="..\..\tools\langs\english.txt" />
+    <Text Include="..\..\tools\themes\metallic.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\res\down.webp" />
+    <None Include="..\..\res\install64.exe" />
+    <None Include="..\..\res\logo.webp" />
+    <None Include="..\..\res\patreon.webp" />
+    <None Include="..\..\res\up.webp" />
+    <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\res\sdi.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\source\sdi.rc" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D836A720-0876-4B3A-BA09-1F6727EEE5D4}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>
+    </PreferredToolArchitecture>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>
+    </PreferredToolArchitecture>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>..\..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <LibraryPath>\LIBTORRENT\bin\msvc-14.2\dbg\extns-off\i2p-off\lnk-sttc\rntm-lnk-sttc\strm-off\spr-sd-off\thrd-mlt\;C:\vcpkg\installed\x86-windows-static\lib\;$(LibraryPath);..\..\lib\Debug_Win32</LibraryPath>
+    <OutDir>..\..\</OutDir>
+    <TargetName>SDI_RD</TargetName>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <ExcludePath>$(VC_IncludePath);$(VC_ExecutablePath_x86);$(WindowsSdk_71A_ExecutablePath);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(MSBuild_ExecutablePath);$(VC_LibraryPath_x86);$(SystemRoot)</ExcludePath>
+    <IncludePath>$(IncludePath);\SDI\external\SevenZ\C;C:\SDI\res;C:\vcpkg\installed\x86-windows-static\include;C:\boost\include;\LIBTORRENT\include</IncludePath>
+    <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>..\..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <LibraryPath>C:\SDI\lib\Debug_x64\;\vcpkg\installed\x64-windows-static\lib;C:\LIBTORRENT\bin\msvc-14.2\dbg\adrs-mdl-64\lnk-sttc\rntm-lnk-sttc\thrd-mlt\;C:\LIBTORRENT\test\bin\msvc-14.2\dbg\adrs-mdl-64\exprt-extr-on\lnk-sttc\rntm-lnk-sttc\;$(Configuration)_$(Platform)\;$(LibraryPath)</LibraryPath>
+    <OutDir>..\..\</OutDir>
+    <TargetName>SDI_x64_RD</TargetName>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <IncludePath>$(IncludePath);..\..\external\SevenZ\C\;C:\SDI\external\SevenZ\CPP\7zip\UI\Console;C:\SDI\res;C:\vcpkg\installed\x64-windows-static\include\;C:\boost\include\;\LIBTORRENT\include\;C:\LIBTORRENT\test</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\LIBTORRENT\include;C:\SDI\external\SevenZ\C;c:\vcpkg\installed\include;c:\boost\include;..\..\external\SevenZ\CPP\7zip;..\..\external\SevenZ\CPP\7zip\Common;..\..\res;$(IncludePath)</IncludePath>
+    <IntDir>..\..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <OutDir>..\..\</OutDir>
+    <TargetName>SDI_R</TargetName>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <LibraryPath>c:\boost;C:\SDI\lib\Release_Win32\;C:\LIBTORRENT\bin\msvc-14.2\rls\;$(LibraryPath)</LibraryPath>
+    <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\LIBTORRENT\include;C:\LIBTORRENT\test;C:\SDI\external\SevenZ\C;C:\boost\include;D:\vcpkg\installed\x64-windows-static\include;..\..\res;$(IncludePath)</IncludePath>
+    <IntDir>..\..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <LibraryPath>..\..\lib\$(Configuration)_$(Platform)\;$(LibraryPath)</LibraryPath>
+    <OutDir>..\..\</OutDir>
+    <TargetName>SDI_x64R</TargetName>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../res;../external/SevenZ/C;../external/SevenZ</AdditionalIncludeDirectories>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <EnablePREfast>false</EnablePREfast>
+      <EnforceTypeConversionRules>false</EnforceTypeConversionRules>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IncludeInUnityFile>false</IncludeInUnityFile>
+      <LanguageStandard>Default</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>true</OmitFramePointers>
+      <PreprocessorDefinitions>USE_TORRENT;WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <ShowIncludes>false</ShowIncludes>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <StringPooling>true</StringPooling>
+      <UseFullPaths>true</UseFullPaths>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <AdditionalOptions>/wd5040 %(AdditionalOptions)</AdditionalOptions>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalOptions>/NODEFAULTLIB:LIBCMT %(AdditionalOptions)</AdditionalOptions>
+      <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
+      <AssemblyDebug>false</AssemblyDebug>
+      <ImportLibrary>webp</ImportLibrary>
+      <ShowProgress>LinkVerboseLib</ShowProgress>
+      <AdditionalDependencies>7zip.lib;libtorrent.lib;IPHLPAPI.lib;comctl32.lib;kernel32.lib;newdev.lib;user32.lib;gdi32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>Dbghelp.dll;</DelayLoadDLLs>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+    <ProjectReference />
+    <Manifest>
+      <AdditionalManifestFiles>..\..\res\drv.exe.manifest %(AdditionalManifestFiles)</AdditionalManifestFiles>
+    </Manifest>
+    <ResourceCompile />
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>C:\SDI\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BrowseInformation>true</BrowseInformation>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <EnablePREfast>false</EnablePREfast>
+      <PreprocessorDefinitions>USE_TORRENT;WIN64;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <AdditionalOptions>/wd5040 %(AdditionalOptions)</AdditionalOptions>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalOptions>/NODEFAULTLIB:LIBCMT %(AdditionalOptions)</AdditionalOptions>
+      <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
+      <AdditionalDependencies>7zip.lib;libtorrent.lib;IPHLPAPI.lib;comctl32.lib;kernel32.lib;newdev.lib;user32.lib;gdi32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>LinkVerbose</ShowProgress>
+      <DelayLoadDLLs>Dbghelp.dll;</DelayLoadDLLs>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+    <Manifest>
+      <AdditionalManifestFiles>..\..\res\drv.exe.manifest %(AdditionalManifestFiles)</AdditionalManifestFiles>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;USE_TORRENT;WIN32;_CRT_SECURE_NO_WARNINGS;_WINDOWS;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <EnablePREfast>false</EnablePREfast>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <OmitFramePointers>true</OmitFramePointers>
+      <Optimization>MaxSpeed</Optimization>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <EnforceTypeConversionRules>false</EnforceTypeConversionRules>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <AdditionalIncludeDirectories>C:\boost\include;c:\boost\boost;../res;../external/SevenZ/C;../external/SevenZ;\libtorrent\test</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <MinimalRebuild>true</MinimalRebuild>
+      <AdditionalOptions>/wd5040 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <Profile>true</Profile>
+      <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
+      <ShowProgress>LinkVerbose</ShowProgress>
+      <AdditionalDependencies>7zip.lib;Dbghelp.lib;Iphlpapi.lib;libtorrent.lib;comctl32.lib;kernel32.lib;newdev.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Manifest>
+      <AdditionalManifestFiles>..\..\res\drv.exe.manifest %(AdditionalManifestFiles)</AdditionalManifestFiles>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>USE_TORRENT;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <EnablePREfast>false</EnablePREfast>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <StringPooling>true</StringPooling>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <AdditionalOptions>/wd5040 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <Profile>true</Profile>
+      <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
+      <AdditionalDependencies>7zip.lib;Dbghelp.lib;Iphlpapi.lib;libtorrent.lib;comctl32.lib;kernel32.lib;newdev.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Manifest>
+      <AdditionalManifestFiles>..\..\res\drv.exe.manifest %(AdditionalManifestFiles)</AdditionalManifestFiles>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
