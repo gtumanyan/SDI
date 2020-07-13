@@ -13,7 +13,7 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "..\source\version.h"
+#include "..\src\version.h"
 
 #define VER_FILEVERSION             1,6,5,SVN_REV
 #define VER_FILEVERSION_STR         "1.6.5." SVN_REV_STR "\0"

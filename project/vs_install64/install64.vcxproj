@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\source\install64.c" />
+    <ClCompile Include="..\..\src\install64.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4962CB7A-5AC4-4143-BB7B-B94CCD87C6E0}</ProjectGuid>

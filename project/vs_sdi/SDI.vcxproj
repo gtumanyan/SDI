@@ -19,52 +19,52 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\source\baseboard.cpp" />
-    <ClCompile Include="..\..\source\cli.cpp" />
-    <ClCompile Include="..\..\source\common.cpp" />
-    <ClCompile Include="..\..\source\draw.cpp" />
-    <ClCompile Include="..\..\source\enum.cpp" />
-    <ClCompile Include="..\..\source\gui.cpp" />
-    <ClCompile Include="..\..\source\indexing.cpp" />
-    <ClCompile Include="..\..\source\install.cpp" />
-    <ClCompile Include="..\..\source\langlist.cpp" />
-    <ClCompile Include="..\..\source\logging.cpp" />
-    <ClCompile Include="..\..\source\main.cpp" />
-    <ClCompile Include="..\..\source\manager.cpp" />
-    <ClCompile Include="..\..\source\matcher.cpp" />
-    <ClCompile Include="..\..\source\model.cpp" />
-    <ClCompile Include="..\..\source\script.cpp" />
-    <ClCompile Include="..\..\source\settings.cpp" />
-    <ClCompile Include="..\..\source\system.cpp" />
-    <ClCompile Include="..\..\source\theme.cpp" />
-    <ClCompile Include="..\..\source\themelist.cpp" />
-    <ClCompile Include="..\..\source\update.cpp" />
-    <ClCompile Include="..\..\source\usbwizard.cpp" />
+    <ClCompile Include="..\..\src\baseboard.cpp" />
+    <ClCompile Include="..\..\src\cli.cpp" />
+    <ClCompile Include="..\..\src\common.cpp" />
+    <ClCompile Include="..\..\src\draw.cpp" />
+    <ClCompile Include="..\..\src\enum.cpp" />
+    <ClCompile Include="..\..\src\gui.cpp" />
+    <ClCompile Include="..\..\src\indexing.cpp" />
+    <ClCompile Include="..\..\src\install.cpp" />
+    <ClCompile Include="..\..\src\langlist.cpp" />
+    <ClCompile Include="..\..\src\logging.cpp" />
+    <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\manager.cpp" />
+    <ClCompile Include="..\..\src\matcher.cpp" />
+    <ClCompile Include="..\..\src\model.cpp" />
+    <ClCompile Include="..\..\src\script.cpp" />
+    <ClCompile Include="..\..\src\settings.cpp" />
+    <ClCompile Include="..\..\src\system.cpp" />
+    <ClCompile Include="..\..\src\theme.cpp" />
+    <ClCompile Include="..\..\src\themelist.cpp" />
+    <ClCompile Include="..\..\src\update.cpp" />
+    <ClCompile Include="..\..\src\usbwizard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\res\wizards.h" />
-    <ClInclude Include="..\..\source\7zip.h" />
-    <ClInclude Include="..\..\source\cli.h" />
-    <ClInclude Include="..\..\source\common.h" />
-    <ClInclude Include="..\..\source\com_header.h" />
-    <ClInclude Include="..\..\source\device.h" />
-    <ClInclude Include="..\..\source\draw.h" />
-    <ClInclude Include="..\..\source\enum.h" />
-    <ClInclude Include="..\..\source\gui.h" />
-    <ClInclude Include="..\..\source\indexing.h" />
-    <ClInclude Include="..\..\source\install.h" />
-    <ClInclude Include="..\..\source\langlist.h" />
-    <ClInclude Include="..\..\source\logging.h" />
-    <ClInclude Include="..\..\source\main.h" />
-    <ClInclude Include="..\..\source\manager.h" />
-    <ClInclude Include="..\..\source\matcher.h" />
-    <ClInclude Include="..\..\source\model.h" />
-    <ClInclude Include="..\..\source\settings.h" />
-    <ClInclude Include="..\..\source\system.h" />
-    <ClInclude Include="..\..\source\theme.h" />
-    <ClInclude Include="..\..\source\themelist.h" />
-    <ClInclude Include="..\..\source\update.h" />
-    <ClInclude Include="..\..\source\version.h" />
+    <ClInclude Include="..\..\src\7zip.h" />
+    <ClInclude Include="..\..\src\cli.h" />
+    <ClInclude Include="..\..\src\common.h" />
+    <ClInclude Include="..\..\src\com_header.h" />
+    <ClInclude Include="..\..\src\device.h" />
+    <ClInclude Include="..\..\src\draw.h" />
+    <ClInclude Include="..\..\src\enum.h" />
+    <ClInclude Include="..\..\src\gui.h" />
+    <ClInclude Include="..\..\src\indexing.h" />
+    <ClInclude Include="..\..\src\install.h" />
+    <ClInclude Include="..\..\src\langlist.h" />
+    <ClInclude Include="..\..\src\logging.h" />
+    <ClInclude Include="..\..\src\main.h" />
+    <ClInclude Include="..\..\src\manager.h" />
+    <ClInclude Include="..\..\src\matcher.h" />
+    <ClInclude Include="..\..\src\model.h" />
+    <ClInclude Include="..\..\src\settings.h" />
+    <ClInclude Include="..\..\src\system.h" />
+    <ClInclude Include="..\..\src\theme.h" />
+    <ClInclude Include="..\..\src\themelist.h" />
+    <ClInclude Include="..\..\src\update.h" />
+    <ClInclude Include="..\..\src\version.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -85,7 +85,7 @@
     <Image Include="..\..\res\sdi.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\source\sdi.rc" />
+    <ResourceCompile Include="..\..\src\sdi.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D836A720-0876-4B3A-BA09-1F6727EEE5D4}</ProjectGuid>
@@ -236,6 +236,9 @@
     <ResourceCompile>
       <AdditionalIncludeDirectories>C:\SDI\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
+    <PreBuildEvent>
+      <Command>CALL $(SolutionDir)..\scripts\GIT-VS-VERSION-GEN.bat "$(IntDir)\" "$(SolutionDir)..\src\gen-versioninfo.h"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -271,6 +274,9 @@
     <Manifest>
       <AdditionalManifestFiles>..\..\res\drv.exe.manifest %(AdditionalManifestFiles)</AdditionalManifestFiles>
     </Manifest>
+    <PreBuildEvent>
+      <Command>CALL $(SolutionDir)..\scripts\GIT-VS-VERSION-GEN.bat "$(IntDir)\" "$(SolutionDir)..\src\gen-versioninfo.h"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -309,6 +315,9 @@
     <Manifest>
       <AdditionalManifestFiles>..\..\res\drv.exe.manifest %(AdditionalManifestFiles)</AdditionalManifestFiles>
     </Manifest>
+    <PreBuildEvent>
+      <Command>CALL $(SolutionDir)..\scripts\GIT-VS-VERSION-GEN.bat "$(IntDir)\" "$(SolutionDir)..\src\gen-versioninfo.h"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -340,6 +349,9 @@
     <Manifest>
       <AdditionalManifestFiles>..\..\res\drv.exe.manifest %(AdditionalManifestFiles)</AdditionalManifestFiles>
     </Manifest>
+    <PreBuildEvent>
+      <Command>CALL $(SolutionDir)..\scripts\GIT-VS-VERSION-GEN.bat "$(IntDir)\" "$(SolutionDir)..\src\gen-versioninfo.h"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
