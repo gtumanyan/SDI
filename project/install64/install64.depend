@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1501660542 source:c:\snappy-driver-installer-origin-code-r722-trunk\source\install64.c
+	<windows.h>
+	<newdev.h>
+	<stdio.h>
+
+1501660542 source:c:\sdio\source\install64.c
+	<windows.h>
+	<newdev.h>
+	<stdio.h>
+

@@ -1,0 +1,143 @@
+[Version]
+Signature="$WINDOWS NT$"
+Class=Battery
+ClassGuid={72631e54-78a4-11d0-bcf7-00aa00b7b32a}
+Provider="Noname"
+CatalogFile=ignore.cat
+DriverVer=01/01/2100,1.0.0.0
+
+[Manufacturer]
+"Noname"=HWIDS
+
+[HWIDS]
+
+;Virtual network adapter
+"VirtualBox Host-Only Ethernet Adapter"=nope,sun_vboxnetadp
+"CommStudio Virtual Adapter by TamoSoft"=a,ts_tscommmp
+"Туннельный адаптер Microsoft Teredo"=a,*teredo
+"Kerio Virtual Network Adapter"=a,kvnetid
+"VPN Client Adapter - VPN"=a,neoadapter_vpn
+"TAP-Windows Adapter V9"=a,tap0901
+"TAP-Win32 Adapter OAS"=a,tapoas
+"TAP-Win32 Adapter V9 (Tunngle)"=a,tap0901t
+"Anchorfree HSS VPN Adapter"=a,taphss6
+i1=a,sun_vboxnetfltmp
+i1=a,*vmnetadapter1
+i1=a,*vmnetadapter8
+i1=a,hamachi
+i1=a,teamviewervpn
+
+;Microsoft
+"Microsoft ISATAP Adapter"=a,*isatap
+i1=a,usb\unknown
+
+;Virtual cam
+"WebcamMax, WDM Video Capture"=a,wcmvcam
+"Avnex Virtual Audio Device"=a,vcsvadds2dhw
+"Pinnacle Marvin Bus 64"=a,root\marvinbus
+"Avnex Virtual Audio Device"=a,vcsvadds2dhw
+"ThinkVantage Virtual Camera"=a,{68224583-29a8-4ae6-95f4-5d372c6f398e}\tvtvcam
+"ASUS Virtual Video Capture Device Driver"=a,sw\{3282d58c-e6cc-4290-976c-28942c85cd9b}
+i1=a,manycamaudio
+i1=a,manycam
+"CyberLink WebCam Virtual Driver"=a,clwvd6
+
+;Virtual monitor
+"TeamViewer GmbH"=a,*pnp09ff
+
+;Virtual DVD
+"H+H Virtual CD 10 SCSI Controller"=a,{C317464A-8106-4e30-83E6-1825448A5FC3}\VDRV1_HWID
+"MagicISO SCSI Host Controller"=a,*mcdbusdevice
+"Acronis Backup Archive Explorer"=a,root\timounter
+"Acronis TIB Mounter"=a,root\tib_mounter
+"Acronis Virtual Disk Bus"=a,root\vididr_bus
+"Primo Ramdisk Controller"=a,root\fancy_ramdisk
+"Block device mounter"=a,wudf\paragonblockdev
+"Universal Image Mounter Controller"=a,root\uim_bus
+"UIM Drive Backup Image Plugin"=a,uim\plugin_db
+"UIM Direct Device Image Plugin"=a,uim\plugin_devim
+"DVDFab Virtual Drive"=a,root\vdrive
+"ASRock RAM Disk"=a,root\asrramdisk
+i1=a,root\dtsoftbus01
+i1=a,root\BazisVirtualCDBus
+i1=a,root\dtultrascsibus
+i1=a,root\dtscsibus
+i1=a,vcd10bus
+i1=a,root\vclone
+
+;Antivirus/firewall
+"AvFw Packet Filter Miniport"=a,av_fltdev9mp
+"avast! SecureLine TAP Adapter v3"=a,aswtap
+"avast! Firewall NDIS Filter Miniport"=a,sw_aswndismp
+"Sunbelt Software Firewall NDIS IM Filter Miniport"=a,sb_sbfwimclmp
+"BitDefender AVC HV"=a,{23356aba-e3fa-11de-8dfb-4c8455d89593}\bdavchv
+i1=a,eset_epfwndismp
+
+;Scanners
+"Brother DCP-8110DN"=a,usb\vid_04f9&pid_0291&mi_01
+"Brother MFC-290C"=a,usb\vid_04f9&pid_01fd&mi_01
+"Brother MFC-6490CW LAN"=a,vid_04f9&pid_01f3&netscn
+"Brother MFC-J285DW"=a,usb\vid_04f9&pid_02ea&mi_01
+"Canon MF3200 Series"=a,usb\vid_04a9&pid_2684&mi_00
+"Canon MF4010 Series"=a,usb\vid_04a9&pid_26b4&mi_00
+"Canon MP230 series"=a,usb\vid_04a9&pid_175f&mi_00
+"Canon MP250 ser"=a,usb\vid_04a9&pid_173a&mi_00
+"Canon MX700 ser"=a,usb\vid_04a9&pid_1729&mi_00
+"Dell 3333dn"=a,usb\vid_413c&pid_5322&mi_00
+"EPSON L210/L350"=a,usb\vid_04b8&pid_08a1&mi_00
+"Epson WF-2520/2530/2540"=a,usb\vid_04b8&pid_08a6&mi_00
+"HP Deskjet 3070 B611 series (NET)"=a,mf\deskjet_3070_b611_series&wsd&ip_scan
+"HP Deskjet 5520 series (NET)"=a,mf\deskjet_5520_series&wsd&ip_scan
+"HP LaserJet M1120 MFP"=a,usb\vid_03f0&pid_5617&mi_00
+"HP Officejet 6700 (NET)"=a,mf\officejet_6700&wsd&ip_scan
+"HP Photosmart B110"=a,usb\vid_03f0&pid_8a11&mi_00
+"HP Photosmart C4400"=a,usb\vid_03f0&pid_6c11&mi_00
+"HP Scanjet 3800"=a,usb\vid_03f0&pid_2605
+"Lexmark 5200 Series"=a,usb\vid_043d&pid_0093&mi_00
+"Lexmark X422"=a,usb\vid_043d&pid_008f&mi_00
+"Officejet 4500 G510g-m"=a,usb\vid_03f0&pid_2d12&mi_00
+"Samsung CLX-3180 Series"=a,usb\vid_04e8&pid_343d&mi_00
+"Samsung SCX-3200 Series"=a,usb\vid_04e8&pid_3441&mi_00
+"Samsung Universal Scan Driver"=a,susd_vista_2008_win7_2008r2_64
+"Canon MG4100 series"=a,usb\vid_04a9&pid_1753&mi_00
+"Brother DCP-7030"=a,usb\vid_04f9&pid_01ea&mi_01
+"HP Deskjet 3520 series (NET)"=a,mf\deskjet_3520_series&wsd&ip_scan
+
+;Printers
+"Brother DCP-7030 Printer"=a,usbprint\brotherdcp-7030381a
+"Brother DCP-8110DN Printer"=a,usbprint\brotherdcp-8110dn0185
+"Brother MFC-290C Printer"=a,usbprint\brothermfc-290c2a1c
+"Brother MFC-J285DW Printer"=a,usbprint\brothermfc-j285dwe2b7
+"Canon LBP2900"=a,usbprint\canonlbp2900287a
+"Canon MF4010 Series UFRII LT"=a,usbprint\canonmf4010_series58e4
+"Canon MG4100 series Printer"=a,usbprint\canonmg4100_series6e3b
+"Canon MP190 series Printer"=a,usbprint\canonmp190_series7b78
+"Canon MP230 series Printer"=a,usbprint\canonmp230_series36f7
+"Canon MP250 series Printer"=a,usbprint\canonmp250_series74dd
+"Canon MX700 series Printer"=a,usbprint\canonmx700_series94a1
+"Canon MX700 series FAX"=a,usbprint\canonmx700_series_faafb9
+"Canon SELPHY CP900"=a,usbprint\canoncp900b3d7
+"Canon iP2700 series"=a,usbprint\canonip2700_series91c9
+"DYMO LabelWriter 450 Twin Turbo"=a,usbprint\dymolabelwriter_450_6eb9
+"EPSON L210 Series"=a,usbprint\epsonl210_series50a3
+"Epson Stylus C67 Series (M)"=a,epsonstylus_c673a09
+"Epson Stylus Photo R210 (M)"=a,epsonstylus_photo_r255c1
+"Fax - HP Officejet 6700"=a,mf\officejet_6700&wsd&ip_fax
+"HP Deskjet 3070 B611 series"=a,mf\deskjet_3070_b611_series&wsd&ip_print
+"HP Deskjet 3520 series"=a,mf\deskjet_3520_series&wsd&ip_print
+"HP Deskjet 5520 series"=a,mf\deskjet_5520_series&wsd&ip_print
+"HP Deskjet D2300 series"=a,hpdeskjet_d2300_seri856d
+"HP Deskjet D2400 series"=a,usbprint\hpdeskjet_d2400_seri9c5d
+"HP LaserJet 1018"=a,usbprint\hewlett-packardhp_la10dc
+"HP LaserJet 1020"=a,usbprint\hewlett-packardhp_la26dd
+"HP LaserJet M1120 MFP"=a,usbprint\hewlett-packardhp_la82cc
+"HP LaserJet Professional P 1102w"=a,usbprint\hewlett-packardhp_la9f0f
+"HP Officejet 4500 G510g-m"=a,usbprint\hpofficejet_4500_g512d90
+"HP Officejet 6700"=a,mf\officejet_6700&wsd&ip_print
+"HP Photosmart B110 series"=a,usbprint\hpphotosmart_b110_sea82b
+"HP Photosmart C4400 series"=a,hpphotosmart_c4400_se709
+"Lexmark 5200 Series"=a,usbprint\lexmark_5200_seriesb357
+"Samsung CLP-360 Series Class Driver"=a,samsungclp-360_seried78d
+
+[strings]
+%i1%="Ignore"

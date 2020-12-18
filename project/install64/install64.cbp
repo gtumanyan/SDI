@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="install64" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc_64" />
+		<Build>
+			<Target title="Win32 Release">
+				<Option output="../../resources/install64" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../obj/Release" />
+				<Option type="1" />
+				<Option compiler="gcc_64" />
+				<Option use_console_runner="0" />
+				<Compiler>
+					<Add option="-fomit-frame-pointer" />
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-Os" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+			<Target title="Win32 Debug">
+				<Option output="../../resources/install64" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../obj/Debug" />
+				<Option type="1" />
+				<Option compiler="gcc_64" />
+				<Option use_console_runner="0" />
+				<Option parameters="asd qwe" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Win64 Release">
+				<Option output="../../resources/install64" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../obj/Release64" />
+				<Option type="1" />
+				<Option compiler="gcc_64" />
+				<Option use_console_runner="0" />
+				<Option parameters="asd qwe" />
+				<Compiler>
+					<Add option="-fomit-frame-pointer" />
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-Os" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+			<Target title="Win64 Debug">
+				<Option output="../../resources/install64" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../obj/Debug64" />
+				<Option type="1" />
+				<Option compiler="gcc_64" />
+				<Option use_console_runner="0" />
+				<Option parameters="asd qwe" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Win32 Console">
+				<Option output="../../resources/install64" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../obj/Console" />
+				<Option type="1" />
+				<Option compiler="gcc_64" />
+				<Option use_console_runner="0" />
+				<Option parameters="asd qwe" />
+				<Compiler>
+					<Add option="-fomit-frame-pointer" />
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-Os" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wnon-virtual-dtor" />
+			<Add option="-Wshadow" />
+			<Add option="-Winit-self" />
+			<Add option="-Wredundant-decls" />
+			<Add option="-Wcast-align" />
+			<Add option="-Wundef" />
+			<Add option="-Wfloat-equal" />
+			<Add option="-Winline" />
+			<Add option="-Wunreachable-code" />
+			<Add option="-Wmissing-declarations" />
+			<Add option="-Wmissing-include-dirs" />
+			<Add option="-Wswitch-enum" />
+			<Add option="-Wswitch-default" />
+			<Add option="-Wmain" />
+			<Add option="-Wextra" />
+			<Add option="-Wall" />
+			<Add option="-m64" />
+			<Add option="-fno-exceptions" />
+			<Add option="-DUNICODE" />
+		</Compiler>
+		<Linker>
+			<Add library="user32" />
+			<Add library="kernel32" />
+			<Add library="newdev" />
+		</Linker>
+		<Unit filename="../../source/install64.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

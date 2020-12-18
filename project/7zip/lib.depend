@@ -1,0 +1,3145 @@
+# depslib dependency file v1.0
+1491217108 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7zalloc.c
+	"Precomp.h"
+	<stdlib.h>
+	"7zAlloc.h"
+	<windows.h>
+	<stdio.h>
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\precomp.h
+	"Compiler.h"
+
+1491214448 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\compiler.h
+
+1491217108 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7zalloc.h
+	"7zTypes.h"
+
+1533387600 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7ztypes.h
+	<stddef.h>
+
+1546232400 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7zarcin.c
+	"Precomp.h"
+	<string.h>
+	"7z.h"
+	"7zBuf.h"
+	"7zCrc.h"
+	"CpuArch.h"
+
+1491221537 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7z.h
+	"7zTypes.h"
+
+1491221807 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7zbuf.h
+	"7zTypes.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7zcrc.h
+	"7zTypes.h"
+
+1550509200 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\cpuarch.h
+	"7zTypes.h"
+	<stdlib.h>
+
+1491221871 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7zbuf.c
+	"Precomp.h"
+	"7zBuf.h"
+
+1496721862 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7zcrc.c
+	"Precomp.h"
+	"7zCrc.h"
+	"CpuArch.h"
+
+1491221982 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7zcrcopt.c
+	"Precomp.h"
+	"CpuArch.h"
+
+1491234231 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7zfile.c
+	"Precomp.h"
+	"7zFile.h"
+	<errno.h>
+
+1491234115 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7zfile.h
+	<windows.h>
+	<stdio.h>
+	"7zTypes.h"
+
+1491223331 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7zstream.c
+	"Precomp.h"
+	<string.h>
+	"7zTypes.h"
+
+1549130400 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7zdec.c
+	"Precomp.h"
+	<string.h>
+	"7z.h"
+	"7zCrc.h"
+	"Bcj2.h"
+	"Bra.h"
+	"CpuArch.h"
+	"Delta.h"
+	"LzmaDec.h"
+	"Lzma2Dec.h"
+	"Ppmd7.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\bcj2.h
+	"7zTypes.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\bra.h
+	"7zTypes.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\delta.h
+	"7zTypes.h"
+
+1524333600 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzmadec.h
+	"7zTypes.h"
+
+1519059600 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzma2dec.h
+	"LzmaDec.h"
+
+1530702000 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\ppmd7.h
+	"Ppmd.h"
+
+1491239217 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\ppmd.h
+	"CpuArch.h"
+
+1524819600 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\alloc.c
+	"Precomp.h"
+	<stdio.h>
+	<windows.h>
+	<stdlib.h>
+	"Alloc.h"
+	<stdio.h>
+
+1519059600 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\alloc.h
+	"7zTypes.h"
+
+1524909600 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\bcj2.c
+	"Precomp.h"
+	"Bcj2.h"
+	"CpuArch.h"
+
+1491295827 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\bra.c
+	"Precomp.h"
+	"CpuArch.h"
+	"Bra.h"
+
+1491234498 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\bra86.c
+	"Precomp.h"
+	"Bra.h"
+
+1485597613 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\braia64.c
+	"Precomp.h"
+	"CpuArch.h"
+	"Bra.h"
+
+1550509200 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\cpuarch.c
+	"Precomp.h"
+	"CpuArch.h"
+	<intrin.h>
+	<windows.h>
+
+1418765740 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\delta.c
+	"Precomp.h"
+	"Delta.h"
+
+1531126800 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzfind.c
+	"Precomp.h"
+	<string.h>
+	"LzFind.h"
+	"LzHash.h"
+
+1497081755 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzfind.h
+	"7zTypes.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzhash.h
+
+1546070400 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzfindmt.c
+	"Precomp.h"
+	"LzHash.h"
+	"LzFindMt.h"
+
+1530702000 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzfindmt.h
+	"LzFind.h"
+	"Threads.h"
+
+1497791553 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\threads.h
+	<windows.h>
+	"7zTypes.h"
+
+1471028314 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzma86dec.c
+	"Precomp.h"
+	"Lzma86.h"
+	"Alloc.h"
+	"Bra.h"
+	"LzmaDec.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzma86.h
+	"7zTypes.h"
+
+1530702000 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzma86enc.c
+	"Precomp.h"
+	<string.h>
+	"Lzma86.h"
+	"Alloc.h"
+	"Bra.h"
+	"LzmaEnc.h"
+
+1501145793 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzmaenc.h
+	"7zTypes.h"
+
+1530702000 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzmadec.c
+	"Precomp.h"
+	<string.h>
+	"LzmaDec.h"
+
+1530702000 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzma2enc.c
+	"Precomp.h"
+	<string.h>
+	"Lzma2Enc.h"
+	"MtCoder.h"
+
+1501145819 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzma2enc.h
+	"LzmaEnc.h"
+
+1530702000 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\mtcoder.h
+	"MtDec.h"
+
+1530702000 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\mtdec.h
+	"7zTypes.h"
+	"Threads.h"
+
+1547136000 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzmaenc.c
+	"Precomp.h"
+	<string.h>
+	<stdio.h>
+	"LzmaEnc.h"
+	"LzFind.h"
+	"LzFindMt.h"
+
+1530702000 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\mtcoder.c
+	"Precomp.h"
+	"MtCoder.h"
+
+1530702000 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\ppmd7.c
+	"Precomp.h"
+	<string.h>
+	"Ppmd7.h"
+
+1530702000 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\ppmd7dec.c
+	"Precomp.h"
+	"Ppmd7.h"
+
+1491239217 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\ppmd7enc.c
+	"Precomp.h"
+	"Ppmd7.h"
+
+1498455718 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\threads.c
+	"Precomp.h"
+	<process.h>
+	"Threads.h"
+
+1391878006 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zcompressionmode.cpp
+	"StdAfx.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\stdafx.h
+	"../../../Common/Common.h"
+
+1481637422 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\common.h
+	"../../C/Compiler.h"
+	"MyWindows.h"
+	"NewHandler.h"
+
+1524935754 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\mywindows.h
+	<windows.h>
+	<stddef.h>
+	<string.h>
+	"MyGuidDef.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\myguiddef.h
+	"MyTypes.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\mytypes.h
+	"../../C/7zTypes.h"
+
+1483465245 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\newhandler.h
+	<stddef.h>
+	<new>
+
+1418765740 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zheader.cpp
+	"StdAfx.h"
+	"7zHeader.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zheader.h
+	"../../../Common/MyTypes.h"
+
+1546788349 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zdecode.cpp
+	"StdAfx.h"
+	"../../Common/LimitedStreams.h"
+	"../../Common/ProgressUtils.h"
+	"../../Common/StreamObjects.h"
+	"7zDecode.h"
+
+1463158258 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\limitedstreams.h
+	"../../Common/MyBuffer.h"
+	"../../Common/MyCom.h"
+	"../../Common/MyVector.h"
+	"../IStream.h"
+
+1481636221 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\mybuffer.h
+	"Defs.h"
+
+1552893389 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\defs.h
+
+1483975250 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\mycom.h
+	"MyWindows.h"
+
+1485251424 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\myvector.h
+	<string.h>
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\istream.h
+	"../Common/MyTypes.h"
+	"../Common/MyWindows.h"
+	"IDecl.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\idecl.h
+	"../Common/MyUnknown.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\myunknown.h
+	"MyWindows.h"
+	<basetyps.h>
+	<unknwn.h>
+	"MyWindows.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\progressutils.h
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+	"../IProgress.h"
+
+1509446559 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\icoder.h
+	"IStream.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\iprogress.h
+	"../Common/MyTypes.h"
+	"IDecl.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\streamobjects.h
+	"../../Common/MyBuffer.h"
+	"../../Common/MyCom.h"
+	"../../Common/MyVector.h"
+	"../IStream.h"
+
+1505564615 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zdecode.h
+	"../Common/CoderMixer2.h"
+	"7zIn.h"
+
+1484057853 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\codermixer2.h
+	"../../../Common/MyCom.h"
+	"../../../Common/MyVector.h"
+	"../../ICoder.h"
+	"../../Common/CreateCoder.h"
+	"../../Common/StreamBinder.h"
+	"../../Common/VirtThread.h"
+
+1519058266 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\createcoder.h
+	"../../Common/MyCom.h"
+	"../../Common/MyString.h"
+	"../ICoder.h"
+	"MethodId.h"
+
+1530350381 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\mystring.h
+	<string.h>
+	<wctype.h>
+	<wchar.h>
+	"MyWindows.h"
+	"MyTypes.h"
+	"MyVector.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\methodid.h
+	"../../Common/MyTypes.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\streambinder.h
+	"../../Windows/Synchronization.h"
+	"../IStream.h"
+
+1391878006 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\synchronization.h
+	"../../C/Threads.h"
+	"Defs.h"
+	"Handle.h"
+
+1391878006 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\defs.h
+	"../Common/MyWindows.h"
+
+1391878006 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\handle.h
+
+1391878006 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\virtthread.h
+	"../../Windows/Synchronization.h"
+	"../../Windows/Thread.h"
+
+1391878006 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\thread.h
+	"../../C/Threads.h"
+	"Defs.h"
+
+1544522809 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zin.h
+	"../../../Common/MyCom.h"
+	"../../../Windows/PropVariant.h"
+	"../../IPassword.h"
+	"../../IStream.h"
+	"../../Common/CreateCoder.h"
+	"../../Common/InBuffer.h"
+	"7zItem.h"
+
+1486740701 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\propvariant.h
+	"../Common/MyTypes.h"
+	"../Common/MyWindows.h"
+	"../Common/MyString.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ipassword.h
+	"../Common/MyTypes.h"
+	"../Common/MyUnknown.h"
+	"IDecl.h"
+
+1491125181 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\inbuffer.h
+	"../../Common/MyException.h"
+	"../IStream.h"
+
+1391878006 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\myexception.h
+	"MyWindows.h"
+
+1479737567 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zitem.h
+	"../../../Common/MyBuffer.h"
+	"../../../Common/MyString.h"
+	"../../Common/MethodId.h"
+	"7zHeader.h"
+
+1506093428 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zextract.cpp
+	"StdAfx.h"
+	"../../../../C/7zCrc.h"
+	"../../../Common/ComTry.h"
+	"../../Common/ProgressUtils.h"
+	"7zDecode.h"
+	"7zHandler.h"
+
+1483441603 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\comtry.h
+	"MyWindows.h"
+
+1519550173 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zhandler.h
+	"../../ICoder.h"
+	"../IArchive.h"
+	"../../Common/CreateCoder.h"
+	"../Common/HandlerOut.h"
+	"7zCompressionMode.h"
+	"7zIn.h"
+
+1508925335 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\iarchive.h
+	"../IProgress.h"
+	"../IStream.h"
+	"../PropID.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\propid.h
+	"../Common/MyTypes.h"
+
+1520061421 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\handlerout.h
+	"../../../Windows/System.h"
+	"../../Common/MethodProps.h"
+
+1490698893 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\system.h
+	"../Common/MyTypes.h"
+
+1499015644 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\methodprops.h
+	"../../Common/MyString.h"
+	"../../Common/Defs.h"
+	"../../Windows/Defs.h"
+	"../../Windows/PropVariant.h"
+	"../ICoder.h"
+
+1519015475 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zcompressionmode.h
+	"../../Common/MethodId.h"
+	"../../Common/MethodProps.h"
+
+1500278430 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zfolderinstream.cpp
+	"StdAfx.h"
+	"7zFolderInStream.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zfolderinstream.h
+	"../../../../C/7zCrc.h"
+	"../../../Common/MyCom.h"
+	"../../../Common/MyVector.h"
+	"../../ICoder.h"
+	"../IArchive.h"
+
+1543857662 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zhandler.cpp
+	"StdAfx.h"
+	"../../../../C/CpuArch.h"
+	"../../../Common/ComTry.h"
+	"../../../Common/IntToString.h"
+	"../../../Windows/System.h"
+	"../Common/ItemNameUtils.h"
+	"7zHandler.h"
+	"7zProperties.h"
+	"../Common/ParseProperties.h"
+
+1486746842 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\inttostring.h
+	"MyTypes.h"
+
+1490003560 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\itemnameutils.h
+	"../../../Common/MyString.h"
+
+1391878006 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zproperties.h
+	"../../PropID.h"
+
+1391878006 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\parseproperties.h
+
+1543858511 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zin.cpp
+	"StdAfx.h"
+	<wchar.h>
+	<ctype.h>
+	"../../../../C/7zCrc.h"
+	"../../../../C/CpuArch.h"
+	"../../Common/StreamObjects.h"
+	"../../Common/StreamUtils.h"
+	"7zDecode.h"
+	"7zIn.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\streamutils.h
+	"../IStream.h"
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zproperties.cpp
+	"StdAfx.h"
+	"7zProperties.h"
+	"7zHeader.h"
+	"7zHandler.h"
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\7z\7zregister.cpp
+	"StdAfx.h"
+	"../../Common/RegisterArc.h"
+	"7zHandler.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\registerarc.h
+	"../Archive/IArchive.h"
+
+1528383447 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\codermixer2.cpp
+	"StdAfx.h"
+	"CoderMixer2.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\stdafx.h
+	"../../../Common/Common.h"
+
+1418765740 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\dummyoutstream.cpp
+	"StdAfx.h"
+	"DummyOutStream.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\dummyoutstream.h
+	"../../../Common/MyCom.h"
+	"../../IStream.h"
+
+1419703316 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\instreamwithcrc.cpp
+	"StdAfx.h"
+	"InStreamWithCRC.h"
+
+1391878006 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\instreamwithcrc.h
+	"../../../../C/7zCrc.h"
+	"../../../Common/MyCom.h"
+	"../../IStream.h"
+
+1490004136 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\itemnameutils.cpp
+	"StdAfx.h"
+	"ItemNameUtils.h"
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\multistream.cpp
+	"StdAfx.h"
+	"MultiStream.h"
+
+1420498362 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\multistream.h
+	"../../../Common/MyCom.h"
+	"../../../Common/MyVector.h"
+	"../../IStream.h"
+
+1391878006 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\outstreamwithcrc.cpp
+	"StdAfx.h"
+	"OutStreamWithCRC.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\outstreamwithcrc.h
+	"../../../../C/7zCrc.h"
+	"../../../Common/MyCom.h"
+	"../../IStream.h"
+
+1391878006 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\common\parseproperties.cpp
+	"StdAfx.h"
+
+1530531147 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\lzmahandler.cpp
+	"StdAfx.h"
+	"../../../C/CpuArch.h"
+	"../../Common/ComTry.h"
+	"../../Common/IntToString.h"
+	"../../Windows/PropVariant.h"
+	"../Common/FilterCoder.h"
+	"../Common/ProgressUtils.h"
+	"../Common/RegisterArc.h"
+	"../Common/StreamUtils.h"
+	"../Compress/BcjCoder.h"
+	"../Compress/LzmaDecoder.h"
+	"Common/DummyOutStream.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\archive\stdafx.h
+	"../../Common/Common.h"
+
+1546191600 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\filtercoder.h
+	"../../../C/Alloc.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+	"../IPassword.h"
+
+1463158258 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\bcjcoder.h
+	"../../../C/Bra.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+
+1518021439 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\lzmadecoder.h
+	"../../../C/LzmaDec.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+
+1524471853 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\bundles\alone7z\resource.rc
+	"../../../../C/7zVersion.rc"
+
+1391878006 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7zversion.rc
+	"7zVersion.h"
+
+1550754000 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\7zversion.h
+
+1391878006 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\bundles\alone7z\stdafx.cpp
+	"StdAfx.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\bundles\alone7z\stdafx.h
+	"../../../Common/Common.h"
+
+1519058450 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\createcoder.cpp
+	"StdAfx.h"
+	"../../Windows/Defs.h"
+	"../../Windows/PropVariant.h"
+	"CreateCoder.h"
+	"FilterCoder.h"
+	"RegisterCodec.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\stdafx.h
+	"../../Common/Common.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\registercodec.h
+	"../Common/MethodId.h"
+	"../ICoder.h"
+
+1509615112 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\cwrappers.cpp
+	"StdAfx.h"
+	"../../../C/Alloc.h"
+	"CWrappers.h"
+	"StreamUtils.h"
+
+1491125978 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\cwrappers.h
+	"../ICoder.h"
+	"../../Common/MyCom.h"
+
+1491125689 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\filepathautorename.cpp
+	"StdAfx.h"
+	"../../Windows/FileFind.h"
+	"FilePathAutoRename.h"
+
+1488212260 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\filefind.h
+	"../Common/MyString.h"
+	"Defs.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\filepathautorename.h
+	"../../Common/MyString.h"
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\filestreams.cpp
+	"StdAfx.h"
+	<fcntl.h>
+	<unistd.h>
+	<errno.h>
+	"../../../C/Alloc.h"
+	"../../Common/Defs.h"
+	"FileStreams.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\filestreams.h
+	"../../Common/MyString.h"
+	"../../Windows/FileIO.h"
+	"../../Common/C_FileIO.h"
+	"../../Common/MyCom.h"
+	"../IStream.h"
+
+1514796387 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\fileio.h
+	"../Common/MyWindows.h"
+	<winioctl.h>
+	"../Common/MyString.h"
+	"../Common/MyBuffer.h"
+	"Defs.h"
+
+1549794212 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\filtercoder.cpp
+	"StdAfx.h"
+	"../../Common/Defs.h"
+	"FilterCoder.h"
+	"StreamUtils.h"
+
+1516809590 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\inbuffer.cpp
+	"StdAfx.h"
+	"../../../C/Alloc.h"
+	"InBuffer.h"
+
+1491125269 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\inouttempbuffer.cpp
+	"StdAfx.h"
+	"../../../C/7zCrc.h"
+	"../../Common/Defs.h"
+	"InOutTempBuffer.h"
+	"StreamUtils.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\inouttempbuffer.h
+	"../../Common/MyCom.h"
+	"../../Windows/FileDir.h"
+	"../IStream.h"
+
+1503739100 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\filedir.h
+	"../Common/MyString.h"
+	"FileIO.h"
+
+1463158258 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\limitedstreams.cpp
+	"StdAfx.h"
+	<string.h>
+	"LimitedStreams.h"
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\lockedstream.cpp
+	"StdAfx.h"
+
+1391878006 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\methodid.cpp
+	"StdAfx.h"
+
+1508925406 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\methodprops.cpp
+	"StdAfx.h"
+	"../../Common/StringToInt.h"
+	"MethodProps.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\stringtoint.h
+	"MyTypes.h"
+
+1418765740 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\offsetstream.cpp
+	"StdAfx.h"
+	"../../Common/Defs.h"
+	"OffsetStream.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\offsetstream.h
+	"../../Common/MyCom.h"
+	"../IStream.h"
+
+1420498362 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\outbuffer.cpp
+	"StdAfx.h"
+	"../../../C/Alloc.h"
+	"OutBuffer.h"
+
+1485248252 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\outbuffer.h
+	"../IStream.h"
+	"../../Common/MyCom.h"
+	"../../Common/MyException.h"
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\progressutils.cpp
+	"StdAfx.h"
+	"ProgressUtils.h"
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\propid.cpp
+	"StdAfx.h"
+	"../../Common/MyWindows.h"
+	"../PropID.h"
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\streambinder.cpp
+	"StdAfx.h"
+	"../../Common/MyCom.h"
+	"StreamBinder.h"
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\streamobjects.cpp
+	"StdAfx.h"
+	<stdlib.h>
+	"../../../C/Alloc.h"
+	"StreamObjects.h"
+
+1420498362 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\streamutils.cpp
+	"StdAfx.h"
+	"StreamUtils.h"
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\uniqblocks.cpp
+	"StdAfx.h"
+	<string.h>
+	"UniqBlocks.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\uniqblocks.h
+	"../../Common/MyTypes.h"
+	"../../Common/MyBuffer.h"
+	"../../Common/MyVector.h"
+
+1391878006 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\common\virtthread.cpp
+	"StdAfx.h"
+	"VirtThread.h"
+
+1483453169 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\bcj2coder.cpp
+	"StdAfx.h"
+	"../../../C/Alloc.h"
+	"../Common/StreamUtils.h"
+	"Bcj2Coder.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\stdafx.h
+	"../../Common/Common.h"
+
+1482939658 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\bcj2coder.h
+	"../../../C/Bcj2.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+
+1463158258 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\bcj2register.cpp
+	"StdAfx.h"
+	"../Common/RegisterCodec.h"
+	"Bcj2Coder.h"
+
+1463158258 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\bcjcoder.cpp
+	"StdAfx.h"
+	"BcjCoder.h"
+
+1463158258 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\bcjregister.cpp
+	"StdAfx.h"
+	"../Common/RegisterCodec.h"
+	"BcjCoder.h"
+
+1463158258 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\branchmisc.cpp
+	"StdAfx.h"
+	"BranchMisc.h"
+
+1463158258 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\branchmisc.h
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+
+1463158258 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\branchregister.cpp
+	"StdAfx.h"
+	"../../../C/Bra.h"
+	"../Common/RegisterCodec.h"
+	"BranchMisc.h"
+
+1463158258 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\byteswap.cpp
+	"StdAfx.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+	"../Common/RegisterCodec.h"
+
+1486878734 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\copycoder.cpp
+	"StdAfx.h"
+	"../../../C/Alloc.h"
+	"CopyCoder.h"
+
+1486878726 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\copycoder.h
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+
+1463158258 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\copyregister.cpp
+	"StdAfx.h"
+	"../Common/RegisterCodec.h"
+	"CopyCoder.h"
+
+1463158258 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\deltafilter.cpp
+	"StdAfx.h"
+	"../../../C/Delta.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+	"../Common/RegisterCodec.h"
+
+1518882831 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\lzma2decoder.cpp
+	"StdAfx.h"
+	"../../../C/Alloc.h"
+	"../Common/StreamUtils.h"
+	"Lzma2Decoder.h"
+
+1518107617 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\lzma2decoder.h
+	"../../../C/Lzma2DecMt.h"
+	"../Common/CWrappers.h"
+
+1518875378 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzma2decmt.h
+	"7zTypes.h"
+
+1463158258 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\lzma2register.cpp
+	"StdAfx.h"
+	"../Common/RegisterCodec.h"
+	"Lzma2Decoder.h"
+	"Lzma2Encoder.h"
+
+1496914148 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\lzma2encoder.h
+	"../../../C/Lzma2Enc.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+
+1518882468 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\lzmadecoder.cpp
+	"StdAfx.h"
+	"../../../C/Alloc.h"
+	"../Common/StreamUtils.h"
+	"LzmaDecoder.h"
+
+1463158258 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\lzmaregister.cpp
+	"StdAfx.h"
+	"../Common/RegisterCodec.h"
+	"LzmaDecoder.h"
+	"LzmaEncoder.h"
+
+1496860609 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\lzmaencoder.h
+	"../../../C/LzmaEnc.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+
+1463158258 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\ppmdregister.cpp
+	"StdAfx.h"
+	"../Common/RegisterCodec.h"
+	"PpmdDecoder.h"
+	"PpmdEncoder.h"
+
+1488989904 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\compress\ppmddecoder.h
+	"../../../C/Ppmd7.h"
+	"../../Common/MyCom.h"
+	"../Common/CWrappers.h"
+	"../ICoder.h"
+
+1549788289 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\archiveopencallback.cpp
+	"StdAfx.h"
+	"../../../Common/ComTry.h"
+	"../../../Windows/FileName.h"
+	"../../../Windows/PropVariant.h"
+	"../../Common/FileStreams.h"
+	"ArchiveOpenCallback.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\stdafx.h
+	"../../../Common/Common.h"
+
+1490210282 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\filename.h
+	"../Common/MyString.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\archiveopencallback.h
+	"../../../Common/MyCom.h"
+	"../../../Windows/FileFind.h"
+	"../../IPassword.h"
+	"../../Archive/IArchive.h"
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\defaultname.cpp
+	"StdAfx.h"
+	"DefaultName.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\defaultname.h
+	"../../../Common/MyString.h"
+
+1549130400 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\lzma2dec.c
+	"Precomp.h"
+	<stdio.h>
+	<string.h>
+	"Lzma2Dec.h"
+
+1532351635 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\archivecommandline.cpp
+	"StdAfx.h"
+	<io.h>
+	<unistd.h>
+	<stdio.h>
+	"../../../../C/Alloc.h"
+	"../../../Common/ListFileUtils.h"
+	"../../../Common/StringConvert.h"
+	"../../../Common/StringToInt.h"
+	"../../../Windows/ErrorMsg.h"
+	"../../../Windows/FileDir.h"
+	"../../../Windows/FileName.h"
+	"../../../Windows/FileMapping.h"
+	"../../../Windows/MemoryLock.h"
+	"../../../Windows/Synchronization.h"
+	"ArchiveCommandLine.h"
+	"EnumDirItems.h"
+	"Update.h"
+	"UpdateAction.h"
+
+1533387867 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\listfileutils.h
+	"MyString.h"
+	"MyTypes.h"
+
+1486574596 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\stringconvert.h
+	"MyString.h"
+	"MyWindows.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\errormsg.h
+	"../Common/MyString.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\filemapping.h
+	"../Common/MyTypes.h"
+	"Handle.h"
+
+1525085542 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\memorylock.h
+	"../Common/MyWindows.h"
+
+1524404864 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\archivecommandline.h
+	"../../../Common/CommandLineParser.h"
+	"../../../Common/Wildcard.h"
+	"EnumDirItems.h"
+	"Extract.h"
+	"HashCalc.h"
+	"Update.h"
+
+1488718583 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\commandlineparser.h
+	"MyString.h"
+
+1487229556 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\wildcard.h
+	"MyString.h"
+
+1533387762 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\enumdiritems.h
+	"../../../Common/Wildcard.h"
+	"../../../Windows/FileFind.h"
+	"DirItem.h"
+
+1494508700 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\diritem.h
+	"../../../Common/MyString.h"
+	"../../../Windows/FileFind.h"
+	"../../Common/UniqBlocks.h"
+	"../../Archive/IArchive.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\extract.h
+	"../../../Windows/FileFind.h"
+	"../../Archive/IArchive.h"
+	"ArchiveExtractCallback.h"
+	"ArchiveOpenCallback.h"
+	"ExtractMode.h"
+	"Property.h"
+	"../Common/LoadCodecs.h"
+
+1515919227 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\archiveextractcallback.h
+	"../../../Common/MyCom.h"
+	"../../../Common/Wildcard.h"
+	"../../IPassword.h"
+	"../../Common/FileStreams.h"
+	"../../Common/ProgressUtils.h"
+	"../../Archive/IArchive.h"
+	"ExtractMode.h"
+	"IFileExtractCallback.h"
+	"OpenArchive.h"
+	"HashCalc.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\extractmode.h
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\ifileextractcallback.h
+	"../../../Common/MyString.h"
+	"../../IDecl.h"
+	"LoadCodecs.h"
+	"OpenArchive.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\loadcodecs.h
+	"../../../Common/MyBuffer.h"
+	"../../../Common/MyCom.h"
+	"../../../Common/MyString.h"
+	"../../../Common/ComTry.h"
+	"../../../Windows/DLL.h"
+	"../../ICoder.h"
+	"../../Archive/IArchive.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\dll.h
+	"../Common/MyString.h"
+
+1516043761 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\openarchive.h
+	"../../../Windows/PropVariant.h"
+	"ArchiveOpenCallback.h"
+	"LoadCodecs.h"
+	"Property.h"
+
+1296507924 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\property.h
+	"../../../Common/MyString.h"
+
+1544787204 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\hashcalc.h
+	"../../../Common/Wildcard.h"
+	"../../Common/CreateCoder.h"
+	"../../Common/MethodProps.h"
+	"DirItem.h"
+
+1513331413 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\update.h
+	"../../../Common/Wildcard.h"
+	"ArchiveOpenCallback.h"
+	"LoadCodecs.h"
+	"OpenArchive.h"
+	"Property.h"
+	"UpdateAction.h"
+	"UpdateCallback.h"
+	"DirItem.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\updateaction.h
+
+1513331448 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\updatecallback.h
+	"../../../Common/MyCom.h"
+	"../../Common/FileStreams.h"
+	"../../IPassword.h"
+	"../../ICoder.h"
+	"../Common/UpdatePair.h"
+	"../Common/UpdateProduce.h"
+	"OpenArchive.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\updatepair.h
+	"DirItem.h"
+	"UpdateAction.h"
+	"../../Archive/IArchive.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\updateproduce.h
+	"UpdatePair.h"
+
+1532855675 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\archiveextractcallback.cpp
+	"StdAfx.h"
+	"../../../../C/Alloc.h"
+	"../../../../C/CpuArch.h"
+	"../../../Common/ComTry.h"
+	"../../../Common/IntToString.h"
+	"../../../Common/StringConvert.h"
+	"../../../Common/Wildcard.h"
+	"../../../Windows/ErrorMsg.h"
+	"../../../Windows/FileDir.h"
+	"../../../Windows/FileFind.h"
+	"../../../Windows/FileName.h"
+	"../../../Windows/PropVariant.h"
+	"../../../Windows/PropVariantConv.h"
+	"../../../Windows/SecurityUtils.h"
+	"../../Common/FilePathAutoRename.h"
+	"../Common/ExtractingFilePath.h"
+	"../Common/PropIDUtils.h"
+	"ArchiveExtractCallback.h"
+
+1488213509 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\propvariantconv.h
+	"../Common/MyTypes.h"
+
+1420498362 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\securityutils.h
+	<NTSecAPI.h>
+	"Defs.h"
+
+1503216326 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\extractingfilepath.h
+	"../../../Common/MyString.h"
+
+1488023374 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\propidutils.h
+	"../../../Common/MyString.h"
+
+1532345616 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\enumdiritems.cpp
+	"StdAfx.h"
+	<wchar.h>
+	"../../../Common/Wildcard.h"
+	"../../../Windows/FileDir.h"
+	"../../../Windows/FileIO.h"
+	"../../../Windows/FileName.h"
+	"../../../Windows/SecurityUtils.h"
+	"EnumDirItems.h"
+	"SortUtils.h"
+
+1389942335 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\sortutils.h
+	"../../../Common/MyString.h"
+
+1514969927 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\extract.cpp
+	"StdAfx.h"
+	"../../../../C/Sort.h"
+	"../../../Common/StringConvert.h"
+	"../../../Windows/FileDir.h"
+	"../../../Windows/PropVariant.h"
+	"../../../Windows/PropVariantConv.h"
+	"../Common/ExtractingFilePath.h"
+	"Extract.h"
+	"SetProperties.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\sort.h
+	"7zTypes.h"
+
+1391878006 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\setproperties.h
+	"Property.h"
+
+1503249540 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\extractingfilepath.cpp
+	"StdAfx.h"
+	"../../../Common/Wildcard.h"
+	"../../../Windows/FileName.h"
+	"ExtractingFilePath.h"
+
+1544785022 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\hashcalc.cpp
+	"StdAfx.h"
+	"../../../../C/Alloc.h"
+	"../../../Common/StringToInt.h"
+	"../../Common/FileStreams.h"
+	"../../Common/StreamUtils.h"
+	"EnumDirItems.h"
+	"HashCalc.h"
+
+1490635605 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\loadcodecs.cpp
+	"StdAfx.h"
+	"../../../../C/7zVersion.h"
+	"../../../Common/MyCom.h"
+	"../../../Common/StringToInt.h"
+	"../../../Common/StringConvert.h"
+	"../../../Windows/PropVariant.h"
+	"LoadCodecs.h"
+	"../../../Common/StringToInt.h"
+	"../../ICoder.h"
+	"../../Common/RegisterArc.h"
+	"../../../Windows/ResourceString.h"
+	"../../../Windows/FileFind.h"
+	"../../../Windows/DLL.h"
+	"../../../Windows/FileName.h"
+	"../../../Windows/Registry.h"
+
+1538667436 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\openarchive.cpp
+	"StdAfx.h"
+	<stdio.h>
+	"../../../../C/CpuArch.h"
+	"../../../Common/ComTry.h"
+	"../../../Common/IntToString.h"
+	"../../../Common/StringConvert.h"
+	"../../../Common/StringToInt.h"
+	"../../../Common/Wildcard.h"
+	"../../../Windows/FileDir.h"
+	"../../Common/FileStreams.h"
+	"../../Common/LimitedStreams.h"
+	"../../Common/ProgressUtils.h"
+	"../../Common/StreamUtils.h"
+	"../../Compress/CopyCoder.h"
+	"DefaultName.h"
+	"OpenArchive.h"
+	"SetProperties.h"
+
+1524577192 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\propidutils.cpp
+	"StdAfx.h"
+	"../../../../C/CpuArch.h"
+	"../../../Common/IntToString.h"
+	"../../../Common/StringConvert.h"
+	"../../../Windows/FileIO.h"
+	"../../../Windows/PropVariantConv.h"
+	"../../PropID.h"
+	"PropIDUtils.h"
+
+1418765740 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\setproperties.cpp
+	"StdAfx.h"
+	"../../../Common/MyCom.h"
+	"../../../Common/MyString.h"
+	"../../../Common/StringToInt.h"
+	"../../../Windows/PropVariant.h"
+	"../../Archive/IArchive.h"
+	"SetProperties.h"
+
+1453253746 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\tempfiles.cpp
+	"StdAfx.h"
+	"../../../Windows/FileDir.h"
+	"TempFiles.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\tempfiles.h
+	"../../../Common/MyString.h"
+
+1453253746 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\workdir.cpp
+	"StdAfx.h"
+	"../../../Common/StringConvert.h"
+	"../../../Common/Wildcard.h"
+	"../../../Windows/FileName.h"
+	"WorkDir.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\workdir.h
+	"../../../Windows/FileDir.h"
+	"../../Common/FileStreams.h"
+	"ZipRegistry.h"
+
+1495111179 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\zipregistry.h
+	"../../../Common/MyTypes.h"
+	"../../../Common/MyString.h"
+	"ExtractMode.h"
+
+1471028314 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\consoleclose.cpp
+	"StdAfx.h"
+	"ConsoleClose.h"
+	"../../../Common/MyWindows.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\stdafx.h
+	"../../../Common/Common.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\consoleclose.h
+
+1520851952 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\extractcallbackconsole.cpp
+	"StdAfx.h"
+	"../../../Common/IntToString.h"
+	"../../../Common/Wildcard.h"
+	"../../../Windows/FileDir.h"
+	"../../../Windows/FileFind.h"
+	"../../../Windows/TimeUtils.h"
+	"../../../Windows/ErrorMsg.h"
+	"../../../Windows/PropVariantConv.h"
+	"../../../Windows/Synchronization.h"
+	"../../Common/FilePathAutoRename.h"
+	"../Common/ExtractingFilePath.h"
+	"ConsoleClose.h"
+	"ExtractCallbackConsole.h"
+	"UserInputUtils.h"
+
+1487961711 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\timeutils.h
+	"../Common/MyTypes.h"
+	"../Common/MyWindows.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\extractcallbackconsole.h
+	"../../../Common/StdOutStream.h"
+	"../../IPassword.h"
+	"../../Archive/IArchive.h"
+	"../Common/ArchiveExtractCallback.h"
+	"PercentPrinter.h"
+	"OpenCallbackConsole.h"
+
+1520954901 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\stdoutstream.h
+	<stdio.h>
+	"MyString.h"
+	"MyTypes.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\percentprinter.h
+	"../../../Common/StdOutStream.h"
+
+1487070987 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\opencallbackconsole.h
+	"../../../Common/StdOutStream.h"
+	"../Common/ArchiveOpenCallback.h"
+	"PercentPrinter.h"
+
+1487375028 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\userinpututils.h
+	"../../../Common/StdOutStream.h"
+
+1544787624 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\hashcon.cpp
+	"StdAfx.h"
+	"../../../Common/IntToString.h"
+	"ConsoleClose.h"
+	"HashCon.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\hashcon.h
+	"../Common/HashCalc.h"
+	"UpdateCallbackConsole.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\updatecallbackconsole.h
+	"../../../Common/StdOutStream.h"
+	"../Common/Update.h"
+	"PercentPrinter.h"
+
+1547029459 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\main.cpp
+	"StdAfx.h"
+	"../../../Common/MyWindows.h"
+	<Psapi.h>
+	"../../../../C/CpuArch.h"
+	"../../../Common/MyInitGuid.h"
+	"../../../Common/CommandLineParser.h"
+	"../../../Common/IntToString.h"
+	"../../../Common/MyException.h"
+	"../../../Common/StringConvert.h"
+	"../../../Common/StringToInt.h"
+	"../../../Common/UTFConvert.h"
+	"../../../Windows/ErrorMsg.h"
+	"../../../Windows/TimeUtils.h"
+	"../Common/ArchiveCommandLine.h"
+	"../Common/Bench.h"
+	"../Common/ExitCode.h"
+	"../Common/Extract.h"
+	"../Common/LoadCodecs.h"
+	"../../Common/RegisterCodec.h"
+	"BenchCon.h"
+	"ConsoleClose.h"
+	"ExtractCallbackConsole.h"
+	"List.h"
+	"OpenCallbackConsole.h"
+	"UpdateCallbackConsole.h"
+	"HashCon.h"
+	"../../../../C/7zVersion.h"
+	"../../MyVersion.h"
+
+1420498362 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\myinitguid.h
+	<basetyps.h>
+	<initguid.h>
+	"MyGuidDef.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\utfconvert.h
+	"MyString.h"
+
+1525595597 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\bench.h
+	"../../../Windows/System.h"
+	"../../Common/CreateCoder.h"
+	"../../UI/Common/Property.h"
+
+1391878006 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\exitcode.h
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\benchcon.h
+	<stdio.h>
+	"../../Common/CreateCoder.h"
+	"../../UI/Common/Property.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\list.h
+	"../../../Common/Wildcard.h"
+	"../Common/LoadCodecs.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\myversion.h
+	"../../C/7zVersion.h"
+
+1487374934 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\opencallbackconsole.cpp
+	"StdAfx.h"
+	"OpenCallbackConsole.h"
+	"ConsoleClose.h"
+	"UserInputUtils.h"
+
+1520851964 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\percentprinter.cpp
+	"StdAfx.h"
+	"../../../Common/IntToString.h"
+	"PercentPrinter.h"
+
+1520961469 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\updatecallbackconsole.cpp
+	"StdAfx.h"
+	"../../../Common/IntToString.h"
+	"../../../Windows/ErrorMsg.h"
+	"../../../Windows/Synchronization.h"
+	"ConsoleClose.h"
+	"UserInputUtils.h"
+	"UpdateCallbackConsole.h"
+
+1490704337 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\userinpututils.cpp
+	"StdAfx.h"
+	"../../../Common/StdInStream.h"
+	"../../../Common/StringConvert.h"
+	"UserInputUtils.h"
+
+1490704662 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\stdinstream.h
+	<stdio.h>
+	"MyString.h"
+	"MyTypes.h"
+
+1488718667 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\commandlineparser.cpp
+	"StdAfx.h"
+	"CommandLineParser.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\stdafx.h
+	"Common.h"
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\crc.cpp
+	"StdAfx.h"
+	"../../C/7zCrc.h"
+
+1447139313 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\common\sortutils.cpp
+	"StdAfx.h"
+	"../../../Common/Wildcard.h"
+	"SortUtils.h"
+
+1550127662 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\listfileutils.cpp
+	"StdAfx.h"
+	"../../C/CpuArch.h"
+	"../Windows/FileIO.h"
+	"ListFileUtils.h"
+	"MyBuffer.h"
+	"StringConvert.h"
+	"UTFConvert.h"
+
+1490704915 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\mystring.cpp
+	"StdAfx.h"
+	<wchar.h>
+	<ctype.h>
+	"IntToString.h"
+	"StringConvert.h"
+	"MyString.h"
+
+1418765740 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\myvector.cpp
+	"StdAfx.h"
+
+1480067036 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\newhandler.cpp
+	"StdAfx.h"
+	<stdlib.h>
+	"NewHandler.h"
+	<stdio.h>
+
+1490704344 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\stdinstream.cpp
+	"StdAfx.h"
+	<tchar.h>
+	"StdInStream.h"
+	"StringConvert.h"
+	"UTFConvert.h"
+
+1520955064 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\stdoutstream.cpp
+	"StdAfx.h"
+	<tchar.h>
+	"IntToString.h"
+	"StdOutStream.h"
+	"StringConvert.h"
+	"UTFConvert.h"
+
+1490704915 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\stringconvert.cpp
+	"StdAfx.h"
+	"StringConvert.h"
+	<stdlib.h>
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\stringtoint.cpp
+	"StdAfx.h"
+	"StringToInt.h"
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\utfconvert.cpp
+	"StdAfx.h"
+	"MyTypes.h"
+	"UTFConvert.h"
+
+1488208701 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\wildcard.cpp
+	"StdAfx.h"
+	"Wildcard.h"
+
+1490704221 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\common\inttostring.cpp
+	"StdAfx.h"
+	"../../C/CpuArch.h"
+	"IntToString.h"
+
+1486538219 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\dll.cpp
+	"StdAfx.h"
+	"DLL.h"
+
+1418765740 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\stdafx.h
+	"../Common/Common.h"
+
+1488212891 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\errormsg.cpp
+	"StdAfx.h"
+	"../Common/StringConvert.h"
+	"ErrorMsg.h"
+
+1516044280 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\filedir.cpp
+	"StdAfx.h"
+	"../Common/StringConvert.h"
+	"FileDir.h"
+	"FileFind.h"
+	"FileName.h"
+
+1488212357 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\filefind.cpp
+	"StdAfx.h"
+	"../Common/StringConvert.h"
+	"FileFind.h"
+	"FileIO.h"
+	"FileName.h"
+
+1443925518 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\fileio.cpp
+	"StdAfx.h"
+	"../../C/Alloc.h"
+	"FileIO.h"
+	"FileName.h"
+
+1514794959 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\filelink.cpp
+	"StdAfx.h"
+	"../../C/CpuArch.h"
+	"../../C/Alloc.h"
+	"FileDir.h"
+	"FileFind.h"
+	"FileIO.h"
+	"FileName.h"
+
+1493373147 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\filename.cpp
+	"StdAfx.h"
+	"FileName.h"
+
+1550507829 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\memorylock.cpp
+	"StdAfx.h"
+	"../../C/CpuArch.h"
+	"MemoryLock.h"
+
+1607877203 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\7zip\ui\console\mainar.cpp
+	"StdAfx.h"
+	"../../../../C/DllSecur.h"
+	"../../../Common/MyException.h"
+	"../../../Common/StdOutStream.h"
+	"../../../Windows/ErrorMsg.h"
+	"../../../Windows/NtCheck.h"
+	"../Common/ArchiveCommandLine.h"
+	"../Common/ExitCode.h"
+	"ConsoleClose.h"
+
+1550570400 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\c\dllsecur.h
+	"7zTypes.h"
+
+1443925518 c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\ntcheck.h
+	"../Common/MyWindows.h"
+
+1486740701 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\propvariant.cpp
+	"StdAfx.h"
+	"../Common/Defs.h"
+	"PropVariant.h"
+
+1491465233 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\propvariantconv.cpp
+	"StdAfx.h"
+	"../Common/IntToString.h"
+	"Defs.h"
+	"PropVariantConv.h"
+
+1453253746 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\securityutils.cpp
+	"StdAfx.h"
+	"../Common/MyString.h"
+	"SecurityUtils.h"
+
+1391878006 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\synchronization.cpp
+	"StdAfx.h"
+	"Synchronization.h"
+
+1490699077 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\system.cpp
+	"StdAfx.h"
+	"../Common/MyWindows.h"
+	"../Common/Defs.h"
+	"System.h"
+
+1487960109 source:c:\snappy-driver-installer-origin-code-r722-trunk\external\sevenz\cpp\windows\timeutils.cpp
+	"StdAfx.h"
+	"Defs.h"
+	"TimeUtils.h"
+
+1491217108 source:c:\sdio\external\sevenz\c\7zalloc.c
+	"Precomp.h"
+	<stdlib.h>
+	"7zAlloc.h"
+	<windows.h>
+	<stdio.h>
+
+1418765740 c:\sdio\external\sevenz\c\precomp.h
+	"Compiler.h"
+
+1491214448 c:\sdio\external\sevenz\c\compiler.h
+
+1491217108 c:\sdio\external\sevenz\c\7zalloc.h
+	"7zTypes.h"
+
+1533387600 c:\sdio\external\sevenz\c\7ztypes.h
+	<stddef.h>
+
+1546232400 source:c:\sdio\external\sevenz\c\7zarcin.c
+	"Precomp.h"
+	<string.h>
+	"7z.h"
+	"7zBuf.h"
+	"7zCrc.h"
+	"CpuArch.h"
+
+1491221537 c:\sdio\external\sevenz\c\7z.h
+	"7zTypes.h"
+
+1491221807 c:\sdio\external\sevenz\c\7zbuf.h
+	"7zTypes.h"
+
+1418765740 c:\sdio\external\sevenz\c\7zcrc.h
+	"7zTypes.h"
+
+1550509200 c:\sdio\external\sevenz\c\cpuarch.h
+	"7zTypes.h"
+	<stdlib.h>
+
+1491221871 source:c:\sdio\external\sevenz\c\7zbuf.c
+	"Precomp.h"
+	"7zBuf.h"
+
+1496721862 source:c:\sdio\external\sevenz\c\7zcrc.c
+	"Precomp.h"
+	"7zCrc.h"
+	"CpuArch.h"
+
+1491221982 source:c:\sdio\external\sevenz\c\7zcrcopt.c
+	"Precomp.h"
+	"CpuArch.h"
+
+1549130400 source:c:\sdio\external\sevenz\c\7zdec.c
+	"Precomp.h"
+	<string.h>
+	"7z.h"
+	"7zCrc.h"
+	"Bcj2.h"
+	"Bra.h"
+	"CpuArch.h"
+	"Delta.h"
+	"LzmaDec.h"
+	"Lzma2Dec.h"
+	"Ppmd7.h"
+
+1443925518 c:\sdio\external\sevenz\c\bcj2.h
+	"7zTypes.h"
+
+1418765740 c:\sdio\external\sevenz\c\bra.h
+	"7zTypes.h"
+
+1418765740 c:\sdio\external\sevenz\c\delta.h
+	"7zTypes.h"
+
+1524333600 c:\sdio\external\sevenz\c\lzmadec.h
+	"7zTypes.h"
+
+1519059600 c:\sdio\external\sevenz\c\lzma2dec.h
+	"LzmaDec.h"
+
+1530702000 c:\sdio\external\sevenz\c\ppmd7.h
+	"Ppmd.h"
+
+1491239217 c:\sdio\external\sevenz\c\ppmd.h
+	"CpuArch.h"
+
+1491234231 source:c:\sdio\external\sevenz\c\7zfile.c
+	"Precomp.h"
+	"7zFile.h"
+	<errno.h>
+
+1491234115 c:\sdio\external\sevenz\c\7zfile.h
+	<windows.h>
+	<stdio.h>
+	"7zTypes.h"
+
+1491223331 source:c:\sdio\external\sevenz\c\7zstream.c
+	"Precomp.h"
+	<string.h>
+	"7zTypes.h"
+
+1524819600 source:c:\sdio\external\sevenz\c\alloc.c
+	"Precomp.h"
+	<stdio.h>
+	<windows.h>
+	<stdlib.h>
+	"Alloc.h"
+	<stdio.h>
+
+1519059600 c:\sdio\external\sevenz\c\alloc.h
+	"7zTypes.h"
+
+1524909600 source:c:\sdio\external\sevenz\c\bcj2.c
+	"Precomp.h"
+	"Bcj2.h"
+	"CpuArch.h"
+
+1491295827 source:c:\sdio\external\sevenz\c\bra.c
+	"Precomp.h"
+	"CpuArch.h"
+	"Bra.h"
+
+1491234498 source:c:\sdio\external\sevenz\c\bra86.c
+	"Precomp.h"
+	"Bra.h"
+
+1485597613 source:c:\sdio\external\sevenz\c\braia64.c
+	"Precomp.h"
+	"CpuArch.h"
+	"Bra.h"
+
+1550509200 source:c:\sdio\external\sevenz\c\cpuarch.c
+	"Precomp.h"
+	"CpuArch.h"
+	<intrin.h>
+	<windows.h>
+
+1418765740 source:c:\sdio\external\sevenz\c\delta.c
+	"Precomp.h"
+	"Delta.h"
+
+1531126800 source:c:\sdio\external\sevenz\c\lzfind.c
+	"Precomp.h"
+	<string.h>
+	"LzFind.h"
+	"LzHash.h"
+
+1497081755 c:\sdio\external\sevenz\c\lzfind.h
+	"7zTypes.h"
+
+1443925518 c:\sdio\external\sevenz\c\lzhash.h
+
+1546070400 source:c:\sdio\external\sevenz\c\lzfindmt.c
+	"Precomp.h"
+	"LzHash.h"
+	"LzFindMt.h"
+
+1530702000 c:\sdio\external\sevenz\c\lzfindmt.h
+	"LzFind.h"
+	"Threads.h"
+
+1497791553 c:\sdio\external\sevenz\c\threads.h
+	<windows.h>
+	"7zTypes.h"
+
+1549130400 source:c:\sdio\external\sevenz\c\lzma2dec.c
+	"Precomp.h"
+	<stdio.h>
+	<string.h>
+	"Lzma2Dec.h"
+
+1530702000 source:c:\sdio\external\sevenz\c\lzma2enc.c
+	"Precomp.h"
+	<string.h>
+	"Lzma2Enc.h"
+	"MtCoder.h"
+
+1501145819 c:\sdio\external\sevenz\c\lzma2enc.h
+	"LzmaEnc.h"
+
+1501145793 c:\sdio\external\sevenz\c\lzmaenc.h
+	"7zTypes.h"
+
+1530702000 c:\sdio\external\sevenz\c\mtcoder.h
+	"MtDec.h"
+
+1530702000 c:\sdio\external\sevenz\c\mtdec.h
+	"7zTypes.h"
+	"Threads.h"
+
+1471028314 source:c:\sdio\external\sevenz\c\lzma86dec.c
+	"Precomp.h"
+	"Lzma86.h"
+	"Alloc.h"
+	"Bra.h"
+	"LzmaDec.h"
+
+1418765740 c:\sdio\external\sevenz\c\lzma86.h
+	"7zTypes.h"
+
+1530702000 source:c:\sdio\external\sevenz\c\lzma86enc.c
+	"Precomp.h"
+	<string.h>
+	"Lzma86.h"
+	"Alloc.h"
+	"Bra.h"
+	"LzmaEnc.h"
+
+1530702000 source:c:\sdio\external\sevenz\c\lzmadec.c
+	"Precomp.h"
+	<string.h>
+	"LzmaDec.h"
+
+1547136000 source:c:\sdio\external\sevenz\c\lzmaenc.c
+	"Precomp.h"
+	<string.h>
+	<stdio.h>
+	"LzmaEnc.h"
+	"LzFind.h"
+	"LzFindMt.h"
+
+1530702000 source:c:\sdio\external\sevenz\c\mtcoder.c
+	"Precomp.h"
+	"MtCoder.h"
+
+1530702000 source:c:\sdio\external\sevenz\c\ppmd7.c
+	"Precomp.h"
+	<string.h>
+	"Ppmd7.h"
+
+1530702000 source:c:\sdio\external\sevenz\c\ppmd7dec.c
+	"Precomp.h"
+	"Ppmd7.h"
+
+1491239217 source:c:\sdio\external\sevenz\c\ppmd7enc.c
+	"Precomp.h"
+	"Ppmd7.h"
+
+1498455718 source:c:\sdio\external\sevenz\c\threads.c
+	"Precomp.h"
+	<process.h>
+	"Threads.h"
+
+1391878006 source:c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zcompressionmode.cpp
+	"StdAfx.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\archive\7z\stdafx.h
+	"../../../Common/Common.h"
+
+1481637422 c:\sdio\external\sevenz\cpp\common\common.h
+	"../../C/Compiler.h"
+	"MyWindows.h"
+	"NewHandler.h"
+
+1524935754 c:\sdio\external\sevenz\cpp\common\mywindows.h
+	<windows.h>
+	<stddef.h>
+	<string.h>
+	"MyGuidDef.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\common\myguiddef.h
+	"MyTypes.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\common\mytypes.h
+	"../../C/7zTypes.h"
+
+1483465245 c:\sdio\external\sevenz\cpp\common\newhandler.h
+	<stddef.h>
+	<new>
+
+1546788349 source:c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zdecode.cpp
+	"StdAfx.h"
+	"../../Common/LimitedStreams.h"
+	"../../Common/ProgressUtils.h"
+	"../../Common/StreamObjects.h"
+	"7zDecode.h"
+
+1463158258 c:\sdio\external\sevenz\cpp\7zip\common\limitedstreams.h
+	"../../Common/MyBuffer.h"
+	"../../Common/MyCom.h"
+	"../../Common/MyVector.h"
+	"../IStream.h"
+
+1481636221 c:\sdio\external\sevenz\cpp\common\mybuffer.h
+	"Defs.h"
+
+1552893389 c:\sdio\external\sevenz\cpp\common\defs.h
+
+1483975250 c:\sdio\external\sevenz\cpp\common\mycom.h
+	"MyWindows.h"
+
+1485251424 c:\sdio\external\sevenz\cpp\common\myvector.h
+	<string.h>
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\istream.h
+	"../Common/MyTypes.h"
+	"../Common/MyWindows.h"
+	"IDecl.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\idecl.h
+	"../Common/MyUnknown.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\common\myunknown.h
+	"MyWindows.h"
+	<basetyps.h>
+	<unknwn.h>
+	"MyWindows.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\common\progressutils.h
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+	"../IProgress.h"
+
+1509446559 c:\sdio\external\sevenz\cpp\7zip\icoder.h
+	"IStream.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\iprogress.h
+	"../Common/MyTypes.h"
+	"IDecl.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\common\streamobjects.h
+	"../../Common/MyBuffer.h"
+	"../../Common/MyCom.h"
+	"../../Common/MyVector.h"
+	"../IStream.h"
+
+1505564615 c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zdecode.h
+	"../Common/CoderMixer2.h"
+	"7zIn.h"
+
+1484057853 c:\sdio\external\sevenz\cpp\7zip\archive\common\codermixer2.h
+	"../../../Common/MyCom.h"
+	"../../../Common/MyVector.h"
+	"../../ICoder.h"
+	"../../Common/CreateCoder.h"
+	"../../Common/StreamBinder.h"
+	"../../Common/VirtThread.h"
+
+1519058266 c:\sdio\external\sevenz\cpp\7zip\common\createcoder.h
+	"../../Common/MyCom.h"
+	"../../Common/MyString.h"
+	"../ICoder.h"
+	"MethodId.h"
+
+1530350381 c:\sdio\external\sevenz\cpp\common\mystring.h
+	<string.h>
+	<wctype.h>
+	<wchar.h>
+	"MyWindows.h"
+	"MyTypes.h"
+	"MyVector.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\common\methodid.h
+	"../../Common/MyTypes.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\common\streambinder.h
+	"../../Windows/Synchronization.h"
+	"../IStream.h"
+
+1391878006 c:\sdio\external\sevenz\cpp\windows\synchronization.h
+	"../../C/Threads.h"
+	"Defs.h"
+	"Handle.h"
+
+1391878006 c:\sdio\external\sevenz\cpp\windows\defs.h
+	"../Common/MyWindows.h"
+
+1391878006 c:\sdio\external\sevenz\cpp\windows\handle.h
+
+1391878006 c:\sdio\external\sevenz\cpp\7zip\common\virtthread.h
+	"../../Windows/Synchronization.h"
+	"../../Windows/Thread.h"
+
+1391878006 c:\sdio\external\sevenz\cpp\windows\thread.h
+	"../../C/Threads.h"
+	"Defs.h"
+
+1544522809 c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zin.h
+	"../../../Common/MyCom.h"
+	"../../../Windows/PropVariant.h"
+	"../../IPassword.h"
+	"../../IStream.h"
+	"../../Common/CreateCoder.h"
+	"../../Common/InBuffer.h"
+	"7zItem.h"
+
+1486740701 c:\sdio\external\sevenz\cpp\windows\propvariant.h
+	"../Common/MyTypes.h"
+	"../Common/MyWindows.h"
+	"../Common/MyString.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\ipassword.h
+	"../Common/MyTypes.h"
+	"../Common/MyUnknown.h"
+	"IDecl.h"
+
+1491125181 c:\sdio\external\sevenz\cpp\7zip\common\inbuffer.h
+	"../../Common/MyException.h"
+	"../IStream.h"
+
+1391878006 c:\sdio\external\sevenz\cpp\common\myexception.h
+	"MyWindows.h"
+
+1479737567 c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zitem.h
+	"../../../Common/MyBuffer.h"
+	"../../../Common/MyString.h"
+	"../../Common/MethodId.h"
+	"7zHeader.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zheader.h
+	"../../../Common/MyTypes.h"
+
+1506093428 source:c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zextract.cpp
+	"StdAfx.h"
+	"../../../../C/7zCrc.h"
+	"../../../Common/ComTry.h"
+	"../../Common/ProgressUtils.h"
+	"7zDecode.h"
+	"7zHandler.h"
+
+1483441603 c:\sdio\external\sevenz\cpp\common\comtry.h
+	"MyWindows.h"
+
+1519550173 c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zhandler.h
+	"../../ICoder.h"
+	"../IArchive.h"
+	"../../Common/CreateCoder.h"
+	"../Common/HandlerOut.h"
+	"7zCompressionMode.h"
+	"7zIn.h"
+
+1508925335 c:\sdio\external\sevenz\cpp\7zip\archive\iarchive.h
+	"../IProgress.h"
+	"../IStream.h"
+	"../PropID.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\propid.h
+	"../Common/MyTypes.h"
+
+1520061421 c:\sdio\external\sevenz\cpp\7zip\archive\common\handlerout.h
+	"../../../Windows/System.h"
+	"../../Common/MethodProps.h"
+
+1490698893 c:\sdio\external\sevenz\cpp\windows\system.h
+	"../Common/MyTypes.h"
+
+1499015644 c:\sdio\external\sevenz\cpp\7zip\common\methodprops.h
+	"../../Common/MyString.h"
+	"../../Common/Defs.h"
+	"../../Windows/Defs.h"
+	"../../Windows/PropVariant.h"
+	"../ICoder.h"
+
+1519015475 c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zcompressionmode.h
+	"../../Common/MethodId.h"
+	"../../Common/MethodProps.h"
+
+1500278430 source:c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zfolderinstream.cpp
+	"StdAfx.h"
+	"7zFolderInStream.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zfolderinstream.h
+	"../../../../C/7zCrc.h"
+	"../../../Common/MyCom.h"
+	"../../../Common/MyVector.h"
+	"../../ICoder.h"
+	"../IArchive.h"
+
+1543857662 source:c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zhandler.cpp
+	"StdAfx.h"
+	"../../../../C/CpuArch.h"
+	"../../../Common/ComTry.h"
+	"../../../Common/IntToString.h"
+	"../../../Windows/System.h"
+	"../Common/ItemNameUtils.h"
+	"7zHandler.h"
+	"7zProperties.h"
+	"../Common/ParseProperties.h"
+
+1486746842 c:\sdio\external\sevenz\cpp\common\inttostring.h
+	"MyTypes.h"
+
+1490003560 c:\sdio\external\sevenz\cpp\7zip\archive\common\itemnameutils.h
+	"../../../Common/MyString.h"
+
+1391878006 c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zproperties.h
+	"../../PropID.h"
+
+1391878006 c:\sdio\external\sevenz\cpp\7zip\archive\common\parseproperties.h
+
+1418765740 source:c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zheader.cpp
+	"StdAfx.h"
+	"7zHeader.h"
+
+1543858511 source:c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zin.cpp
+	"StdAfx.h"
+	<wchar.h>
+	<ctype.h>
+	"../../../../C/7zCrc.h"
+	"../../../../C/CpuArch.h"
+	"../../Common/StreamObjects.h"
+	"../../Common/StreamUtils.h"
+	"7zDecode.h"
+	"7zIn.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\common\streamutils.h
+	"../IStream.h"
+
+1443925518 source:c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zproperties.cpp
+	"StdAfx.h"
+	"7zProperties.h"
+	"7zHeader.h"
+	"7zHandler.h"
+
+1443925518 source:c:\sdio\external\sevenz\cpp\7zip\archive\7z\7zregister.cpp
+	"StdAfx.h"
+	"../../Common/RegisterArc.h"
+	"7zHandler.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\common\registerarc.h
+	"../Archive/IArchive.h"
+
+1528383447 source:c:\sdio\external\sevenz\cpp\7zip\archive\common\codermixer2.cpp
+	"StdAfx.h"
+	"CoderMixer2.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\archive\common\stdafx.h
+	"../../../Common/Common.h"
+
+1418765740 source:c:\sdio\external\sevenz\cpp\7zip\archive\common\dummyoutstream.cpp
+	"StdAfx.h"
+	"DummyOutStream.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\archive\common\dummyoutstream.h
+	"../../../Common/MyCom.h"
+	"../../IStream.h"
+
+1419703316 source:c:\sdio\external\sevenz\cpp\7zip\archive\common\instreamwithcrc.cpp
+	"StdAfx.h"
+	"InStreamWithCRC.h"
+
+1391878006 c:\sdio\external\sevenz\cpp\7zip\archive\common\instreamwithcrc.h
+	"../../../../C/7zCrc.h"
+	"../../../Common/MyCom.h"
+	"../../IStream.h"
+
+1490004136 source:c:\sdio\external\sevenz\cpp\7zip\archive\common\itemnameutils.cpp
+	"StdAfx.h"
+	"ItemNameUtils.h"
+
+1443925518 source:c:\sdio\external\sevenz\cpp\7zip\archive\common\multistream.cpp
+	"StdAfx.h"
+	"MultiStream.h"
+
+1420498362 c:\sdio\external\sevenz\cpp\7zip\archive\common\multistream.h
+	"../../../Common/MyCom.h"
+	"../../../Common/MyVector.h"
+	"../../IStream.h"
+
+1391878006 source:c:\sdio\external\sevenz\cpp\7zip\archive\common\outstreamwithcrc.cpp
+	"StdAfx.h"
+	"OutStreamWithCRC.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\archive\common\outstreamwithcrc.h
+	"../../../../C/7zCrc.h"
+	"../../../Common/MyCom.h"
+	"../../IStream.h"
+
+1391878006 source:c:\sdio\external\sevenz\cpp\7zip\archive\common\parseproperties.cpp
+	"StdAfx.h"
+
+1530531147 source:c:\sdio\external\sevenz\cpp\7zip\archive\lzmahandler.cpp
+	"StdAfx.h"
+	"../../../C/CpuArch.h"
+	"../../Common/ComTry.h"
+	"../../Common/IntToString.h"
+	"../../Windows/PropVariant.h"
+	"../Common/FilterCoder.h"
+	"../Common/ProgressUtils.h"
+	"../Common/RegisterArc.h"
+	"../Common/StreamUtils.h"
+	"../Compress/BcjCoder.h"
+	"../Compress/LzmaDecoder.h"
+	"Common/DummyOutStream.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\archive\stdafx.h
+	"../../Common/Common.h"
+
+1546191600 c:\sdio\external\sevenz\cpp\7zip\common\filtercoder.h
+	"../../../C/Alloc.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+	"../IPassword.h"
+
+1463158258 c:\sdio\external\sevenz\cpp\7zip\compress\bcjcoder.h
+	"../../../C/Bra.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+
+1518021439 c:\sdio\external\sevenz\cpp\7zip\compress\lzmadecoder.h
+	"../../../C/LzmaDec.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+
+1524471853 source:c:\sdio\external\sevenz\cpp\7zip\bundles\alone7z\resource.rc
+	"../../../../C/7zVersion.rc"
+
+1391878006 c:\sdio\external\sevenz\c\7zversion.rc
+	"7zVersion.h"
+
+1550754000 c:\sdio\external\sevenz\c\7zversion.h
+
+1391878006 source:c:\sdio\external\sevenz\cpp\7zip\bundles\alone7z\stdafx.cpp
+	"StdAfx.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\bundles\alone7z\stdafx.h
+	"../../../Common/Common.h"
+
+1519058450 source:c:\sdio\external\sevenz\cpp\7zip\common\createcoder.cpp
+	"StdAfx.h"
+	"../../Windows/Defs.h"
+	"../../Windows/PropVariant.h"
+	"CreateCoder.h"
+	"FilterCoder.h"
+	"RegisterCodec.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\common\stdafx.h
+	"../../Common/Common.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\common\registercodec.h
+	"../Common/MethodId.h"
+	"../ICoder.h"
+
+1509615112 source:c:\sdio\external\sevenz\cpp\7zip\common\cwrappers.cpp
+	"StdAfx.h"
+	"../../../C/Alloc.h"
+	"CWrappers.h"
+	"StreamUtils.h"
+
+1491125978 c:\sdio\external\sevenz\cpp\7zip\common\cwrappers.h
+	"../ICoder.h"
+	"../../Common/MyCom.h"
+
+1491125689 source:c:\sdio\external\sevenz\cpp\7zip\common\filepathautorename.cpp
+	"StdAfx.h"
+	"../../Windows/FileFind.h"
+	"FilePathAutoRename.h"
+
+1488212260 c:\sdio\external\sevenz\cpp\windows\filefind.h
+	"../Common/MyString.h"
+	"Defs.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\common\filepathautorename.h
+	"../../Common/MyString.h"
+
+1443925518 source:c:\sdio\external\sevenz\cpp\7zip\common\filestreams.cpp
+	"StdAfx.h"
+	<fcntl.h>
+	<unistd.h>
+	<errno.h>
+	"../../../C/Alloc.h"
+	"../../Common/Defs.h"
+	"FileStreams.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\common\filestreams.h
+	"../../Common/MyString.h"
+	"../../Windows/FileIO.h"
+	"../../Common/C_FileIO.h"
+	"../../Common/MyCom.h"
+	"../IStream.h"
+
+1514796387 c:\sdio\external\sevenz\cpp\windows\fileio.h
+	"../Common/MyWindows.h"
+	<winioctl.h>
+	"../Common/MyString.h"
+	"../Common/MyBuffer.h"
+	"Defs.h"
+
+1549794212 source:c:\sdio\external\sevenz\cpp\7zip\common\filtercoder.cpp
+	"StdAfx.h"
+	"../../Common/Defs.h"
+	"FilterCoder.h"
+	"StreamUtils.h"
+
+1516809590 source:c:\sdio\external\sevenz\cpp\7zip\common\inbuffer.cpp
+	"StdAfx.h"
+	"../../../C/Alloc.h"
+	"InBuffer.h"
+
+1491125269 source:c:\sdio\external\sevenz\cpp\7zip\common\inouttempbuffer.cpp
+	"StdAfx.h"
+	"../../../C/7zCrc.h"
+	"../../Common/Defs.h"
+	"InOutTempBuffer.h"
+	"StreamUtils.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\common\inouttempbuffer.h
+	"../../Common/MyCom.h"
+	"../../Windows/FileDir.h"
+	"../IStream.h"
+
+1503739100 c:\sdio\external\sevenz\cpp\windows\filedir.h
+	"../Common/MyString.h"
+	"FileIO.h"
+
+1463158258 source:c:\sdio\external\sevenz\cpp\7zip\common\limitedstreams.cpp
+	"StdAfx.h"
+	<string.h>
+	"LimitedStreams.h"
+
+1443925518 source:c:\sdio\external\sevenz\cpp\7zip\common\lockedstream.cpp
+	"StdAfx.h"
+
+1391878006 source:c:\sdio\external\sevenz\cpp\7zip\common\methodid.cpp
+	"StdAfx.h"
+
+1508925406 source:c:\sdio\external\sevenz\cpp\7zip\common\methodprops.cpp
+	"StdAfx.h"
+	"../../Common/StringToInt.h"
+	"MethodProps.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\common\stringtoint.h
+	"MyTypes.h"
+
+1418765740 source:c:\sdio\external\sevenz\cpp\7zip\common\offsetstream.cpp
+	"StdAfx.h"
+	"../../Common/Defs.h"
+	"OffsetStream.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\common\offsetstream.h
+	"../../Common/MyCom.h"
+	"../IStream.h"
+
+1420498362 source:c:\sdio\external\sevenz\cpp\7zip\common\outbuffer.cpp
+	"StdAfx.h"
+	"../../../C/Alloc.h"
+	"OutBuffer.h"
+
+1485248252 c:\sdio\external\sevenz\cpp\7zip\common\outbuffer.h
+	"../IStream.h"
+	"../../Common/MyCom.h"
+	"../../Common/MyException.h"
+
+1443925518 source:c:\sdio\external\sevenz\cpp\7zip\common\progressutils.cpp
+	"StdAfx.h"
+	"ProgressUtils.h"
+
+1443925518 source:c:\sdio\external\sevenz\cpp\7zip\common\propid.cpp
+	"StdAfx.h"
+	"../../Common/MyWindows.h"
+	"../PropID.h"
+
+1443925518 source:c:\sdio\external\sevenz\cpp\7zip\common\streambinder.cpp
+	"StdAfx.h"
+	"../../Common/MyCom.h"
+	"StreamBinder.h"
+
+1443925518 source:c:\sdio\external\sevenz\cpp\7zip\common\streamobjects.cpp
+	"StdAfx.h"
+	<stdlib.h>
+	"../../../C/Alloc.h"
+	"StreamObjects.h"
+
+1420498362 source:c:\sdio\external\sevenz\cpp\7zip\common\streamutils.cpp
+	"StdAfx.h"
+	"StreamUtils.h"
+
+1443925518 source:c:\sdio\external\sevenz\cpp\7zip\common\uniqblocks.cpp
+	"StdAfx.h"
+	<string.h>
+	"UniqBlocks.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\common\uniqblocks.h
+	"../../Common/MyTypes.h"
+	"../../Common/MyBuffer.h"
+	"../../Common/MyVector.h"
+
+1391878006 source:c:\sdio\external\sevenz\cpp\7zip\common\virtthread.cpp
+	"StdAfx.h"
+	"VirtThread.h"
+
+1483453169 source:c:\sdio\external\sevenz\cpp\7zip\compress\bcj2coder.cpp
+	"StdAfx.h"
+	"../../../C/Alloc.h"
+	"../Common/StreamUtils.h"
+	"Bcj2Coder.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\compress\stdafx.h
+	"../../Common/Common.h"
+
+1482939658 c:\sdio\external\sevenz\cpp\7zip\compress\bcj2coder.h
+	"../../../C/Bcj2.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+
+1463158258 source:c:\sdio\external\sevenz\cpp\7zip\compress\bcj2register.cpp
+	"StdAfx.h"
+	"../Common/RegisterCodec.h"
+	"Bcj2Coder.h"
+
+1463158258 source:c:\sdio\external\sevenz\cpp\7zip\compress\bcjcoder.cpp
+	"StdAfx.h"
+	"BcjCoder.h"
+
+1463158258 source:c:\sdio\external\sevenz\cpp\7zip\compress\bcjregister.cpp
+	"StdAfx.h"
+	"../Common/RegisterCodec.h"
+	"BcjCoder.h"
+
+1463158258 source:c:\sdio\external\sevenz\cpp\7zip\compress\branchmisc.cpp
+	"StdAfx.h"
+	"BranchMisc.h"
+
+1463158258 c:\sdio\external\sevenz\cpp\7zip\compress\branchmisc.h
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+
+1463158258 source:c:\sdio\external\sevenz\cpp\7zip\compress\branchregister.cpp
+	"StdAfx.h"
+	"../../../C/Bra.h"
+	"../Common/RegisterCodec.h"
+	"BranchMisc.h"
+
+1463158258 source:c:\sdio\external\sevenz\cpp\7zip\compress\byteswap.cpp
+	"StdAfx.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+	"../Common/RegisterCodec.h"
+
+1486878734 source:c:\sdio\external\sevenz\cpp\7zip\compress\copycoder.cpp
+	"StdAfx.h"
+	"../../../C/Alloc.h"
+	"CopyCoder.h"
+
+1486878726 c:\sdio\external\sevenz\cpp\7zip\compress\copycoder.h
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+
+1463158258 source:c:\sdio\external\sevenz\cpp\7zip\compress\copyregister.cpp
+	"StdAfx.h"
+	"../Common/RegisterCodec.h"
+	"CopyCoder.h"
+
+1463158258 source:c:\sdio\external\sevenz\cpp\7zip\compress\deltafilter.cpp
+	"StdAfx.h"
+	"../../../C/Delta.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+	"../Common/RegisterCodec.h"
+
+1518882831 source:c:\sdio\external\sevenz\cpp\7zip\compress\lzma2decoder.cpp
+	"StdAfx.h"
+	"../../../C/Alloc.h"
+	"../Common/StreamUtils.h"
+	"Lzma2Decoder.h"
+
+1518107617 c:\sdio\external\sevenz\cpp\7zip\compress\lzma2decoder.h
+	"../../../C/Lzma2DecMt.h"
+	"../Common/CWrappers.h"
+
+1518875378 c:\sdio\external\sevenz\c\lzma2decmt.h
+	"7zTypes.h"
+
+1463158258 source:c:\sdio\external\sevenz\cpp\7zip\compress\lzma2register.cpp
+	"StdAfx.h"
+	"../Common/RegisterCodec.h"
+	"Lzma2Decoder.h"
+	"Lzma2Encoder.h"
+
+1496914148 c:\sdio\external\sevenz\cpp\7zip\compress\lzma2encoder.h
+	"../../../C/Lzma2Enc.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+
+1518882468 source:c:\sdio\external\sevenz\cpp\7zip\compress\lzmadecoder.cpp
+	"StdAfx.h"
+	"../../../C/Alloc.h"
+	"../Common/StreamUtils.h"
+	"LzmaDecoder.h"
+
+1463158258 source:c:\sdio\external\sevenz\cpp\7zip\compress\lzmaregister.cpp
+	"StdAfx.h"
+	"../Common/RegisterCodec.h"
+	"LzmaDecoder.h"
+	"LzmaEncoder.h"
+
+1496860609 c:\sdio\external\sevenz\cpp\7zip\compress\lzmaencoder.h
+	"../../../C/LzmaEnc.h"
+	"../../Common/MyCom.h"
+	"../ICoder.h"
+
+1463158258 source:c:\sdio\external\sevenz\cpp\7zip\compress\ppmdregister.cpp
+	"StdAfx.h"
+	"../Common/RegisterCodec.h"
+	"PpmdDecoder.h"
+	"PpmdEncoder.h"
+
+1488989904 c:\sdio\external\sevenz\cpp\7zip\compress\ppmddecoder.h
+	"../../../C/Ppmd7.h"
+	"../../Common/MyCom.h"
+	"../Common/CWrappers.h"
+	"../ICoder.h"
+
+1532351635 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\archivecommandline.cpp
+	"StdAfx.h"
+	<io.h>
+	<unistd.h>
+	<stdio.h>
+	"../../../../C/Alloc.h"
+	"../../../Common/ListFileUtils.h"
+	"../../../Common/StringConvert.h"
+	"../../../Common/StringToInt.h"
+	"../../../Windows/ErrorMsg.h"
+	"../../../Windows/FileDir.h"
+	"../../../Windows/FileName.h"
+	"../../../Windows/FileMapping.h"
+	"../../../Windows/MemoryLock.h"
+	"../../../Windows/Synchronization.h"
+	"ArchiveCommandLine.h"
+	"EnumDirItems.h"
+	"Update.h"
+	"UpdateAction.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\ui\common\stdafx.h
+	"../../../Common/Common.h"
+
+1533387867 c:\sdio\external\sevenz\cpp\common\listfileutils.h
+	"MyString.h"
+	"MyTypes.h"
+
+1486574596 c:\sdio\external\sevenz\cpp\common\stringconvert.h
+	"MyString.h"
+	"MyWindows.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\windows\errormsg.h
+	"../Common/MyString.h"
+
+1490210282 c:\sdio\external\sevenz\cpp\windows\filename.h
+	"../Common/MyString.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\windows\filemapping.h
+	"../Common/MyTypes.h"
+	"Handle.h"
+
+1525085542 c:\sdio\external\sevenz\cpp\windows\memorylock.h
+	"../Common/MyWindows.h"
+
+1524404864 c:\sdio\external\sevenz\cpp\7zip\ui\common\archivecommandline.h
+	"../../../Common/CommandLineParser.h"
+	"../../../Common/Wildcard.h"
+	"EnumDirItems.h"
+	"Extract.h"
+	"HashCalc.h"
+	"Update.h"
+
+1488718583 c:\sdio\external\sevenz\cpp\common\commandlineparser.h
+	"MyString.h"
+
+1487229556 c:\sdio\external\sevenz\cpp\common\wildcard.h
+	"MyString.h"
+
+1533387762 c:\sdio\external\sevenz\cpp\7zip\ui\common\enumdiritems.h
+	"../../../Common/Wildcard.h"
+	"../../../Windows/FileFind.h"
+	"DirItem.h"
+
+1494508700 c:\sdio\external\sevenz\cpp\7zip\ui\common\diritem.h
+	"../../../Common/MyString.h"
+	"../../../Windows/FileFind.h"
+	"../../Common/UniqBlocks.h"
+	"../../Archive/IArchive.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\ui\common\extract.h
+	"../../../Windows/FileFind.h"
+	"../../Archive/IArchive.h"
+	"ArchiveExtractCallback.h"
+	"ArchiveOpenCallback.h"
+	"ExtractMode.h"
+	"Property.h"
+	"../Common/LoadCodecs.h"
+
+1515919227 c:\sdio\external\sevenz\cpp\7zip\ui\common\archiveextractcallback.h
+	"../../../Common/MyCom.h"
+	"../../../Common/Wildcard.h"
+	"../../IPassword.h"
+	"../../Common/FileStreams.h"
+	"../../Common/ProgressUtils.h"
+	"../../Archive/IArchive.h"
+	"ExtractMode.h"
+	"IFileExtractCallback.h"
+	"OpenArchive.h"
+	"HashCalc.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\ui\common\extractmode.h
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\ui\common\ifileextractcallback.h
+	"../../../Common/MyString.h"
+	"../../IDecl.h"
+	"LoadCodecs.h"
+	"OpenArchive.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\ui\common\loadcodecs.h
+	"../../../Common/MyBuffer.h"
+	"../../../Common/MyCom.h"
+	"../../../Common/MyString.h"
+	"../../../Common/ComTry.h"
+	"../../../Windows/DLL.h"
+	"../../ICoder.h"
+	"../../Archive/IArchive.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\windows\dll.h
+	"../Common/MyString.h"
+
+1516043761 c:\sdio\external\sevenz\cpp\7zip\ui\common\openarchive.h
+	"../../../Windows/PropVariant.h"
+	"ArchiveOpenCallback.h"
+	"LoadCodecs.h"
+	"Property.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\ui\common\archiveopencallback.h
+	"../../../Common/MyCom.h"
+	"../../../Windows/FileFind.h"
+	"../../IPassword.h"
+	"../../Archive/IArchive.h"
+
+1296507924 c:\sdio\external\sevenz\cpp\7zip\ui\common\property.h
+	"../../../Common/MyString.h"
+
+1544787204 c:\sdio\external\sevenz\cpp\7zip\ui\common\hashcalc.h
+	"../../../Common/Wildcard.h"
+	"../../Common/CreateCoder.h"
+	"../../Common/MethodProps.h"
+	"DirItem.h"
+
+1513331413 c:\sdio\external\sevenz\cpp\7zip\ui\common\update.h
+	"../../../Common/Wildcard.h"
+	"ArchiveOpenCallback.h"
+	"LoadCodecs.h"
+	"OpenArchive.h"
+	"Property.h"
+	"UpdateAction.h"
+	"UpdateCallback.h"
+	"DirItem.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\ui\common\updateaction.h
+
+1513331448 c:\sdio\external\sevenz\cpp\7zip\ui\common\updatecallback.h
+	"../../../Common/MyCom.h"
+	"../../Common/FileStreams.h"
+	"../../IPassword.h"
+	"../../ICoder.h"
+	"../Common/UpdatePair.h"
+	"../Common/UpdateProduce.h"
+	"OpenArchive.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\ui\common\updatepair.h
+	"DirItem.h"
+	"UpdateAction.h"
+	"../../Archive/IArchive.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\ui\common\updateproduce.h
+	"UpdatePair.h"
+
+1532855675 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\archiveextractcallback.cpp
+	"StdAfx.h"
+	"../../../../C/Alloc.h"
+	"../../../../C/CpuArch.h"
+	"../../../Common/ComTry.h"
+	"../../../Common/IntToString.h"
+	"../../../Common/StringConvert.h"
+	"../../../Common/Wildcard.h"
+	"../../../Windows/ErrorMsg.h"
+	"../../../Windows/FileDir.h"
+	"../../../Windows/FileFind.h"
+	"../../../Windows/FileName.h"
+	"../../../Windows/PropVariant.h"
+	"../../../Windows/PropVariantConv.h"
+	"../../../Windows/SecurityUtils.h"
+	"../../Common/FilePathAutoRename.h"
+	"../Common/ExtractingFilePath.h"
+	"../Common/PropIDUtils.h"
+	"ArchiveExtractCallback.h"
+
+1488213509 c:\sdio\external\sevenz\cpp\windows\propvariantconv.h
+	"../Common/MyTypes.h"
+
+1420498362 c:\sdio\external\sevenz\cpp\windows\securityutils.h
+	<NTSecAPI.h>
+	"Defs.h"
+
+1503216326 c:\sdio\external\sevenz\cpp\7zip\ui\common\extractingfilepath.h
+	"../../../Common/MyString.h"
+
+1488023374 c:\sdio\external\sevenz\cpp\7zip\ui\common\propidutils.h
+	"../../../Common/MyString.h"
+
+1549788289 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\archiveopencallback.cpp
+	"StdAfx.h"
+	"../../../Common/ComTry.h"
+	"../../../Windows/FileName.h"
+	"../../../Windows/PropVariant.h"
+	"../../Common/FileStreams.h"
+	"ArchiveOpenCallback.h"
+
+1443925518 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\defaultname.cpp
+	"StdAfx.h"
+	"DefaultName.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\ui\common\defaultname.h
+	"../../../Common/MyString.h"
+
+1532345616 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\enumdiritems.cpp
+	"StdAfx.h"
+	<wchar.h>
+	"../../../Common/Wildcard.h"
+	"../../../Windows/FileDir.h"
+	"../../../Windows/FileIO.h"
+	"../../../Windows/FileName.h"
+	"../../../Windows/SecurityUtils.h"
+	"EnumDirItems.h"
+	"SortUtils.h"
+
+1389942335 c:\sdio\external\sevenz\cpp\7zip\ui\common\sortutils.h
+	"../../../Common/MyString.h"
+
+1514969927 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\extract.cpp
+	"StdAfx.h"
+	"../../../../C/Sort.h"
+	"../../../Common/StringConvert.h"
+	"../../../Windows/FileDir.h"
+	"../../../Windows/PropVariant.h"
+	"../../../Windows/PropVariantConv.h"
+	"../Common/ExtractingFilePath.h"
+	"Extract.h"
+	"SetProperties.h"
+
+1418765740 c:\sdio\external\sevenz\c\sort.h
+	"7zTypes.h"
+
+1391878006 c:\sdio\external\sevenz\cpp\7zip\ui\common\setproperties.h
+	"Property.h"
+
+1503249540 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\extractingfilepath.cpp
+	"StdAfx.h"
+	"../../../Common/Wildcard.h"
+	"../../../Windows/FileName.h"
+	"ExtractingFilePath.h"
+
+1544785022 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\hashcalc.cpp
+	"StdAfx.h"
+	"../../../../C/Alloc.h"
+	"../../../Common/StringToInt.h"
+	"../../Common/FileStreams.h"
+	"../../Common/StreamUtils.h"
+	"EnumDirItems.h"
+	"HashCalc.h"
+
+1490635605 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\loadcodecs.cpp
+	"StdAfx.h"
+	"../../../../C/7zVersion.h"
+	"../../../Common/MyCom.h"
+	"../../../Common/StringToInt.h"
+	"../../../Common/StringConvert.h"
+	"../../../Windows/PropVariant.h"
+	"LoadCodecs.h"
+	"../../../Common/StringToInt.h"
+	"../../ICoder.h"
+	"../../Common/RegisterArc.h"
+	"../../../Windows/ResourceString.h"
+	"../../../Windows/FileFind.h"
+	"../../../Windows/DLL.h"
+	"../../../Windows/FileName.h"
+	"../../../Windows/Registry.h"
+
+1538667436 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\openarchive.cpp
+	"StdAfx.h"
+	<stdio.h>
+	"../../../../C/CpuArch.h"
+	"../../../Common/ComTry.h"
+	"../../../Common/IntToString.h"
+	"../../../Common/StringConvert.h"
+	"../../../Common/StringToInt.h"
+	"../../../Common/Wildcard.h"
+	"../../../Windows/FileDir.h"
+	"../../Common/FileStreams.h"
+	"../../Common/LimitedStreams.h"
+	"../../Common/ProgressUtils.h"
+	"../../Common/StreamUtils.h"
+	"../../Compress/CopyCoder.h"
+	"DefaultName.h"
+	"OpenArchive.h"
+	"SetProperties.h"
+
+1524577192 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\propidutils.cpp
+	"StdAfx.h"
+	"../../../../C/CpuArch.h"
+	"../../../Common/IntToString.h"
+	"../../../Common/StringConvert.h"
+	"../../../Windows/FileIO.h"
+	"../../../Windows/PropVariantConv.h"
+	"../../PropID.h"
+	"PropIDUtils.h"
+
+1418765740 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\setproperties.cpp
+	"StdAfx.h"
+	"../../../Common/MyCom.h"
+	"../../../Common/MyString.h"
+	"../../../Common/StringToInt.h"
+	"../../../Windows/PropVariant.h"
+	"../../Archive/IArchive.h"
+	"SetProperties.h"
+
+1447139313 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\sortutils.cpp
+	"StdAfx.h"
+	"../../../Common/Wildcard.h"
+	"SortUtils.h"
+
+1453253746 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\tempfiles.cpp
+	"StdAfx.h"
+	"../../../Windows/FileDir.h"
+	"TempFiles.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\ui\common\tempfiles.h
+	"../../../Common/MyString.h"
+
+1453253746 source:c:\sdio\external\sevenz\cpp\7zip\ui\common\workdir.cpp
+	"StdAfx.h"
+	"../../../Common/StringConvert.h"
+	"../../../Common/Wildcard.h"
+	"../../../Windows/FileName.h"
+	"WorkDir.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\ui\common\workdir.h
+	"../../../Windows/FileDir.h"
+	"../../Common/FileStreams.h"
+	"ZipRegistry.h"
+
+1495111179 c:\sdio\external\sevenz\cpp\7zip\ui\common\zipregistry.h
+	"../../../Common/MyTypes.h"
+	"../../../Common/MyString.h"
+	"ExtractMode.h"
+
+1471028314 source:c:\sdio\external\sevenz\cpp\7zip\ui\console\consoleclose.cpp
+	"StdAfx.h"
+	"ConsoleClose.h"
+	"../../../Common/MyWindows.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\ui\console\stdafx.h
+	"../../../Common/Common.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\ui\console\consoleclose.h
+
+1520851952 source:c:\sdio\external\sevenz\cpp\7zip\ui\console\extractcallbackconsole.cpp
+	"StdAfx.h"
+	"../../../Common/IntToString.h"
+	"../../../Common/Wildcard.h"
+	"../../../Windows/FileDir.h"
+	"../../../Windows/FileFind.h"
+	"../../../Windows/TimeUtils.h"
+	"../../../Windows/ErrorMsg.h"
+	"../../../Windows/PropVariantConv.h"
+	"../../../Windows/Synchronization.h"
+	"../../Common/FilePathAutoRename.h"
+	"../Common/ExtractingFilePath.h"
+	"ConsoleClose.h"
+	"ExtractCallbackConsole.h"
+	"UserInputUtils.h"
+
+1487961711 c:\sdio\external\sevenz\cpp\windows\timeutils.h
+	"../Common/MyTypes.h"
+	"../Common/MyWindows.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\ui\console\extractcallbackconsole.h
+	"../../../Common/StdOutStream.h"
+	"../../IPassword.h"
+	"../../Archive/IArchive.h"
+	"../Common/ArchiveExtractCallback.h"
+	"PercentPrinter.h"
+	"OpenCallbackConsole.h"
+
+1520954901 c:\sdio\external\sevenz\cpp\common\stdoutstream.h
+	<stdio.h>
+	"MyString.h"
+	"MyTypes.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\ui\console\percentprinter.h
+	"../../../Common/StdOutStream.h"
+
+1487070987 c:\sdio\external\sevenz\cpp\7zip\ui\console\opencallbackconsole.h
+	"../../../Common/StdOutStream.h"
+	"../Common/ArchiveOpenCallback.h"
+	"PercentPrinter.h"
+
+1487375028 c:\sdio\external\sevenz\cpp\7zip\ui\console\userinpututils.h
+	"../../../Common/StdOutStream.h"
+
+1544787624 source:c:\sdio\external\sevenz\cpp\7zip\ui\console\hashcon.cpp
+	"StdAfx.h"
+	"../../../Common/IntToString.h"
+	"ConsoleClose.h"
+	"HashCon.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\ui\console\hashcon.h
+	"../Common/HashCalc.h"
+	"UpdateCallbackConsole.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\ui\console\updatecallbackconsole.h
+	"../../../Common/StdOutStream.h"
+	"../Common/Update.h"
+	"PercentPrinter.h"
+
+1547029459 source:c:\sdio\external\sevenz\cpp\7zip\ui\console\main.cpp
+	"StdAfx.h"
+	"../../../Common/MyWindows.h"
+	<Psapi.h>
+	"../../../../C/CpuArch.h"
+	"../../../Common/MyInitGuid.h"
+	"../../../Common/CommandLineParser.h"
+	"../../../Common/IntToString.h"
+	"../../../Common/MyException.h"
+	"../../../Common/StringConvert.h"
+	"../../../Common/StringToInt.h"
+	"../../../Common/UTFConvert.h"
+	"../../../Windows/ErrorMsg.h"
+	"../../../Windows/TimeUtils.h"
+	"../Common/ArchiveCommandLine.h"
+	"../Common/Bench.h"
+	"../Common/ExitCode.h"
+	"../Common/Extract.h"
+	"../Common/LoadCodecs.h"
+	"../../Common/RegisterCodec.h"
+	"BenchCon.h"
+	"ConsoleClose.h"
+	"ExtractCallbackConsole.h"
+	"List.h"
+	"OpenCallbackConsole.h"
+	"UpdateCallbackConsole.h"
+	"HashCon.h"
+	"../../../../C/7zVersion.h"
+	"../../MyVersion.h"
+
+1420498362 c:\sdio\external\sevenz\cpp\common\myinitguid.h
+	<basetyps.h>
+	<initguid.h>
+	"MyGuidDef.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\common\utfconvert.h
+	"MyString.h"
+
+1525595597 c:\sdio\external\sevenz\cpp\7zip\ui\common\bench.h
+	"../../../Windows/System.h"
+	"../../Common/CreateCoder.h"
+	"../../UI/Common/Property.h"
+
+1391878006 c:\sdio\external\sevenz\cpp\7zip\ui\common\exitcode.h
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\ui\console\benchcon.h
+	<stdio.h>
+	"../../Common/CreateCoder.h"
+	"../../UI/Common/Property.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\7zip\ui\console\list.h
+	"../../../Common/Wildcard.h"
+	"../Common/LoadCodecs.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\7zip\myversion.h
+	"../../C/7zVersion.h"
+
+1607877203 source:c:\sdio\external\sevenz\cpp\7zip\ui\console\mainar.cpp
+	"StdAfx.h"
+	"../../../../C/DllSecur.h"
+	"../../../Common/MyException.h"
+	"../../../Common/StdOutStream.h"
+	"../../../Windows/ErrorMsg.h"
+	"../../../Windows/NtCheck.h"
+	"../Common/ArchiveCommandLine.h"
+	"../Common/ExitCode.h"
+	"ConsoleClose.h"
+
+1550570400 c:\sdio\external\sevenz\c\dllsecur.h
+	"7zTypes.h"
+
+1443925518 c:\sdio\external\sevenz\cpp\windows\ntcheck.h
+	"../Common/MyWindows.h"
+
+1487374934 source:c:\sdio\external\sevenz\cpp\7zip\ui\console\opencallbackconsole.cpp
+	"StdAfx.h"
+	"OpenCallbackConsole.h"
+	"ConsoleClose.h"
+	"UserInputUtils.h"
+
+1520851964 source:c:\sdio\external\sevenz\cpp\7zip\ui\console\percentprinter.cpp
+	"StdAfx.h"
+	"../../../Common/IntToString.h"
+	"PercentPrinter.h"
+
+1520961469 source:c:\sdio\external\sevenz\cpp\7zip\ui\console\updatecallbackconsole.cpp
+	"StdAfx.h"
+	"../../../Common/IntToString.h"
+	"../../../Windows/ErrorMsg.h"
+	"../../../Windows/Synchronization.h"
+	"ConsoleClose.h"
+	"UserInputUtils.h"
+	"UpdateCallbackConsole.h"
+
+1490704337 source:c:\sdio\external\sevenz\cpp\7zip\ui\console\userinpututils.cpp
+	"StdAfx.h"
+	"../../../Common/StdInStream.h"
+	"../../../Common/StringConvert.h"
+	"UserInputUtils.h"
+
+1490704662 c:\sdio\external\sevenz\cpp\common\stdinstream.h
+	<stdio.h>
+	"MyString.h"
+	"MyTypes.h"
+
+1488718667 source:c:\sdio\external\sevenz\cpp\common\commandlineparser.cpp
+	"StdAfx.h"
+	"CommandLineParser.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\common\stdafx.h
+	"Common.h"
+
+1443925518 source:c:\sdio\external\sevenz\cpp\common\crc.cpp
+	"StdAfx.h"
+	"../../C/7zCrc.h"
+
+1490704221 source:c:\sdio\external\sevenz\cpp\common\inttostring.cpp
+	"StdAfx.h"
+	"../../C/CpuArch.h"
+	"IntToString.h"
+
+1550127662 source:c:\sdio\external\sevenz\cpp\common\listfileutils.cpp
+	"StdAfx.h"
+	"../../C/CpuArch.h"
+	"../Windows/FileIO.h"
+	"ListFileUtils.h"
+	"MyBuffer.h"
+	"StringConvert.h"
+	"UTFConvert.h"
+
+1490704915 source:c:\sdio\external\sevenz\cpp\common\mystring.cpp
+	"StdAfx.h"
+	<wchar.h>
+	<ctype.h>
+	"IntToString.h"
+	"StringConvert.h"
+	"MyString.h"
+
+1418765740 source:c:\sdio\external\sevenz\cpp\common\myvector.cpp
+	"StdAfx.h"
+
+1480067036 source:c:\sdio\external\sevenz\cpp\common\newhandler.cpp
+	"StdAfx.h"
+	<stdlib.h>
+	"NewHandler.h"
+	<stdio.h>
+
+1490704344 source:c:\sdio\external\sevenz\cpp\common\stdinstream.cpp
+	"StdAfx.h"
+	<tchar.h>
+	"StdInStream.h"
+	"StringConvert.h"
+	"UTFConvert.h"
+
+1520955064 source:c:\sdio\external\sevenz\cpp\common\stdoutstream.cpp
+	"StdAfx.h"
+	<tchar.h>
+	"IntToString.h"
+	"StdOutStream.h"
+	"StringConvert.h"
+	"UTFConvert.h"
+
+1490704915 source:c:\sdio\external\sevenz\cpp\common\stringconvert.cpp
+	"StdAfx.h"
+	"StringConvert.h"
+	<stdlib.h>
+
+1443925518 source:c:\sdio\external\sevenz\cpp\common\stringtoint.cpp
+	"StdAfx.h"
+	"StringToInt.h"
+
+1443925518 source:c:\sdio\external\sevenz\cpp\common\utfconvert.cpp
+	"StdAfx.h"
+	"MyTypes.h"
+	"UTFConvert.h"
+
+1488208701 source:c:\sdio\external\sevenz\cpp\common\wildcard.cpp
+	"StdAfx.h"
+	"Wildcard.h"
+
+1486538219 source:c:\sdio\external\sevenz\cpp\windows\dll.cpp
+	"StdAfx.h"
+	"DLL.h"
+
+1418765740 c:\sdio\external\sevenz\cpp\windows\stdafx.h
+	"../Common/Common.h"
+
+1488212891 source:c:\sdio\external\sevenz\cpp\windows\errormsg.cpp
+	"StdAfx.h"
+	"../Common/StringConvert.h"
+	"ErrorMsg.h"
+
+1516044280 source:c:\sdio\external\sevenz\cpp\windows\filedir.cpp
+	"StdAfx.h"
+	"../Common/StringConvert.h"
+	"FileDir.h"
+	"FileFind.h"
+	"FileName.h"
+
+1488212357 source:c:\sdio\external\sevenz\cpp\windows\filefind.cpp
+	"StdAfx.h"
+	"../Common/StringConvert.h"
+	"FileFind.h"
+	"FileIO.h"
+	"FileName.h"
+
+1443925518 source:c:\sdio\external\sevenz\cpp\windows\fileio.cpp
+	"StdAfx.h"
+	"../../C/Alloc.h"
+	"FileIO.h"
+	"FileName.h"
+
+1514794959 source:c:\sdio\external\sevenz\cpp\windows\filelink.cpp
+	"StdAfx.h"
+	"../../C/CpuArch.h"
+	"../../C/Alloc.h"
+	"FileDir.h"
+	"FileFind.h"
+	"FileIO.h"
+	"FileName.h"
+
+1493373147 source:c:\sdio\external\sevenz\cpp\windows\filename.cpp
+	"StdAfx.h"
+	"FileName.h"
+
+1550507829 source:c:\sdio\external\sevenz\cpp\windows\memorylock.cpp
+	"StdAfx.h"
+	"../../C/CpuArch.h"
+	"MemoryLock.h"
+
+1486740701 source:c:\sdio\external\sevenz\cpp\windows\propvariant.cpp
+	"StdAfx.h"
+	"../Common/Defs.h"
+	"PropVariant.h"
+
+1491465233 source:c:\sdio\external\sevenz\cpp\windows\propvariantconv.cpp
+	"StdAfx.h"
+	"../Common/IntToString.h"
+	"Defs.h"
+	"PropVariantConv.h"
+
+1453253746 source:c:\sdio\external\sevenz\cpp\windows\securityutils.cpp
+	"StdAfx.h"
+	"../Common/MyString.h"
+	"SecurityUtils.h"
+
+1391878006 source:c:\sdio\external\sevenz\cpp\windows\synchronization.cpp
+	"StdAfx.h"
+	"Synchronization.h"
+
+1490699077 source:c:\sdio\external\sevenz\cpp\windows\system.cpp
+	"StdAfx.h"
+	"../Common/MyWindows.h"
+	"../Common/Defs.h"
+	"System.h"
+
+1487960109 source:c:\sdio\external\sevenz\cpp\windows\timeutils.cpp
+	"StdAfx.h"
+	"Defs.h"
+	"TimeUtils.h"
+
