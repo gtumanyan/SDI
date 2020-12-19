@@ -127,7 +127,7 @@ void Log_t::start(wchar_t *logdir)
         logfile=_wfopen(filename.Get(),L"wb");
     }
     if((log_verbose&LOG_VERBOSE_BATCH)==0)
-        Log.print_file("{start logging\n%s\n\n",SVN_REV_STR);
+        Log.print_file("{start logging\n%s\n\n", VERSION_REV_FULL);
 }
 
 void Log_t::save()

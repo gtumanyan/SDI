@@ -2,6 +2,3 @@
 	path = external/libtorrent
 	url = https://github.com/arvidn/libtorrent
 	branch = RC_1_0
-[submodule "external/boost"]
-	path = external/boost
-	url = https://github.com/boostorg/boost
