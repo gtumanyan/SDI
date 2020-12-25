@@ -13,24 +13,24 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SVNREV_H
-#define SVNREV_H
-#define SVN_REV $WCREV$
-#define SVN_REV_STR "$WCREV$"
+#ifndef GITREV_H
+#define GITREV_H
+#define GIT_REV $WCREV$
+#define GIT_REV_STR "$WCREV$"
 
 /* Date of the last commit */
-#define SVN_REV_D "$WCDATE=%d$"
-#define SVN_REV_M "$WCDATE=%m$"
-#define SVN_REV_Y $WCDATE=%Y$
+#define GIT_REV_D "$WCDATE=%d$"
+#define GIT_REV_M "$WCDATE=%m$"
+#define GIT_REV_Y $WCDATE=%Y$
 
 #if $WCMODS?1:0$
-#define SVN_BUILD_NOTE "TEST BUILD - NOT FOR DISTRIBUTION"
+#define GIT_BUILD_NOTE "TEST BUILD - NOT FOR DISTRIBUTION"
 #else
-#define SVN_BUILD_NOTE ""
+#define GIT_BUILD_NOTE ""
 #endif
 
-#define SVN_BUILD_REV "Revision: R$WCREV$"
-#define SVN_BUILD_DATE "Build Date: $WCNOW=%d$ $WCNOW=%b$ $WCNOW=%Y$"
+#define GIT_BUILD_REV "Revision: R$WCREV$"
+#define GIT_BUILD_DATE "Build Date: $WCNOW=%d$ $WCNOW=%b$ $WCNOW=%Y$"
 #define COPYRIGHT_DATE "(C) Copyright $WCNOW=%Y$"
 
 #endif

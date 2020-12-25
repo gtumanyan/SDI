@@ -42,6 +42,7 @@ Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
 #include "libtorrent/bencode.hpp"
 #include "libtorrent/alert_types.hpp"
 #include "libtorrent/session.hpp"
+#include "libtorrent/session_settings.hpp"
 
 #ifdef _MSC_VER
 #pragma warning(pop)
@@ -202,10 +203,10 @@ WNDPROC UpdateDialog_t::wpOrigButtonProc;
 int UpdateDialog_t::bMouseInWindow=0;
 
 // Updater (static)
-const std::wstring Updater_t::torrent_url=L"http://driveroff.net/Drivers.torrent";
+const std::wstring Updater_t::torrent_url=L"http://www.snappy-driver-installer.org/downloads/SDIO_Update.torrent";
 const std::wstring Updater_t::torrent2_url=L"http://www.snappy-driver-installer.org/downloads/Drivers.torrent";
 const std::wstring Updater_t::torrent_save_path=L"update";
-const std::wstring Updater_t::torrent2_save_path=L"update\\SDI_RUS";
+const std::wstring Updater_t::torrent2_save_path=L"update\\SDIO_Update";
 int Updater_t::activetorrent=1;
 int Updater_t::torrentport=50171;
 int Updater_t::downlimit=0;
@@ -879,8 +880,8 @@ int UpdateDialog_t::populate(int update,bool clearlist)
     // Add driverpacks to the list
     for(int i=0;i<Updater->numfiles;i++)
     {
-        const char *filename=nullptr;
-        const char *filenamefull=nullptr;
+        char *filename=nullptr;
+        char *filenamefull=nullptr;
         file_entry fe=ti->file_at(i);
         filenamefull=strchr(fe.path.c_str(),'\\')+1;
         filename=strchr(filenamefull,'\\');

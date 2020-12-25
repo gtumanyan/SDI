@@ -39,6 +39,7 @@ Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 #include <process.h>
 #include <signal.h>
+#include <iostream>
 
 // Depend on Win32API
 #include "enum.h"   // non-portable
@@ -152,7 +153,7 @@ int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hinst,LPSTR pStr,int nCmd)
     #endif // _WIN64
 
     std::cout << "\nSnappy Driver Installer Origin " << VER_VERSION_STR2 << " (" << bit << "bit)\n";
-    std::cout << SVN_BUILD_NOTE << "\n\n";
+    std::cout << GIT_BUILD_NOTE << "\n\n";
 
     // Determine number of CPU cores ("Logical Processors")
     SYSTEM_INFO siSysInfo;

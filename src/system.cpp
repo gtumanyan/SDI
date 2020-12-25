@@ -564,7 +564,7 @@ std::string SystemImp::AppPathS()
 
 int SystemImp::FindLatestExeVersion(int bit)
 {
-    int ver=SVN_REV;
+    int ver=VERSION_REV;
     std::wstring spec;
     if(bit==32)spec=AppPathW()+L"\\SDIO_R*.exe";
     else if(bit==64)spec=AppPathW()+L"\\SDIO_x64_R*.exe";

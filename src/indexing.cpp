@@ -616,7 +616,7 @@ void Collection::populate()
 //{thread
     drplist_t queuedriverpack1;
     queuedriverpack_p=&queuedriverpack1;
-    int num_thr=num_cores;
+    const int num_thr=num_cores;
     int num_thr_1=num_cores;
     #ifndef _WIN64
     if(drp_count&&num_thr>1)num_thr=1;

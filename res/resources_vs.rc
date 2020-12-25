@@ -1,104 +1,354 @@
-/*
-This file is part of Snappy Driver Installer.
+// Microsoft Visual C++ generated resource script.
+//
+#include "resources.h"
+#include "Version.h"
 
-Snappy Driver Installer is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-Snappy Driver Installer is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
 #define _WIN32_IE 0x0501
 
 #include <windows.h>
 #include <commctrl.h>
 #include <winuser.h>
-#include "resources.h"
-#include "..\source\version.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
 
-IDI_ICON1       ICON        "icon.ico"
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Neutral resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+#pragma code_page(1252)
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+IDI_ICON1       ICON        "sdi.ico"
 IDR_UP          RESFILE     "up.webp"
 IDR_DOWN        RESFILE     "down.webp"
 IDR_UP_H        RESFILE     "up.webp"
 IDR_DOWN_H      RESFILE     "down.webp"
-IDR_LOGO        RESFILE     "logo.webp"
+IDR_LOGO        RESFILE     "logoorigin.webp"
 IDR_LICENSE     RESFILE     "gpl-3.0.txt"
-IDR_THEME       RESFILE     "..\\tools\\SDI\\themes\\metallic.txt"
-IDR_LANG        RESFILE     "..\\tools\\SDI\\langs\\english.txt"
+IDR_THEME       RESFILE     "..\\tools\\themes\\metallic.txt"
+IDR_LANG        RESFILE     "..\\tools\\langs\\english.txt"
 IDR_INSTALL64   RESFILE     "install64.exe"
 IDR_CLI_HELP    RESFILE     "CLI.txt"
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
 
-#define SIZEY 270
+#define SIZEY 300
 #define LISTY SIZEY-53
 #define POSY1 SIZEY-42
 #define POSY2 SIZEY-22
+#define POSY3 SIZEY-50
+#define BTW 18
 
-IDD_DIALOG1 DIALOGEX DISCARDABLE 0, 0, 340, 349
+IDD_DIALOG1 DIALOGEX DISCARDABLE 0, 0, 335, 295
+FONT 8, "Courier New"
 STYLE DS_MODALFRAME|WS_POPUP|WS_CAPTION|WS_SYSMENU|DS_CENTER
-CAPTION "Snappy Driver Installer License"
+CAPTION "Snappy Driver Installer Origin License"
 {
     LTEXT           "Please read the following License Agreement carefully before using this program.",0,10,10,300,20
-    DEFPUSHBUTTON   "&Decline", IDCANCEL, 10, 318, 70, 20
-    PUSHBUTTON      "&Accept",  IDOK,     87, 318, 70, 20
-    EDITTEXT        IDC_EDIT1, 10, 30, 320, 300-30, WS_HSCROLL|WS_VSCROLL|ES_MULTILINE|ES_READONLY
+    DEFPUSHBUTTON   "&Decline", IDCANCEL, 10, 268, 70, 20
+    PUSHBUTTON      "&Accept",  IDOK,     255, 268, 70, 20
+    EDITTEXT        IDC_EDIT1, 10, 30, 315, 230, WS_VSCROLL|ES_MULTILINE|ES_READONLY
 }
 
-IDD_DIALOG2 DIALOGEX 0, 0, 383, SIZEY
+IDD_DIALOG2 DIALOGEX 0, 0, 400, SIZEY
 FONT 8, "MS Shell Dlg"
 STYLE DS_CENTER | DS_MODALFRAME |WS_CAPTION |WS_VISIBLE|WS_POPUP|WS_SYSMENU
 CAPTION "Update"
 {
-    CHECKBOX        "Only update", IDONLYUPDATE,5, POSY1-20,300,14,BS_AUTOCHECKBOX
+    CONTROL         "", IDLIST, WC_LISTVIEW, WS_TABSTOP | WS_BORDER | LVS_REPORT|LVS_SINGLESEL|LVS_SHOWSELALWAYS,
+        5, 5, 389, LISTY-50, WS_EX_LEFT|LVS_EX_CHECKBOXES
 
-    PUSHBUTTON      "Check All",   IDCHECKALL,                        5, POSY1,  70, 14
-    PUSHBUTTON      "Uncheck All", IDUNCHECKALL,                     77, POSY1,  70, 14
-    PUSHBUTTON      "Check only needed for this PC", IDCHECKTHISPC,   5, POSY2, 142, 14
+    GROUPBOX        "Selection",IDSELECTION,5,206,182,86
+    PUSHBUTTON      "Check All",   IDCHECKALL,   10, 216, 80, 14
+    PUSHBUTTON      "Uncheck All", IDUNCHECKALL, 10, 234, 80, 14
+    PUSHBUTTON      "This PC Only", IDCHECKTHISPC, 96, 216, 80, 14
+    PUSHBUTTON      "Network Only", IDCHECKNETWORK, 96, 234, 80, 14
 
-    DEFPUSHBUTTON   "OK",     IDOK,     110+100, POSY2, 50, 14,BS_DEFPUSHBUTTON
-    PUSHBUTTON      "Cancel", IDCANCEL, 163+100, POSY2, 50, 14
-    PUSHBUTTON      "Accept", IDACCEPT, 216+100, POSY2, 50, 14
+    LTEXT           "Total download size: xx MB",   IDTOTALSIZE,  10, 266, 150, 12
+    LTEXT           "Total available space: xx MB", IDTOTALAVAIL, 10, 278, 150, 12
 
-    CONTROL         "", IDLIST, WC_LISTVIEW, WS_TABSTOP | WS_BORDER | LVS_REPORT|LVS_SINGLESEL,
-        5, 5, 369, LISTY-20, WS_EX_LEFT|LVS_EX_CHECKBOXES
+    GROUPBOX        "Options",IDOPTIONS,200,206,194,66
+    CHECKBOX        "Only update", IDONLYUPDATE,205,216,180,12,BS_AUTOCHECKBOX
+    CHECKBOX        "Continue seeding after download is finished", IDKEEPSEEDING, 205, 228, 180, 12, BS_AUTOCHECKBOX
 
-    LTEXT           "Total download size: xx MB", IDTOTALSIZE, 210, POSY1, 150, 14
+    DEFPUSHBUTTON   "OK",     IDOK,     110+120, POSY2, 50, 14,BS_DEFPUSHBUTTON
+    PUSHBUTTON      "Cancel", IDCANCEL, 163+120, POSY2, 50, 14
+    PUSHBUTTON      "Accept", IDACCEPT, 216+120, POSY2, 50, 14
 }
 
-#define VER_PRODUCTVERSION          VER_FILEVERSION
-#define VER_PRODUCTVERSION_STR      VER_FILEVERSION_STR
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
 
 VS_VERSION_INFO VERSIONINFO
 FILEVERSION     VER_FILEVERSION
-PRODUCTVERSION  VER_PRODUCTVERSION
+PRODUCTVERSION  VER_FILEVERSION
 FILEOS          VOS__WINDOWS32
 FILETYPE        VFT_APP
+FILEFLAGS       VS_FF_DEBUG | VS_FF_PRERELEASE | VS_FF_SPECIALBUILD
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "040904E4"
+        BLOCK "040904E4" // Lang=US English, CharSet=Windows Multilingual
         BEGIN
-            VALUE "FileDescription",  "Snappy Driver Installer"
+            VALUE "CompanyName",      "Glenn Delahoy\0"
+            VALUE "FileDescription",  "Snappy Driver Installer Origin\0"
+            VALUE "LegalCopyright",   "GNU GPL v3\0"
+            VALUE "OriginalFilename", "SDIO_R" GIT_REV_STR ".exe\0"
+            VALUE "ProductName",      "Snappy Driver Installer Origin\0"
             VALUE "FileVersion",      VER_FILEVERSION_STR
-            VALUE "LegalCopyright",   "GNU GPL v3"
-            VALUE "OriginalFilename", "SDI_" SVN_REV2 ".exe"
-            VALUE "ProductName",      "Snappy Driver Installer"
-            VALUE "ProductVersion",   SVN_REV2
+            VALUE "ProductVersion",   VER_FILEVERSION_STR
+            VALUE "SpecialBuild",     GIT_BUILD_NOTE
         END
     END
 
     BLOCK "VarFileInfo"
     BEGIN
-        VALUE "Translation", 0x409, 1252, // English
-                             0x419, 1200, // Russian
-                             0x415, 1200, // Polish
-                             0x40E, 1200, // Hungarian
-                             0x422, 1200  // Ukrainian
+        VALUE "Translation",
+            0x409, 1252, // English
+            0x004, 1200, // Chinese simplified
+            0x401, 1200, // Arabic
+            0x402, 1200, // Bulgarian
+			0x403, 1200, // Catalan
+            0x405, 1200, // Czech
+            0x406, 1200, // Danish
+            0x407, 1200, // German
+            0x408, 1200, // Greek
+            0x40A, 1200, // Spanish
+            0x40C, 1200, // French
+            0x40D, 1200, // Hebrew
+            0x40E, 1200, // Hungarian
+            0x410, 1200, // Italian
+            0x411, 1200, // Japanese
+            0x412, 1200, // Korean
+            0x413, 1200, // Dutch
+            0x414, 1200, // Norwegian
+            0x415, 1200, // Polish
+            0x416, 1200, // Portuguese (Brazil)
+            0x418, 1200, // Romanian
+            0x419, 1200, // Russian
+            0x41A, 1200, // Croatia
+            0x41D, 1200, // Swedish
+			0x41E, 1200, // Thai
+            0x41F, 1200, // Turkish
+            0x421, 1200, // Indonesia
+            0x422, 1200, // Ukrainian
+            0x423, 1200, // Belarusian
+            0x425, 1200, // Estonian
+            0x426, 1200, // Latvian
+            0x427, 1200, // Lithuanian
+            0x429, 1200, // Persian
+            0x42A, 1200, // Vietnamese
+            0x42B, 1200, // Armenian
+            0x437, 1200, // Georgian
+            0x816, 1200, // Portuguese (Portugal)
+            0x82C, 1200  // Azerbaijani
     END
 END
+
+#define OFSX 10
+#define OFSY 20
+#define EDITX 180
+#define EDITX2 120
+#define EDITW 50
+#define EDITW2 110
+#define EDITW3 210
+#define LABELW 218
+#define LABELW2 236
+#define GROUPW 236
+#define OFSYL 16
+
+IDD_DIALOG3 DIALOGEX 0, 0, 263, 261
+STYLE DS_CENTER|DS_MODALFRAME|WS_CAPTION|WS_VISIBLE|WS_SYSMENU
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8,"MS Shell Dlg"
+CAPTION "Options"
+BEGIN
+    DEFPUSHBUTTON   "OK",     IDOK,     110+42, 238, 50, 14,BS_DEFPUSHBUTTON
+    PUSHBUTTON      "Cancel", IDCANCEL, 163+42, 238, 50, 14
+    CONTROL         "", IDC_TAB1, WC_TABCONTROL, WS_TABSTOP, 5, 5, 253, 220
+END
+
+IDD_Page1 DIALOGEX 0,0,0,0
+STYLE DS_SETFONT|WS_CHILD|DS_CONTROL
+FONT 8,"MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Driver Pack Names", IDD_P1_DRV, 5, 5, GROUPW, 5+BTW*3+14, 0
+    AUTORADIOBUTTON "Do not show driver pack names", IDD_P1_DRV1, 5+OFSX, OFSY+BTW*0, LABELW, 14, WS_GROUP
+    AUTORADIOBUTTON "Show driver pack names on the right", IDD_P1_DRV2, 5+OFSX, OFSY+BTW*1, LABELW, 14, 0
+    AUTORADIOBUTTON "Show driver pack names above", IDD_P1_DRV3, 5+OFSX, OFSY+BTW*2, LABELW, 14, 0
+
+    GROUPBOX        "Interface scaling", IDD_P1_ZOOMG, 5, 80+5, GROUPW, 63, 0
+    LTEXT           "You can also zoom via Ctrl+mouse wheel", IDD_P1_ZOOML, 5+OFSX, 95+5, LABELW, 14, SS_LEFT
+    CONTROL         "", IDD_P1_ZOOMI, TRACKBAR_CLASS, WS_TABSTOP | TBS_BOTH | TBS_NOTICKS, 10, 95+12+5+3, 225, 15
+    LTEXT           "Small", IDD_P1_ZOOMS, 5+OFSX, 114+15+3, LABELW, 14, SS_LEFT
+    RTEXT           "Big", IDD_P1_ZOOMB, 130, 114+15+3, 100, 14, SS_RIGHT
+    PUSHBUTTON      "Reset", IDD_P1_ZOOMR, 130+50, 114+15-30-3, 100-50, 14
+
+    GROUPBOX        "Hint", IDD_P1_HINTG, 5, 137+18, GROUPW, 35, 0
+    LTEXT           "Popup window delay (in ms)", IDD_P1_HINTL, 5+OFSX, 154+18-2, LABELW, 14, SS_LEFT
+    EDITTEXT        IDD_P1_HINTE, EDITX, 154+18-5, EDITW, 14, ES_AUTOHSCROLL
+END
+
+IDD_Page2 DIALOGEX 0,0,0,0
+STYLE DS_SETFONT|WS_CHILD|DS_CONTROL
+FONT 8,"MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Torrent", IDD_P2_TOR, 5, 5, GROUPW, 91+70-4, 0
+    LTEXT           "Port", IDD_P2_PORT, 5+OFSX, OFSY, LABELW, 14, SS_LEFT
+    LTEXT           "Max connections (0 - unlimited)", IDD_P2_CON, 5+OFSX, OFSY+28, LABELW, 14, SS_LEFT
+    LTEXT           "Max download speed in KB/s (0 - unlimited)", IDD_P2_DOWN, 5+OFSX, OFSY+56, LABELW, 14, SS_LEFT
+    LTEXT           "Max upload speed in KB/s (0 - unlimited)", IDD_P2_UP, 5+OFSX, OFSY+84, LABELW, 14, SS_LEFT
+    EDITTEXT        IDD_P2_PORTE, 5+OFSX, OFSYL+14, EDITW, 14, ES_AUTOHSCROLL
+    EDITTEXT        IDD_P2_CONE, 5+OFSX, OFSYL+42, EDITW, 14, ES_AUTOHSCROLL
+    EDITTEXT        IDD_P2_DOWNE, 5+OFSX, OFSYL+70, EDITW, 14, ES_AUTOHSCROLL
+    EDITTEXT        IDD_P2_UPE, 5+OFSX, OFSYL+98, EDITW, 14, ES_AUTOHSCROLL
+    CHECKBOX        "Do not check for updates", IDD_P2_UPD,5, 164,LABELW2,14,BS_AUTOCHECKBOX
+    CHECKBOX        "Do not notify about missing driverpacks", IDONLYUPDATE,5, 175,LABELW2,14,BS_AUTOCHECKBOX
+END
+
+IDD_Page3 DIALOGEX 0,0,0,0
+STYLE DS_SETFONT|WS_CHILD|DS_CONTROL
+FONT 8,"MS Shell Dlg"
+BEGIN
+    GROUPBOX        "", 0, 5, 5, GROUPW, 190, 0
+    LTEXT           "Drivers", IDD_P3_DIR1, 5+OFSX, OFSY+BTW*0, LABELW, 14, SS_LEFT
+    LTEXT           "Indexes", IDD_P3_DIR2, 5+OFSX, OFSY+BTW*2, LABELW, 14, SS_LEFT
+    LTEXT           "Indexes (human-readable)", IDD_P3_DIR3, 5+OFSX, OFSY+BTW*4, LABELW, 14, SS_LEFT
+    LTEXT           "Data", IDD_P3_DIR4, 5+OFSX, OFSY+BTW*6, LABELW, 14, SS_LEFT
+    LTEXT           "Logs", IDD_P3_DIR5, 5+OFSX, OFSY+BTW*8, LABELW, 14, SS_LEFT
+    EDITTEXT        IDD_P3_DIR1E, 5+OFSX, OFSYL+BTW*1-4, EDITW3, 14, ES_AUTOHSCROLL
+    EDITTEXT        IDD_P3_DIR2E, 5+OFSX, OFSYL+BTW*3-4, EDITW3, 14, ES_AUTOHSCROLL
+    EDITTEXT        IDD_P3_DIR3E, 5+OFSX, OFSYL+BTW*5-4, EDITW3, 14, ES_AUTOHSCROLL
+    EDITTEXT        IDD_P3_DIR4E, 5+OFSX, OFSYL+BTW*7-4, EDITW3, 14, ES_AUTOHSCROLL
+    EDITTEXT        IDD_P3_DIR5E, 5+OFSX, OFSYL+BTW*9-4, EDITW3, 14, ES_AUTOHSCROLL
+END
+
+IDD_Page4 DIALOGEX 0,0,0,0
+STYLE DS_SETFONT|WS_CHILD|DS_CONTROL
+FONT 8,"MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Commands", IDD_P4_CMDG, 5, 5, GROUPW, 110+47, 0
+    LTEXT           "You can define commands that will be excecuted after specifed action is complited", IDD_P4_CMDL, 5+OFSX, 19+5, 200, 14*3, SS_LEFT
+    LTEXT           "After installation", IDD_P4_CMD1, 5+OFSX, OFSY+BTW*2, LABELW, 14, SS_LEFT
+    EDITTEXT        IDD_P4_CMD1E, 5+OFSX, OFSYL+BTW*3-4, EDITW3, 14, ES_AUTOHSCROLL
+    LTEXT           "After installation(reboot)", IDD_P4_CMD2, 5+OFSX, OFSY+BTW*4, LABELW, 14, SS_LEFT
+    EDITTEXT        IDD_P4_CMD2E, 5+OFSX, OFSYL+BTW*5-4, EDITW3, 14, ES_AUTOHSCROLL
+    LTEXT           "After downloading", IDD_P4_CMD3, 5+OFSX, OFSY+BTW*6, LABELW, 14, SS_LEFT
+    EDITTEXT        IDD_P4_CMD3E, 5+OFSX, OFSYL+BTW*7-4, EDITW3, 14, ES_AUTOHSCROLL
+
+    CHECKBOX        "Show console window", IDD_P4_CONSL,5, 103+64,LABELW2,14,BS_AUTOCHECKBOX
+END
+
+IDD_ABOUT DIALOGEX DISCARDABLE 0, 0, 382, 290
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION |WS_VISIBLE
+FONT 9, "MS Sans Serif"
+CAPTION "About"
+BEGIN
+    DEFPUSHBUTTON "&OK", IDOK, 322, 256, 51, 28
+    CONTROL IDB_LOGO,IDC_STATIC,WC_STATIC,SS_BITMAP,10,7, 32, 32
+    LTEXT   "Snappy Driver Installer Origin",IDD_ABOUT_T1,115,4,255,60,SS_LEFT
+    LTEXT   COPYRIGHT_DATE "\n"
+            VER_VERSION_STR "\n"
+            GIT_BUILD_DATE "\n"
+            GIT_BUILD_NOTE
+            , IDD_ABOUT_T2, 115,24,255,60,SS_LEFT
+    LTEXT   "Home Page: www.snappy-driver-installer.org",IDD_ABOUT_T8,115,57,200,10,SS_LEFT|SS_NOTIFY
+    LTEXT   "Developers:",IDD_ABOUT_T3,10,97,360,30,SS_LEFT
+    LTEXT   "BadPointer, Glenn Delahoy",0,70,97,360,30,SS_LEFT
+    LTEXT   "GNU General Public License",IDD_ABOUT_T4,10,116,360,12,SS_LEFT
+    LTEXT   "This program is free software: you can redistribute it and/or modify it under the "
+            "terms of the GNU General Public License as published by the Free Software Foundation, "
+            "either version 3 of the License, or (at your option) any later version.\n\n"
+            "This program is distributed in the hope that it will be useful, but WITHOUT ANY "
+            "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A "
+            "PARTICULAR PURPOSE.  See the GNU General Public License for more details."
+            ,IDD_ABOUT_T5,10,124,360,60,SS_LEFT
+    LTEXT   "Snappy Driver Installer Origin uses the following technologies:"
+            ,IDD_ABOUT_T6,10,192,360,12,SS_LEFT
+    LTEXT   "WebP is licensed under the terms of the BSD license\n"
+            "libtorrent is licensed under the terms of the BSD license\n"
+            "Backtrace is licensed under the terms of the BSD license\n"
+            "7-Zip is licensed under the terms of the GNU Library or Lesser General Public License version 2\n"
+            "Driver Packs by SamLab",IDD_ABOUT_T7,10,201,360,40,SS_LEFT
+END
+
+IDD_WELCOME DIALOGEX DISCARDABLE 0, 0, 400, 300
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION |WS_VISIBLE
+FONT 9, "MS Sans Serif"
+CAPTION "Welcome"
+BEGIN
+    CONTROL IDB_LOGO,IDC_STATIC,WC_STATIC,SS_BITMAP,5,5, 32, 32
+    LTEXT   "Snappy Driver Installer Origin",IDD_WELC_TITLE,115,4,300,90,SS_LEFT
+    LTEXT   COPYRIGHT_DATE "\n"
+            VER_VERSION_STR "\n"
+            GIT_BUILD_DATE "\n"
+            GIT_BUILD_NOTE
+            , IDD_WELC_TEXT, 115,24,250,90,SS_LEFT
+    LTEXT   "Home Page: www.snappy-driver-installer.org",IDD_WELC_LINK1,115,57,200,10,SS_LEFT|SS_NOTIFY
+    LTEXT   "Welcome To Snappy Driver Installer Origin"
+            ,IDD_WELC_SUBTITLE,34,92,384,40,SS_LEFT
+    LTEXT   "Before you can begin, you'll need to download driver packs or indexes. Select one of "
+            "the following options to start downloading. The Updates bar will keep you apprised of"
+            "the download status."
+            ,IDD_WELC_INTRO,34,102,346,40,SS_LEFT
+    LTEXT   "Note: Look for additional tools on the System Menu at the top left of the "
+            "main application window."
+            ,IDD_WELC_INTRO2,34,126,346,40,SS_LEFT
+    DEFPUSHBUTTON "Download All Driver Packs", IDD_WELC_BUTTON1,34,148,75,35,BS_MULTILINE
+    LTEXT   "Get the entire driver pack collection. "
+            "This is a big download and will take "
+            "anywhere from an hour to a day depending on availability and internet speed. "
+            "When complete, you'll have everything required to work offline. If you're a "
+            "technician, this is the option you want."
+            ,IDD_WELC_BUTTON1_DESC,120,148,260,39,SS_LEFT
+    PUSHBUTTON "Download Network Drivers Only", IDD_WELC_BUTTON2,34,188,75,35,BS_MULTILINE
+    LTEXT   "Get the latest LAN, WLAN, and Wifi drivers. This allows you to get "
+            "any PC online quickly and is a relatively small download."
+            ,IDD_WELC_BUTTON2_DESC,120,194,260,35,SS_LEFT
+    PUSHBUTTON "Download Indexes Only", IDD_WELC_BUTTON3,34,228,75,38,BS_MULTILINE
+    LTEXT   "This allows you to "
+            "scan your PC to see which drivers need to be installed or updated. "
+            "The download will only take a few minutes but you'll need "
+            "an internet connection when the required driver packs "
+            "need to be downloaded. "
+            "If you're a casual user, this is the option you want."
+            ,IDD_WELC_BUTTON3_DESC,120  ,228,260,39,SS_LEFT
+    PUSHBUTTON "&Close", IDD_WELC_CLOSE, 339, 266, 51, 28
+END
+
+IDD_TRANSL_EDITDIALOG DIALOGEX DISCARDABLE 0, 0, 350,200
+FONT 9, "MS Sans Serif"
+STYLE DS_MODALFRAME|WS_POPUP|WS_CAPTION|WS_SYSMENU|DS_CENTER
+CAPTION "Snappy Driver Installer Origin Language Translation Tool"
+{
+    LTEXT           "Key:",0,10,8,20,12
+    LTEXT           "KEY_VALUE",IDC_TRANSL_KEYVALUE,30,8,330,12
+    LTEXT           "Reference (English):",0,10,19,330,12
+    EDITTEXT        IDC_TRANSL_EDIT1,10,28,330,60,WS_VSCROLL|ES_MULTILINE|ES_READONLY|WS_DISABLED
+    LTEXT           "Translation:",IDC_TRANSL_LANGUAGEID,10,93,330,12
+    EDITTEXT        IDC_TRANSL_EDIT2,10,102,330,60,WS_VSCROLL|ES_MULTILINE|WS_TABSTOP
+    PUSHBUTTON      "Copy Reference To Clipboard",IDC_TRANSL_COPYCLIP,260,3,80,23,BS_MULTILINE
+    DEFPUSHBUTTON   "&Accept",IDOK,210,180,60,15
+    PUSHBUTTON      "&Cancel",IDCANCEL,280,180,60,15
+}
+
+#endif    // English (United States) resources

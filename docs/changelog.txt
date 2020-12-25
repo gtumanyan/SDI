@@ -6,6 +6,17 @@ www.snappy-driver-installer.org
 
 Change Log
 
+Version 1.9.0.728
+21 December 2020
+* Driver Packs 20.12.2
+* Tools updated as follows:
+  msys2 v20200903
+  gcc v7.3.0
+  boost v1.65.0
+  webp v0.6.1
+  libtorrent v1.0.11
+  7-Zip v16.04
+
 Version 1.8.0.722
 14 November 2020
 * Driver Packs 20.11.1

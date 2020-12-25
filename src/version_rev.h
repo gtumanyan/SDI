@@ -1,0 +1,7 @@
+#define BRANCH _T("SDIO")
+#define VERSION_MINOR 20
+#define VERSION_BUILD 12
+#define VERSION_BUILD_NUM 12
+#define VERSION_HASH TEXT("90c8c6e")
+#define VERSION_REV 722
+#define VERSION_REV_FULL TEXT("r722 (90c8c6e) (SDIO)")

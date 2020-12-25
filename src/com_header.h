@@ -18,7 +18,7 @@ Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <stddef.h>
 #include <wchar.h>
-#include "version.h"
+#include "version_rev.h"
 
 typedef unsigned ofst;
 

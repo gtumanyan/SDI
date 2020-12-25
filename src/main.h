@@ -29,8 +29,8 @@ extern class Popup_t *Popup;
 
 #include "resources.h"
 
-// svnrev_template.h
-#define APPTITLE            L"Snappy Driver Installer Origin " TEXT(VER_VERSION_STR2) " " TEXT(SVN_BUILD_NOTE)
+// GITrev_template.h
+#define APPTITLE            L"Snappy Driver Installer Origin " TEXT(VER_VERSION_STR2) " " TEXT(GIT_BUILD_NOTE)
 #define VER_MARKER          "SDW"
 #define VER_STATE           0x102
 #define VER_INDEX           0x205
@@ -105,7 +105,7 @@ enum TORRENT_SELECTION_MODE
 // Manager
 extern int volatile installmode;
 extern int invaidate_set;
-extern int num_cores;
+extern int const num_cores;
 extern bool emptydrp;
 extern HINSTANCE ghInst;
 extern CRITICAL_SECTION sync;

@@ -139,7 +139,7 @@
 			<Add option="-DWINVER=0x0500" />
 			<Add directory="../resources" />
 			<Add directory="../external/SevenZ/C" />
-			<Add directory="../external/boost_1_64_0" />
+			<Add directory="../external/boost_1_65_0" />
 		</Compiler>
 		<Linker>
 			<Add option="-static" />
@@ -163,6 +163,7 @@
 			<Add library="comctl32" />
 			<Add directory="../external" />
 		</Linker>
+		<Unit filename="../resources/cli.txt" />
 		<Unit filename="../resources/cli.txt" />
 		<Unit filename="../resources/resources.h" />
 		<Unit filename="../resources/resources.rc">
@@ -207,6 +208,7 @@
 		<Unit filename="../source/script.h" />
 		<Unit filename="../source/settings.cpp" />
 		<Unit filename="../source/settings.h" />
+		<Unit filename="../source/svnrev.h" />
 		<Unit filename="../source/system.cpp" />
 		<Unit filename="../source/system.h" />
 		<Unit filename="../source/system_imp.h" />
@@ -219,14 +221,10 @@
 		<Unit filename="../source/update.h" />
 		<Unit filename="../source/usbwizard.cpp" />
 		<Unit filename="../source/usbwizard.h" />
-		<Unit filename="version.h" />
 		<Extensions>
-			<AutoVersioning>
-				<Scheme minor_max="10" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
-				<Settings autoincrement="1" date_declarations="1" use_define="0" update_manifest="0" do_auto_increment="0" ask_to_increment="0" language="C" svn="1" svn_directory="" header_path="..\..\source\version.h" />
-				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
-				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
-			</AutoVersioning>
+			<code_completion />
+			<envvars />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
