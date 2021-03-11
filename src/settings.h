@@ -161,11 +161,11 @@ enum FLAG
     FLAG_AUTOUPDATE             = 0x02000000,
     FLAG_FILTERSP               = 0x04000000,
     FLAG_OLDSTYLE               = 0x08000000,
-//    FLAG_HIDEPATREON            = 0x10000000,
+    FLAG_HIDEPATREON            = 0x10000000,
     FLAG_NOSTOP                 = 0x20000000,
     FLAG_KEEPSEEDING            = 0x40000000,
     FLAG_SCRIPTMODE             = 0x80000000,
-    FLAG_UPDATESOK              = 0x10000000
+    FLAG_UPDATESOK              = 0x100000000
 };
 
 class Settings_t

@@ -1,16 +1,16 @@
 /*
-This file is part of Snappy Driver Installer Origin.
+This file is part of Snappy Driver Installer.
 
-Snappy Driver Installer Origin is free software: you can redistribute it and/or modify
+Snappy Driver Installer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License or (at your option) any later version.
 
-Snappy Driver Installer Origin is distributed in the hope that it will be useful
+Snappy Driver Installer is distributed in the hope that it will be useful
 but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
+Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #ifndef COM_HEADER_H
@@ -18,7 +18,7 @@ Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <stddef.h>
 #include <wchar.h>
-#include "version_rev.h"
+#include "gitrev.h"
 
 typedef unsigned ofst;
 
@@ -41,22 +41,22 @@ typedef unsigned ofst;
 // BOOST
 #define BOOST_ALL_NO_LIB
 #define BOOST_ASIO_ENABLE_CANCELIO
-#define BOOST_ASIO_HASH_MAP_BUCKETS 1021
-#define BOOST_ASIO_SEPARATE_COMPILATION
+//#define BOOST_ASIO_HASH_MAP_BUCKETS 1021  // Can be set to auto since Asio 1.4.3 / Boost 1.40
+//#define BOOST_ASIO_SEPARATE_COMPILATION   // BOOST_ASIO_SEPARATE_COMPILATION - is evil
 #define BOOST_MULTI_INDEX_DISABLE_SERIALIZATION
 #define BOOST_SYSTEM_NO_DEPRECATED
 #define BOOST_SYSTEM_STATIC_LINK 1
-#define BOOST_NO_AUTO_PTR
+//#define BOOST_NO_AUTO_PTR                   // The standard library no longer supports std::auto_ptr. It was deprecated in C++11 and is removed from C++14
 
 // Torrent
 #define TORRENT_DISABLE_GEO_IP
-#define TORRENT_NO_DEPRECATE
+//#define TORRENT_NO_DEPRECATE  todo: comply with torrent 2.0
 #define TORRENT_PRODUCTION_ASSERTS 1
 #define TORRENT_RELEASE_ASSERTS 1
 #define TORRENT_USE_I2P 0
 #define TORRENT_USE_ICONV 0
-#define TORRENT_USE_IPV6 0
-#define TORRENT_USE_TOMMATH
+#define TORRENT_USE_IPV6 1
+//#define TORRENT_USE_TOMMATH               // Switched to boost.multiprecision instead in RC 1.1
 
 #ifdef _MSC_VER
 #include <shlwapi.h>

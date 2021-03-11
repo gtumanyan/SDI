@@ -1,16 +1,16 @@
 /*
-This file is part of Snappy Driver Installer Origin.
+This file is part of Snappy Driver Installer.
 
-Snappy Driver Installer Origin is free software: you can redistribute it and/or modify
+Snappy Driver Installer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License or (at your option) any later version.
 
-Snappy Driver Installer Origin is distributed in the hope that it will be useful
+Snappy Driver Installer is distributed in the hope that it will be useful
 but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
+Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "com_header.h"
@@ -27,19 +27,16 @@ Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
 #include "draw.h"   // non-portable
 #include "theme.h"
 #include "usbwizard.h"
-#include "shellapi.h"
-#include "commdlg.h"
-#include "tchar.h"
 
 #include <windows.h>
 #include <setupapi.h>       // for CommandLineToArgvW
 #include <shobjidl.h>       // for TBPF_NORMAL
 #ifdef _MSC_VER
 #include <shellapi.h>
+#include <iostream>
 #endif
 #include <process.h>
 #include <signal.h>
-#include <iostream>
 
 // Depend on Win32API
 #include "enum.h"   // non-portable
@@ -152,7 +149,7 @@ int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hinst,LPSTR pStr,int nCmd)
     strcpy(bit,"64");
     #endif // _WIN64
 
-    std::cout << "\nSnappy Driver Installer Origin " << VER_VERSION_STR2 << " (" << bit << "bit)\n";
+    std::cout << "\nSnappy Driver Installer " << VER_VERSION_STR2 << " (" << bit << "bit)\n";
     std::cout << GIT_BUILD_NOTE << "\n\n";
 
     // Determine number of CPU cores ("Logical Processors")
@@ -187,7 +184,7 @@ int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hinst,LPSTR pStr,int nCmd)
     if(!GetSystemMetrics(SM_MOUSEPRESENT))MainWindow.kbpanel=KB_FIELD;
 
     // Runtime error handlers
-    start_exception_hadnlers();
+    start_exception_handlers();
     HMODULE backtrace=LoadLibraryA("backtrace.dll");
     if(!backtrace)signal(SIGSEGV,SignalHandler);
 
@@ -195,7 +192,7 @@ int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hinst,LPSTR pStr,int nCmd)
     init_CLIParam();
     if(!Settings.load_cfg_switch(GetCommandLineW()))
         if(!Settings.load(L"sdi.cfg"))
-            Settings.load(L"tools\\SDI\\settings.cfg");
+            Settings.load(L"tools\\settings.cfg");
 
     Settings.parse(GetCommandLineW(),1);
     RUN_CLI();
@@ -368,7 +365,7 @@ void MainWindow_t::LoadMenuItems()
     // the updates sub-menu - reverse order
     UpdatesMenu=CreatePopupMenu();
     AddMenuItem(UpdatesMenu,MIIM_STRING|MIIM_ID,IDM_UPDATES_DRIVERS,0,0,nullptr,const_cast<wchar_t *>STR(STR_UPDATES_DRIVERS));
-    AddMenuItem(UpdatesMenu,MIIM_STRING|MIIM_ID,IDM_UPDATES_SDIO,0,0,nullptr,const_cast<wchar_t *>STR(STR_UPDATES_SDIO));
+    AddMenuItem(UpdatesMenu,MIIM_STRING|MIIM_ID,IDM_UPDATES_SDI,0,0,nullptr,const_cast<wchar_t *>STR(STR_UPDATES_SDIO));
     AddMenuItem(UpdatesMenu,MIIM_FTYPE,0,MFT_SEPARATOR,0,nullptr,const_cast<wchar_t *>(L""));
     AddMenuItem(UpdatesMenu,MIIM_STRING|MIIM_ID|MIIM_STATE,IDM_SEED,0,MFS_DISABLED,nullptr,const_cast<wchar_t *>STR(STR_SYST_START_SEED));
 
@@ -1031,6 +1028,9 @@ static BOOL CALLBACK AboutBoxProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam
             case IDD_ABOUT_T8:
                 System.run_command(L"open",WEB_HOMEPAGE,SW_SHOWNORMAL,0);
                 break;
+            case IDD_ABOUT_T9:
+                System.run_command(L"open",WEB_PATREONPAGE,SW_SHOWNORMAL,0);
+                break;
             default:
                 break;
         }
@@ -1390,11 +1390,11 @@ void MainWindow_t::UpdateTorrentItems(int activetorrent)
     switch (activetorrent)
     {
         case 0:
-            ModifyMenuItem(UpdatesMenu,MIIM_STATE|MIIM_ID,IDM_UPDATES_SDIO,MFS_UNCHECKED,nullptr);
+            ModifyMenuItem(UpdatesMenu,MIIM_STATE|MIIM_ID,IDM_UPDATES_SDI,MFS_UNCHECKED,nullptr);
             ModifyMenuItem(UpdatesMenu,MIIM_STATE|MIIM_ID,IDM_UPDATES_DRIVERS,MFS_UNCHECKED,nullptr);
             break;
         case 1:
-            ModifyMenuItem(UpdatesMenu,MIIM_STATE|MIIM_ID,IDM_UPDATES_SDIO,MFS_CHECKED,nullptr);
+            ModifyMenuItem(UpdatesMenu,MIIM_STATE|MIIM_ID,IDM_UPDATES_SDI,MFS_CHECKED,nullptr);
             break;
         case 2:
             ModifyMenuItem(UpdatesMenu,MIIM_STATE|MIIM_ID,IDM_UPDATES_DRIVERS,MFS_CHECKED,nullptr);
@@ -1957,7 +1957,7 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
                         #endif // USE_TORRENT
                         return 0;
                     }
-                    case IDM_UPDATES_SDIO:
+                    case IDM_UPDATES_SDI:
                         {
                             TorrentSelectionMode=TSM_NONE;
                             MainWindow.ResetUpdater(1);
@@ -2269,7 +2269,7 @@ void InstallCommand::LeftClick(bool)
     if(installmode==MODE_NONE)
     {
         if((Settings.flags&FLAG_EXTRACTONLY)==0)
-        wsprintf(extractdir,L"%s\\SDIO",manager_g->getState()->textas.getw(manager_g->getState()->getTemp()));
+        wsprintf(extractdir,L"%s\\SDI",manager_g->getState()->textas.getw(manager_g->getState()->getTemp()));
         manager_g->install(INSTALLDRIVERS);
     }
 }
@@ -2382,13 +2382,21 @@ LRESULT MainWindow_t::WndProcField(HWND hwnd,UINT message,WPARAM wParam,LPARAM l
                 #endif
                 break;
             }
+            if(Popup->floating_itembar==SLOT_PATREON)
+            {
+                if(StrStrIW(STR(STR_LANG_ID),L"Russian"))
+                    System.run_command(L"open",L"http://vk.com/snappydriverinstaller?w=page-71369181_50543112",SW_SHOWNORMAL,0);
+                else
+                    System.run_command(L"open",L"https://www.patreon.com/SamLab",SW_SHOWNORMAL,0);
+                break;
+            }
             if(Popup->floating_itembar>0&&(i==1||i==0||i==3))
             {
                 manager_g->toggle(Popup->floating_itembar);
                 if(wParam&MK_SHIFT&&installmode==MODE_NONE)
                 {
                     if((Settings.flags&FLAG_EXTRACTONLY)==0)
-                    wsprintf(extractdir,L"%s\\SDIO",manager_g->getState()->textas.getw(manager_g->getState()->getTemp()));
+                    wsprintf(extractdir,L"%s\\SDI",manager_g->getState()->textas.getw(manager_g->getState()->getTemp()));
                     manager_g->install(INSTALLDRIVERS);
                 }
                 redrawfield();
@@ -2452,6 +2460,8 @@ LRESULT MainWindow_t::WndProcField(HWND hwnd,UINT message,WPARAM wParam,LPARAM l
                     Popup->drawpopup(itembar_i,STR_RESTOREPOINT_H,FLOATING_TOOLTIP,x,y,hField);
                 else if(itembar_i==SLOT_DOWNLOAD)
                     Popup->drawpopup(itembar_i,0,FLOATING_DOWNLOAD,x,y,hField);
+                else if(itembar_i==SLOT_PATREON)
+                    Popup->drawpopup(itembar_i,STR_PATREON_H,FLOATING_TOOLTIP,x,y,hField);
                 else if(i==0&&itembar_i>=RES_SLOTS)
                     Popup->drawpopup(itembar_i,STR_HINT_DRIVER,FLOATING_TOOLTIP,x,y,hField);
                 else
@@ -2754,6 +2764,9 @@ BOOL CALLBACK WelcomeProcedure(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
                 return TRUE;
             case IDD_WELC_LINK1:
                 System.run_command(L"open",WEB_HOMEPAGE,SW_SHOWNORMAL,0);
+                break;
+            case IDD_WELC_LINK2:
+                System.run_command(L"open",WEB_PATREONPAGE,SW_SHOWNORMAL,0);
                 break;
             default:
                 break;

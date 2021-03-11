@@ -15,11 +15,11 @@ Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
 
 #ifndef GITREV_H
 #define GITREV_H
-#define GIT_REV 4ac619e1c085443c2ffdefe204b2f4cc32653291
-#define GIT_REV_STR "4ac619e1c085443c2ffdefe204b2f4cc32653291"
+#define GIT_REV 736
+#define GIT_REV_STR "736"
 
 /* Date of the last commit */
-#define GIT_REV_D "20"
+#define GIT_REV_D "25"
 #define GIT_REV_M "12"
 #define GIT_REV_Y 2020
 
@@ -29,8 +29,8 @@ Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
 #define GIT_BUILD_NOTE ""
 #endif
 
-#define GIT_BUILD_REV "Revision: R4ac619e1c085443c2ffdefe204b2f4cc32653291"
-#define GIT_BUILD_DATE "Build Date: 25 Dec 2020"
-#define COPYRIGHT_DATE "(C) Copyright 2020"
+#define GIT_BUILD_REV "Revision: R736"
+#define GIT_BUILD_DATE "Build Date: 08 Mar 2021"
+#define COPYRIGHT_DATE "(C) Copyright 2021"
 
 #endif

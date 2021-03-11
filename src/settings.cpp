@@ -35,7 +35,7 @@ Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
 
 int volatile installmode=MODE_NONE;
 int invaidate_set;
-// const int num_cores;
+unsigned int num_cores;
 int ret_global=0;
 
 Settings_t::Settings_t()

@@ -564,10 +564,10 @@ std::string SystemImp::AppPathS()
 
 int SystemImp::FindLatestExeVersion(int bit)
 {
-    int ver=VERSION_REV;
+    int ver=GIT_REV;
     std::wstring spec;
-    if(bit==32)spec=AppPathW()+L"\\SDIO_R*.exe";
-    else if(bit==64)spec=AppPathW()+L"\\SDIO_x64_R*.exe";
+    if(bit==32)spec=AppPathW()+L"\\SDI*.exe";
+    else if(bit==64)spec=AppPathW()+L"\\SDI_x64*.exe";
     else return 0;
 
     WIN32_FIND_DATA fd;

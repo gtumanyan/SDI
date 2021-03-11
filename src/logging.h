@@ -116,7 +116,7 @@ extern Log_t Log;
 
 // Error handling
 const wchar_t *errno_str();
-void start_exception_hadnlers();
+void start_exception_handlers();
 void SignalHandler(int signum);
 
 // Virus detection

@@ -1,16 +1,16 @@
 /*
-This file is part of Snappy Driver Installer Origin.
+This file is part of Snappy Driver Installer.
 
-Snappy Driver Installer Origin is free software: you can redistribute it and/or modify
+Snappy Driver Installer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License or (at your option) any later version.
 
-Snappy Driver Installer Origin is distributed in the hope that it will be useful
+Snappy Driver Installer is distributed in the hope that it will be useful
 but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
+Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #ifndef MAIN_H
@@ -29,7 +29,7 @@ extern class Popup_t *Popup;
 
 #include "resources.h"
 
-// GITrev_template.h
+// gitrev_template.h
 #define APPTITLE            L"Snappy Driver Installer Origin " TEXT(VER_VERSION_STR2) " " TEXT(GIT_BUILD_NOTE)
 #define VER_MARKER          "SDW"
 #define VER_STATE           0x102
@@ -105,7 +105,7 @@ enum TORRENT_SELECTION_MODE
 // Manager
 extern int volatile installmode;
 extern int invaidate_set;
-extern int const num_cores;
+extern unsigned int num_cores;
 extern bool emptydrp;
 extern HINSTANCE ghInst;
 extern CRITICAL_SECTION sync;
