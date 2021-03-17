@@ -365,7 +365,7 @@ void MainWindow_t::LoadMenuItems()
     // the updates sub-menu - reverse order
     UpdatesMenu=CreatePopupMenu();
     AddMenuItem(UpdatesMenu,MIIM_STRING|MIIM_ID,IDM_UPDATES_DRIVERS,0,0,nullptr,const_cast<wchar_t *>STR(STR_UPDATES_DRIVERS));
-    AddMenuItem(UpdatesMenu,MIIM_STRING|MIIM_ID,IDM_UPDATES_SDI,0,0,nullptr,const_cast<wchar_t *>STR(STR_UPDATES_SDIO));
+    AddMenuItem(UpdatesMenu,MIIM_STRING|MIIM_ID,IDM_UPDATES_SDI,0,0,nullptr,const_cast<wchar_t *>STR(STR_UPDATES_SDI));
     AddMenuItem(UpdatesMenu,MIIM_FTYPE,0,MFT_SEPARATOR,0,nullptr,const_cast<wchar_t *>(L""));
     AddMenuItem(UpdatesMenu,MIIM_STRING|MIIM_ID|MIIM_STATE,IDM_SEED,0,MFS_DISABLED,nullptr,const_cast<wchar_t *>STR(STR_SYST_START_SEED));
 
@@ -382,15 +382,6 @@ void MainWindow_t::LoadMenuItems()
     AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_OPENLOGS,0,0,nullptr,const_cast<wchar_t *>STR(STR_OPENLOGS));
     AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID|MIIM_SUBMENU,IDM_TOOLS,0,0,ToolsMenu,const_cast<wchar_t *>STR(STR_TOOLS));
     AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID|MIIM_SUBMENU,IDM_UPDATES,0,0,UpdatesMenu,const_cast<wchar_t *>STR(STR_UPDATES));
-}
-
-void MainWindow_t::OpenTranslationTool()
-{
-    // get the current selected language file
-    int j=SendMessage(GetDlgItem(hMain,ID_LANG),CB_GETCURSEL,0,0);
-    std::wstring filename=vLang->GetFileName(j);
-    // run the tool
-    System.run_command(L"SDIOTranslationTool.exe",filename.c_str(),SW_SHOWNORMAL,0);
 }
 
 void MainWindow_t::MainLoop(int nCmd)
@@ -2057,11 +2048,6 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
                         delete USBWiz;
                         return 0;
                     }
-                    case IDM_TRANSLATE:
-                    {
-                        OpenTranslationTool();
-                        return 0;
-                    }
                     default:
                         return DefWindowProc(hwnd, WM_SYSCOMMAND, wParam, lParam);
                 }
@@ -2390,6 +2376,13 @@ LRESULT MainWindow_t::WndProcField(HWND hwnd,UINT message,WPARAM wParam,LPARAM l
                     System.run_command(L"open",L"https://www.patreon.com/SamLab",SW_SHOWNORMAL,0);
                 break;
             }
+
+            if(Popup->floating_itembar==SLOT_TRANSLATION)
+            {
+                System.run_command(L"open",L"https://www.transifex.com/snappy-driver-installer/snappy-driver-installer",SW_SHOWNORMAL,0);
+                break;
+            }
+
             if(Popup->floating_itembar>0&&(i==1||i==0||i==3))
             {
                 manager_g->toggle(Popup->floating_itembar);

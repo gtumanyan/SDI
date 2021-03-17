@@ -1,16 +1,16 @@
 /*
-This file is part of Snappy Driver Installer Origin.
+This file is part of Snappy Driver Installer.
 
-Snappy Driver Installer Origin is free software: you can redistribute it and/or modify
+Snappy Driver Installer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License or (at your option) any later version.
 
-Snappy Driver Installer Origin is distributed in the hope that it will be useful
+Snappy Driver Installer is distributed in the hope that it will be useful
 but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
+Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "com_header.h"
@@ -48,8 +48,8 @@ entry_t language[STR_NM]=
     DEF_STR("STR_REFRESH_H")
     DEF_STR("STR_UPDATES")
     DEF_STR("STR_UPDATES_H")
-    DEF_STR("STR_UPDATES_SDIO")
-    DEF_STR("STR_UPDATES_SDIO_H")
+    DEF_STR("STR_UPDATES_SDI")
+    DEF_STR("STR_UPDATES_SDI_H")
     DEF_STR("STR_UPDATES_DRIVERS")
     DEF_STR("STR_UPDATES_DRIVERS_H")
     DEF_STR("STR_TOOLS")
@@ -408,6 +408,7 @@ entry_t language[STR_NM]=
     DEF_STR("STR_OPTION_MAX_CON")
     DEF_STR("STR_OPTION_MAX_DOWNLOAD")
     DEF_STR("STR_OPTION_MAX_UPLOAD")
+    DEF_STR("STR_OPTION_TORRENT_URL")
 
 // Paths tab
     DEF_STR("STR_OPTION_DIR_DRIVERS")
@@ -423,6 +424,11 @@ entry_t language[STR_NM]=
     DEF_STR("STR_OPTION_CMD_FINISHRB")
     DEF_STR("STR_OPTION_CMD_FINISHDN")
     DEF_STR("STR_OPTION_CONSOLE")
+
+// Patreon
+    DEF_STR("STR_PATREON1")
+    DEF_STR("STR_PATREON2")
+    DEF_STR("STR_PATREON_H")
 
 // Welcome
     DEF_STR("STR_WELCOME_TITLE")

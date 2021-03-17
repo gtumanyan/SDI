@@ -1,16 +1,16 @@
 /*
-This file is part of Snappy Driver Installer Origin.
+This file is part of Snappy Driver Installer.
 
-Snappy Driver Installer Origin is free software: you can redistribute it and/or modify
+Snappy Driver Installer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License or (at your option) any later version.
 
-Snappy Driver Installer Origin is distributed in the hope that it will be useful
+Snappy Driver Installer is distributed in the hope that it will be useful
 but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
+Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "com_header.h"
@@ -382,7 +382,8 @@ int SystemImp::canWriteFile(const wchar_t *path,const wchar_t *mode)
 {
     // test if the given file name can be written or updated
 
-    FILE *f;
+    FILE *stream;
+    errno_t err;
     DWORD flagsv=0;
     DWORD lasterror;
     wchar_t drive[4];
@@ -402,13 +403,22 @@ int SystemImp::canWriteFile(const wchar_t *path,const wchar_t *mode)
     // test if the file can be opened for the required mode
     else
     {
-        if((f=_wfopen(path,mode)) == NULL)
+        err = _wfopen_s(&stream, path, mode);
+        if (err)
         {
-            Log.print_err("Error: canWriteFile : _wfopen failed: %S\n",path);
+            //Log.print_err("The file %S was not opened\n",path);
             return(0);
         }
-        fclose(f);
-        return(1);
+        // Close stream if it isn't NULL
+        if (stream)
+        {
+            err = fclose(stream);
+            if (err)
+            {
+                Log.print_err("The file %S was not closed\n,path");
+            }
+            return(1);
+        }
     }
     return (flagsv&FILE_READ_ONLY_VOLUME)?0:1;
 }

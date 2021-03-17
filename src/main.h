@@ -30,7 +30,7 @@ extern class Popup_t *Popup;
 #include "resources.h"
 
 // gitrev_template.h
-#define APPTITLE            L"Snappy Driver Installer Origin " TEXT(VER_VERSION_STR2) " " TEXT(GIT_BUILD_NOTE)
+#define APPTITLE            L"Snappy Driver Installer " TEXT(VER_VERSION_STR2) " " TEXT(GIT_BUILD_NOTE)
 #define VER_MARKER          "SDW"
 #define VER_STATE           0x102
 #define VER_INDEX           0x205
@@ -203,7 +203,7 @@ private:
     LRESULT WndProcField(HWND,UINT,WPARAM,LPARAM);
     void AddMenuItem(HMENU parent,UINT mask,UINT id,UINT type,UINT state,HMENU hSubMenu,wchar_t* typedata);
     void ModifyMenuItem(HMENU parent, UINT mask,UINT id,UINT state,wchar_t* typedata);
-    void OpenTranslationTool();
+    // void OpenTranslationTool();
 
 public:
     void MainLoop(int nCmd);

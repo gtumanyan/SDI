@@ -163,7 +163,9 @@
 			<Add library="comctl32" />
 			<Add directory="../external" />
 		</Linker>
-		<Unit filename="../resources/cli.txt" />
+		<ExtraCommands>
+			<Add before="SubWCRev.exe .. ..\source\svnrev_template.h ..\source\svnrev.h" />
+		</ExtraCommands>
 		<Unit filename="../resources/cli.txt" />
 		<Unit filename="../resources/resources.h" />
 		<Unit filename="../resources/resources.rc">

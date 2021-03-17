@@ -31,6 +31,7 @@ ExportedObj/
 *.user
 *.userprefs
 *.pidb
+*.bsc
 *.svd
 *.pdb
 *.mdb
@@ -40,6 +41,6 @@ ExportedObj/
 *.exe
 
 # Other stuff
-*.save
-*.layout
+drivers
+*.ilk
 

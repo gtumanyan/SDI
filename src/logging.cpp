@@ -1,16 +1,16 @@
 /*
-This file is part of Snappy Driver Installer Origin.
+This file is part of Snappy Driver Installer.
 
-Snappy Driver Installer Origin is free software: you can redistribute it and/or modify
+Snappy Driver Installer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License or (at your option) any later version.
 
-Snappy Driver Installer Origin is distributed in the hope that it will be useful
+Snappy Driver Installer is distributed in the hope that it will be useful
 but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
+Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "com_header.h"
@@ -109,19 +109,19 @@ void Log_t::start(wchar_t *logdir)
     filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
     if(!System.canWriteFile(filename.Get(),L"wt"))
     {
-        Log.print_err("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
+       // Log.print_err("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
         GetEnvironmentVariable(L"TEMP",logdir,BUFLEN);
-        wcscat(logdir,L"\\SDIO_logs");
+        wcscat(logdir,L"\\SDI_logs");
         filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
     }
 
-    mkdir_r(logdir);
+    //mkdir_r(logdir);
     logfile=_wfopen(filename.Get(),L"wt");
     if(!logfile)
     {
         Log.print_err("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
-        GetEnvironmentVariable(L"TEMP",logdir,BUFLEN);
-        wcscat(logdir,L"\\SDIO_logs");
+        //GetEnvironmentVariable(L"TEMP",logdir,BUFLEN);
+        wcscat(logdir,L"\\SDI_logs");
         filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
         mkdir_r(logdir);
         logfile=_wfopen(filename.Get(),L"wb");
@@ -304,9 +304,9 @@ static void myunexpected()
     myterminate();
 }
 
-void start_exception_handlers()
-{
-    std::set_unexpected(myunexpected);
+void start_exception_handlers()        //In the current Microsoft implementation of C++ exception handling, 
+{                                      // unexpected calls terminate by default and is never called by the exception-handling run-time library. 
+    std::set_unexpected(myunexpected); //  There is no particular advantage to calling unexpected rather than term`inate.
     std::set_terminate(myterminate);
 }
 

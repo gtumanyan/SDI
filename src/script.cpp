@@ -1,16 +1,16 @@
 /*
-This file is part of Snappy Driver Installer Origin.
+This file is part of Snappy Driver Installer.
 
-Snappy Driver Installer Origin is free software: you can redistribute it and/or modify
+Snappy Driver Installer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License or (at your option) any later version.
 
-Snappy Driver Installer Origin is distributed in the hope that it will be useful
+Snappy Driver Installer is distributed in the hope that it will be useful
 but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
+Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "com_header.h"
@@ -89,7 +89,7 @@ bool Script::loadscript()
             if(wcslen(Buff)==0)
             {
                 std::cout << "Command line argument missing.\n";
-                std::cout << "Usage: SDIO -script:file.txt\n";
+                std::cout << "Usage: SDI -script:file.txt\n";
                 break;
             }
 
@@ -164,7 +164,7 @@ bool Script::runscript()
         wcscpy(buf,systemDrive);
 
     GetEnvironmentVariable(L"TEMP",buf,BUFLEN);
-    wsprintf(extractdir,L"%s\\SDIO",buf);
+    wsprintf(extractdir,L"%s\\SDI",buf);
 
     // iterate the script text lines
     for(std::vector<std::wstring>::iterator txt = ScriptText.begin(); txt != ScriptText.end(); ++txt)
@@ -230,7 +230,7 @@ bool Script::runscript()
                 {
                     std::wstring s(args[i]);
                     // trim spaces
-                    s.erase(s.begin(), std::find_if(s.begin(),s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+                    s.erase(std::remove_if(s.begin(), s.end(), &std::isspace), s.end());  // not1 deprecated in C++17 (removed in C++20)
                     if(_wcsicmp(s.c_str(),L"missing")==0)filter|=2;
                     else if(_wcsicmp(s.c_str(),L"newer")==0)filter|=4;
                     else if(_wcsicmp(s.c_str(),L"current")==0)filter|=8;
@@ -373,7 +373,7 @@ bool Script::runscript()
             }
             else if(StrStrIW(args[0].c_str(),L"restorepoint"))
             {
-                std::wstring desc=L"Snappy Driver Installer Origin";
+                std::wstring desc=L"Snappy Driver Installer";
                 if(args.size()>1)
                 {
                     desc=L"";
@@ -716,9 +716,9 @@ void Script::RunLatest(std::wstring args)
     // get the correct executable
     std::wstring cmd;
     #ifdef _WIN64
-        cmd=L"SDIO_x64_R"+std::to_wstring(System.FindLatestExeVersion(64))+L".exe";
+        cmd=L"SDI_x64"+std::to_wstring(System.FindLatestExeVersion(64))+L".exe";
     #else
-        cmd=L"SDIO_R"+std::to_wstring(System.FindLatestExeVersion(32))+L".exe";
+        cmd=L"SDI"+std::to_wstring(System.FindLatestExeVersion(32))+L".exe";
     #endif // _WIN64
 
     if(!System.FileExists2(cmd.c_str()))

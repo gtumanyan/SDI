@@ -34,7 +34,6 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <queue>
 
-
 //{ Global variables
 int drp_count;
 int drp_cur;
@@ -627,7 +626,7 @@ void Collection::populate()
     for(UInt32 i=0;i<num_thr;i++)
     {
         Log.print_debug("Collection::populate::ThreadAbs::%d\n",i);
-        cons[i]=CreateThread();
+        cons.push_back(CreateThread());
         cons[i]->start(&Driverpack::loaddrp_thread,&queuedriverpack);
     }
 
@@ -636,7 +635,7 @@ void Collection::populate()
     for(UInt32 i=0;i<(num_thr_1-1);++i)
     {
         Log.print_debug("Collection::populate::ThreadAbs1::%d\n",i);
-        thr[i]=CreateThread();
+        thr.push_back(CreateThread());
         thr[i]->start(&Driverpack::indexinf_thread,&queuedriverpack1);
     }
 //}thread
@@ -715,7 +714,7 @@ void Collection::save()
     drplist_t queuedriverpack_loc;
     for(UInt32 i=0;i<(num_cores-1);++i)
     {
-        thr[i]=CreateThread();
+        thr.push_back(CreateThread());
         thr[i]->start(&Driverpack::savedrp_thread,&queuedriverpack_loc);
     }
     for(auto &driverpack:driverpack_list)

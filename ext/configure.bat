@@ -58,8 +58,8 @@ set BOOST_BUILD_PATH=%BOOST_ROOT%\tools\build
 echo %BOOST_ROOT%
 echo %BOOST_BUILD_PATH%
 set PATH=%PATH%;%BOOST_BUILD_PATH%
-set BOOST_INSTALL_PATH=D:\BOOST32_%GCC_VERSION2%
-set BOOST64_INSTALL_PATH=D:\BOOST64_%GCC_VERSION2%
+@rem set BOOST_INSTALL_PATH=D:\BOOST32_%GCC_VERSION2%
+@rem set BOOST64_INSTALL_PATH=D:\BOOST64_%GCC_VERSION2%
 
 rem Configure paths
 set LIBTORRENT_PATH=%CD%\libtorrent
@@ -147,7 +147,7 @@ pushd %BOOST_ROOT%
 set oldpath=%path%
 set path=%GCC64_PATH%\bin;%BOOST_ROOT%;%MSYS_BIN%;%path%
 echo %c_do% "Installing BOOST64"[0m&echo.
-b2.exe toolset=%TOOLSET% --with-thread --layout=tagged address-model=64 define=BOOST_USE_WINAPI_VERSION=0x05010000
+b2.exe toolset=%TOOLSET% --with-thread --layout=tagged address-model=64
 set path=%oldpath%
 popd
 :skipinstallboost64
@@ -284,7 +284,6 @@ rem Install webp
 if /I exist %LIBWEBP% (echo %c_skip% "Skipping installing WebP"[0m&echo. & goto skipprepwebp)
 :installwebp
 echo %c_do% "Installing WebP"[0m&echo.
-xcopy webp\mingw\msys\1.0 %MSYS_PATH% /E /I /Y
 echo %GCC_PATH% /mingw32> %MSYS_PATH%\etc\fstab
 echo %GCC64_PATH% /mingw64>> %MSYS_PATH%\etc\fstab
 pushd %WEBP_PATH%
@@ -299,8 +298,10 @@ nmake /f Makefile.vc CFG=debug-static RTLIBCFG=static OBJDIR=output
 if %TOOLSET%==gcc goto skiplibs
 call :copyecho %WEBP_PATH%\output\release-static\x64\lib\libwebp.lib %LIBDIR%\Release_x64\libwebp.lib /Y
 call :copyecho %WEBP_PATH%\output\debug-static\x64\lib\libwebp_debug.lib %LIBDIR%\Debug_x64\libwebp.lib /Y
+call :copyecho %WEBP_PATH%\output\debug-static\x64\lib\libwebp_debug.pdb %LIBDIR%\Debug_x64\ /Y
 call :copyecho %WEBP_PATH%\output\release-static\x86\lib\libwebp.lib %LIBDIR%\Release_Win32\libwebp.lib /Y
 call :copyecho %WEBP_PATH%\output\debug-static\x86\lib\libwebp_debug.lib %LIBDIR%\Debug_Win32\libwebp.lib /Y
+call :copyecho %WEBP_PATH%\output\debug-static\x86\lib\libwebp_debug.pdb %LIBDIR%\Debug_Win32\ /Y
 :skiplibs
 
 popd
@@ -374,14 +375,12 @@ echo %c_do% "Building libtorrent64"[0m&echo.
 set oldpath=%path%
 set path=%GCC64_PATH%\bin;%BOOST_ROOT%;%MSYS_BIN%;%path%
 pushd "%LIBTORRENT_PATH%\examples"
-b2 client_test address-model=64 toolset=%TOOLSET% release exception-handling=on %EXTRA_OPTIONS% define=BOOST_USE_WINAPI_VERSION=0x0501
+b2 client_test address-model=64 toolset=%TOOLSET% release exception-handling=on %EXTRA_OPTIONS%
 call :copyecho ..\bin\%TOOLSET%\rls\adrs-mdl-64\dprct-fnctn-off\extns-off\i2p-off\lnk-sttc\rntm-lnk-sttc\thrd-mlt\libtorrent.lib %LIBDIR%\Release_x64 /Y
-b2 client_test address-model=64 toolset=%TOOLSET% debug exception-handling=on %EXTRA_OPTIONS% define=BOOST_USE_WINAPI_VERSION=0x0501
+b2 client_test address-model=64 toolset=%TOOLSET% debug exception-handling=on %EXTRA_OPTIONS%
 call :copyecho ..\bin\%TOOLSET%\dbg\adrs-mdl-64\dprct-fnctn-off\extns-off\i2p-off\lnk-sttc\rntm-lnk-sttc\thrd-mlt\libtorrent.lib %LIBDIR%\Debug_x64 /Y
 
 if %TOOLSET%==gcc goto skiplibtor64
-@rem call :copyecho %BOOST_ROOT%\bin.v2\libs\system\build\%TOOLSET%\rls%ADR64%\libboost_system-vc142-mt-s-%BOOST_VER3%.lib %LIBDIR%\Release_x64\libboost_system.lib /Y
-@rem call :copyecho %BOOST_ROOT%\bin.v2\libs\system\build\%TOOLSET%\mydbg%ADR64%\libboost_system-vc142-mt-sg-%BOOST_VER3%.lib %LIBDIR%\Debug_x64\libboost_system.lib /Y
 :skiplibtor64
 call :copyecho ..\bin\gcc-mngw-%GCC_VERSION%\rls64\adrs-mdl-64\libtorrent.a %GCC64_PATH%%GCC64_PREFIX%\lib /Y
 call :copyecho ..\bin\gcc-mngw-%GCC_VERSION%\dbg64\adrs-mdl-64\libtorrent.a %GCC64_PATH%%GCC64_PREFIX%\lib\libtorrent_dbg.a /Y
