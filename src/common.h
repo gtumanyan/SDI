@@ -103,7 +103,7 @@ class WStringShort:public WString_dyn
     const static int size=128;
     wchar_t buf[size];
 public:
-    WStringShort(bool debug_=false):WString_dyn(size,buf,debug_){*buf=0;}
+    WStringShort(bool debug_=true):WString_dyn(size,buf,debug_){*buf=0;}
 };
 
 // Version

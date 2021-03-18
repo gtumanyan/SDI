@@ -28,9 +28,9 @@ rem mingw-w64 8.1.0
 set GCC_VERSION=8.1.0
 set GCC_VERSION2=81
 
-set MSVC_VERSION=2019\Preview
+if %TOOLSET%==msvc set MSVC_VERSION=2019\Preview
 
-set MINGW_PATH=C:\mingw
+if %TOOLSET%==gcc set MINGW_PATH=C:\mingw
 
 rem GCC 32-bit
 set GCC_PATH=%MINGW_PATH%\mingw32
@@ -62,6 +62,7 @@ set PATH=%PATH%;%BOOST_BUILD_PATH%
 @rem set BOOST64_INSTALL_PATH=D:\BOOST64_%GCC_VERSION2%
 
 rem Configure paths
+cd %~dp0
 set LIBTORRENT_PATH=%CD%\libtorrent
 set WEBP_PATH=%CD%\libwebp
 set path=%BOOST_ROOT%;%MSYS_BIN%;%path%
@@ -119,44 +120,6 @@ if /I "%menu%"=="w" goto :installwebp
 if /I "%menu%"=="b" call :buildboost
 if /I "%menu%"=="q" exit
 goto mainmenu
-
-:buildboost
-rem Build b2.exe
-if /I exist "%BOOST_BUILD_PATH%\b2.exe" (echo %c_skip% "Skipping building b2.exe"[0m&echo. & goto skipbuildb2)
-echo %c_do% "Building B2"[0m&echo.
-pushd %BOOST_BUILD_PATH%
-set SAVED_TOOLSET=%TOOLSET%
-call bootstrap.bat %TOOLSET2%
-set TOOLSET=%SAVED_TOOLSET%
-popd
-:skipbuildb2
-
-rem Install BOOST (32-bit)
-if /I exist "%BOOST_INSTALL_PATH%\include\boost\version.hpp" (echo %c_skip% "Skipping installing BOOST32"[0m&echo. & goto skipinstallboost32)
-@rem if %BOOST_VER2% LSS 1.75.0 (call :copyecho "libtorrent_patch\socket_types.hpp" "%BOOST_ROOT%\boost\asio\detail\socket_types.hpp" /Y) // WSPiApi.h not required on Windows XP or newer
-@rem pushd %BOOST_ROOT%
-@rem echo %c_do% "Installing BOOST32"[0m&echo.
-@rem rem BOOST_USE_WINAPI_VERSION=0x0501 = Win XP
-@rem b2.exe install toolset=%TOOLSET% release --layout=tagged -j%NUMBER_OF_PROCESSORS% define=BOOST_USE_WINAPI_VERSION=0x05010000 --show-locate-target --without-mpi
-@rem popd
-:skipinstallboost32
-
-rem Install BOOST (64-bit)
-if /I exist "%BOOST64_INSTALL_PATH%\include\boost\version.hpp" (echo %c_skip% "Skipping installing BOOST64"[0m&echo. & goto skipinstallboost64)
-pushd %BOOST_ROOT%
-set oldpath=%path%
-set path=%GCC64_PATH%\bin;%BOOST_ROOT%;%MSYS_BIN%;%path%
-echo %c_do% "Installing BOOST64"[0m&echo.
-b2.exe toolset=%TOOLSET% --with-thread --layout=tagged address-model=64
-set path=%oldpath%
-popd
-:skipinstallboost64
-
-echo.
-echo %c_done% "DONE"[0m&echo.
-echo.
-pause
-goto :eof
 
 :delall
 echo.
@@ -252,12 +215,6 @@ echo %c_do% "Downloading wget"[0m&echo.
 %MSYS_BIN%\pacman.exe -S wget --noconfirm
 :skipwget
 
-rem download tar
-if /I exist "%MSYS_BIN%\tar.exe" (echo %c_skip% "Skipping downloading tar"[0m&echo. & goto skiptar)
-echo %c_do% "Downloading tar"[0m&echo.
-%MSYS_BIN%\pacman.exe -S tar --noconfirm
-:skiptar
-
 rem download make
 if /I exist "%MSYS_BIN%\make.exe" (echo %c_skip% "Skipping downloading make"[0m&echo. & goto skipmake)
 echo %c_do% "Downloading make"[0m&echo.
@@ -279,6 +236,43 @@ mkdir %LIBDIR%\Release_x64
 mkdir %LIBDIR%\Debug_Win32
 mkdir %LIBDIR%\Debug_x64
 :skipcreatelibdir
+
+:buildboost
+rem Build b2.exe
+@rem if /I exist "%BOOST_BUILD_PATH%\b2.exe" (echo %c_skip% "Skipping building b2.exe"[0m&echo. & goto skipbuildb2)
+echo %c_do% "Building B2"[0m&echo.
+pushd %BOOST_BUILD_PATH%
+set SAVED_TOOLSET=%TOOLSET%
+call bootstrap.bat %TOOLSET2%
+set TOOLSET=%SAVED_TOOLSET%
+popd
+:skipbuildb2
+
+rem Install BOOST (32-bit)
+if /I exist "%BOOST_INSTALL_PATH%\include\boost\version.hpp" (echo %c_skip% "Skipping installing BOOST32"[0m&echo. & goto skipinstallboost32)
+@rem if %BOOST_VER2% LSS 1.75.0 (call :copyecho "libtorrent_patch\socket_types.hpp" "%BOOST_ROOT%\boost\asio\detail\socket_types.hpp" /Y) // WSPiApi.h not required on Windows XP or newer
+@rem pushd %BOOST_ROOT%
+@rem echo %c_do% "Installing BOOST32"[0m&echo.
+@rem rem BOOST_USE_WINAPI_VERSION=0x0501 = Win XP
+@rem b2.exe install toolset=%TOOLSET% release --layout=tagged -j%NUMBER_OF_PROCESSORS% define=BOOST_USE_WINAPI_VERSION=0x05010000 --show-locate-target --without-mpi
+@rem popd
+:skipinstallboost32
+
+rem Install BOOST (64-bit)
+if /I exist "%BOOST64_INSTALL_PATH%\include\boost\version.hpp" (echo %c_skip% "Skipping installing BOOST64"[0m&echo. & goto skipinstallboost64)
+pushd %BOOST_ROOT%
+set oldpath=%path%
+set path=%GCC64_PATH%\bin;%BOOST_ROOT%;%MSYS_BIN%;%path%
+echo %c_do% "Installing BOOST64"[0m&echo.
+b2.exe toolset=%TOOLSET% --with-thread --layout=tagged address-model=64
+set path=%oldpath%
+popd
+:skipinstallboost64
+
+echo.
+echo %c_done% "DONE"[0m&echo.
+echo.
+pause
 
 rem Install webp
 if /I exist %LIBWEBP% (echo %c_skip% "Skipping installing WebP"[0m&echo. & goto skipprepwebp)

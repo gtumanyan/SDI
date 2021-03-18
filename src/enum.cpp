@@ -1083,7 +1083,7 @@ void State::getsysinfo_slow(const State *prev)
 
 void State::scanDevices()
 {
-    Log.print_debug("State::scanDevices\n");
+    //Log.print_debug("State::scanDevices\n");
     HDEVINFO hDevInfo;
     HKEY   hkey;
     wchar_t buf[BUFLEN];
@@ -1093,7 +1093,7 @@ void State::scanDevices()
     Timers.start(time_devicescan);
     //collection.init(textas.getw(windir),L"",L"");
 
-    Log.print_debug("State::scanDevices::SetupDiGetClassDevs\n");
+    //Log.print_debug("State::scanDevices::SetupDiGetClassDevs\n");
     hDevInfo=SetupDiGetClassDevs(nullptr,nullptr,nullptr,DIGCF_PRESENT|DIGCF_ALLCLASSES);
     if(hDevInfo==INVALID_HANDLE_VALUE)
     {
@@ -1121,7 +1121,7 @@ void State::scanDevices()
         // Driver
         if(!cur_device->getDriver())continue;
         wsprintf(buf,L"SYSTEM\\CurrentControlSet\\Control\\Class\\%s",textas.getw(cur_device->getDriver()));
-        Log.print_debug("State::scanDevices::Driver::%S\n",buf);
+        //Log.print_debug("State::scanDevices::Driver::%S\n",buf);
         ret=RegOpenKeyEx(HKEY_LOCAL_MACHINE,buf,0,KEY_QUERY_VALUE,&hkey);
         switch(ret)
         {

@@ -34,7 +34,10 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <queue>
 
+#define kInputBufSize ((size_t)1 << 18)
+
 //{ Global variables
+static const ISzAlloc g_Alloc = { SzAlloc, SzFree };
 int drp_count;
 int drp_cur;
 int loaded_unpacked=0;
@@ -125,31 +128,15 @@ public:
 //}
 
 //{ Misc functions
-void *mySzAlloc(ISzAllocPtr p,size_t size)
+static int Buf_EnsureSize(CBuf *dest, size_t size)
 {
-    UNREFERENCED_PARAMETER(p);
-
-    void *mem=nullptr;
-
-    if(size==0)return nullptr;
-    try
-    {
-        mem=((void*)(new char[size]));
-    }
-    catch(std::bad_alloc)
-    {
-        Log.print_err("Failed to alloc\n");
-        //Log.log_err("%10ld, Failed to allocate %ld MB \n",nvwa::total_mem_alloc/1024/1024,size/1024/1024);
-    }
-
-    //if(size>1024*1024)Log.log_err("%10ld, Allocated %ld MB\n",nvwa::total_mem_alloc/1024/1024,size/1024/1024);
-
-    //if(!mem)Log.log_err("Failed to alloc a\n");
-    return mem;
-
+  if (dest->size >= size)
+    return 1;
+  Buf_Free(dest, &g_Alloc);
+  return Buf_Create(dest, size, &g_Alloc);
 }
 
-void mySzFree(ISzAllocPtr p,void *address)
+void mySzFree(void *p,void *address)
 {
     UNREFERENCED_PARAMETER(p);
 
@@ -632,7 +619,7 @@ void Collection::populate()
 
     Log.print_debug("Collection::populate::num_thr_1::%d\n",num_thr_1);
     std::vector<ThreadAbs*> thr;
-    for(UInt32 i=0;i<(num_thr_1-1);++i)
+    for(UInt32 i=0;i<num_thr_1;i++)
     {
         Log.print_debug("Collection::populate::ThreadAbs1::%d\n",i);
         thr.push_back(CreateThread());
@@ -644,13 +631,13 @@ void Collection::populate()
 
     Log.print_debug("Collection::populate::scanfolder::%S\n",driverpack_dir);
     scanfolder(driverpack_dir,&queuedriverpack);
-    for(UInt32 i=0;i<(num_thr-1);++i)
+    for(UInt32 i=0;i<num_thr;i++)
     {
         Log.print_debug("Collection::populate::queuedriverpack.push::%d\n",i);
         queuedriverpack.push(driverpack_task{nullptr});
     }
 
-    for(UInt32 i=0;i<(num_thr-1);++i)
+    for(UInt32 i=0;i<num_thr;i++)
     {
         Log.print_debug("Collection::populate::cons[i]->join::%d\n",i);
         cons[i]->join();
@@ -676,9 +663,9 @@ void Collection::populate()
 
 //{thread
     Log.print_debug("Collection::populate::queuedriverpack1\n");
-    for(UInt32 i=0;i<(num_thr_1-1);++i)queuedriverpack1.push(driverpack_task{nullptr});
+    for(UInt32 i=0;i<num_thr_1;i++)queuedriverpack1.push(driverpack_task{nullptr});
 
-    for(UInt32 i=0;i<(num_thr_1-1);++i)
+    for(UInt32 i=0;i<num_thr_1;i++)
     {
         thr[i]->join();
         delete thr[i];
@@ -712,7 +699,7 @@ void Collection::save()
     if(count_)Log.print_con("Saving indexes...\n");
     std::vector<ThreadAbs *> thr;
     drplist_t queuedriverpack_loc;
-    for(UInt32 i=0;i<(num_cores-1);++i)
+    for(UInt32 i=0;i<num_cores;i++)
     {
         thr.push_back(CreateThread());
         thr[i]->start(&Driverpack::savedrp_thread,&queuedriverpack_loc);
@@ -721,8 +708,8 @@ void Collection::save()
         if(driverpack.getType()==DRIVERPACK_TYPE_PENDING_SAVE)
             queuedriverpack_loc.push(driverpack_task{&driverpack});
 
-    for(UInt32 i=0;i<(num_cores-1);++i)queuedriverpack_loc.push(driverpack_task{nullptr});
-    for(UInt32 i=0;i<(num_cores-1);++i)
+    for(UInt32 i=0;i<num_cores;i++)queuedriverpack_loc.push(driverpack_task{nullptr});
+    for(UInt32 i=0;i<num_cores;i++)
     {
         thr[i]->join();
         delete thr[i];
@@ -1086,6 +1073,13 @@ int Merger::combine(std::wstring dir1,std::wstring dir2,int sz)
     return 1;
 }
 
+static void PrintError(char *s)
+{
+  Print("\nERROR: ");
+  Print(s);
+  PrintLF();
+}
+
 void Merger::find_dups()
 {
     Log.print_con("{");
@@ -1126,8 +1120,13 @@ void Merger::find_dups()
 //{ Driverpack
 int Driverpack::genindex()
 {
-    CFileInStream archiveStream;
-    CLookToRead2 lookStream;
+  ISzAlloc allocImp;
+  ISzAlloc allocTempImp;
+
+  CFileInStream archiveStream;
+  CLookToRead2 lookStream;
+  CSzArEx db;
+  SRes res;
 
     wchar_t fullname[BUFLEN];
     WStringShort infpath;
@@ -1135,26 +1134,46 @@ int Driverpack::genindex()
 
     WStringShort name;
     name.sprintf(L"%ws\\%ws",getPath(),getFilename());
+  Log.print_con("\n7z Decoder " MY_VERSION_CPU " : " MY_COPYRIGHT_DATE "\n\n");
     Log.print_con("Indexing %S\n",name.Get());
-    if(InFile_OpenW(&archiveStream.file,name.Get()))return 1;
 
-    FileInStream_CreateVTable(&archiveStream);
-    LookToRead2_CreateVTable(&lookStream,False);
-    lookStream.realStream=&archiveStream.vt;
-    LookToRead2_Init(&lookStream);
 
-    ISzAlloc allocImp;
-    ISzAlloc allocTempImp;
-    allocImp.Alloc=mySzAlloc;
-    allocImp.Free=mySzFree;
-    allocTempImp.Alloc=SzAllocTemp;
-    allocTempImp.Free=SzFreeTemp;
+  allocImp = g_Alloc;
+  allocTempImp = g_Alloc;
+    if (InFile_OpenW(&archiveStream.file,name.Get()));
+  {
+    Log.print_err("can not open input file");
+    return 1;
+  }
 
-    CSzArEx db;
-    SzArEx_Init(&db);
-    SRes res=SzArEx_Open(&db,&lookStream.vt,&allocImp,&allocTempImp);
+  FileInStream_CreateVTable(&archiveStream);
+  LookToRead2_CreateVTable(&lookStream, False);
+  lookStream.buf = NULL;
+
+  res = SZ_OK;
+
+  {
+    lookStream.buf = (Byte *)ISzAlloc_Alloc(&allocImp, kInputBufSize);
+    if (!lookStream.buf)
+      res = SZ_ERROR_MEM;
+    else
+    {
+      lookStream.bufSize = kInputBufSize;
+      lookStream.realStream = &archiveStream.vt;
+      LookToRead2_Init(&lookStream);
+    }
+  }
+    
+  CrcGenerateTable();
+    
+  SzArEx_Init(&db);
+    
+  if (res == SZ_OK)
+  {
+    res = SzArEx_Open(&db, &lookStream.vt, &allocImp, &allocTempImp);
+  }
     int cc=0;
-    if(res==SZ_OK)
+  if (res == SZ_OK)
     {
 #ifdef MERGE_FINDER
         getindexfilename(col->getIndex_linear_dir(),L"7z.bat",fullname);

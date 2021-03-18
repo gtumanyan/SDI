@@ -378,7 +378,7 @@ int SystemImp::canWrite(const wchar_t *path)
     return (flagsv&FILE_READ_ONLY_VOLUME)?0:1;
 }
 */
-int SystemImp::canWriteFile(const wchar_t *path,const wchar_t *mode)
+bool SystemImp::canWriteFile(const wchar_t *path,const wchar_t *mode)
 {
     // test if the given file name can be written or updated
 
@@ -406,8 +406,8 @@ int SystemImp::canWriteFile(const wchar_t *path,const wchar_t *mode)
         err = _wfopen_s(&stream, path, mode);
         if (err)
         {
-            //Log.print_err("The file %S was not opened\n",path);
-            return(0);
+            Log.print_err("Error %d The file %S was not opened\n",err,path);
+            return(false);
         }
         // Close stream if it isn't NULL
         if (stream)
@@ -417,10 +417,10 @@ int SystemImp::canWriteFile(const wchar_t *path,const wchar_t *mode)
             {
                 Log.print_err("The file %S was not closed\n,path");
             }
-            return(1);
+            return(true);
         }
     }
-    return (flagsv&FILE_READ_ONLY_VOLUME)?0:1;
+    return bool (flagsv&FILE_READ_ONLY_VOLUME)?0:1;
 }
 
 int SystemImp::canWriteDirectory(const wchar_t *path)

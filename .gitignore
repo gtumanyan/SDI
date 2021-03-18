@@ -25,7 +25,6 @@ ExportedObj/
 *.csproj
 /res/RCa0*
 *.unityproj
-*.sln
 *.suo
 *.tmp
 *.user
@@ -42,5 +41,6 @@ ExportedObj/
 
 # Other stuff
 drivers
+indexes
 *.ilk
 
