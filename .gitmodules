@@ -1,9 +1,11 @@
-[submodule "ext/libtorrent"]
-	path = ext/libtorrent
-	url = https://github.com/arvidn/libtorrent.git
-[submodule "ext/boost"]
-	path = ext/boost
-	url = https://github.com/boostorg/boost
 [submodule "ext/libwebp"]
 	path = ext/libwebp
 	url = https://github.com/webmproject/libwebp.git
+[submodule "ext/libtorrent"]
+	path = ext/libtorrent
+	url = https://github.com/arvidn/libtorrent
+	branch = master
+[submodule "ext/boost"]
+	path = ext/boost
+	url = https://github.com/boostorg/boost
+	branch = master
