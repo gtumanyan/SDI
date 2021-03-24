@@ -8,4 +8,4 @@
 [submodule "ext/boost"]
 	path = ext/boost
 	url = https://github.com/boostorg/boost
-	branch = master
+	branch = develop
