@@ -5,7 +5,3 @@
 	path = ext/libtorrent
 	url = https://github.com/arvidn/libtorrent
 	branch = master
-[submodule "ext/boost"]
-	path = ext/boost
-	url = https://github.com/boostorg/boost
-	branch = develop
