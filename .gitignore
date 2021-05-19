@@ -2,7 +2,7 @@
 **/[Dd]ebug/
 **/[Rr]elease/
 **/x64/
-**/Win32/*
+**/Win32/**
 #[Bb]in/
 [Oo]bj/
 [Ll]ib
@@ -59,3 +59,4 @@ update/
 *.ilk
 
 *.db
+Win32
