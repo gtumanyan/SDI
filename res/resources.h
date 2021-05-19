@@ -1,27 +1,29 @@
 /*
-This file is part of Snappy Driver Installer Origin.
+This file is part of Snappy Driver Installer.
 
-Snappy Driver Installer Origin is free software: you can redistribute it and/or modify
+Snappy Driver Installer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License or (at your option) any later version.
 
-Snappy Driver Installer Origin is distributed in the hope that it will be useful
+Snappy Driver Installer is distributed in the hope that it will be useful
 but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
+Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "version.h"
+#include "..\src\gitrev.h"
 
-#define VER_FILEVERSION             1,9,0,SVN_REV
-#define VER_FILEVERSION_STR         "1.9.0." SVN_REV_STR "\0"
+#define VER_FILEVERSION             1,10,3,GIT_REV
+#define VER_FILEVERSION_STR         "1.10.3." GIT_REV_STR "\0"
 
-#define VER_VERSION_STR             "Version 1.9.0." SVN_REV_STR
-#define VER_VERSION_STR2            "v1.9.0"
+#define VER_VERSION_STR             "Version 1.10.3." GIT_REV_STR
+#define VER_VERSION_STR2            "v1.10.3"
 
+#ifndef IDC_STATIC
 #define IDC_STATIC     -1
+#endif
 
 #define RESFILE       100
 
@@ -37,7 +39,7 @@ Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
 #define IDR_INSTALL64 209
 #define IDR_CLI_HELP  210
 #define IDR_LOGO      211
-//#define IDR_PATREON   212
+#define IDR_PATREON   212
 #define IDB_LOGO      214
 #define IDB_WATERMARK 215
 
@@ -91,12 +93,14 @@ Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
 #define IDD_P2_CON    503
 #define IDD_P2_DOWN   504
 #define IDD_P2_UP     505
+#define IDD_P2_TURL   511
 #define IDD_P2_PORTE  506
 #define IDD_P2_CONE   507
 #define IDD_P2_DOWNE  508
 #define IDD_P2_UPE    509
 
 #define IDD_P2_UPD    510
+#define IDD_P2_TURLE  512
 
 // Path tab
 #define IDD_Page3     600
@@ -131,7 +135,7 @@ Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
 #define IDM_DRVDIR    19
 #define IDM_SEED      20
 #define IDM_UPDATES   21
-#define IDM_UPDATES_SDIO 22
+#define IDM_UPDATES_SDI 22
 #define IDM_UPDATES_DRIVERS 23
 #define IDM_TOOLS     24
 #define IDM_WELCOME   25
@@ -176,4 +180,5 @@ Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
 #define IDC_TRANSL_COPYCLIP   1011
 #define IDC_TRANSL_CLEAR      1012
 
-#define WEB_HOMEPAGE    L"www.snappy-driver-installer.org"
+#define WEB_HOMEPAGE    L"http://www.sdi-tool.org"
+#define WEB_PATREONPAGE L"https://www.patreon.com/SamLab"

@@ -1,5 +1,5 @@
 @echo off
-echo Snappy Driver Installer Origin
+echo Snappy Driver Installer
 echo Driver Pack Cleanup
 echo by Computer Bloke
 echo.

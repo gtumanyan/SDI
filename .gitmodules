@@ -1,7 +1,10 @@
-[submodule "external/libtorrent"]
-	path = external/libtorrent
-	url = https://github.com/arvidn/libtorrent
-	branch = RC_1_0
-[submodule "external/boost"]
-	path = external/boost
-	url = https://github.com/boostorg/boost.git
+[submodule "ext/libwebp"]
+	path = ext/libwebp
+	url = https://github.com/webmproject/libwebp.git
+[submodule "ext/boost"]
+	path = ext/boost
+	url = https://github.com/boostorg/boost
+	branch = develop
+[submodule "ext/libtorrent"]
+	path = ext/libtorrent
+	url = https://github.com/FranciscoPombal/libtorrent.git

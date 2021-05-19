@@ -4,7 +4,7 @@ Task-oriented
 -?                Show this help window.
 
 -7z               Run in 7z archiver mode.
-                  Example: SDIO.exe -7z x DP_TV_Beholder_14020.7z
+                  Example: SDI.exe -7z x DP_TV_Beholder_14020.7z
 
 -install <hwid> <inffile>
                   Install driver with specified <hwid> from <inffile>.
@@ -66,6 +66,7 @@ sdi.cfg
 -showdrpnames2    Shows driverpack names above.
 -oldstyle         Shows driver list using old style.
 -preservecfg      Prevents updating of sdi.cfg.
+-hidepatreon      Hides the Patreon button.
 -cfg:<FileName>   Loads <file> instead of "sdi.cfg".
 
 -------
@@ -78,11 +79,10 @@ Torrent
 -downlimit:<num>  Sets download speed limit (in KBs).
 -uplimit:<num>    Sets upload speed limit (in KBs).
 -connections:<num>Sets the maximum number of connections.
--finish_upd_cmd:<cmd> Specifies a command executed upon completion
-                  of download.
+-finish_upd_cmd:<cmd> Specifies a command executed upon completion of download.
 -autoclose        Close the application after downloading.
 -activetorrent:<num> Selects the update torrent. A value of 1 selects
-                  the normal SDIO update torrent, a value of 2 selects
+                  the normal SDI update torrent, a value of 2 selects
                   the driver packs update torrent which is updated
                   more frequently.
 ---------
@@ -91,8 +91,7 @@ Emulation
 -a:32             Emulates 32-bit Windows.
 -a:64             Emulates 64-bit Windows.
 -v:<version>      Emulates Windows of specific version.
-                  For example, in order to emulate Windows Vista
-                  use -v:60.
+                  For example, in order to emulate Windows Vista use -v:60.
 
 -----------
 Autoinstall
@@ -116,3 +115,26 @@ Debug
                   restore point.
 -reindex          Forces reindexing of all driverpacks.
 -index_hr         Creates indexes in human-readable format.
+
+-------
+Verbose
+-------
+The -verbose:<flags> switch is used to set log detail level.
+For example, in order to log only sections DeviceInfo and manager_print
+you have to calculate the sum: 4+16=20.
+SDI.exe -verbose:20
+
+LOG_VERBOSE_ARGS       | 0x0001 |    1 | Sections: "Settings".
+LOG_VERBOSE_SYSINFO    | 0x0002 |    2 | Sections: "Windows", "Environment".
+LOG_VERBOSE_DEVICES    | 0x0004 |    4 | Sections: "DeviceInfo".
+LOG_VERBOSE_MATCHER    | 0x0008 |    8 | Sections: "{matcher_print".
+LOG_VERBOSE_MANAGER    | 0x0010 |   16 | Sections: "{manager_print".
+LOG_VERBOSE_DRP        | 0x0020 |   32 | Sections: "Driverpacks".
+LOG_VERBOSE_TIMES      | 0x0040 |   64 | Sections: "Times".
+LOG_VERBOSE_LOG_ERR    | 0x0080 |  128 | Error messages.
+LOG_VERBOSE_LOG_CON    | 0x0100 |  256 | Misc messages.
+LOG_VERBOSE_LAGCOUNTER | 0x0200 |  512 | GUI lag counter.
+LOG_VERBOSE_DEVSYNC    | 0x0400 | 1024 | Sections: "{Updated".
+LOG_VERBOSE_BATCH      | 0x0800 | 2048 | Batch processing of snapshots.
+LOG_VERBOSE_DEBUG      | 0x1000 | 4096 | Debug output.
+LOG_VERBOSE_TORRENT    | 0x2000 | 8196 | Torrent output

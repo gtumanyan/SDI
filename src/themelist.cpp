@@ -2,17 +2,15 @@
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+it under the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License or (at your option) any later version.
 
-Snappy Driver Installer is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Snappy Driver Installer is distributed in the hope that it will be useful
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "com_header.h"
@@ -111,6 +109,10 @@ const int boxindex[BOX_NUM]=
     KBHLT_INSIDE_COLOR,
     DRVITEM_INSIDE_COLOR_IU,
     DRVITEM_INSIDE_COLOR_IU_H,
+    DRVITEM_INSIDE_COLOR_PT,
+    DRVITEM_INSIDE_COLOR_PT_H,
+    DRVITEM_INSIDE_COLOR_TR,
+    DRVITEM_INSIDE_COLOR_TR_H,
     DRVITEM_INSIDE_COLOR_PN,
     DRVITEM_INSIDE_COLOR_PN_H,
 };
@@ -643,6 +645,42 @@ entry_t theme[THEME_NM]=
     DEF_VAL("DRVITEM_BITMAP_FILL_IU_H")
     DEF_VAL("DRVITEM_TEXT1_COLOR_IU")
     DEF_VAL("DRVITEM_TEXT2_COLOR_IU")
+
+// Patreon
+    DEF_VAL("DRVITEM_INSIDE_COLOR_PT")
+    DEF_VAL("DRVITEM_OUTLINE_COLOR_PT")
+    DEF_VAL("DRVITEM_OUTLINE_WIDTH_PT")
+    DEF_VAL("DRVITEM_OUTLINE_ROUND_PT")
+    DEF_VAL("DRVITEM_BITMAP_FILENAME_PT")
+    DEF_VAL("DRVITEM_BITMAP_ANCHOR_PT")
+    DEF_VAL("DRVITEM_BITMAP_FILL_PT")
+    DEF_VAL("DRVITEM_INSIDE_COLOR_PT_H")
+    DEF_VAL("DRVITEM_OUTLINE_COLOR_PT_H")
+    DEF_VAL("DRVITEM_OUTLINE_WIDTH_PT_H")
+    DEF_VAL("DRVITEM_OUTLINE_ROUND_PT_H")
+    DEF_VAL("DRVITEM_BITMAP_FILENAME_PT_H")
+    DEF_VAL("DRVITEM_BITMAP_ANCHOR_PT_H")
+    DEF_VAL("DRVITEM_BITMAP_FILL_PT_H")
+    DEF_VAL("DRVITEM_TEXT1_COLOR_PT")
+    DEF_VAL("DRVITEM_TEXT2_COLOR_PT")
+
+// Translation
+    DEF_VAL("DRVITEM_INSIDE_COLOR_TR")
+    DEF_VAL("DRVITEM_OUTLINE_COLOR_TR")
+    DEF_VAL("DRVITEM_OUTLINE_WIDTH_TR")
+    DEF_VAL("DRVITEM_OUTLINE_ROUND_TR")
+    DEF_VAL("DRVITEM_BITMAP_FILENAME_TR")
+    DEF_VAL("DRVITEM_BITMAP_ANCHOR_TR")
+    DEF_VAL("DRVITEM_BITMAP_FILL_TR")
+    DEF_VAL("DRVITEM_INSIDE_COLOR_TR_H")
+    DEF_VAL("DRVITEM_OUTLINE_COLOR_TR_H")
+    DEF_VAL("DRVITEM_OUTLINE_WIDTH_TR_H")
+    DEF_VAL("DRVITEM_OUTLINE_ROUND_TR_H")
+    DEF_VAL("DRVITEM_BITMAP_FILENAME_TR_H")
+    DEF_VAL("DRVITEM_BITMAP_ANCHOR_TR_H")
+    DEF_VAL("DRVITEM_BITMAP_FILL_TR_H")
+    DEF_VAL("DRVITEM_TEXT1_COLOR_TR")
+    DEF_VAL("DRVITEM_TEXT2_COLOR_TR")
 
 // Virus alert
     DEF_VAL("DRVITEM_INSIDE_COLOR_VR")

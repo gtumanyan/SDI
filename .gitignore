@@ -8,22 +8,11 @@
 .vs
 *.lo
 *.log
-ipch/
-*.aps
 *.ncb
 *.o
 *.opendb
+*.VC.db
 *.obj
-*.ilc
-*.ild
-*.ilf
-*.ils
-*.map
-*.tds
-
-# Precompiled Headers
-*.gch
-*.pch
 
 # Compiled Dynamic libraries
 *.so
@@ -36,24 +25,22 @@ ExportedObj/
 *.csproj
 /res/RCa0*
 *.unityproj
-*.sln
 *.suo
 *.tmp
 *.user
 *.userprefs
 *.pidb
-*.booproj
+*.bsc
 *.svd
 *.pdb
 *.mdb
-*.opendb
-*.VC.db
 
 
 # Executables
 *.exe
 
 # Other stuff
-*.save
-*.layout
+drivers
+indexes
+*.ilk
 

@@ -1,16 +1,16 @@
 /*
-This file is part of Snappy Driver Installer Origin.
+This file is part of Snappy Driver Installer.
 
-Snappy Driver Installer Origin is free software: you can redistribute it and/or modify
+Snappy Driver Installer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License or (at your option) any later version.
 
-Snappy Driver Installer Origin is distributed in the hope that it will be useful
+Snappy Driver Installer is distributed in the hope that it will be useful
 but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
+Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <string>
@@ -76,7 +76,7 @@ public:
     unsigned GetTickCountWr();
 
 //    int canWrite(const wchar_t *path);
-    int canWriteFile(const wchar_t *path,const wchar_t *mode);
+    bool canWriteFile(const wchar_t *path,const wchar_t *mode);
     int canWriteDirectory(const wchar_t *path);
     int run_command(const wchar_t* file,const wchar_t* cmd,int show,int wait);
     int run_command32(const wchar_t* file,const wchar_t* cmd,int show,int wait);

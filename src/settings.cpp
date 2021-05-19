@@ -1,16 +1,16 @@
 /*
-This file is part of Snappy Driver Installer Origin.
+This file is part of Snappy Driver Installer.
 
-Snappy Driver Installer Origin is free software: you can redistribute it and/or modify
+Snappy Driver Installer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License or (at your option) any later version.
 
-Snappy Driver Installer Origin is distributed in the hope that it will be useful
+Snappy Driver Installer is distributed in the hope that it will be useful
 but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
+Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "com_header.h"
@@ -35,7 +35,7 @@ Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
 
 int volatile installmode=MODE_NONE;
 int invaidate_set;
-// const int num_cores;
+unsigned int num_cores;
 int ret_global=0;
 
 Settings_t::Settings_t()
@@ -45,10 +45,10 @@ Settings_t::Settings_t()
     wcscpy(logO_dir,  L"logs");
 
     wcscpy(drp_dir,   L"drivers");
-    wcscpy(output_dir,L"indexes\\SDI\\txt");
+    wcscpy(output_dir,L"indexes\\txt");
     *drpext_dir=0;
-    wcscpy(index_dir, L"indexes\\SDI");
-    wcscpy(data_dir,  L"tools\\SDI");
+    wcscpy(index_dir, L"indexes");
+    wcscpy(data_dir,  L"tools");
     *log_dir=0;
 
     wcscpy(state_file,L"untitled.snp");
@@ -141,6 +141,7 @@ void Settings_t::parse(const wchar_t *str,size_t ind)
         if(argflg(pr,L"-norestorepnt",   FLAG_NORESTOREPOINT))continue;
         if(argflg(pr,L"-novirusalerts",  FLAG_NOVIRUSALERTS))continue;
         if(argflg(pr,L"-preservecfg",    FLAG_PRESERVECFG))continue;
+        if(argflg(pr,L"-hidepatreon",    FLAG_HIDEPATREON))continue;
 
         if(argflg(pr,L"-showdrpnames1",  FLAG_SHOWDRPNAMES1))continue;
         if(argflg(pr,L"-showdrpnames2",  FLAG_SHOWDRPNAMES2))continue;
@@ -174,7 +175,7 @@ void Settings_t::parse(const wchar_t *str,size_t ind)
             wchar_t buf[BUFLEN];
             Log.print_con("Install '%S' '%s'\n",argv[i+1],argv[i+2]);
             GetEnvironmentVariable(L"TEMP",buf,BUFLEN);
-            wsprintf(extractdir,L"%s\\SDIO",buf);
+            wsprintf(extractdir,L"%s\\SDI",buf);
             installmode=MODE_INSTALLING;
             driver_install(argv[i+1],argv[i+2],&ret_global,&needreboot);
             Log.print_con("Ret: %X,%d\n",ret_global,needreboot);
@@ -265,6 +266,7 @@ void Settings_t::save()
     if(flags&FLAG_SHOWCONSOLE)fwprintf(f,L"-showconsole ");
     if(flags&FLAG_NORESTOREPOINT)fwprintf(f,L"-norestorepnt ");
     if(flags&FLAG_NOVIRUSALERTS)fwprintf(f,L"-novirusalerts ");
+    if(flags&FLAG_HIDEPATREON)fwprintf(f,L"-hidepatreon ");
 
     if(flags&FLAG_SHOWDRPNAMES1)fwprintf(f,L"-showdrpnames1 ");
     if(flags&FLAG_SHOWDRPNAMES2)fwprintf(f,L"-showdrpnames2 ");

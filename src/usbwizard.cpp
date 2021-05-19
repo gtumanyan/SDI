@@ -1,16 +1,16 @@
 /*
-This file is part of Snappy Driver Installer Origin.
+This file is part of Snappy Driver Installer.
 
-Snappy Driver Installer Origin is free software: you can redistribute it and/or modify
+Snappy Driver Installer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License or (at your option) any later version.
 
-Snappy Driver Installer Origin is distributed in the hope that it will be useful
+Snappy Driver Installer is distributed in the hope that it will be useful
 but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
+Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 // have to link in comctl32
@@ -424,8 +424,8 @@ static void BuildFilesList(HWND hwnd)
 
     // both executables
     int ver=System.FindLatestExeVersion();
-    std::wstring exe32=L"SDIO_R"+std::to_wstring(ver)+L".exe";
-    std::wstring exe64=L"SDIO_x64_R"+std::to_wstring(ver)+L".exe";
+    std::wstring exe32=L"SDI"+std::to_wstring(ver)+L".exe";
+    std::wstring exe64=L"SDI_x64"+std::to_wstring(ver)+L".exe";
     USBWiz->AddFile(exe32,targetDrive+exe32);
     USBWiz->AddFile(exe64,targetDrive+exe64);
     __int64 ExecutableSize=System.FileSize(exe32.c_str())+System.FileSize(exe64.c_str());
@@ -449,6 +449,7 @@ static void BuildFilesList(HWND hwnd)
         if(USBWiz->NoSnapshots)fwprintf(f,L"-nosnapshot ");
         if(USBWiz->NoLogs)fwprintf(f,L"-nologfile ");
         if(Settings.flags&FLAG_SHOWCONSOLE)fwprintf(f,L"-showconsole ");
+        if(Settings.flags&FLAG_HIDEPATREON)fwprintf(f,L"-hidepatreon ");
         if(Settings.flags&FLAG_SHOWDRPNAMES1)fwprintf(f,L"-showdrpnames1 ");
         if(Settings.flags&FLAG_SHOWDRPNAMES2)fwprintf(f,L"-showdrpnames2 ");
         fclose(f);
@@ -468,7 +469,7 @@ static void BuildFilesList(HWND hwnd)
         if(f)
         {
             fwprintf(f,L"[autorun]\n");
-            fwprintf(f,L"open=SDIO_auto.bat\n");
+            fwprintf(f,L"open=SDI_auto.bat\n");
             fwprintf(f,L"icon=%ws\n\n",exe32.c_str());
             fwprintf(f,L"[NOT_A_VIRUS]\n");
             fclose(f);
@@ -476,10 +477,10 @@ static void BuildFilesList(HWND hwnd)
         TargetFileName=targetDrive;
         TargetFileName.append(L"autorun.inf");
         USBWiz->AddFile(SourceFileName,TargetFileName);
-        // SDIO_auto.bat
+        // SDI_auto.bat
         TargetFileName=targetDrive;
-        TargetFileName.append(L"SDIO_auto.bat");
-        USBWiz->AddFile(L"SDIO_auto.bat",TargetFileName);
+        TargetFileName.append(L"SDI_auto.bat");
+        USBWiz->AddFile(L"SDI_auto.bat",TargetFileName);
     }
 
     // update all wizard text

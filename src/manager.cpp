@@ -1,16 +1,16 @@
 /*
-This file is part of Snappy Driver Installer Origin.
+This file is part of Snappy Driver Installer.
 
-Snappy Driver Installer Origin is free software: you can redistribute it and/or modify
+Snappy Driver Installer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License or (at your option) any later version.
 
-Snappy Driver Installer Origin is distributed in the hope that it will be useful
+Snappy Driver Installer is distributed in the hope that it will be useful
 but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
+Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "com_header.h"
@@ -169,6 +169,12 @@ int itembar_t::box_status()
         case SLOT_DOWNLOAD:
         case SLOT_NOUPDATES:
             return BOX_NOUPDATES;
+
+        case SLOT_PATREON:
+            return BOX_PATREON;
+
+        case SLOT_TRANSLATION:
+            return BOX_TRANSLATION;
 
         case SLOT_RESTORE_POINT:
             switch(install_status)
@@ -704,12 +710,12 @@ void Manager::filter(int options,std::vector<std::wstring> *drpfilter)
 
             if((!o1||!cnt[NUM_STATUS])&&(options&FILTER_SHOW_MISSING)&&itembar->hwidmatch->getStatus()&STATUS_MISSING)
             {
-                        itembar->isactive=1;
-                        if(itembar->hwidmatch->getdrp_packontorrent()&&!ontorrent)
-                            ontorrent=1;
-                        else
-                        cnt[NUM_STATUS]++;
-                    }
+                itembar->isactive=1;
+                if(itembar->hwidmatch->getdrp_packontorrent()&&!ontorrent)
+                    ontorrent=1;
+                else
+                    cnt[NUM_STATUS]++;
+            }
 
             if(Settings.flags&FLAG_FILTERSP&&itembar->hwidmatch->getAltsectscore()==2&&!itembar->hwidmatch->isvalidcat(matcher->getState()))
                 itembar->hwidmatch->setAltsectscore(1);
@@ -1517,6 +1523,14 @@ int Manager::drawitem(Canvas &canvas,size_t index,int ofsy,int zone,int cutoff)
             canvas.DrawTextXY(x+D_X(ITEM_TEXT_OFS_X),pos+D_X(ITEM_TEXT_DIST_Y)/2,bufw);
             break;
 
+        case SLOT_PATREON:
+            pos+=D_X(ITEM_TEXT_OFS_Y);
+            canvas.SetTextColor(D_C(boxindex[itembar->box_status()]+14));
+            canvas.DrawTextXY(x+D_X(ITEM_TEXT_OFS_X),pos,STR(STR_PATREON1));
+            canvas.SetTextColor(D_C(boxindex[itembar->box_status()]+15));
+            canvas.DrawTextXY(x+D_X(ITEM_TEXT_OFS_X),pos+D_X(ITEM_TEXT_DIST_Y),STR(STR_PATREON2));
+            break;
+
         case SLOT_DOWNLOAD:
             if(*itembar->txt1)
                 wsprintf(bufw,L"%s",itembar->txt1);
@@ -1817,7 +1831,7 @@ void Manager::restorepos1(Manager *manager_prev)
         {
             if(!isRebootDesired())selectall();
             if((Settings.flags&FLAG_EXTRACTONLY)==0)
-            wsprintf(extractdir,L"%s\\SDIO",matcher->getState()->textas.getw(matcher->getState()->getTemp()));
+            wsprintf(extractdir,L"%s\\SDI",matcher->getState()->textas.getw(matcher->getState()->getTemp()));
             install(INSTALLDRIVERS);
         }
         else

@@ -1,16 +1,16 @@
 /*
-This file is part of Snappy Driver Installer Origin.
+This file is part of Snappy Driver Installer.
 
-Snappy Driver Installer Origin is free software: you can redistribute it and/or modify
+Snappy Driver Installer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License or (at your option) any later version.
 
-Snappy Driver Installer Origin is distributed in the hope that it will be useful
+Snappy Driver Installer is distributed in the hope that it will be useful
 but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
-Snappy Driver Installer Origin.  If not, see <http://www.gnu.org/licenses/>.
+Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "com_header.h"
@@ -1083,7 +1083,7 @@ void State::getsysinfo_slow(const State *prev)
 
 void State::scanDevices()
 {
-    Log.print_debug("State::scanDevices\n");
+    //Log.print_debug("State::scanDevices\n");
     HDEVINFO hDevInfo;
     HKEY   hkey;
     wchar_t buf[BUFLEN];
@@ -1093,7 +1093,7 @@ void State::scanDevices()
     Timers.start(time_devicescan);
     //collection.init(textas.getw(windir),L"",L"");
 
-    Log.print_debug("State::scanDevices::SetupDiGetClassDevs\n");
+    //Log.print_debug("State::scanDevices::SetupDiGetClassDevs\n");
     hDevInfo=SetupDiGetClassDevs(nullptr,nullptr,nullptr,DIGCF_PRESENT|DIGCF_ALLCLASSES);
     if(hDevInfo==INVALID_HANDLE_VALUE)
     {
@@ -1121,7 +1121,7 @@ void State::scanDevices()
         // Driver
         if(!cur_device->getDriver())continue;
         wsprintf(buf,L"SYSTEM\\CurrentControlSet\\Control\\Class\\%s",textas.getw(cur_device->getDriver()));
-        Log.print_debug("State::scanDevices::Driver::%S\n",buf);
+        //Log.print_debug("State::scanDevices::Driver::%S\n",buf);
         ret=RegOpenKeyEx(HKEY_LOCAL_MACHINE,buf,0,KEY_QUERY_VALUE,&hkey);
         switch(ret)
         {
