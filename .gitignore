@@ -1,17 +1,23 @@
-# Compiled Object files
-[Bb]in/
+#-- Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+Win32/
+#[Bb]in/
 [Oo]bj/
 [Ll]ib
+*.pdb
 [Ll]og
 [Ll]ogs/
-*.slo
-.vs
-*.lo
-*.log
+
+#-- Visual C++ cache files
+.vs/
+ipch/
+*.aps
 *.ncb
 *.o
 *.opendb
-*.VC.db
+
 *.obj
 
 # Compiled Dynamic libraries
@@ -30,11 +36,17 @@ ExportedObj/
 *.user
 *.userprefs
 *.pidb
+*.vcxproj.filters
 *.bsc
 *.svd
 *.pdb
 *.mdb
 
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
 
 # Executables
 *.exe
@@ -44,3 +56,4 @@ drivers
 indexes
 *.ilk
 
+*.db

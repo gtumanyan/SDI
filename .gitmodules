@@ -3,8 +3,8 @@
 	url = https://github.com/webmproject/libwebp.git
 [submodule "ext/boost"]
 	path = ext/boost
-	url = https://github.com/boostorg/boost
+	url = https://github.com/boostorg/boost.git
 	branch = develop
 [submodule "ext/libtorrent"]
 	path = ext/libtorrent
-	url = https://github.com/FranciscoPombal/libtorrent.git
+	url = https://github.com/gtumanyan/libtorrent.git
