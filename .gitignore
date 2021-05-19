@@ -38,6 +38,9 @@ ExportedObj/
 *.pidb
 *.vcxproj.filters
 *.bsc
+drivers/
+indexes/
+update/
 *.svd
 *.pdb
 *.mdb
@@ -52,8 +55,7 @@ ExportedObj/
 *.exe
 
 # Other stuff
-drivers
-indexes
+
 *.ilk
 
 *.db
