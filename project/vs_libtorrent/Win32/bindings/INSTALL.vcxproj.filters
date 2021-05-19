@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\sdi\project\vs_libtorrent\Win32\CMakeFiles\04601773241efac446342a4cdbd219a6\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{9A227F5D-D47E-3C12-8559-D49C4C88F19A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
