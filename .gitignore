@@ -1,14 +1,14 @@
 #-- Build results
-[Dd]ebug/
-[Rr]elease/
-x64/
-Win32/
+**[Dd]ebug/
+**[Rr]elease/
+**x64/
+**Win32/
 #[Bb]in/
 [Oo]bj/
 [Ll]ib
 *.pdb
-[Ll]og
-[Ll]ogs/
+**[Ll]og
+**[Ll]ogs/
 
 #-- Visual C++ cache files
 .vs/
