@@ -1173,7 +1173,7 @@ int Driverpack::genindex()
     res = SzArEx_Open(&db, &lookStream.vt, &allocImp, &allocTempImp);
   }
     int cc=0;
-    if(res==SZ_OK)
+  if (res == SZ_OK)
     {
 #ifdef MERGE_FINDER
         getindexfilename(col->getIndex_linear_dir(),L"7z.bat",fullname);
