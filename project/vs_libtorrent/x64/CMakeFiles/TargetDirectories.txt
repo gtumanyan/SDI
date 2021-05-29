@@ -1,8 +1,0 @@
-E:/sdi/project/vs_libtorrent/x64/CMakeFiles/torrent-rasterbar.dir
-E:/sdi/project/vs_libtorrent/x64/CMakeFiles/INSTALL.dir
-E:/sdi/project/vs_libtorrent/x64/CMakeFiles/ALL_BUILD.dir
-E:/sdi/project/vs_libtorrent/x64/CMakeFiles/ZERO_CHECK.dir
-E:/sdi/project/vs_libtorrent/x64/bindings/CMakeFiles/INSTALL.dir
-E:/sdi/project/vs_libtorrent/x64/examples/CMakeFiles/client_test.dir
-E:/sdi/project/vs_libtorrent/x64/examples/CMakeFiles/INSTALL.dir
-E:/sdi/project/vs_libtorrent/x64/examples/CMakeFiles/ALL_BUILD.dir

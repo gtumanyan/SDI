@@ -1361,11 +1361,7 @@ int UpdaterImp::downloadTorrent()
     //   settings.disk_cache_algorithm=session_settings::avoid_readback;   Disk caching was removed in libtorrent, at least 1.1, maybe earlier
 //    settings.volatile_read_cache=false;   // Let's leave it on by default
 
-    settings.set_str(lt::settings_pack::dht_bootstrap_nodes, "dht.libtorrent.org:25401,
-		router.bittorrent.com:6881,
-		router.utorrent.com:6881,
-		dht.transmissionbt.com:6881,
-		dht.aelitis.com:6881");
+    settings.set_str(lt::settings_pack::dht_bootstrap_nodes, "dht.libtorrent.org:25401,router.bittorrent.com:6881,router.utorrent.com:6881,dht.transmissionbt.com:6881,dht.aelitis.com:6881");
 //    settings.set_bool(settings_pack::enable_dht, false);  // True by default
     settings.set_int(lt::settings_pack::alert_mask,
         lt::alert::dht_notification   |
@@ -1738,7 +1734,7 @@ void UpdaterImp::DownloadNetwork()
 void UpdaterImp::DownloadIndexes()
 {
     for(int i=0;i<Updater->numfiles;i++)
-        if(StrStrIA(hTorrent.torrent_file()->files().file_name(i).c_str(),"indexes\\"))
+        if(StrStrIA(hTorrent.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
             hTorrent.file_priority(i,2);
     Updater->resumeDownloading();
 }
