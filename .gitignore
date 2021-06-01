@@ -1,7 +1,6 @@
 #-- Build results
 **/[Dd]ebug/
 **/[Rr]elease/
-**/x64/
 **/Win32/**
 #[Bb]in/
 [Oo]bj/
@@ -18,7 +17,9 @@ ipch/
 *.o
 *.opendb
 
-*.obj
+# These are intermediate and output folders for VC++
+**/obj
+**/x64
 
 # Compiled Dynamic libraries
 *.so
@@ -57,7 +58,3 @@ update/
 # Other stuff
 
 *.ilk
-
-*.db
-Win32
-x64
