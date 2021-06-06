@@ -176,7 +176,7 @@ Updater_t *CreateUpdater(){return new UpdaterImp;}
 
 //{ Global variables
 lt::session *hSession=nullptr;
-lt::torrent_handle hTorrent;
+lt::torrent_handle th;
 lt::settings_pack settings;
 
 UpdateDialog_t UpdateDialog;
@@ -493,9 +493,9 @@ void UpdateDialog_t::setCheckboxes()
     // The app and indexes
     int baseChecked=0,indexesChecked=0;
     for(int i=0;i<Updater->numfiles;i++)
-    if(hTorrent.file_priority(i)==2)
+    if(th.file_priority(i)==2)
     {
-        if(StrStrIA(hTorrent.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
+        if(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
             indexesChecked=1;
         else
             baseChecked=1;
@@ -513,7 +513,7 @@ void UpdateDialog_t::setCheckboxes()
 
         if(ItemData->DefaultSort==-2)val=baseChecked;
         if(ItemData->DefaultSort==-1)val=indexesChecked;
-        if(ItemData->DefaultSort>=0)val=hTorrent.file_priority((int)ItemData->DefaultSort);
+        if(ItemData->DefaultSort>=0)val=th.file_priority((int)ItemData->DefaultSort);
 
         ListView.SetCheckState(i,val);
     }
@@ -525,8 +525,8 @@ void UpdateDialog_t::setPriorities()
 
     // Clear priorities for driverpacks
     for(int i=0;i<Updater->numfiles;i++)
-    if(StrStrIA(hTorrent.torrent_file()->files().file_path(i).c_str(),"drivers\\"))
-        hTorrent.file_priority(i,0);
+    if(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"drivers\\"))
+        th.file_priority(i,0);
 
     // Set priorities for driverpacks
     int base_pri=0,indexes_pri=0;
@@ -546,13 +546,13 @@ void UpdateDialog_t::setPriorities()
         // index priority will be 2 if checked
         if(ItemData->DefaultSort==-1)indexes_pri=val?2:0;
         // driver priority will be 1 if checked
-        if(ItemData->DefaultSort>= 0)hTorrent.file_priority(static_cast<int>(ItemData->DefaultSort),val);
+        if(ItemData->DefaultSort>= 0)th.file_priority(static_cast<int>(ItemData->DefaultSort),val);
     }
 
     // Set priorities for any torrent file that's not a driver
     for(int i=0;i<Updater->numfiles;i++)
-    if(!StrStrIA(hTorrent.torrent_file()->files().file_path(i).c_str(),"drivers\\"))
-        hTorrent.file_priority(i,StrStrIA(hTorrent.torrent_file()->files().file_path(i).c_str(),"indexes\\")?indexes_pri:base_pri);
+    if(!StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"drivers\\"))
+        th.file_priority(i,StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"indexes\\")?indexes_pri:base_pri);
 }
 
 LRESULT CALLBACK UpdateDialog_t::NewButtonProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
@@ -771,10 +771,10 @@ int UpdateDialog_t::populate(int update,bool clearlist)
 
     // Read torrent info
     std::vector<boost::int64_t> file_progress;
-    auto ti=hTorrent.torrent_file();
+    auto ti=th.torrent_file();
     Updater->numfiles=0;
     if(!ti)return 0;
-    hTorrent.file_progress(file_progress);
+    th.file_progress(file_progress);
     Updater->numfiles=ti->num_files();
 
     // Calculate size and progress for the app and indexes
@@ -959,9 +959,9 @@ void UpdateDialog_t::setFilePriority(const wchar_t *name,int pri)
     wsprintfA(buf,"%S",name);
 
     for(int i=0;i<Updater->numfiles;i++)
-    if(StrStrIA(hTorrent.torrent_file()->files().file_path(i).c_str(),buf))
+    if(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),buf))
     {
-        hTorrent.file_priority(i,pri);
+        th.file_priority(i,pri);
         Log.print_con("Req(%S,%d)\n",name,pri);
     }
 }
@@ -975,41 +975,41 @@ void UpdateDialog_t::openDialog()
 //{ Updater
 void UpdaterImp::updateTorrentStatus()
 {
-    std::vector<lt::torrent_status> temp;
-    TorrentStatus_t *t=&TorrentStatus;
+    lt::torrent_status st=th.status();
+	TorrentStatus_t *t=&TorrentStatus;
 
     memset(t,0,sizeof(TorrentStatus_t));
-    if(!hSession)
-    {
-        wcscpy(t->error,STR(STR_DWN_ERRSES));
-        return;
-    }
-    hSession->get_torrent_status(&temp, &yes1, 0);
+    //if(!st)
+    //{
+    //    wcscpy(t->error,STR(STR_DWN_ERRSES));
+    //    return;
+    //}
+    //hSession->get_torrent_status(&temp, &yes1, 0);
 
-    if(temp.empty())
-    {
-        wcscpy(t->error,STR(STR_DWN_ERRTOR));
-        return;
-    }
-    lt::torrent_status& st=temp[0];
+    //if(temp.empty())
+    //{
+    //    wcscpy(t->error,STR(STR_DWN_ERRTOR));
+    //    return;
+    //}
+    //lt::torrent_status& st=temp[0];
 
     t->elapsed=13;
 
     wcscpy(t->error,L"");
 
-    t->uploadspeed=st.upload_payload_rate;
     t->downloadspeed=st.download_payload_rate;
+    t->uploadspeed=st.upload_payload_rate;
 
     t->seedstotal=st.list_seeds;
     t->peerstotal=st.list_peers;
     t->seedsconnected=st.num_seeds;
     t->peersconnected=st.num_peers;
 
-    t->wasted=(int)st.total_redundant_bytes;
-    t->wastedhashfailes=(int)st.total_failed_bytes;
+    t->wasted=int(st.total_redundant_bytes);
+    t->wastedhashfailes=int(st.total_failed_bytes);
 
-    t->downloaded=st.total_wanted_done;
     t->downloadsize=st.total_wanted;
+    t->downloaded=st.total_wanted_done;
     t->uploaded=st.total_payload_upload;
 
     if(torrenttime)t->elapsed=System.GetTickCountWr()-torrenttime;
@@ -1087,12 +1087,12 @@ void UpdaterImp::moveNewFiles()
 {
     int i;
 
-    auto ti=hTorrent.torrent_file();
+    auto ti=th.torrent_file();
     monitor_pause=1;
 
     // Delete old "_" online indexes if new are downloaded
     for(i=0;i<numfiles;i++)
-        if(hTorrent.file_priority(i)&&
+        if(th.file_priority(i)&&
            StrStrIA(ti->files().file_path(i).c_str(),"indexes"))
             break;
     if(i!=numfiles)
@@ -1103,7 +1103,7 @@ void UpdaterImp::moveNewFiles()
     }
 
     for(i=0;i<numfiles;i++)
-    if(hTorrent.file_priority(i))
+    if(th.file_priority(i))
     {
         std::string filenamefull= ti->files().file_path(i);
         if(activetorrent==1)
@@ -1214,10 +1214,10 @@ void UpdaterImp::ShowProgress(wchar_t *buf)
         format_size(num3,TorrentStatus.uploadspeed,1);
         format_size(num4,TorrentStatus.uploaded,0);
 
-        std::vector<torrent_status> temp;
-        hSession->get_torrent_status(&temp,&yes1,0);
-        if(temp.empty())return;
-        torrent_status& st=temp[0];
+        //std::vector<torrent_status> temp;
+        //hSession->get_torrent_status(&temp,&yes1,0);
+        //if(temp.empty())return;
+        torrent_status st=th.status();
         if(closingsession)
             wsprintf(buf,STR(STR_DWN_CLOSING));
         else if(movingfiles)
@@ -1367,21 +1367,21 @@ int UpdaterImp::downloadTorrent()
 
     settings.set_str(lt::settings_pack::dht_bootstrap_nodes, "dht.libtorrent.org:25401,router.bittorrent.com:6881,router.utorrent.com:6881,dht.transmissionbt.com:6881,dht.aelitis.com:6881");
 //    settings.set_bool(settings_pack::enable_dht, false);  // True by default
-    settings.set_int(lt::settings_pack::alert_mask,
-        lt::alert::dht_notification   |
-        lt::alert::error_notification |
-        lt::alert::tracker_notification |
-        lt::alert::ip_block_notification |
-        lt::alert::dht_notification |
-        lt::alert::performance_warning |
-        lt::alert::storage_notification);
+    settings.set_int(lt::settings_pack::alert_mask
+		, lt::alert::dht_notification   
+		| lt::alert::error_notification 
+		| lt::alert::tracker_notification 
+		| lt::alert::ip_block_notification 
+		| lt::alert::dht_notification 
+		| lt::alert::performance_warning
+		| lt::alert::storage_notification);
     lt::dht_settings dht;
 //	dht.max_peers_reply = 70;	//Let's leave a default
     //   dht.privacy_lookups=true; Privacy lookups slightly more expensive
     hSession->set_dht_settings(dht);
     
 
-    hTorrent=hSession->add_torrent(params, ec);   // TODO: test async_add
+    th=hSession->add_torrent(params, ec);   // TODO: test async_add
 
     if (ec)Log.print_err("ERROR: failed to add torrent: %s\n", ec.message().c_str());
 
@@ -1409,7 +1409,7 @@ int UpdaterImp::downloadTorrent()
     // Pause and set speed limits
     hSession->pause();
     SetLimits();
-    hTorrent.resume();
+    th.resume();
 
     // Download torrent
     Log.print_con("Waiting for torrent");
@@ -1417,7 +1417,7 @@ int UpdaterImp::downloadTorrent()
     {
         Log.print_con(".");
         // test if torrent has been retrieved
-        if(hTorrent.torrent_file())
+        if(th.torrent_file())
         {
             downloadmangar_exitflag=DOWNLOAD_STATUS_TORRENT_GOT;
             Log.print_con("DONE\n");
@@ -1430,7 +1430,7 @@ int UpdaterImp::downloadTorrent()
 
     if(Settings.flags&FLAG_SCRIPTMODE)
     {
-        if(!hTorrent.torrent_file())
+        if(!th.torrent_file())
             downloadmangar_exitflag=DOWNLOAD_STATUS_STOPPING;
         return 0;
     }
@@ -1439,7 +1439,7 @@ int UpdaterImp::downloadTorrent()
 	manager_g->itembar_settext(SLOT_DOWNLOAD,0,L"",0,0,0);
 
     // test if we failed to get the torrent
-    if(!hTorrent.torrent_file())
+    if(!th.torrent_file())
     {
         if(emptydrp) manager_g->itembar_settext(SLOT_NODRIVERS,1);
         downloadmangar_exitflag=DOWNLOAD_STATUS_STOPPING;
@@ -1458,7 +1458,7 @@ int UpdaterImp::downloadTorrent()
     Log.print_con("Updated driver packs available: %d\n",i&0xFF);
 
     // clear the torrent priorities
-    for(int j=0;j<numfiles;j++)hTorrent.file_priority(j,0);
+    for(int j=0;j<numfiles;j++)th.file_priority(j,0);
 
     Timers.stop(time_chkupdate);
     return i;
@@ -1466,7 +1466,7 @@ int UpdaterImp::downloadTorrent()
 
 void UpdaterImp::resumeDownloading()
 {
-    if(!hSession||!hTorrent.torrent_file())
+    if(!hSession||!th.torrent_file())
     {
         finisheddownloading=1;
         finishedupdating=1;
@@ -1474,7 +1474,7 @@ void UpdaterImp::resumeDownloading()
     }
     if(hSession->is_paused())
     {
-        hTorrent.force_recheck();
+        th.force_recheck();
         Log.print_con("torrent_resume\n");
         downloadmangar_exitflag=DOWNLOAD_STATUS_DOWLOADING_DATA;
         downloadmangar_event->raise();
@@ -1482,7 +1482,7 @@ void UpdaterImp::resumeDownloading()
 
     hSession->resume();
     // sometimes the torrent stays paused
-    hTorrent.resume();
+    th.resume();
     finisheddownloading=0;
     finishedupdating=0;
     torrenttime=System.GetTickCountWr();
@@ -1496,8 +1496,8 @@ int UpdaterImp::scriptInitUpdates(int torrentport)
         downloadmangar_event->wait();
 
     // Read torrent info
-    boost::shared_ptr<lt::torrent_info const> ti;
-    ti=hTorrent.torrent_file();
+    std::shared_ptr<lt::torrent_info> ti;
+    ti=th.torrent_file();
     Updater->numfiles=0;
     if(ti)
     {
@@ -1525,11 +1525,11 @@ int UpdaterImp::scriptDownloadApp()
     // select everything that's not indexes and drivers in the torrent
     for(int i=0;i<Updater->numfiles;i++)
     {
-        if(!(StrStrIA(hTorrent.torrent_file()->files().file_path(i).c_str(),"indexes\\"))&&
-           !(StrStrIA(hTorrent.torrent_file()->files().file_path(i).c_str(),"drivers\\")))
-            hTorrent.file_priority(i,2);
+        if(!(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"indexes\\"))&&
+           !(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"drivers\\")))
+            th.file_priority(i,2);
         else
-            hTorrent.file_priority(i,0);
+            th.file_priority(i,0);
     }
     return scriptDoDownload();
 }
@@ -1541,7 +1541,7 @@ int UpdaterImp::scriptDownloadIndexes()
         Log.print_err("Error: get : Updates not initialised");
         return 1;
     }
-    boost::shared_ptr<lt::torrent_info const> ti=hTorrent.torrent_file();
+    std::shared_ptr<lt::torrent_info const> ti=th.torrent_file();
     
     // select indexes in the torrent
     for(int i=0;i<Updater->numfiles;i++)
@@ -1550,9 +1550,9 @@ int UpdaterImp::scriptDownloadIndexes()
         std::string file= ti->files().file_path(i);
         size_t p=file.find("indexes\\");
         if(p!=std::string::npos)
-            hTorrent.file_priority(i,2);
+            th.file_priority(i,2);
         else
-            hTorrent.file_priority(i,0);
+            th.file_priority(i,0);
     }
     return scriptDoDownload();
 }
@@ -1574,15 +1574,15 @@ int UpdaterImp::scriptDownloadDrivers(std::wstring mode)
     // set all active
     manager_g->filter(126);
 
-    boost::shared_ptr<lt::torrent_info const> ti;
-    ti=hTorrent.torrent_file();
+    std::shared_ptr<lt::torrent_info const> ti;
+    ti=th.torrent_file();
     int updatecount=0;
 
     // iterate the torrent
     for(int i=0;i<Updater->numfiles;i++)
     {
         // disable all files by default
-        hTorrent.file_priority(i,0);
+        th.file_priority(i,0);
         // get the file entry
         std::string file= ti->files().file_path(i);
         // look for driver entries
@@ -1608,7 +1608,7 @@ int UpdaterImp::scriptDownloadDrivers(std::wstring mode)
             if(getfile)
             {
                 Log.print_debug("Getting: %s\n", file.c_str());
-                hTorrent.file_priority(i,1);
+                th.file_priority(i,1);
                 updatecount++;
             }
         }
@@ -1632,17 +1632,17 @@ int UpdaterImp::scriptDownloadEverything()
         return 1;
     }
 
-    boost::shared_ptr<lt::torrent_info const> ti;
-    ti=hTorrent.torrent_file();
+    std::shared_ptr<lt::torrent_info const> ti;
+    ti=th.torrent_file();
 
     for(int i=0;i<Updater->numfiles;i++)
-        hTorrent.file_priority(i,0);
+        th.file_priority(i,0);
 
     // select everything that's not drivers
     for(int i=0;i<Updater->numfiles;i++)
     {
-        if(!(StrStrIA(hTorrent.torrent_file()->files().file_path(i).c_str(),"drivers\\")))
-            hTorrent.file_priority(i,2);
+        if(!(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"drivers\\")))
+            th.file_priority(i,2);
     }
 
     // missing and updated drivers
@@ -1661,7 +1661,7 @@ int UpdaterImp::scriptDownloadEverything()
             if(newver>curver)
             {
                 Log.print_debug("Getting: %s\n", file.c_str());
-                hTorrent.file_priority(i,1);
+                th.file_priority(i,1);
             }
         }
     }
@@ -1672,7 +1672,7 @@ int UpdaterImp::scriptDoDownload()
 {
     int count=0;
     for(int i=0;i<Updater->numfiles;i++)
-        if(hTorrent.file_priority(i))count++;
+        if(th.file_priority(i))count++;
     if(!count)return 0;
     resumeDownloading();
     while(downloadmangar_exitflag==DOWNLOAD_STATUS_DOWLOADING_DATA)
@@ -1694,7 +1694,7 @@ int UpdaterImp::scriptInstall()
     if(Settings.flags&FLAG_UPDATESOK)
     {
         for(int i=0;i<Updater->numfiles;i++)
-            hTorrent.file_priority(i,0);
+            th.file_priority(i,0);
     }
     manager_g->install(INSTALLDRIVERS);
     installupdate_exitflag=0;
@@ -1706,10 +1706,10 @@ int UpdaterImp::scriptInstall()
 void UpdaterImp::DownloadAll()
 {
     for(int i=0;i<Updater->numfiles;i++)
-        if(StrStrIA(hTorrent.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
-            hTorrent.file_priority(i,2);
+        if(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
+            th.file_priority(i,2);
         else
-            hTorrent.file_priority(i,1);
+            th.file_priority(i,1);
     Updater->resumeDownloading();
 }
 
@@ -1718,18 +1718,18 @@ void UpdaterImp::DownloadNetwork()
     for(int i=0;i<Updater->numfiles;i++)
     {
         // indexes
-        if(StrStrIA(hTorrent.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
-            hTorrent.file_priority(i,2);
+        if(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
+            th.file_priority(i,2);
         else
         {
             // the file name minus the path
-            std::string filename=strrchr(hTorrent.torrent_file()->files().file_path(i).c_str(),'\\')+1;
+            std::string filename=strrchr(th.torrent_file()->files().file_path(i).c_str(),'\\')+1;
             // look for all networking packs
             size_t found1=filename.find("_LAN_");
             size_t found2=filename.find("_WLAN-WiFi_");
             size_t found3=filename.find("_WWAN-4G_");
             if((found1!=std::string::npos)||(found2!=std::string::npos)||(found3!=std::string::npos))
-                hTorrent.file_priority(i,1);
+                th.file_priority(i,1);
         }
     }
     Updater->resumeDownloading();
@@ -1738,8 +1738,8 @@ void UpdaterImp::DownloadNetwork()
 void UpdaterImp::DownloadIndexes()
 {
     for(int i=0;i<Updater->numfiles;i++)
-        if(StrStrIA(hTorrent.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
-            hTorrent.file_priority(i,2);
+        if(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
+            th.file_priority(i,2);
     Updater->resumeDownloading();
 }
 
@@ -1759,15 +1759,15 @@ void UpdaterImp::StartSeedingDrivers()
     wchar_t buf[BUFLEN];
     buf[0]=0;
     hSession->pause();
-    boost::shared_ptr<lt::torrent_info const> ti;
-    ti=hTorrent.torrent_file();
+    std::shared_ptr<lt::torrent_info const> ti;
+    ti=th.torrent_file();
     if(!ti)return;
 
     // modify the files in the torrent
     for(int i=0;i<ti->num_files();i++)
     {
         // disable all files by default
-        hTorrent.file_priority(i,0);
+        th.file_priority(i,0);
         // get the file entry
         std::string file=to_lower(ti->files().file_path(i));
         size_t p=file.find("drivers\\");
@@ -1782,8 +1782,8 @@ void UpdaterImp::StartSeedingDrivers()
             MultiByteToWideChar(CP_ACP,MB_PRECOMPOSED,file.c_str(),strlen(file.c_str())+1,buf,BUFLEN);
             if(System.FileExists2(buf))
             {
-                hTorrent.rename_file(i,file);
-                hTorrent.file_priority(i,1);
+                th.rename_file(i,file);
+                th.file_priority(i,1);
                 Log.print_con("Seeding: %s\n",file.c_str());
             }
         }
@@ -1894,7 +1894,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 
                 // Flush cache
                 Log.print_con("Torrent: flushing cache...");
-                hTorrent.flush_cache();
+                th.flush_cache();
                 // synchronize to make sure the files have been created on disk
                 using namespace lt;
                 while(1)
@@ -1918,7 +1918,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
                 Updater1->moveNewFiles();
                 movingfiles=0;
                 Updater1->updateTorrentStatus();
-                hTorrent.force_recheck();
+                th.force_recheck();
 
                 if(Settings.flags&FLAG_SCRIPTMODE)
                 {
@@ -1971,7 +1971,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
     if(hSession)
     {
         Log.print_con("Closing torrent session...");
-        hSession->remove_torrent(hTorrent);
+        hSession->remove_torrent(th);
         hSession->pause();
         hSession->abort();
         //delete ses;  not needed with s.reset
@@ -1984,7 +1984,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 
 void UpdaterImp::pause(){downloadmangar_exitflag=DOWNLOAD_STATUS_PAUSING;}
 
-bool UpdaterImp::isTorrentReady(){return hTorrent.torrent_file()!=nullptr;}
+bool UpdaterImp::isTorrentReady(){return th.torrent_file()!=nullptr;}
 bool UpdaterImp::isPaused(){return TorrentStatus.sessionpaused;}
 bool UpdaterImp::isUpdateCompleted(){return finishedupdating;}
 bool UpdaterImp::isSeedingDrivers(){return SeedMode;}
@@ -1994,9 +1994,9 @@ void UpdaterImp::SetLimits()
 {
     if(!hSession)return;
 
-    hTorrent.set_download_limit(downlimit*1024);
-    hTorrent.set_upload_limit(uplimit*1024);
-    if(connections)hTorrent.set_max_connections(connections);
+    th.set_download_limit(downlimit*1024);
+    th.set_upload_limit(uplimit*1024);
+    if(connections)th.set_max_connections(connections);
 }
 void UpdaterImp::OpenDialog(){UpdateDialog.openDialog();}
 //}
