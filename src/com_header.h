@@ -32,7 +32,6 @@ typedef unsigned ofst;
 //#define BENCH_MODE
 
 #define _CONSOLE
-#define EXCLUDE_COM
 #define NO_REGISTRY
 #define _MBCS
 #define _NO_CRYPTO

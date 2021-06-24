@@ -110,11 +110,9 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 		<ClCompile>
 			<RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-			<FloatingPointModel>Fast</FloatingPointModel>
+			<InlineFunctionExpansion>Default</InlineFunctionExpansion>
 			<EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
 			<MultiProcessorCompilation>true</MultiProcessorCompilation>
-			<AdditionalIncludeDirectories>..\..\ext\SevenZ\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<RuntimeTypeInfo>true</RuntimeTypeInfo>
 			<RemoveUnreferencedCodeData>false</RemoveUnreferencedCodeData>
 			<FunctionLevelLinking>false</FunctionLevelLinking>
 			<Optimization>Disabled</Optimization>
@@ -122,9 +120,9 @@
 			<SuppressStartupBanner>true</SuppressStartupBanner>
 			<DebugInformationFormat>None</DebugInformationFormat>
 			<WarningLevel>Level4</WarningLevel>
-			<OmitFramePointers>true</OmitFramePointers>
 			<MinimalRebuild>true</MinimalRebuild>
-			<PreprocessorDefinitions>_DEBUG;WIN32;_CONSOLE;EXTRACT_ONLY;_LIB;_NO_CRYPTO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>..\..\ext\SevenZ\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>_DEBUG;UNICODE;WIN32;_CONSOLE;EXTRACT_ONLY;_LIB;_NO_CRYPTO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<PrecompiledHeader>Use</PrecompiledHeader>
 			<PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
 			<CallingConvention>FastCall</CallingConvention>
