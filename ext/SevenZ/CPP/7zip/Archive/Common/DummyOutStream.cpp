@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // DummyOutStream.cpp
 
 #include "StdAfx.h"
@@ -16,22 +15,3 @@ STDMETHODIMP CDummyOutStream::Write(const void *data, UInt32 size, UInt32 *proce
     *processedSize = realProcessedSize;
   return res;
 }
-=======
-// DummyOutStream.cpp
-
-#include "StdAfx.h"
-
-#include "DummyOutStream.h"
-
-STDMETHODIMP CDummyOutStream::Write(const void *data, UInt32 size, UInt32 *processedSize)
-{
-  UInt32 realProcessedSize = size;
-  HRESULT res = S_OK;
-  if (_stream)
-    res = _stream->Write(data, size, &realProcessedSize);
-  _size += realProcessedSize;
-  if (processedSize)
-    *processedSize = realProcessedSize;
-  return res;
-}
->>>>>>> 2224fa12b7f7f22cf5577530bd417d7c562217b8

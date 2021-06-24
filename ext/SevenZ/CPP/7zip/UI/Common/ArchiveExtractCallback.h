@@ -4,7 +4,7 @@
 #define __ARCHIVE_EXTRACT_CALLBACK_H
 
 #include "../../../Common/MyCom.h"
-#include "../../../Common/MyLinux.h"
+//#include "../../../Common/MyLinux.h"
 #include "../../../Common/Wildcard.h"
 
 #include "../../IPassword.h"
