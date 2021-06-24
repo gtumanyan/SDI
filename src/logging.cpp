@@ -109,22 +109,17 @@ void Log_t::start(wchar_t *logdir)
     filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
     if(!(System.canWriteDirectory(logdir)&&System.canWriteFile(filename.Get(),L"wt")))
     {
-       // Log.print_err("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
+        Log.print_err("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
         GetEnvironmentVariable(L"TEMP",logdir,BUFLEN);
         wcscat(logdir,L"\\SDI_logs");
         filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
     }
 
-    //mkdir_r(logdir);
     logfile=_wfopen(filename.Get(),L"wt");
     if(!logfile)
     {
         Log.print_err("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
-<<<<<<< HEAD
         GetEnvironmentVariable(L"TEMP",logdir,BUFLEN);
-=======
-        //GetEnvironmentVariable(L"TEMP",logdir,BUFLEN);
->>>>>>> 2224fa12b7f7f22cf5577530bd417d7c562217b8
         wcscat(logdir,L"\\SDI_logs");
         filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
         mkdir_r(logdir);
