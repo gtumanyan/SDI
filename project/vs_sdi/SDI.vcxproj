@@ -138,7 +138,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>dbghelp.lib;7zip.lib;comctl32.lib;libtorrent.lib;libwebp.lib;newdev.lib;setupapi.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;7zip.lib;comctl32.lib;torrent-rasterbar.lib;libwebp.lib;newdev.lib;setupapi.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/NODEFAULTLIB:LIBCMT %(AdditionalOptions)</AdditionalOptions>
       <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
@@ -179,7 +179,7 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalOptions>/NODEFAULTLIB:LIBCMT %(AdditionalOptions)</AdditionalOptions>
       <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
-      <AdditionalDependencies>7zip.lib;comctl32.lib;libtorrent.lib;dbghelp.lib;libwebp.lib;newdev.lib;setupapi.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>7zip.lib;comctl32.lib;torrent-rasterbar.lib;dbghelp.lib;libwebp.lib;newdev.lib;setupapi.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>Dbghelp.dll;</DelayLoadDLLs>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
       <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>
@@ -203,7 +203,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\boost\include;c:\boost\boost;../res;../EXT/SevenZ/C;../EXT/SevenZ;\libtorrent\test</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\boost\include;c:\boost\boost;../res;../EXT/SevenZ/C;../EXT/SevenZ</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;USE_TORRENT;WIN32;_CRT_SECURE_NO_WARNINGS;_WINDOWS;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -223,7 +223,7 @@
       <Profile>true</Profile>
       <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
       <ShowProgress>NotSet</ShowProgress>
-      <AdditionalDependencies>7zip.lib;comctl32.lib;libtorrent.lib;libwebp.lib;newdev.lib;setupapi.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>7zip.lib;comctl32.lib;torrent-rasterbar.lib;libwebp.lib;newdev.lib;setupapi.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <RegisterOutput>false</RegisterOutput>
       <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>
@@ -269,7 +269,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
-      <AdditionalDependencies>7zip.lib;comctl32.lib;libtorrent.lib;libwebp.lib;newdev.lib;setupapi.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>7zip.lib;comctl32.lib;torrent-rasterbar.lib;libwebp.lib;newdev.lib;setupapi.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <RegisterOutput>false</RegisterOutput>
       <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>
