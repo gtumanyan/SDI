@@ -1496,8 +1496,7 @@ int UpdaterImp::scriptInitUpdates(int torrentport)
         downloadmangar_event->wait();
 
     // Read torrent info
-    std::shared_ptr<lt::torrent_info> ti;
-    ti=th.torrent_file();
+    std::shared_ptr<const lt::torrent_info> ti = th.torrent_file();
     Updater->numfiles=0;
     if(ti)
     {
