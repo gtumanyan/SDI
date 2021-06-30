@@ -1,6 +1,6 @@
 #-- Build results
-**/[Dd]ebug/
-**/[Rr]elease/
+**/[Dd]ebug*/
+**/[Rr]elease*/
 **/Win32/**
 #[Bb]in/
 [Oo]bj/

@@ -34,7 +34,7 @@ typedef unsigned ofst;
 #define _CONSOLE
 //#define EXCLUDE_COM   //it's some old macro from 9.31, that now is unused in source code
 #define NO_REGISTRY
-#define _MBCS
+//#define _MBCS         //7zip supports unicode since 4.58 alpha 8
 #define _NO_CRYPTO
 #define EXTRACT_ONLY
 
