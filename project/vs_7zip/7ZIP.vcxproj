@@ -1,12 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<ItemGroup Label="ProjectConfigurations">
+		<ProjectConfiguration Include="DebugU|Win32">
+			<Configuration>DebugU</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="DebugU|x64">
+			<Configuration>DebugU</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
 		<ProjectConfiguration Include="Debug|Win32">
 			<Configuration>Debug</Configuration>
 			<Platform>Win32</Platform>
 		</ProjectConfiguration>
 		<ProjectConfiguration Include="Debug|x64">
 			<Configuration>Debug</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="ReleaseU|Win32">
+			<Configuration>ReleaseU</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="ReleaseU|x64">
+			<Configuration>ReleaseU</Configuration>
 			<Platform>x64</Platform>
 		</ProjectConfiguration>
 		<ProjectConfiguration Include="Release|Win32">
@@ -49,6 +65,16 @@
 	<ImportGroup Label="ExtensionSettings">
 		<Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
 	</ImportGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'" Label="Configuration">
+		<ConfigurationType>StaticLibrary</ConfigurationType>
+		<UseOfMfc>false</UseOfMfc>
+		<CharacterSet>Unicode</CharacterSet>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugU|x64'" Label="Configuration">
+		<ConfigurationType>StaticLibrary</ConfigurationType>
+		<UseOfMfc>false</UseOfMfc>
+		<CharacterSet>Unicode</CharacterSet>
+	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
 		<ConfigurationType>StaticLibrary</ConfigurationType>
 		<PlatformToolset>v141_xp</PlatformToolset>
@@ -142,6 +168,46 @@
 			<LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
 			<ForceSymbolReferences>?register7z@N7z@NArchive@@YAXXZ</ForceSymbolReferences>
 		</Lib>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
+		<ClCompile>
+			<RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+			<InlineFunctionExpansion>Default</InlineFunctionExpansion>
+			<FunctionLevelLinking>false</FunctionLevelLinking>
+			<Optimization>Disabled</Optimization>
+			<SuppressStartupBanner>true</SuppressStartupBanner>
+			<WarningLevel>Level4</WarningLevel>
+			<MinimalRebuild>true</MinimalRebuild>
+			<DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+			<AdditionalIncludeDirectories>..\..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PreprocessorDefinitions>_DEBUG;UNICODE;WIN32;_CONSOLE;_7ZIP_LARGE_PAGES;SUPPORT_DEVICE_FILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AssemblerListingLocation>.\DebugU\</AssemblerListingLocation>
+			<PrecompiledHeaderOutputFile>.\DebugU\Alone.pch</PrecompiledHeaderOutputFile>
+			<PrecompiledHeader>Use</PrecompiledHeader>
+			<PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
+			<ObjectFileName>.\DebugU\</ObjectFileName>
+			<ProgramDataBaseFileName>.\DebugU\</ProgramDataBaseFileName>
+			<CallingConvention>FastCall</CallingConvention>
+			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+		</ClCompile>
+		<Midl>
+			<TypeLibraryName>.\DebugU\Alone.tlb</TypeLibraryName>
+		</Midl>
+		<ResourceCompile>
+			<Culture>0x0419</Culture>
+			<PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+		</ResourceCompile>
+		<Bscmake>
+			<SuppressStartupBanner>true</SuppressStartupBanner>
+			<OutputFile>.\DebugU\Alone.bsc</OutputFile>
+		</Bscmake>
+		<Link>
+			<SuppressStartupBanner>true</SuppressStartupBanner>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<SubSystem>Console</SubSystem>
+			<OutputFile>c:\UTIL\7zr.exe</OutputFile>
+			<AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
 		<ClCompile>
@@ -488,83 +554,83 @@
 			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 			</PrecompiledHeader>
 		</ClCompile>
-				<ClCompile Include="..\..\ext\SevenZ\C\Lzma2Dec.c">
-					<Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-					</PrecompiledHeader>
-				</ClCompile>
-				<ClCompile Include="..\..\ext\SevenZ\C\Lzma2DecMt.c">
-					<Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-					</PrecompiledHeader>
-				</ClCompile>
-				<ClCompile Include="..\..\ext\SevenZ\C\Lzma2Enc.c">
-					<Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-					</PrecompiledHeader>
-				</ClCompile>
-				<ClCompile Include="..\..\ext\SevenZ\C\LzmaDec.c">
-					<Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-					</PrecompiledHeader>
-				</ClCompile>
-				<ClCompile Include="..\..\ext\SevenZ\C\LzmaEnc.c">
-					<Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-					</PrecompiledHeader>
-				</ClCompile>
-				<ClCompile Include="..\..\ext\SevenZ\C\MtCoder.c">
-					<Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-					</PrecompiledHeader>
-				</ClCompile>
-				<ClCompile Include="..\..\ext\SevenZ\C\MtDec.c">
-					<Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
-					</PrecompiledHeader>
-					<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-					</PrecompiledHeader>
-				</ClCompile>
+		<ClCompile Include="..\..\ext\SevenZ\C\Lzma2Dec.c">
+			<Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+			</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="..\..\ext\SevenZ\C\Lzma2DecMt.c">
+			<Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+			</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="..\..\ext\SevenZ\C\Lzma2Enc.c">
+			<Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+			</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="..\..\ext\SevenZ\C\LzmaDec.c">
+			<Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+			</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="..\..\ext\SevenZ\C\LzmaEnc.c">
+			<Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+			</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="..\..\ext\SevenZ\C\MtCoder.c">
+			<Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+			</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="..\..\ext\SevenZ\C\MtDec.c">
+			<Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
+			</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+			</PrecompiledHeader>
+		</ClCompile>
 		<ClCompile Include="..\..\ext\SevenZ\C\Sort.c">
 			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 			</PrecompiledHeader>
@@ -691,7 +757,7 @@
 		<ClCompile Include="..\..\ext\SevenZ\CPP\7zip\UI\Console\ConsoleClose.cpp" />
 		<ClCompile Include="..\..\ext\SevenZ\CPP\7zip\UI\Console\ExtractCallbackConsole.cpp" />
 		<ClCompile Include="..\..\ext\SevenZ\CPP\7zip\UI\Console\HashCon.cpp" />
-		<ClCompile Include="..\..\ext\SevenZ\CPP\7zip\UI\Console\Main.cpp" >
+		<ClCompile Include="..\..\ext\SevenZ\CPP\7zip\UI\Console\Main.cpp">
 			<PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PROG_VARIANT_R;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">PROG_VARIANT_R;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">PROG_VARIANT_R;%(PreprocessorDefinitions)</PreprocessorDefinitions>

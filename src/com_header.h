@@ -32,6 +32,7 @@ typedef unsigned ofst;
 //#define BENCH_MODE
 
 #define _CONSOLE
+//#define EXCLUDE_COM   //it's some old macro from 9.31, that now is unused in source code
 #define NO_REGISTRY
 #define _MBCS
 #define _NO_CRYPTO
