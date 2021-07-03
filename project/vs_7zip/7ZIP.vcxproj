@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<PreferredToolArchitecture>x64</PreferredToolArchitecture>
+	</PropertyGroup>
 	<ItemGroup Label="ProjectConfigurations">
 		<ProjectConfiguration Include="DebugU|Win32">
 			<Configuration>DebugU</Configuration>
@@ -20,39 +23,75 @@
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
 		<ProjectGuid>{9FE9A4F2-4E31-41EF-8189-167465A02FFD}</ProjectGuid>
+		<WindowsTargetPlatformVersion>7.0</WindowsTargetPlatformVersion>
 		<Keyword>Win32Proj</Keyword>
+		<VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
 		<RootNamespace>7zip</RootNamespace>
 		<XPDeprecationWarning>false</XPDeprecationWarning>
-		<WindowsTargetPlatformVersion>7.0</WindowsTargetPlatformVersion>
 	</PropertyGroup>
 	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'" Label="Configuration">
-		<ConfigurationType>StaticLibrary</ConfigurationType>
-		<PlatformToolset>v141_xp</PlatformToolset>
-		<UseOfMfc>false</UseOfMfc>
-		<CharacterSet>Unicode</CharacterSet>
-	</PropertyGroup>
 	<ImportGroup Label="ExtensionSettings">
 		<Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
 	</ImportGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'" Label="Configuration">
 		<ConfigurationType>StaticLibrary</ConfigurationType>
+		<PlatformToolset>v141_xp</PlatformToolset>
 		<UseOfMfc>false</UseOfMfc>
 		<CharacterSet>Unicode</CharacterSet>
-		<PlatformToolset>v141_xp</PlatformToolset>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugU|x64'" Label="Configuration">
 		<ConfigurationType>StaticLibrary</ConfigurationType>
 		<UseOfMfc>false</UseOfMfc>
 		<CharacterSet>Unicode</CharacterSet>
+		<PlatformToolset>v142</PlatformToolset>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'" Label="Configuration">
+		<ConfigurationType>StaticLibrary</ConfigurationType>
+		<PlatformToolset>v142</PlatformToolset>
+		<UseOfMfc>false</UseOfMfc>
+		<CharacterSet>Unicode</CharacterSet>
+	</PropertyGroup>
+	<PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='ReleaseU|x64'">
+		<PlatformToolset>v142</PlatformToolset>
+		<ConfigurationType>StaticLibrary</ConfigurationType>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
 	<PropertyGroup Label="UserMacros" />
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
+		<IntDir>..\..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+		<OutDir>..\..\lib\$(Configuration)_$(Platform)\</OutDir>
+		<TargetName>7zip</TargetName>
+		<RunCodeAnalysis>false</RunCodeAnalysis>
+		<LinkIncremental>true</LinkIncremental>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugU|x64'">
+		<TargetName>7zip</TargetName>
+		<LinkIncremental>true</LinkIncremental>
+		<IntDir>..\..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+		<OutDir>..\..\lib\$(Configuration)_$(Platform)\</OutDir>
+		<RunCodeAnalysis>false</RunCodeAnalysis>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
+		<LinkIncremental>true</LinkIncremental>
+		<IntDir>..\..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+		<OutDir>..\..\lib\$(Configuration)_$(Platform)\</OutDir>
+		<TargetName>7zip</TargetName>
+		<RunCodeAnalysis>false</RunCodeAnalysis>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseU|x64'">
+		<TargetName>7zip</TargetName>
+		<LinkIncremental>true</LinkIncremental>
+		<IntDir>..\..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+		<OutDir>..\..\lib\$(Configuration)_$(Platform)\</OutDir>
+		<RunCodeAnalysis>false</RunCodeAnalysis>
+	</PropertyGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
 		<ClCompile>
 			<RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
 			<InlineFunctionExpansion>Default</InlineFunctionExpansion>
 			<FunctionLevelLinking>false</FunctionLevelLinking>
 			<Optimization>Disabled</Optimization>
+			<EnablePREfast>false</EnablePREfast>
 			<SuppressStartupBanner>true</SuppressStartupBanner>
 			<WarningLevel>Level4</WarningLevel>
 			<MinimalRebuild>true</MinimalRebuild>
@@ -81,11 +120,15 @@
 		</Bscmake>
 		<Link>
 			<SuppressStartupBanner>true</SuppressStartupBanner>
+			<TargetMachine>MachineX86</TargetMachine>
 			<GenerateDebugInformation>true</GenerateDebugInformation>
 			<SubSystem>Console</SubSystem>
-			<OutputFile>c:\UTIL\7zr.exe</OutputFile>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
 			<AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
 		</Link>
+		<Lib>
+			<TargetMachine>MachineX86</TargetMachine>
+		</Lib>
 	</ItemDefinitionGroup>
 	<ItemGroup>
 		<!-- <ClInclude Include="..\..\ext\SevenZ\C\7z.h" /> -->
@@ -262,13 +305,10 @@
 		</ClCompile>
 		<ClCompile Include="..\..\ext\SevenZ\C\7zStream.c">
 			<Optimization Condition="'$(Configuration)|$(Platform)'=='ReleaseU'">MaxSpeed</Optimization>
-		
 			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
 			</PrecompiledHeader>
 			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
 			</PrecompiledHeader>
-		
-		
 		</ClCompile>
 		<ClCompile Include="..\..\ext\SevenZ\C\Alloc.c">
 			<Optimization Condition="'$(Configuration)|$(Platform)'=='ReleaseU'">MaxSpeed</Optimization>
@@ -363,7 +403,6 @@
 			</PrecompiledHeader>
 		</ClCompile>
 		<ClCompile Include="..\..\ext\SevenZ\C\Threads.c">
-
 		</ClCompile>
 		<ClCompile Include="..\..\ext\SevenZ\CPP\Common\CommandLineParser.cpp" />
 		<ClCompile Include="..\..\ext\SevenZ\CPP\Common\CRC.cpp" />
