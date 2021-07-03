@@ -95,7 +95,7 @@
       <PreprocessorDefinitions>_DEBUG;UNICODE;WIN32;_CONSOLE;EXTRACT_ONLY;_LIB;_NO_CRYPTO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerListingLocation>.\DebugU\</AssemblerListingLocation>
       <PrecompiledHeaderOutputFile>.\DebugU\Alone.pch</PrecompiledHeaderOutputFile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
       <ObjectFileName>.\DebugU\</ObjectFileName>
       <ProgramDataBaseFileName>.\DebugU\</ProgramDataBaseFileName>
@@ -123,6 +123,16 @@
     <Lib>
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugU|x64'">
+    <ClCompile>
+      <CallingConvention>FastCall</CallingConvention>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
+    <ClCompile>
+      <CallingConvention>FastCall</CallingConvention>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <!-- <ClInclude Include="..\..\ext\SevenZ\C\7z.h" /> -->
