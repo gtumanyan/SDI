@@ -184,9 +184,9 @@ int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hinst,LPSTR pStr,int nCmd)
     if(!GetSystemMetrics(SM_MOUSEPRESENT))MainWindow.kbpanel=KB_FIELD;
 
     // Runtime error handlers
-    start_exception_handlers();
-    HMODULE backtrace=LoadLibraryA("backtrace.dll");
-    if(!backtrace)signal(SIGSEGV,SignalHandler);
+    //start_exception_handlers();
+    //HMODULE backtrace=LoadLibraryA("backtrace.dll");
+    //if(!backtrace)signal(SIGSEGV,SignalHandler);
 
     // Load settings
     init_CLIParam();
@@ -200,7 +200,7 @@ int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hinst,LPSTR pStr,int nCmd)
     // Close the app if the work is done
     if(Settings.statemode==STATEMODE_EXIT)
     {
-        if(backtrace)FreeLibrary(backtrace);
+        //if(backtrace)FreeLibrary(backtrace);
         delete Console;
         return ret_global;
     }
@@ -253,8 +253,8 @@ int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hinst,LPSTR pStr,int nCmd)
 
     // Start folder monitors
     Filemon *mon_drp=CreateFilemon(Settings.drp_dir,1,drp_callback);
-    Filemon *mon_vir=CreateFilemon(L"\\",0,viruscheck);
-    viruscheck(L"",0,0);
+    //Filemon *mon_vir=CreateFilemon(L"\\",0,viruscheck);
+    //viruscheck(L"",0,0);
 
     // MAIN GUI LOOP
     MainWindow.MainLoop(nCmd);
@@ -280,7 +280,7 @@ int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hinst,LPSTR pStr,int nCmd)
 
     // Stop folder monitors
     delete mon_drp;
-    delete mon_vir;
+    //delete mon_vir;
 
     // Bring the console window back
     ShowWindow(GetConsoleWindow(),SW_SHOWNOACTIVATE);

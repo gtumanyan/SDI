@@ -116,10 +116,10 @@ extern Log_t Log;
 
 // Error handling
 const wchar_t *errno_str();
-void start_exception_handlers();
-void SignalHandler(int signum);
+//void start_exception_handlers();
+//void SignalHandler(int signum);
 
 // Virus detection
-void viruscheck(const wchar_t *szFile,int action,int lParam);
+//void viruscheck(const wchar_t *szFile,int action,int lParam);
 
 #endif
