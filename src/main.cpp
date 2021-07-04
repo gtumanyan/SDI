@@ -217,7 +217,7 @@ int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hinst,LPSTR pStr,int nCmd)
     Settings.loginfo();
     #ifndef NDEBUG
     Log.print_con("Debug info present\n");
-    if(backtrace)Log.print_con("Backtrace is loaded\n");
+    //if(backtrace)Log.print_con("Backtrace is loaded\n");
     #endif
 
     #ifdef BENCH_MODE
