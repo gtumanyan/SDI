@@ -312,6 +312,10 @@
 			<Optimization Condition="'$(Configuration)|$(Platform)'=='ReleaseU'">MaxSpeed</Optimization>
 			<PrecompiledHeader/>
 		</ClCompile>
+		<ClCompile Include="..\..\ext\SevenZ\C\7zArcIn.c">
+			<Optimization Condition="'$(Configuration)|$(Platform)'=='ReleaseU'">MaxSpeed</Optimization>
+			<PrecompiledHeader/>
+		</ClCompile>
 		<ClCompile Include="..\..\ext\SevenZ\C\7zCrc.c">
 			<Optimization Condition="'$(Configuration)|$(Platform)'=='ReleaseU'">MaxSpeed</Optimization>
 			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
