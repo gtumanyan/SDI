@@ -151,6 +151,7 @@
 		<ClInclude Include="..\..\ext\SevenZ\C\Lzma2Dec.h" />
 		<ClInclude Include="..\..\ext\SevenZ\C\Lzma2DecMt.h" />
 		<ClInclude Include="..\..\ext\SevenZ\C\Lzma2Enc.h" />
+		<ClInclude Include="..\..\ext\SevenZ\C\Lzma86.h" />
 		<ClInclude Include="..\..\ext\SevenZ\C\LzmaDec.h" />
 		<ClInclude Include="..\..\ext\SevenZ\C\LzmaEnc.h" />
 		<ClInclude Include="..\..\ext\SevenZ\C\MtCoder.h" />
@@ -255,6 +256,7 @@
 		<ClInclude Include="..\..\ext\SevenZ\CPP\7zip\Compress\Lzma2Decoder.h" />
 		<ClInclude Include="..\..\ext\SevenZ\CPP\7zip\Compress\Lzma2Encoder.h" />
 		<ClInclude Include="..\..\ext\SevenZ\CPP\7zip\Compress\LzmaDecoder.h" />
+
 		<ClInclude Include="..\..\ext\SevenZ\CPP\7zip\Compress\LzmaEncoder.h" />
 		<ClInclude Include="..\..\ext\SevenZ\CPP\7zip\ICoder.h" />
 		<ClInclude Include="..\..\ext\SevenZ\CPP\7zip\IDecl.h" />
@@ -367,6 +369,10 @@
 			</PrecompiledHeader>
 			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'">
 			</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="..\..\ext\SevenZ\C\Lzma86Enc.c">
+			<Optimization Condition="'$(Configuration)|$(Platform)'=='ReleaseU'">MaxSpeed</Optimization>
+			<PrecompiledHeader/>
 		</ClCompile>
 		<ClCompile Include="..\..\ext\SevenZ\C\LzmaDec.c">
 			<Optimization Condition="'$(Configuration)|$(Platform)'=='ReleaseU'">MaxSpeed</Optimization>
