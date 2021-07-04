@@ -257,64 +257,64 @@ void Log_t::print_syserr(int r,const wchar_t *s)
     error_count++;
 }
 
-static void myterminate()
-{
-    WStringShort buf;
-
-    std::exception_ptr p;
-    p=std::current_exception();
-
-    try
-    {
-        std::rethrow_exception (p);
-    }
-    catch(const std::exception& e)
-    {
-        buf.sprintf(L"Exception: %S\n",e.what());
-    }
-    catch(int i)
-    {
-        buf.sprintf(L"Exception: %d\n",i);
-    }
-    catch(char const*str)
-    {
-        buf.sprintf(L"Exception: %S\n",str);
-    }
-    catch(wchar_t const*str)
-    {
-        buf.sprintf(L"Exception: %s\n",str);
-    }
-    catch(...)
-    {
-        buf.sprintf(L"Exception: unknown");
-    }
-    Log.print_err("ERROR: %S\n",buf.Get());
-    Log.save();
-    Log.stop();
-    buf.append(L"\n\nThe program will self terminate now.");
-    MessageBox(MainWindow.hMain,buf.Get(),L"Exception",MB_ICONERROR);
-
-    abort();
-}
-
-static void myunexpected()
-{
-    Log.print_err("ERROR: myunexpected()\n");
-    myterminate();
-}
-
-void start_exception_handlers()        //In the current Microsoft implementation of C++ exception handling, 
-{                                      // unexpected calls terminate by default and is never called by the exception-handling run-time library. 
-    std::set_unexpected(myunexpected); //  There is no particular advantage to calling unexpected rather than term`inate.
-    std::set_terminate(myterminate);
-}
-
-void SignalHandler(int signum)
-{
-    Log.print_err("!!! Crashed %d!!!\n",signum);
-    Log.save();
-    Log.stop();
-}
+//static void myterminate()
+//{
+//    WStringShort buf;
+//
+//    std::exception_ptr p;
+//    p=std::current_exception();
+//
+//    try
+//    {
+//        std::rethrow_exception (p);
+//    }
+//    catch(const std::exception& e)
+//    {
+//        buf.sprintf(L"Exception: %S\n",e.what());
+//    }
+//    catch(int i)
+//    {
+//        buf.sprintf(L"Exception: %d\n",i);
+//    }
+//    catch(char const*str)
+//    {
+//        buf.sprintf(L"Exception: %S\n",str);
+//    }
+//    catch(wchar_t const*str)
+//    {
+//        buf.sprintf(L"Exception: %s\n",str);
+//    }
+//    catch(...)
+//    {
+//        buf.sprintf(L"Exception: unknown");
+//    }
+//    Log.print_err("ERROR: %S\n",buf.Get());
+//    Log.save();
+//    Log.stop();
+//    buf.append(L"\n\nThe program will self terminate now.");
+//    MessageBox(MainWindow.hMain,buf.Get(),L"Exception",MB_ICONERROR);
+//
+//    abort();
+//}
+//
+//static void myunexpected()
+//{
+//    Log.print_err("ERROR: myunexpected()\n");
+//    myterminate();
+//}
+//
+//void start_exception_handlers()        //In the current Microsoft implementation of C++ exception handling, 
+//{                                      // unexpected calls terminate by default and is never called by the exception-handling run-time library. 
+//    std::set_unexpected(myunexpected); //  There is no particular advantage to calling unexpected rather than term`inate.
+//    std::set_terminate(myterminate);
+//}
+//
+//void SignalHandler(int signum)
+//{
+//    Log.print_err("!!! Crashed %d!!!\n",signum);
+//    Log.save();
+//    Log.stop();
+//}
 
 #undef new
 void* operator new(size_t size, const char* file, int line)
