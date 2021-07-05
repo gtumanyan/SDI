@@ -1316,43 +1316,43 @@ int Main2(
       }
       } // if (so)
     }
-    else // if_(!isExtractGroupCommand)
-    {
-      UInt64 numErrors = 0;
-      UInt64 numWarnings = 0;
-      
-      // options.ExtractNtOptions.StoreAltStreams = true, if -sns[-] is not definmed
+    //else // if_(!isExtractGroupCommand)
+    //{
+    //  UInt64 numErrors = 0;
+    //  UInt64 numWarnings = 0;
+    //  
+    //  // options.ExtractNtOptions.StoreAltStreams = true, if -sns[-] is not definmed
 
-      hresultMain = ListArchives(
-          codecs,
-          types,
-          excludedFormats,
-          options.StdInMode,
-          ArchivePathsSorted,
-          ArchivePathsFullSorted,
-          options.ExtractOptions.NtOptions.AltStreams.Val,
-          options.AltStreams.Val, // we don't want to show AltStreams by default
-          options.Censor.Pairs.Front().Head,
-          options.EnableHeaders,
-          options.TechMode,
-          #ifndef _NO_CRYPTO
-          options.PasswordEnabled,
-          options.Password,
-          #endif
-          &options.Properties,
-          numErrors, numWarnings);
+    //  hresultMain = ListArchives(
+    //      codecs,
+    //      types,
+    //      excludedFormats,
+    //      options.StdInMode,
+    //      ArchivePathsSorted,
+    //      ArchivePathsFullSorted,
+    //      options.ExtractOptions.NtOptions.AltStreams.Val,
+    //      options.AltStreams.Val, // we don't want to show AltStreams by default
+    //      options.Censor.Pairs.Front().Head,
+    //      options.EnableHeaders,
+    //      options.TechMode,
+    //      #ifndef _NO_CRYPTO
+    //      options.PasswordEnabled,
+    //      options.Password,
+    //      #endif
+    //      &options.Properties,
+    //      numErrors, numWarnings);
 
-      if (options.EnableHeaders)
-        if (numWarnings > 0)
-          g_StdOut << endl << "Warnings: " << numWarnings << endl;
-      
-      if (numErrors > 0)
-      {
-        if (options.EnableHeaders)
-          g_StdOut << endl << "Errors: " << numErrors << endl;
-        retCode = NExitCode::kFatalError;
-      }
-    } // if_(isExtractGroupCommand)
+    //  if (options.EnableHeaders)
+    //    if (numWarnings > 0)
+    //      g_StdOut << endl << "Warnings: " << numWarnings << endl;
+    //  
+    //  if (numErrors > 0)
+    //  {
+    //    if (options.EnableHeaders)
+    //      g_StdOut << endl << "Errors: " << numErrors << endl;
+    //    retCode = NExitCode::kFatalError;
+    //  }
+    //} // if_(isExtractGroupCommand)
     } // if_(hresultMain == S_OK)
   }
   //else if (options.Command.IsFromUpdateGroup())
