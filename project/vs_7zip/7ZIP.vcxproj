@@ -144,7 +144,7 @@
 	<ItemGroup>
 		<!-- <ClInclude Include="..\..\ext\SevenZ\C\7z.h" /> -->
 		<ClInclude Include="..\..\ext\SevenZ\C\7zAlloc.h" />
-		<!-- <ClInclude Include="..\..\ext\SevenZ\C\7zBuf.h" /> -->
+		<ClInclude Include="..\..\ext\SevenZ\C\7zBuf.h" />
 		<ClInclude Include="..\..\ext\SevenZ\C\7zCrc.h" />
 		<ClInclude Include="..\..\ext\SevenZ\C\7zFile.h" />
 		<ClInclude Include="..\..\ext\SevenZ\C\7zTypes.h" />
@@ -313,6 +313,10 @@
 			<PrecompiledHeader />
 		</ClCompile>
 		<ClCompile Include="..\..\ext\SevenZ\C\7zArcIn.c">
+			<Optimization Condition="'$(Configuration)|$(Platform)'=='ReleaseU'">MaxSpeed</Optimization>
+			<PrecompiledHeader />
+		</ClCompile>
+		<ClCompile Include="..\..\ext\SevenZ\C\7zBuf.c">
 			<Optimization Condition="'$(Configuration)|$(Platform)'=='ReleaseU'">MaxSpeed</Optimization>
 			<PrecompiledHeader />
 		</ClCompile>
