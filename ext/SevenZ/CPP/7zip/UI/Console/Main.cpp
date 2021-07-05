@@ -1316,7 +1316,7 @@ int Main2(
       }
       } // if (so)
     }
-    else // if_(!isExtractGroupCommand)
+    /*else // if_(!isExtractGroupCommand)
     {
       UInt64 numErrors = 0;
       UInt64 numWarnings = 0;
@@ -1352,67 +1352,68 @@ int Main2(
           g_StdOut << endl << "Errors: " << numErrors << endl;
         retCode = NExitCode::kFatalError;
       }
-    } // if_(isExtractGroupCommand)
+    }*/ // if_(isExtractGroupCommand)
     } // if_(hresultMain == S_OK)
   }
-  //else if (options.Command.IsFromUpdateGroup())
-  //{
-  //  CUpdateOptions &uo = options.UpdateOptions;
-  //  if (uo.SfxMode && uo.SfxModule.IsEmpty())
-  //    uo.SfxModule = kDefaultSfxModule;
+  /*else if (options.Command.IsFromUpdateGroup())
+  {
+    CUpdateOptions &uo = options.UpdateOptions;
+    if (uo.SfxMode && uo.SfxModule.IsEmpty())
+      uo.SfxModule = kDefaultSfxModule;
 
-  //  COpenCallbackConsole openCallback;
-  //  openCallback.Init(g_StdStream, g_ErrStream, percentsStream);
+    COpenCallbackConsole openCallback;
+    openCallback.Init(g_StdStream, g_ErrStream, percentsStream);
 
-  //  #ifndef _NO_CRYPTO
-  //  bool passwordIsDefined =
-  //      (options.PasswordEnabled && !options.Password.IsEmpty());
-  //  openCallback.PasswordIsDefined = passwordIsDefined;
-  //  openCallback.Password = options.Password;
-  //  #endif
+    #ifndef _NO_CRYPTO
+    bool passwordIsDefined =
+        (options.PasswordEnabled && !options.Password.IsEmpty());
+    openCallback.PasswordIsDefined = passwordIsDefined;
+    openCallback.Password = options.Password;
+    #endif
 
-  //  CUpdateCallbackConsole callback;
-  //  callback.LogLevel = options.LogLevel;
-  //  callback.PercentsNameLevel = percentsNameLevel;
+    CUpdateCallbackConsole callback;
+    callback.LogLevel = options.LogLevel;
+    callback.PercentsNameLevel = percentsNameLevel;
 
-  //  if (percentsStream)
-  //    callback.SetWindowWidth(consoleWidth);
+    if (percentsStream)
+      callback.SetWindowWidth(consoleWidth);
 
-  //  #ifndef _NO_CRYPTO
-  //  callback.PasswordIsDefined = passwordIsDefined;
-  //  callback.AskPassword = (options.PasswordEnabled && options.Password.IsEmpty());
-  //  callback.Password = options.Password;
-  //  #endif
+    #ifndef _NO_CRYPTO
+    callback.PasswordIsDefined = passwordIsDefined;
+    callback.AskPassword = (options.PasswordEnabled && options.Password.IsEmpty());
+    callback.Password = options.Password;
+    #endif
 
-  //  callback.StdOutMode = uo.StdOutMode;
-  //  callback.Init(
-  //    // NULL,
-  //    g_StdStream, g_ErrStream, percentsStream);
+    callback.StdOutMode = uo.StdOutMode;
+    callback.Init(
+      // NULL,
+      g_StdStream, g_ErrStream, percentsStream);
 
-  //  CUpdateErrorInfo errorInfo;
+    CUpdateErrorInfo errorInfo;
 
-  //  /*
-  //  if (!uo.Init(codecs, types, options.ArchiveName))
-  //    throw kUnsupportedUpdateArcType;
-  //  */
-  //  hresultMain = UpdateArchive(codecs,
-  //      types,
-  //      options.ArchiveName,
-  //      options.Censor,
-  //      uo,
-  //      errorInfo, &openCallback, &callback, true);
+    /*
+    if (!uo.Init(codecs, types, options.ArchiveName))
+      throw kUnsupportedUpdateArcType;
+    */
+    /*
+    hresultMain = UpdateArchive(codecs,
+        types,
+        options.ArchiveName,
+        options.Censor,
+        uo,
+        errorInfo, &openCallback, &callback, true);
 
-  //  callback.ClosePercents2();
+    callback.ClosePercents2();
 
-  //  CStdOutStream *se = g_StdStream;
-  //  if (!se)
-  //    se = g_ErrStream;
+    CStdOutStream *se = g_StdStream;
+    if (!se)
+      se = g_ErrStream;
 
-  //  retCode = WarningsCheck(hresultMain, callback, errorInfo,
-  //      g_StdStream, se,
-  //      true // options.EnableHeaders
-  //      );
-  //}
+    retCode = WarningsCheck(hresultMain, callback, errorInfo,
+        g_StdStream, se,
+        true // options.EnableHeaders
+        );
+  }
   else if (options.Command.CommandType == NCommandType::kHash)
   {
     const CHashOptions &uo = options.HashOptions;
@@ -1434,7 +1435,7 @@ int Main2(
     if (!se)
       se = g_ErrStream;
     retCode = WarningsCheck(hresultMain, callback, errorInfo, g_StdStream, se, options.EnableHeaders);
-  }
+  }*/
   else
     ShowMessageAndThrowException(kUserErrorMessage, NExitCode::kUserError);
 
