@@ -327,10 +327,6 @@
 			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'">
 			</PrecompiledHeader>
 		</ClCompile>
-		<ClCompile Include="..\..\ext\SevenZ\C\7zDec.c">
-			<Optimization Condition="'$(Configuration)|$(Platform)'=='ReleaseU'">MaxSpeed</Optimization>
-			<PrecompiledHeader />
-		</ClCompile>
 		<ClCompile Include="..\..\ext\SevenZ\C\7zFile.c">
 			<Optimization Condition="'$(Configuration)|$(Platform)'=='ReleaseU'">MaxSpeed</Optimization>
 			<PrecompiledHeader />
