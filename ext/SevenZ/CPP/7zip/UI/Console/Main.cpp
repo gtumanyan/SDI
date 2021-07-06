@@ -1316,7 +1316,7 @@ int Main2(
       }
       } // if (so)
     }
-    else // if_(!isExtractGroupCommand)
+    /*else // if_(!isExtractGroupCommand)
     {
       UInt64 numErrors = 0;
       UInt64 numWarnings = 0;
@@ -1352,10 +1352,10 @@ int Main2(
           g_StdOut << endl << "Errors: " << numErrors << endl;
         retCode = NExitCode::kFatalError;
       }
-    } // if_(isExtractGroupCommand)
+    }*/ // if_(isExtractGroupCommand)
     } // if_(hresultMain == S_OK)
   }
-  else if (options.Command.IsFromUpdateGroup())
+  /*else if (options.Command.IsFromUpdateGroup())
   {
     CUpdateOptions &uo = options.UpdateOptions;
     if (uo.SfxMode && uo.SfxModule.IsEmpty())
@@ -1395,6 +1395,7 @@ int Main2(
     if (!uo.Init(codecs, types, options.ArchiveName))
       throw kUnsupportedUpdateArcType;
     */
+    /*
     hresultMain = UpdateArchive(codecs,
         types,
         options.ArchiveName,
@@ -1434,7 +1435,7 @@ int Main2(
     if (!se)
       se = g_ErrStream;
     retCode = WarningsCheck(hresultMain, callback, errorInfo, g_StdStream, se, options.EnableHeaders);
-  }
+  }*/
   else
     ShowMessageAndThrowException(kUserErrorMessage, NExitCode::kUserError);
 

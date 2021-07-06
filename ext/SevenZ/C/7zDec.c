@@ -536,11 +536,11 @@ static SRes SzFolder_Decode2(const CSzFolder *folder,
             x86_Convert(outBuffer, outSize, 0, &state, 0);
             break;
           }
-          CASE_BRA_CONV(PPC)
-          CASE_BRA_CONV(IA64)
-          CASE_BRA_CONV(SPARC)
-          CASE_BRA_CONV(ARM)
-          CASE_BRA_CONV(ARMT)
+          //CASE_BRA_CONV(PPC)
+          //CASE_BRA_CONV(IA64)
+          //CASE_BRA_CONV(SPARC)
+          //CASE_BRA_CONV(ARM)
+          //CASE_BRA_CONV(ARMT)
           default:
             return SZ_ERROR_UNSUPPORTED;
         }

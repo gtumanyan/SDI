@@ -420,30 +420,30 @@ static void AddNameToCensor(NWildcard::CCensor &censor,
   censor.AddPreItem(include, name, recursed, wildcardMatching);
 }
 
-static void AddRenamePair(CObjectVector<CRenamePair> *renamePairs,
-    const UString &oldName, const UString &newName, NRecursedType::EEnum type,
-    bool wildcardMatching)
-{
-  CRenamePair &pair = renamePairs->AddNew();
-  pair.OldName = oldName;
-  pair.NewName = newName;
-  pair.RecursedType = type;
-  pair.WildcardParsing = wildcardMatching;
-
-  if (!pair.Prepare())
-  {
-    UString val;
-    val += pair.OldName;
-    val.Add_LF();
-    val += pair.NewName;
-    val.Add_LF();
-    if (type == NRecursedType::kRecursed)
-      val += "-r";
-    else if (type == NRecursedType::kWildcardOnlyRecursed)
-      val += "-r0";
-    throw CArcCmdLineException("Unsupported rename command:", val);
-  }
-}
+//static void AddRenamePair(CObjectVector<CRenamePair> *renamePairs,
+//    const UString &oldName, const UString &newName, NRecursedType::EEnum type,
+//    bool wildcardMatching)
+//{
+//  CRenamePair &pair = renamePairs->AddNew();
+//  pair.OldName = oldName;
+//  pair.NewName = newName;
+//  pair.RecursedType = type;
+//  pair.WildcardParsing = wildcardMatching;
+//
+//  if (!pair.Prepare())
+//  {
+//    UString val;
+//    val += pair.OldName;
+//    val.Add_LF();
+//    val += pair.NewName;
+//    val.Add_LF();
+//    if (type == NRecursedType::kRecursed)
+//      val += "-r";
+//    else if (type == NRecursedType::kWildcardOnlyRecursed)
+//      val += "-r0";
+//    throw CArcCmdLineException("Unsupported rename command:", val);
+//  }
+//}
 
 static void AddToCensorFromListFile(
     CObjectVector<CRenamePair> *renamePairs,
@@ -468,16 +468,16 @@ static void AddToCensorFromListFile(
     }
     throw CArcCmdLineException(kIncorrectListFile, fileName);
   }
-  if (renamePairs)
-  {
-    if ((names.Size() & 1) != 0)
-      throw CArcCmdLineException(kIncorrectListFile, fileName);
-    for (unsigned i = 0; i < names.Size(); i += 2)
-    {
-      // change type !!!!
-      AddRenamePair(renamePairs, names[i], names[i + 1], type, wildcardMatching);
-    }
-  }
+  //if (renamePairs)
+  //{
+  //  if ((names.Size() & 1) != 0)
+  //    throw CArcCmdLineException(kIncorrectListFile, fileName);
+  //  for (unsigned i = 0; i < names.Size(); i += 2)
+  //  {
+  //    // change type !!!!
+  //    AddRenamePair(renamePairs, names[i], names[i + 1], type, wildcardMatching);
+  //  }
+  //}
   else
     FOR_VECTOR (i, names)
       AddNameToCensor(censor, names[i], include, type, wildcardMatching);
@@ -514,13 +514,13 @@ static void AddToCensorFromNonSwitchesStrings(
     {
       if (oldIndex == -1)
         oldIndex = (int)i;
-      else
-      {
-        // NRecursedType::EEnum type is used for global wildcard (-i! switches)
-        AddRenamePair(renamePairs, nonSwitchStrings[(unsigned)oldIndex], s, NRecursedType::kNonRecursed, wildcardMatching);
-        // AddRenamePair(renamePairs, nonSwitchStrings[oldIndex], s, type);
-        oldIndex = -1;
-      }
+      //else
+      //{
+      //  // NRecursedType::EEnum type is used for global wildcard (-i! switches)
+      //  AddRenamePair(renamePairs, nonSwitchStrings[(unsigned)oldIndex], s, NRecursedType::kNonRecursed, wildcardMatching);
+      //  // AddRenamePair(renamePairs, nonSwitchStrings[oldIndex], s, type);
+      //  oldIndex = -1;
+      //}
     }
     else
       AddNameToCensor(censor, s, true, type, wildcardMatching);
@@ -693,134 +693,134 @@ static const char * const kUpdateIgnoreItselfPostStringID = "-";
 static const wchar_t kUpdateNewArchivePostCharID = '!';
 
 
-static bool ParseUpdateCommandString2(const UString &command,
-    NUpdateArchive::CActionSet &actionSet, UString &postString)
-{
-  for (unsigned i = 0; i < command.Len();)
-  {
-    wchar_t c = MyCharLower_Ascii(command[i]);
-    int statePos = FindCharPosInString(kUpdatePairStateIDSet, (char)c);
-    if (c > 0x7F || statePos < 0)
-    {
-      postString = command.Ptr(i);
-      return true;
-    }
-    i++;
-    if (i >= command.Len())
-      return false;
-    c = command[i];
-    if (c < '0' || c >= (wchar_t)('0' + kNumUpdatePairActions))
-      return false;
-    unsigned actionPos = (unsigned)(c - '0');
-    actionSet.StateActions[(unsigned)statePos] = (NUpdateArchive::NPairAction::EEnum)(actionPos);
-    if (kUpdatePairStateNotSupportedActions[(unsigned)statePos] == (int)actionPos)
-      return false;
-    i++;
-  }
-  postString.Empty();
-  return true;
-}
-
-static void ParseUpdateCommandString(CUpdateOptions &options,
-    const UStringVector &updatePostStrings,
-    const NUpdateArchive::CActionSet &defaultActionSet)
-{
-  const char *errorMessage = "incorrect update switch command";
-  unsigned i;
-  for (i = 0; i < updatePostStrings.Size(); i++)
-  {
-    const UString &updateString = updatePostStrings[i];
-    if (updateString.IsEqualTo(kUpdateIgnoreItselfPostStringID))
-    {
-      if (options.UpdateArchiveItself)
-      {
-        options.UpdateArchiveItself = false;
-        options.Commands.Delete(0);
-      }
-    }
-    else
-    {
-      NUpdateArchive::CActionSet actionSet = defaultActionSet;
-
-      UString postString;
-      if (!ParseUpdateCommandString2(updateString, actionSet, postString))
-        break;
-      if (postString.IsEmpty())
-      {
-        if (options.UpdateArchiveItself)
-          options.Commands[0].ActionSet = actionSet;
-      }
-      else
-      {
-        if (postString[0] != kUpdateNewArchivePostCharID)
-          break;
-        CUpdateArchiveCommand uc;
-        UString archivePath = postString.Ptr(1);
-        if (archivePath.IsEmpty())
-          break;
-        uc.UserArchivePath = archivePath;
-        uc.ActionSet = actionSet;
-        options.Commands.Add(uc);
-      }
-    }
-  }
-  if (i != updatePostStrings.Size())
-    throw CArcCmdLineException(errorMessage, updatePostStrings[i]);
-}
+//static bool ParseUpdateCommandString2(const UString &command,
+//    NUpdateArchive::CActionSet &actionSet, UString &postString)
+//{
+//  for (unsigned i = 0; i < command.Len();)
+//  {
+//    wchar_t c = MyCharLower_Ascii(command[i]);
+//    int statePos = FindCharPosInString(kUpdatePairStateIDSet, (char)c);
+//    if (c > 0x7F || statePos < 0)
+//    {
+//      postString = command.Ptr(i);
+//      return true;
+//    }
+//    i++;
+//    if (i >= command.Len())
+//      return false;
+//    c = command[i];
+//    if (c < '0' || c >= (wchar_t)('0' + kNumUpdatePairActions))
+//      return false;
+//    unsigned actionPos = (unsigned)(c - '0');
+//    actionSet.StateActions[(unsigned)statePos] = (NUpdateArchive::NPairAction::EEnum)(actionPos);
+//    if (kUpdatePairStateNotSupportedActions[(unsigned)statePos] == (int)actionPos)
+//      return false;
+//    i++;
+//  }
+//  postString.Empty();
+//  return true;
+//}
+//
+//static void ParseUpdateCommandString(CUpdateOptions &options,
+//    const UStringVector &updatePostStrings,
+//    const NUpdateArchive::CActionSet &defaultActionSet)
+//{
+//  const char *errorMessage = "incorrect update switch command";
+//  unsigned i;
+//  for (i = 0; i < updatePostStrings.Size(); i++)
+//  {
+//    const UString &updateString = updatePostStrings[i];
+//    if (updateString.IsEqualTo(kUpdateIgnoreItselfPostStringID))
+//    {
+//      if (options.UpdateArchiveItself)
+//      {
+//        options.UpdateArchiveItself = false;
+//        options.Commands.Delete(0);
+//      }
+//    }
+//    else
+//    {
+//      NUpdateArchive::CActionSet actionSet = defaultActionSet;
+//
+//      UString postString;
+//      if (!ParseUpdateCommandString2(updateString, actionSet, postString))
+//        break;
+//      if (postString.IsEmpty())
+//      {
+//        if (options.UpdateArchiveItself)
+//          options.Commands[0].ActionSet = actionSet;
+//      }
+//      else
+//      {
+//        if (postString[0] != kUpdateNewArchivePostCharID)
+//          break;
+//        CUpdateArchiveCommand uc;
+//        UString archivePath = postString.Ptr(1);
+//        if (archivePath.IsEmpty())
+//          break;
+//        uc.UserArchivePath = archivePath;
+//        uc.ActionSet = actionSet;
+//        options.Commands.Add(uc);
+//      }
+//    }
+//  }
+//  if (i != updatePostStrings.Size())
+//    throw CArcCmdLineException(errorMessage, updatePostStrings[i]);
+//}
 
 bool ParseComplexSize(const wchar_t *s, UInt64 &result);
 
-static void SetAddCommandOptions(
-    NCommandType::EEnum commandType,
-    const CParser &parser,
-    CUpdateOptions &options)
-{
-  NUpdateArchive::CActionSet defaultActionSet;
-  switch (commandType)
-  {
-    case NCommandType::kAdd:
-      defaultActionSet = NUpdateArchive::k_ActionSet_Add;
-      break;
-    case NCommandType::kDelete:
-      defaultActionSet = NUpdateArchive::k_ActionSet_Delete;
-      break;
-    default:
-      defaultActionSet = NUpdateArchive::k_ActionSet_Update;
-  }
-  
-  options.UpdateArchiveItself = true;
-  
-  options.Commands.Clear();
-  CUpdateArchiveCommand updateMainCommand;
-  updateMainCommand.ActionSet = defaultActionSet;
-  options.Commands.Add(updateMainCommand);
-  if (parser[NKey::kUpdate].ThereIs)
-    ParseUpdateCommandString(options, parser[NKey::kUpdate].PostStrings,
-        defaultActionSet);
-  if (parser[NKey::kWorkingDir].ThereIs)
-  {
-    const UString &postString = parser[NKey::kWorkingDir].PostStrings[0];
-    if (postString.IsEmpty())
-      NDir::MyGetTempPath(options.WorkingDir);
-    else
-      options.WorkingDir = us2fs(postString);
-  }
-  options.SfxMode = parser[NKey::kSfx].ThereIs;
-  if (options.SfxMode)
-    options.SfxModule = us2fs(parser[NKey::kSfx].PostStrings[0]);
-
-  if (parser[NKey::kVolume].ThereIs)
-  {
-    const UStringVector &sv = parser[NKey::kVolume].PostStrings;
-    FOR_VECTOR (i, sv)
-    {
-      UInt64 size;
-      if (!ParseComplexSize(sv[i], size) || size == 0)
-        throw CArcCmdLineException("Incorrect volume size:", sv[i]);
-      options.VolumesSizes.Add(size);
-    }
-  }
-}
+//static void SetAddCommandOptions(
+//    NCommandType::EEnum commandType,
+//    const CParser &parser,
+//    CUpdateOptions &options)
+//{
+//  NUpdateArchive::CActionSet defaultActionSet;
+//  switch (commandType)
+//  {
+//    case NCommandType::kAdd:
+//      defaultActionSet = NUpdateArchive::k_ActionSet_Add;
+//      break;
+//    case NCommandType::kDelete:
+//      defaultActionSet = NUpdateArchive::k_ActionSet_Delete;
+//      break;
+//    default:
+//      defaultActionSet = NUpdateArchive::k_ActionSet_Update;
+//  }
+//  
+//  options.UpdateArchiveItself = true;
+//  
+//  options.Commands.Clear();
+//  CUpdateArchiveCommand updateMainCommand;
+//  updateMainCommand.ActionSet = defaultActionSet;
+//  options.Commands.Add(updateMainCommand);
+//  if (parser[NKey::kUpdate].ThereIs)
+//    ParseUpdateCommandString(options, parser[NKey::kUpdate].PostStrings,
+//        defaultActionSet);
+//  if (parser[NKey::kWorkingDir].ThereIs)
+//  {
+//    const UString &postString = parser[NKey::kWorkingDir].PostStrings[0];
+//    if (postString.IsEmpty())
+//      NDir::MyGetTempPath(options.WorkingDir);
+//    else
+//      options.WorkingDir = us2fs(postString);
+//  }
+//  options.SfxMode = parser[NKey::kSfx].ThereIs;
+//  if (options.SfxMode)
+//    options.SfxModule = us2fs(parser[NKey::kSfx].PostStrings[0]);
+//
+//  if (parser[NKey::kVolume].ThereIs)
+//  {
+//    const UStringVector &sv = parser[NKey::kVolume].PostStrings;
+//    FOR_VECTOR (i, sv)
+//    {
+//      UInt64 size;
+//      if (!ParseComplexSize(sv[i], size) || size == 0)
+//        throw CArcCmdLineException("Incorrect volume size:", sv[i]);
+//      options.VolumesSizes.Add(size);
+//    }
+//  }
+//}
 
 static void SetMethodOptions(const CParser &parser, CObjectVector<CProperty> &properties)
 {
@@ -1338,70 +1338,70 @@ void CArcCmdLineParser::Parse2(CArcCmdLineOptions &options)
       eo.PathMode_Force = true;
     }
   }
-  else if (options.Command.IsFromUpdateGroup())
-  {
-    if (parser[NKey::kArInclude].ThereIs)
-      throw CArcCmdLineException("-ai switch is not supported for this command");
+  //else if (options.Command.IsFromUpdateGroup())
+  //{
+  //  if (parser[NKey::kArInclude].ThereIs)
+  //    throw CArcCmdLineException("-ai switch is not supported for this command");
 
-    CUpdateOptions &updateOptions = options.UpdateOptions;
+  //  CUpdateOptions &updateOptions = options.UpdateOptions;
 
-    SetAddCommandOptions(options.Command.CommandType, parser, updateOptions);
-    
-    updateOptions.MethodMode.Properties = options.Properties;
+  //  SetAddCommandOptions(options.Command.CommandType, parser, updateOptions);
+  //  
+  //  updateOptions.MethodMode.Properties = options.Properties;
 
-    if (parser[NKey::kPreserveATime].ThereIs)
-      updateOptions.PreserveATime = true;
-    if (parser[NKey::kShareForWrite].ThereIs)
-      updateOptions.OpenShareForWrite = true;
-    if (parser[NKey::kStopAfterOpenError].ThereIs)
-      updateOptions.StopAfterOpenError = true;
+  //  if (parser[NKey::kPreserveATime].ThereIs)
+  //    updateOptions.PreserveATime = true;
+  //  if (parser[NKey::kShareForWrite].ThereIs)
+  //    updateOptions.OpenShareForWrite = true;
+  //  if (parser[NKey::kStopAfterOpenError].ThereIs)
+  //    updateOptions.StopAfterOpenError = true;
 
-    updateOptions.PathMode = censorPathMode;
+  //  updateOptions.PathMode = censorPathMode;
 
-    updateOptions.AltStreams = options.AltStreams;
-    updateOptions.NtSecurity = options.NtSecurity;
-    updateOptions.HardLinks = options.HardLinks;
-    updateOptions.SymLinks = options.SymLinks;
+  //  updateOptions.AltStreams = options.AltStreams;
+  //  updateOptions.NtSecurity = options.NtSecurity;
+  //  updateOptions.HardLinks = options.HardLinks;
+  //  updateOptions.SymLinks = options.SymLinks;
 
-    updateOptions.EMailMode = parser[NKey::kEmail].ThereIs;
-    if (updateOptions.EMailMode)
-    {
-      updateOptions.EMailAddress = parser[NKey::kEmail].PostStrings.Front();
-      if (updateOptions.EMailAddress.Len() > 0)
-        if (updateOptions.EMailAddress[0] == L'.')
-        {
-          updateOptions.EMailRemoveAfter = true;
-          updateOptions.EMailAddress.Delete(0);
-        }
-    }
+  //  updateOptions.EMailMode = parser[NKey::kEmail].ThereIs;
+  //  if (updateOptions.EMailMode)
+  //  {
+  //    updateOptions.EMailAddress = parser[NKey::kEmail].PostStrings.Front();
+  //    if (updateOptions.EMailAddress.Len() > 0)
+  //      if (updateOptions.EMailAddress[0] == L'.')
+  //      {
+  //        updateOptions.EMailRemoveAfter = true;
+  //        updateOptions.EMailAddress.Delete(0);
+  //      }
+  //  }
 
-    updateOptions.StdOutMode = options.StdOutMode;
-    updateOptions.StdInMode = options.StdInMode;
+  //  updateOptions.StdOutMode = options.StdOutMode;
+  //  updateOptions.StdInMode = options.StdInMode;
 
-    updateOptions.DeleteAfterCompressing = parser[NKey::kDeleteAfterCompressing].ThereIs;
-    updateOptions.SetArcMTime = parser[NKey::kSetArcMTime].ThereIs;
+  //  updateOptions.DeleteAfterCompressing = parser[NKey::kDeleteAfterCompressing].ThereIs;
+  //  updateOptions.SetArcMTime = parser[NKey::kSetArcMTime].ThereIs;
 
-    if (updateOptions.StdOutMode && updateOptions.EMailMode)
-      throw CArcCmdLineException("stdout mode and email mode cannot be combined");
-    
-    if (updateOptions.StdOutMode)
-    {
-      if (options.IsStdOutTerminal)
-        throw CArcCmdLineException(kTerminalOutError);
-      
-      if (options.Number_for_Percents == k_OutStream_stdout
-          || options.Number_for_Out == k_OutStream_stdout
-          || options.Number_for_Errors == k_OutStream_stdout)
-        throw CArcCmdLineException(kSameTerminalError);
-    }
-    
-    if (updateOptions.StdInMode)
-      updateOptions.StdInFileName = parser[NKey::kStdIn].PostStrings.Front();
+  //  if (updateOptions.StdOutMode && updateOptions.EMailMode)
+  //    throw CArcCmdLineException("stdout mode and email mode cannot be combined");
+  //  
+  //  if (updateOptions.StdOutMode)
+  //  {
+  //    if (options.IsStdOutTerminal)
+  //      throw CArcCmdLineException(kTerminalOutError);
+  //    
+  //    if (options.Number_for_Percents == k_OutStream_stdout
+  //        || options.Number_for_Out == k_OutStream_stdout
+  //        || options.Number_for_Errors == k_OutStream_stdout)
+  //      throw CArcCmdLineException(kSameTerminalError);
+  //  }
+  //  
+  //  if (updateOptions.StdInMode)
+  //    updateOptions.StdInFileName = parser[NKey::kStdIn].PostStrings.Front();
 
-    if (options.Command.CommandType == NCommandType::kRename)
-      if (updateOptions.Commands.Size() != 1)
-        throw CArcCmdLineException("Only one archive can be created with rename command");
-  }
+  //  if (options.Command.CommandType == NCommandType::kRename)
+  //    if (updateOptions.Commands.Size() != 1)
+  //      throw CArcCmdLineException("Only one archive can be created with rename command");
+  //}
   else if (options.Command.CommandType == NCommandType::kBenchmark)
   {
     options.NumIterations = 1;

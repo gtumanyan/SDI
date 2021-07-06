@@ -485,7 +485,7 @@ void registerall()
     NArchive::N7z::register7z();
     registerBCJ();
     registerBCJ2();
-    registerBranch();
+    //registerBranch();
     registerCopy();
     registerLZMA();
     registerLZMA2();
