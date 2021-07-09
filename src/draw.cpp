@@ -232,7 +232,7 @@ void ImageImp::CreateMyBitmap(BYTE *data,size_t sz)
     hasalpha=sx=sy=0;
     ldc=nullptr;
 
-    int ret=WebPGetInfo(data,sz,&sx,&sy);
+    int ret= WebPGetInfo(data,sz,&sx,&sy);
     if(!ret)
     {
         Log.print_err("ERROR in image_load(): failed WebPGetInfo(%d)\n",ret);

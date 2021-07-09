@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31320.298
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31423.177
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "install64", "..\vs_install64\install64.vcxproj", "{4962CB7A-5AC4-4143-BB7B-B94CCD87C6E0}"
 EndProject
@@ -66,8 +66,8 @@ Global
 		{9FE9A4F2-4E31-41EF-8189-167465A02FFD}.MinSizeRel|Win32.ActiveCfg = ReleaseU|Win32
 		{9FE9A4F2-4E31-41EF-8189-167465A02FFD}.MinSizeRel|x64.ActiveCfg = ReleaseU|x64
 		{9FE9A4F2-4E31-41EF-8189-167465A02FFD}.Release|Win32.ActiveCfg = ReleaseU|Win32
-		{9FE9A4F2-4E31-41EF-8189-167465A02FFD}.Release|x64.ActiveCfg = DebugU|Win32
-		{9FE9A4F2-4E31-41EF-8189-167465A02FFD}.Release|x64.Build.0 = DebugU|Win32
+		{9FE9A4F2-4E31-41EF-8189-167465A02FFD}.Release|x64.ActiveCfg = ReleaseU|x64
+		{9FE9A4F2-4E31-41EF-8189-167465A02FFD}.Release|x64.Build.0 = ReleaseU|x64
 		{9FE9A4F2-4E31-41EF-8189-167465A02FFD}.RelWithDebInfo|Win32.ActiveCfg = ReleaseU|x64
 		{9FE9A4F2-4E31-41EF-8189-167465A02FFD}.RelWithDebInfo|Win32.Build.0 = ReleaseU|x64
 		{9FE9A4F2-4E31-41EF-8189-167465A02FFD}.RelWithDebInfo|x64.ActiveCfg = DebugU|x64
