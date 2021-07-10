@@ -137,6 +137,7 @@ enum FLAG
     COLLECTION_FORCE_REINDEXING = 0x00000001,
     COLLECTION_USE_LZMA         = 0x00000002,
     COLLECTION_PRINT_INDEX      = 0x00000004,
+    FLAG_UPDATESOK              = 0x10000008,
     FLAG_NOGUI                  = 0x00000010,
     FLAG_CHECKUPDATES           = 0x00000020,
     FLAG_DISABLEINSTALL         = 0x00000040,
@@ -164,8 +165,7 @@ enum FLAG
     FLAG_HIDEPATREON            = 0x10000000,
     FLAG_NOSTOP                 = 0x20000000,
     FLAG_KEEPSEEDING            = 0x40000000,
-    FLAG_SCRIPTMODE             = 0x80000000,
-    FLAG_UPDATESOK              = 0x100000000
+    FLAG_SCRIPTMODE             = 0x80000000    
 };
 
 class Settings_t

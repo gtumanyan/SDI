@@ -412,7 +412,7 @@ int UpdateDialog_t::getcurver(const char *ptr)
     return 0;
 }
 
-static bool yes1(libtorrent::torrent_status const&){return true;}
+//static bool yes1(libtorrent::torrent_status const&){return true;}
 
 void UpdateDialog_t::calctotalsize()
 {
