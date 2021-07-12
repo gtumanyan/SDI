@@ -383,7 +383,7 @@ void WString_dyn::vsprintf(const wchar_t *format,va_list args)
 #else
     r=_vswprintf(buf_cur,format,args);
 #endif
-    if(debug)Log.print_con("%d,(%S),[%S]\n",r,format,buf_cur);
+    if(debug)Log.print_con("[%S]\n",buf_cur);
 }
 
 void WString_dyn::append(const wchar_t *str)
