@@ -331,98 +331,16 @@ static inline char GetHex(unsigned val)
   return (char)((val < 10) ? ('0' + val) : ('A' + (val - 10)));
 }
 
-static void PrintWarningsPaths(const CErrorPathCodes &pc, CStdOutStream &so)
-{
-  FOR_VECTOR(i, pc.Paths)
-  {
-    so.NormalizePrint_UString(fs2us(pc.Paths[i]));
-    so << " : ";
-    so << NError::MyFormatMessage(pc.Codes[i]) << endl;
-  }
-  so << "----------------" << endl;
-}
-
-static int WarningsCheck(HRESULT result, const CCallbackConsoleBase &callback,
-    const CUpdateErrorInfo &errorInfo,
-    CStdOutStream *so,
-    CStdOutStream *se,
-    bool showHeaders)
-{
-  int exitCode = NExitCode::kSuccess;
-  
-  if (callback.ScanErrors.Paths.Size() != 0)
-  {
-    if (se)
-    {
-      *se << endl;
-      *se << "Scan WARNINGS for files and folders:" << endl << endl;
-      PrintWarningsPaths(callback.ScanErrors, *se);
-      *se << "Scan WARNINGS: " << callback.ScanErrors.Paths.Size();
-      *se << endl;
-    }
-    exitCode = NExitCode::kWarning;
-  }
-  
-  if (result != S_OK || errorInfo.ThereIsError())
-  {
-    if (se)
-    {
-      UString message;
-      if (!errorInfo.Message.IsEmpty())
-      {
-        message += errorInfo.Message.Ptr();
-        message.Add_LF();
-      }
-      {
-        FOR_VECTOR(i, errorInfo.FileNames)
-        {
-          message += fs2us(errorInfo.FileNames[i]);
-          message.Add_LF();
-        }
-      }
-      if (errorInfo.SystemError != 0)
-      {
-        message += NError::MyFormatMessage(errorInfo.SystemError);
-        message.Add_LF();
-      }
-      if (!message.IsEmpty())
-        *se << L"\nError:\n" << message;
-    }
-
-    // we will work with (result) later
-    // throw CSystemException(result);
-    return NExitCode::kFatalError;
-  }
-
-  unsigned numErrors = callback.FailedFiles.Paths.Size();
-  if (numErrors == 0)
-  {
-    if (showHeaders)
-      if (callback.ScanErrors.Paths.Size() == 0)
-        if (so)
-        {
-          if (se)
-            se->Flush();
-          *so << kEverythingIsOk << endl;
-        }
-  }
-  else
-  {
-    if (se)
-    {
-      *se << endl;
-      *se << "WARNINGS for files:" << endl << endl;
-      PrintWarningsPaths(callback.FailedFiles, *se);
-      *se << "WARNING: Cannot open " << numErrors << " file";
-      if (numErrors > 1)
-        *se << 's';
-      *se << endl;
-    }
-    exitCode = NExitCode::kWarning;
-  }
-  
-  return exitCode;
-}
+//static void PrintWarningsPaths(const CErrorPathCodes &pc, CStdOutStream &so)
+//{
+//  FOR_VECTOR(i, pc.Paths)
+//  {
+//    so.NormalizePrint_UString(fs2us(pc.Paths[i]));
+//    so << " : ";
+//    so << NError::MyFormatMessage(pc.Codes[i]) << endl;
+//  }
+//  so << "----------------" << endl;
+//}
 
 static void ThrowException_if_Error(HRESULT res)
 {
@@ -693,7 +611,14 @@ void Set_ModuleDirPrefix_From_ProgArg0(const char *s);
 #endif
 
 int Main2(
-	const WCHAR *command_line
+  #ifndef _WIN32
+  int numArgs, char *args[]
+  #endif
+);
+int Main2(
+  #ifndef _WIN32
+  int numArgs, char *args[]
+  #endif
 )
 {
   #if defined(MY_CPU_SIZEOF_POINTER)

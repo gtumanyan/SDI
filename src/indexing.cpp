@@ -128,14 +128,6 @@ public:
 //}
 
 //{ Misc functions
-static int Buf_EnsureSize(CBuf *dest, size_t size)
-{
-  if (dest->size >= size)
-    return 1;
-  Buf_Free(dest, &g_Alloc);
-  return Buf_Create(dest, size, &g_Alloc);
-}
-
 void mySzFree(ISzAllocPtr p,void *address)
 {
     UNREFERENCED_PARAMETER(p);
@@ -1127,26 +1119,33 @@ int Driverpack::genindex()
   CLookToRead2 lookStream;
   CSzArEx db;
   SRes res;
-
+  UInt16 *temp = NULL;
+  size_t tempSize = 0;
     wchar_t fullname[BUFLEN];
     WStringShort infpath;
     wchar_t *infname;
 
     WStringShort name;
     name.sprintf(L"%ws\\%ws",getPath(),getFilename());
-  Log.print_con("\n7z Decoder " MY_VERSION_CPU " : " MY_COPYRIGHT_DATE "\n\n");
+  	Log.print_con("\n7z Decoder " MY_VERSION_CPU " : " MY_COPYRIGHT_DATE "\n\n");
     Log.print_con("Indexing %S\n",name.Get());
 
 
   allocImp = g_Alloc;
   allocTempImp = g_Alloc;
-    if (InFile_OpenW(&archiveStream.file,name.Get()));
+
   {
-    Log.print_err("can not open input file");
-    return 1;
+    WRes wres =
+  	InFile_OpenW(&archiveStream.file, name.Get());
+    if (wres != 0)
+    {
+    Log.print_err("can not open input file", wres);
+      return 1;
+    }
   }
 
   FileInStream_CreateVTable(&archiveStream);
+  archiveStream.wres = 0;
   LookToRead2_CreateVTable(&lookStream, False);
   lookStream.buf = NULL;
 
@@ -1172,35 +1171,54 @@ int Driverpack::genindex()
   {
     res = SzArEx_Open(&db, &lookStream.vt, &allocImp, &allocTempImp);
   }
-    int cc=0;
+  
   if (res == SZ_OK)
     {
 #ifdef MERGE_FINDER
-        getindexfilename(col->getIndex_linear_dir(),L"7z.bat",fullname);
-        Merger merger{&db,fullname};
-        for(unsigned i=0;i<db.NumFiles;i++)if(!SzArEx_IsDir(&db,i))merger.makerecords(i);
-        merger.find_dups();
+	getindexfilename(col->getIndex_linear_dir(),L"7z.bat",fullname);
+    Merger merger{&db,fullname};
+    for(unsigned i=0;i<db.NumFiles;i++)if(!SzArEx_IsDir(&db,i))merger.makerecords(i);
+    merger.find_dups();
 #endif
-        /*
-        if you need cache, use these 3 variables.
-        if you use external function, you can make these variable as static.
-        */
-        UInt32 blockIndex=0xFFFFFFFF; /* it can have any value before first call (if outBuffer = 0) */
-        Byte *outBuffer=nullptr; /* it must be 0 before first call for each new archive. */
-        size_t outBufferSize=0;  /* it can have any value before first call (if outBuffer = 0) */
+    }
 
-        for(unsigned i=0;i<db.NumFiles;i++)
+    if (res == SZ_OK)
+    {
+      UInt32 i;
+
+      /*
+      if you need cache, use these 3 variables.
+      if you use external function, you can make these variable as static.
+      */
+      UInt32 blockIndex = 0xFFFFFFFF; /* it can have any value before first call (if outBuffer = 0) */
+      Byte *outBuffer = 0; /* it must be 0 before first call for each new archive. */
+      size_t outBufferSize = 0;  /* it can have any value before first call (if outBuffer = 0) */
+
+      for (i = 0; i < db.NumFiles; i++)
+      {
+        size_t offset = 0;
+        size_t outSizeProcessed = 0;
+        // const CSzFileItem *f = db.Files + i;
+        size_t len;
+        const BoolInt isDir = SzArEx_IsDir(&db, i);
+        if (isDir)
+          continue;
+        len = SzArEx_GetFileNameUtf16(&db, i, NULL);
+        // len = SzArEx_GetFullNameLen(&db, i);
+
+        if (len > tempSize)
         {
-            size_t offset=0;
-            size_t outSizeProcessed=0;
-            if(SzArEx_IsDir(&db,i))continue;
-
-            if(SzArEx_GetFileNameUtf16(&db,i,nullptr)>BUFLEN)
-            {
-                res=SZ_ERROR_MEM;
+          SzFree(NULL, temp);
+          tempSize = len;
+          temp = (UInt16 *)SzAlloc(NULL, tempSize * sizeof(temp[0]));
+          if (!temp)
+          {
+            res = SZ_ERROR_MEM;
                 Log.print_err("ERROR: mem\n");
-                break;
-            }
+            break;
+          }
+        }
+
             SzArEx_GetFileNameUtf16(&db,i,(UInt16 *)fullname);
 
             size_t namelen=wcslen(fullname)-4;
@@ -1230,7 +1248,6 @@ int Driverpack::genindex()
                 if(*infname=='\\'){*infname++=0;}
                 infpath.sprintf(L"%ws\\",fullname);
 
-                cc++;
                 if(outSizeProcessed)
                 {
                     if(StrStrIW(infname,L".infdrp"))
@@ -1242,15 +1259,17 @@ int Driverpack::genindex()
                 }
             }
         }
-        IAlloc_Free(&allocImp,outBuffer);
+      ISzAlloc_Free(&allocImp, outBuffer);
     }
     else
     {
         Log.print_err("ERROR with %S:%d\n",getFilename(),res);
     }
-    delete[](Byte*)(lookStream.buf);
-    SzArEx_Free(&db,&allocImp);
-    File_Close(&archiveStream.file);
+  SzFree(NULL, temp);
+  SzArEx_Free(&db, &allocImp);
+  ISzAlloc_Free(&allocImp, lookStream.buf);
+
+  File_Close(&archiveStream.file);
     return 1;
 }
 
@@ -1974,8 +1993,8 @@ void Driverpack::print_index_hr()
         t=&d_i->version;
         t->str_date(date,true);
         t->str_version(vers);
-        fwprintf(f,L"    date\t\t\t%S\n",date.Get());
-        fwprintf(f,L"    version\t\t\t%S\n",vers.Get());
+        fwprintf(f,L"    date\t\t\t%s\n",date.Get());
+        fwprintf(f,L"    version\t\t\t%s\n",vers.Get());
         for(i=0;i<NUM_VER_NAMES;i++)
             if(d_i->fields[i])
             {

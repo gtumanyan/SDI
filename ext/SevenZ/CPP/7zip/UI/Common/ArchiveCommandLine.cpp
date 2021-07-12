@@ -444,93 +444,93 @@ static void AddNameToCensor(NWildcard::CCensor &censor,
 //    throw CArcCmdLineException("Unsupported rename command:", val);
 //  }
 //}
-
-static void AddToCensorFromListFile(
-    CObjectVector<CRenamePair> *renamePairs,
-    NWildcard::CCensor &censor,
-    LPCWSTR fileName, bool include, NRecursedType::EEnum type, bool wildcardMatching, UInt32 codePage)
-{
-  UStringVector names;
-  /*
-  if (!NFind::DoesFileExist_FollowLink(us2fs(fileName)))
-    throw CArcCmdLineException(kCannotFindListFile, fileName);
-  */
-  DWORD lastError = 0;
-  if (!ReadNamesFromListFile2(us2fs(fileName), names, codePage, lastError))
-  {
-    if (lastError != 0)
-    {
-      UString m;
-      m = "The file operation error for listfile";
-      m.Add_LF();
-      m += NError::MyFormatMessage(lastError);
-      throw CArcCmdLineException(m, fileName);
-    }
-    throw CArcCmdLineException(kIncorrectListFile, fileName);
-  }
-  //if (renamePairs)
-  //{
-  //  if ((names.Size() & 1) != 0)
-  //    throw CArcCmdLineException(kIncorrectListFile, fileName);
-  //  for (unsigned i = 0; i < names.Size(); i += 2)
-  //  {
-  //    // change type !!!!
-  //    AddRenamePair(renamePairs, names[i], names[i + 1], type, wildcardMatching);
-  //  }
-  //}
-  else
-    FOR_VECTOR (i, names)
-      AddNameToCensor(censor, names[i], include, type, wildcardMatching);
-}
-
-static void AddToCensorFromNonSwitchesStrings(
-    CObjectVector<CRenamePair> *renamePairs,
-    unsigned startIndex,
-    NWildcard::CCensor &censor,
-    const UStringVector &nonSwitchStrings,
-    int stopSwitchIndex,
-    NRecursedType::EEnum type,
-    bool wildcardMatching,
-    bool thereAreSwitchIncludes, UInt32 codePage)
-{
-  if ((renamePairs || nonSwitchStrings.Size() == startIndex) && !thereAreSwitchIncludes)
-    AddNameToCensor(censor, UString(kUniversalWildcard), true, type,
-        true // wildcardMatching
-        );
-
-  int oldIndex = -1;
-  
-  if (stopSwitchIndex < 0)
-    stopSwitchIndex = (int)nonSwitchStrings.Size();
-
-  for (unsigned i = startIndex; i < nonSwitchStrings.Size(); i++)
-  {
-    const UString &s = nonSwitchStrings[i];
-    if (s.IsEmpty())
-      throw CArcCmdLineException(kEmptyFilePath);
-    if (i < (unsigned)stopSwitchIndex && s[0] == kFileListID)
-      AddToCensorFromListFile(renamePairs, censor, s.Ptr(1), true, type, wildcardMatching, codePage);
-    else if (renamePairs)
-    {
-      if (oldIndex == -1)
-        oldIndex = (int)i;
-      //else
-      //{
-      //  // NRecursedType::EEnum type is used for global wildcard (-i! switches)
-      //  AddRenamePair(renamePairs, nonSwitchStrings[(unsigned)oldIndex], s, NRecursedType::kNonRecursed, wildcardMatching);
-      //  // AddRenamePair(renamePairs, nonSwitchStrings[oldIndex], s, type);
-      //  oldIndex = -1;
-      //}
-    }
-    else
-      AddNameToCensor(censor, s, true, type, wildcardMatching);
-  }
-  
-  if (oldIndex != -1)
-  {
-    throw CArcCmdLineException("There is no second file name for rename pair:", nonSwitchStrings[(unsigned)oldIndex]);
-  }
-}
+//
+//static void AddToCensorFromListFile(
+//    CObjectVector<CRenamePair> *renamePairs,
+//    NWildcard::CCensor &censor,
+//    LPCWSTR fileName, bool include, NRecursedType::EEnum type, bool wildcardMatching, UInt32 codePage)
+//{
+//  UStringVector names;
+//  /*
+//  if (!NFind::DoesFileExist_FollowLink(us2fs(fileName)))
+//    throw CArcCmdLineException(kCannotFindListFile, fileName);
+//  */
+//  DWORD lastError = 0;
+//  if (!ReadNamesFromListFile2(us2fs(fileName), names, codePage, lastError))
+//  {
+//    if (lastError != 0)
+//    {
+//      UString m;
+//      m = "The file operation error for listfile";
+//      m.Add_LF();
+//      m += NError::MyFormatMessage(lastError);
+//      throw CArcCmdLineException(m, fileName);
+//    }
+//    throw CArcCmdLineException(kIncorrectListFile, fileName);
+//  }
+//  if (renamePairs)
+//  {
+//    if ((names.Size() & 1) != 0)
+//      throw CArcCmdLineException(kIncorrectListFile, fileName);
+//    for (unsigned i = 0; i < names.Size(); i += 2)
+//    {
+//      // change type !!!!
+//      AddRenamePair(renamePairs, names[i], names[i + 1], type, wildcardMatching);
+//    }
+//  }
+//  else
+//    FOR_VECTOR (i, names)
+//      AddNameToCensor(censor, names[i], include, type, wildcardMatching);
+//}
+//
+//static void AddToCensorFromNonSwitchesStrings(
+//    CObjectVector<CRenamePair> *renamePairs,
+//    unsigned startIndex,
+//    NWildcard::CCensor &censor,
+//    const UStringVector &nonSwitchStrings,
+//    int stopSwitchIndex,
+//    NRecursedType::EEnum type,
+//    bool wildcardMatching,
+//    bool thereAreSwitchIncludes, UInt32 codePage)
+//{
+//  if ((renamePairs || nonSwitchStrings.Size() == startIndex) && !thereAreSwitchIncludes)
+//    AddNameToCensor(censor, UString(kUniversalWildcard), true, type,
+//        true // wildcardMatching
+//        );
+//
+//  int oldIndex = -1;
+//  
+//  if (stopSwitchIndex < 0)
+//    stopSwitchIndex = (int)nonSwitchStrings.Size();
+//
+//  for (unsigned i = startIndex; i < nonSwitchStrings.Size(); i++)
+//  {
+//    const UString &s = nonSwitchStrings[i];
+//    if (s.IsEmpty())
+//      throw CArcCmdLineException(kEmptyFilePath);
+//    if (i < (unsigned)stopSwitchIndex && s[0] == kFileListID)
+//      AddToCensorFromListFile(renamePairs, censor, s.Ptr(1), true, type, wildcardMatching, codePage);
+//    else if (renamePairs)
+//    {
+//      if (oldIndex == -1)
+//        oldIndex = (int)i;
+//      //else
+//      //{
+//      //  // NRecursedType::EEnum type is used for global wildcard (-i! switches)
+//      //  AddRenamePair(renamePairs, nonSwitchStrings[(unsigned)oldIndex], s, NRecursedType::kNonRecursed, wildcardMatching);
+//      //  // AddRenamePair(renamePairs, nonSwitchStrings[oldIndex], s, type);
+//      //  oldIndex = -1;
+//      //}
+//    }
+//    else
+//      AddNameToCensor(censor, s, true, type, wildcardMatching);
+//  }
+//  
+//  if (oldIndex != -1)
+//  {
+//    throw CArcCmdLineException("There is no second file name for rename pair:", nonSwitchStrings[(unsigned)oldIndex]);
+//  }
+//}
 
 #ifdef _WIN32
 
@@ -651,8 +651,8 @@ static void AddSwitchWildcardsToCensor(
     
     if (name[pos] == kImmediateNameID)
       AddNameToCensor(censor, tail, include, recursedType, wildcardMatching);
-    else if (name[pos] == kFileListID)
-      AddToCensorFromListFile(NULL, censor, tail, include, recursedType, wildcardMatching, codePage);
+    //else if (name[pos] == kFileListID)
+    //  AddToCensorFromListFile(NULL, censor, tail, include, recursedType, wildcardMatching, codePage);
     #ifdef _WIN32
     else if (name[pos] == kMapNameID)
     {
@@ -1174,11 +1174,11 @@ void CArcCmdLineParser::Parse2(CArcCmdLineOptions &options)
     #endif
   }
 
-  AddToCensorFromNonSwitchesStrings(isRename ? &options.UpdateOptions.RenamePairs : NULL,
-      curCommandIndex, options.Censor,
-      nonSwitchStrings, parser.StopSwitchIndex,
-      recursedType, wildcardMatching,
-      thereAreSwitchIncludes, codePage);
+  //AddToCensorFromNonSwitchesStrings(isRename ? &options.UpdateOptions.RenamePairs : NULL,
+  //    curCommandIndex, options.Censor,
+  //    nonSwitchStrings, parser.StopSwitchIndex,
+  //    recursedType, wildcardMatching,
+  //    thereAreSwitchIncludes, codePage);
 
   options.YesToAll = parser[NKey::kYes].ThereIs;
 

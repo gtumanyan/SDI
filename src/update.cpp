@@ -175,9 +175,9 @@ public:
 Updater_t *CreateUpdater(){return new UpdaterImp;}
 
 //{ Global variables
-lt::session *hSession=nullptr;
+lt::session ses;
 lt::torrent_handle th;
-lt::settings_pack settings;
+//lt::settings_pack settings;
 
 UpdateDialog_t UpdateDialog;
 Updater_t *Updater;
@@ -664,7 +664,7 @@ BOOL CALLBACK UpdateDialog_t::UpdateProcedure(HWND hwnd,UINT Message,WPARAM wPar
             break;
 
         case WM_TIMER:
-            if(!(hSession&&hSession->is_paused()))UpdateDialog.populate(1);
+            if(!(ses.is_valid()&&ses.is_paused()))UpdateDialog.populate(1);
             //Log.print_con(".");
             break;
 
@@ -770,11 +770,12 @@ int UpdateDialog_t::populate(int update,bool clearlist)
     TorrentRevision=0;
 
     // Read torrent info
-    std::vector<boost::int64_t> file_progress;
-    auto ti=th.torrent_file();
+		if(!th.is_valid())return 0;
+    std::vector<std::int64_t> file_progress;
+				th.file_progress(file_progress);
     Updater->numfiles=0;
-    if(!ti)return 0;
-    th.file_progress(file_progress);
+    
+				std::shared_ptr<const lt::torrent_info> ti = th.torrent_file();
     Updater->numfiles=ti->num_files();
 
     // Calculate size and progress for the app and indexes
@@ -984,7 +985,7 @@ void UpdaterImp::updateTorrentStatus()
     //    wcscpy(t->error,STR(STR_DWN_ERRSES));
     //    return;
     //}
-    //hSession->get_torrent_status(&temp, &yes1, 0);
+    //ses.get_torrent_status(&temp, &yes1, 0);
 
     //if(temp.empty())
     //{
@@ -1024,7 +1025,7 @@ void UpdaterImp::updateTorrentStatus()
     //  or files have been set to priority 0, i.e. are not downloaded."
 
     // if the session is shut down then clear the stats
-    if(hSession->is_paused())
+    if(ses.is_paused())
     {
         *t={};
         t->status_strid=STR_TR_ST4;
@@ -1053,7 +1054,7 @@ void UpdaterImp::updateTorrentStatus()
     else if(st.state==lt::torrent_status::checking_resume_data)
         t->status_strid=STR_TR_ST7;
 
-    t->sessionpaused=hSession->is_paused();
+    t->sessionpaused=ses.is_paused();
     t->torrentpaused=st.paused;
 
     if(TorrentStatus.downloadsize)
@@ -1206,7 +1207,7 @@ void UpdaterImp::ShowProgress(wchar_t *buf)
     using namespace libtorrent;
     namespace lt = libtorrent;
 
-    if(hSession)
+    if(ses.is_valid())
     {
         wchar_t num1[BUFLEN],num2[BUFLEN],num3[BUFLEN],num4[BUFLEN];
         format_size(num1,TorrentStatus.downloaded,0);
@@ -1215,7 +1216,7 @@ void UpdaterImp::ShowProgress(wchar_t *buf)
         format_size(num4,TorrentStatus.uploaded,0);
 
         //std::vector<torrent_status> temp;
-        //hSession->get_torrent_status(&temp,&yes1,0);
+        //ses.get_torrent_status(&temp,&yes1,0);
         //if(temp.empty())return;
         torrent_status st=th.status();
         if(closingsession)
@@ -1341,73 +1342,74 @@ int UpdaterImp::downloadTorrent()
 	// checking for updates
     manager_g->itembar_settext(SLOT_DOWNLOAD,1,STR(STR_UPD_CHECKING),0,0,0);
 
-    lt::error_code ec;
-    int i;
-    lt::add_torrent_params params;
+    lt::session_params params;
+
+    // Settings
+    
+    //lt::dht_settings dht;
+    //	dht.max_peers_reply = 70;	//Let's leave a default
+    //   params.dht_settings.privacy_lookups=true; Privacy lookups slightly more expensive
+    
+    auto& settings = params.settings;
+    settings.set_int(lt::settings_pack::choking_algorithm, lt::settings_pack::rate_based_choker);
+
+    settings.set_str(lt::settings_pack::user_agent, "Snappy Drivers Installer " VER_VERSION_STR2);
+    //   settings.always_send_user_agent=true; // By default include a user-agent to just the first request in a connection
+    //   settings.anonymous_mode=false;     //Is false by default
+    //   settings.disk_cache_algorithm=session_settings::avoid_readback;   Disk caching was removed in libtorrent, at least 1.1, maybe earlier
+    //   settings.volatile_read_cache=false;   // Let's leave it on by default
+
+    settings.set_str(lt::settings_pack::dht_bootstrap_nodes, "dht.libtorrent.org:25401,router.bittorrent.com:6881,router.utorrent.com:6881,dht.transmissionbt.com:6881,dht.aelitis.com:6881");
+    //    settings.set_bool(settings_pack::enable_dht, false);  // True by default
+
+    //   settings.always_send_user_agent=true; Include a user-agent to just the first request in a connection by default
+    //   settings.anonymous_mode=false;     Default is false
+    settings.set_bool(lt::settings_pack::allow_multiple_connections_per_ip, true);            //*That way two people from behind the same NAT
+    //   can use the service simultaneously 
+    settings.set_str(lt::settings_pack::listen_interfaces, "0.0.0.0:torrentport,[::]:torrentport");
+
+    settings.set_int(lt::settings_pack::alert_mask
+		    , lt::alert::error_notification
+		    | lt::alert::storage_notification
+        | lt::alert::tracker_notification
+        | lt::alert::ip_block_notification
+        | lt::alert::dht_notification
+        | lt::alert::performance_warning
+		    | lt::alert::file_progress_notification);
 
     // Setup path and URL
     char url[BUFSIZ];
     wcstombs(url, active_torrent_url->c_str(), BUFSIZ);
     char spath[BUFSIZ];
     wcstombs(spath, active_torrent_save_path->c_str(), BUFSIZ);
-    params.url = url;
-    params.save_path = spath;
-    Log.print_con("Torrent: %s\n", url);
-    params.flags |= lt::add_torrent_params::flag_paused;
-    params.flags |= lt::add_torrent_params::flag_seed_mode;
-    params.flags |= lt::add_torrent_params::flag_auto_managed;
+    lt::add_torrent_params p;
+    p.flags |= lt::add_torrent_params::flag_paused;
+    p.flags |= lt::add_torrent_params::flag_seed_mode;
+    p.flags &= lt::add_torrent_params::flag_auto_managed;
+    p.save_path = spath;
+    p.url = url;
 
-    // Settings
-    settings.set_str(lt::settings_pack::user_agent, "Snappy Drivers Installer " VER_VERSION_STR2);
-    //   settings.always_send_user_agent=true; // By default include a user-agent to just the first request in a connection
- //   settings.anonymous_mode=false;     //Is false by default
-    settings.set_int(lt::settings_pack::choking_algorithm, lt::settings_pack::rate_based_choker);
-    //   settings.disk_cache_algorithm=session_settings::avoid_readback;   Disk caching was removed in libtorrent, at least 1.1, maybe earlier
-//    settings.volatile_read_cache=false;   // Let's leave it on by default
-
-    settings.set_str(lt::settings_pack::dht_bootstrap_nodes, "dht.libtorrent.org:25401,router.bittorrent.com:6881,router.utorrent.com:6881,dht.transmissionbt.com:6881,dht.aelitis.com:6881");
-//    settings.set_bool(settings_pack::enable_dht, false);  // True by default
-    settings.set_int(lt::settings_pack::alert_mask
-		, lt::alert::dht_notification   
-		| lt::alert::error_notification 
-		| lt::alert::tracker_notification 
-		| lt::alert::ip_block_notification 
-		| lt::alert::dht_notification 
-		| lt::alert::performance_warning
-		| lt::alert::storage_notification);
-    lt::dht_settings dht;
-//	dht.max_peers_reply = 70;	//Let's leave a default
-    //   dht.privacy_lookups=true; Privacy lookups slightly more expensive
-    hSession->set_dht_settings(dht);
+    Log.print_con("adding URL: %s\n", url); 
     
-
-    th=hSession->add_torrent(params, ec);   // TODO: test async_add
-
+    lt::error_code ec;
+    th = ses.add_torrent(p);   // TODO: test async_add
     if (ec)Log.print_err("ERROR: failed to add torrent: %s\n", ec.message().c_str());
 
-//   settings.always_send_user_agent=true; Include a user-agent to just the first request in a connection by default
- //   settings.anonymous_mode=false;     Default is false
- 	settings.set_bool(lt::settings_pack::allow_multiple_connections_per_ip, true);            //*That way two people from behind the same NAT
- //   can use the service simultaneously 
 
- //   settings.disk_cache_algorithm=session_settings::avoid_readback;   Disk caching was removed in libtorrent, at least 1.1, maybe earlier
-//    settings.volatile_read_cache=false;   Let's leave it on by default
-//    s->set_settings(settings); That function is deprecated use lt::settings_pack pack;
     Timers.start(time_chkupdate);
 
-//    hSession->start_lsd();    // Enabled by default
-//    hSession->start_natpmp(); // Enabled by default
+//    ses.start_lsd();    // Enabled by default
+//    ses.start_natpmp(); // Enabled by default
 
     // Connecting
-    settings.set_str(lt::settings_pack::listen_interfaces, "0.0.0.0:torrentport,[::]:torrentport");
-    if(ec)Log.print_err("ERROR: failed to open listen socket: %s\n",ec.message().c_str());
+    //if(ec)Log.print_err("ERROR: failed to open listen socket: %s\n",ec.message().c_str());
     Log.print_con("Listen port: %d (%s)\nDownload limit: %dKb\nUpload limit: %dKb\n",
-            hSession->listen_port(),hSession->is_listening()?"connected":"disconnected",
+            ses.listen_port(),ses.is_listening()?"connected":"disconnected",
             downlimit,uplimit);
 
 
     // Pause and set speed limits
-    hSession->pause();
+    ses.pause();
     SetLimits();
     th.resume();
 
@@ -1448,7 +1450,7 @@ int UpdaterImp::downloadTorrent()
     }
 
     // Populate list
-    i=UpdateDialog.populate(0);
+    int i=UpdateDialog.populate(0);
     if(UpdateDialog.TorrentRevision==0)
         Log.print_con("Latest Version: Not found.\n");
     else if(UpdateDialog.TorrentRevision<=UpdateDialog.LocalRevision)
@@ -1466,13 +1468,13 @@ int UpdaterImp::downloadTorrent()
 
 void UpdaterImp::resumeDownloading()
 {
-    if(!hSession||!th.torrent_file())
+    if(!ses.is_valid()||!th.torrent_file())
     {
         finisheddownloading=1;
         finishedupdating=1;
         return;
     }
-    if(hSession->is_paused())
+    if(ses.is_paused())
     {
         th.force_recheck();
         Log.print_con("torrent_resume\n");
@@ -1480,7 +1482,7 @@ void UpdaterImp::resumeDownloading()
         downloadmangar_event->raise();
     }
 
-    hSession->resume();
+    ses.resume();
     // sometimes the torrent stays paused
     th.resume();
     finisheddownloading=0;
@@ -1744,10 +1746,10 @@ void UpdaterImp::DownloadIndexes()
 
 void UpdaterImp::StartSeedingDrivers()
 {
-    if(!hSession)return;
+    if(!ses.is_valid())return;
 
     // don't interrupt the current session
-    if(!hSession->is_paused())
+    if(!ses.is_paused())
         return;
 
     // i'm going to point the torrent files back to
@@ -1757,7 +1759,7 @@ void UpdaterImp::StartSeedingDrivers()
 
     wchar_t buf[BUFLEN];
     buf[0]=0;
-    hSession->pause();
+    ses.pause();
     std::shared_ptr<lt::torrent_info const> ti;
     ti=th.torrent_file();
     if(!ti)return;
@@ -1864,7 +1866,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 
         // Downloading loop
         Log.print_con("{torrent_start\n");
-        while(downloadmangar_exitflag==DOWNLOAD_STATUS_DOWLOADING_DATA&&hSession)
+        while(downloadmangar_exitflag==DOWNLOAD_STATUS_DOWLOADING_DATA&&ses.is_valid())
         {
             Sleep(500);
 
@@ -1878,7 +1880,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 
             // Send libtorrent messages to log
             std::vector<lt::alert*> alerts;
-            hSession->pop_alerts(&alerts);
+            ses.pop_alerts(&alerts);
             for (auto a : alerts)
             {
                 if (Log.isAllowed(LOG_VERBOSE_TORRENT)) continue;
@@ -1889,7 +1891,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
             if((TorrentStatus.status_strid==STR_TR_ST0+libtorrent::torrent_status::finished)&&!SeedMode)
             {
                 Log.print_con("Torrent: finished\n");
-                hSession->pause();
+                ses.pause();
 
                 // Flush cache
                 Log.print_con("Torrent: flushing cache...");
@@ -1898,7 +1900,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
                 using namespace lt;
                 while(1)
                 {
-                    auto const* a=hSession->wait_for_alert(seconds(60*2));
+                    auto const* a=ses.wait_for_alert(seconds(60*2));
                     if(!a)
                     {
                         Log.print_con("time out\n");
@@ -1960,22 +1962,21 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
         }
         // Download is completed
         finishedupdating=1;
-        hSession->pause();
+        ses.pause();
         Updater1->updateTorrentStatus();
         monitor_pause=0;
         Log.print_con("}torrent_stop\n");
         downloadmangar_event->reset();
     } // !=DOWNLOAD_STATUS_STOPPING
 
-    if(hSession)
+    if(ses.is_valid())
     {
         Log.print_con("Closing torrent session...");
-        hSession->remove_torrent(th);
-        hSession->pause();
-        hSession->abort();
+        ses.remove_torrent(th);
+        ses.pause();
+        ses.abort();
         //delete ses;  not needed with s.reset
         Log.print_con("DONE\n");
-        hSession=nullptr;
     }
     Log.print_con("}thread_download\n");
     return 0;
@@ -1991,7 +1992,7 @@ int  UpdaterImp::Populate(int flags){return UpdateDialog.populate(flags,!flags);
 void UpdaterImp::SetFilePriority(const wchar_t *name,int pri){UpdateDialog.setFilePriority(name,pri);}
 void UpdaterImp::SetLimits()
 {
-    if(!hSession)return;
+    if(!ses.is_valid())return;
 
     th.set_download_limit(downlimit*1024);
     th.set_upload_limit(uplimit*1024);

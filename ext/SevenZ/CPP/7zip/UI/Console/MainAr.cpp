@@ -23,7 +23,9 @@ CStdOutStream *g_ErrStream;
 CStdOutStream *g_ErrStream = NULL;
 
 extern int Main2(
-  const WCHAR *command_line
+  #ifndef _WIN32
+  int numArgs, char *args[]
+  #endif
 );
 
 static const char * const kException_CmdLine_Error_Message = "Command Line Error:";
@@ -72,7 +74,15 @@ int Extract7z(const WCHAR *str)
   
   try
   {
-	res = Main2(str);
+    #ifdef _WIN32
+    //My_SetDefaultDllDirectories();
+    #endif
+
+    res = Main2(
+    #ifndef _WIN32
+    numArgs, args
+    #endif
+    );
   }
   catch(const CNewException &)
   {
