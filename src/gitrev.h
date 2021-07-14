@@ -15,12 +15,12 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #ifndef GITREV_H
 #define GITREV_H
-#define GIT_REV 738
-#define GIT_REV_STR "738"
+#define GIT_REV 790
+#define GIT_REV_STR "790"
 
 /* Date of the last commit */
-#define GIT_REV_D "11"
-#define GIT_REV_M "03"
+#define GIT_REV_D "12"
+#define GIT_REV_M "07"
 #define GIT_REV_Y 2021
 
 #if 1
@@ -29,8 +29,8 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #define GIT_BUILD_NOTE ""
 #endif
 
-#define GIT_BUILD_REV "Revision: R738"
-#define GIT_BUILD_DATE "Build Date: 14 Mar 2021"
+#define GIT_BUILD_REV "Revision: R790"
+#define GIT_BUILD_DATE "Build Date: 13 Jul 2021"
 #define COPYRIGHT_DATE "(C) Copyright 2021"
 
 #endif

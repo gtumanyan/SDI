@@ -38,14 +38,15 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 #include "libtorrent/config.hpp"
+#include "libtorrent/torrent_info.hpp"
 #include "libtorrent/entry.hpp"
 #include "libtorrent/alert_types.hpp"
 #include "libtorrent/bencode.hpp"
 #include "libtorrent/session.hpp"
 #include "libtorrent/session_settings.hpp"
 #include "libtorrent/file.hpp"
-#include "libtorrent/torrent_info.hpp"
 
+using lt::file_index_t;
 #ifdef _MSC_VER
 #pragma comment(lib, "IPHLPAPI.lib") 
 #pragma warning(pop)
@@ -492,7 +493,7 @@ void UpdateDialog_t::setCheckboxes()
 
     // The app and indexes
     int baseChecked=0,indexesChecked=0;
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i <Updater->numfiles; ++i)
     if(th.file_priority(i)==2)
     {
         if(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
@@ -524,7 +525,7 @@ void UpdateDialog_t::setPriorities()
     // set the torrent priorities based on the list items checkboxes
 
     // Clear priorities for driverpacks
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i <Updater->numfiles; ++i)
     if(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"drivers\\"))
         th.file_priority(i,0);
 
@@ -550,7 +551,7 @@ void UpdateDialog_t::setPriorities()
     }
 
     // Set priorities for any torrent file that's not a driver
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i <Updater->numfiles; ++i)
     if(!StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"drivers\\"))
         th.file_priority(i,StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"indexes\\")?indexes_pri:base_pri);
 }
@@ -771,7 +772,7 @@ int UpdateDialog_t::populate(int update,bool clearlist)
 
     // Read torrent info
 		if(!th.is_valid())return 0;
-    std::vector<std::int64_t> file_progress;
+				std::vector<std::int64_t> file_progress;
 				th.file_progress(file_progress);
     Updater->numfiles=0;
     
@@ -782,17 +783,17 @@ int UpdateDialog_t::populate(int update,bool clearlist)
     int missingindexes=0;
     int newver=0;
     __int64 basesize=0,basedownloaded=0;
-    __int64 indexsize=0,indexdownloaded=0;
-    for(int i=0;i<Updater->numfiles;i++)
+    std::int64_t indexsize=0,indexdownloaded=0;
+    lt::file_storage const& st = ti->files();
+    for (auto const i : st.file_range())
     {
-        auto fe=ti->files().file_path(i);
         // the file name minus the parent directory 'SDI_Update'
-        const char *filenamefull=strchr(fe.c_str(),'\\')+1;
+        const char *filenamefull=strchr(st.file_path(i).c_str(),'\\')+1;
 
         // looking for missing "_" online indexes
         if(StrStrIA(filenamefull,"indexes\\"))
         {
-            indexsize+=fe.size();
+            indexsize+= st.file_size(i);
             indexdownloaded+=file_progress[i];
             wsprintf(buf,L"%S",filenamefull);
             *wcsstr(buf,L"DP_")=L'_';
@@ -802,7 +803,7 @@ int UpdateDialog_t::populate(int update,bool clearlist)
         }
         else if(!StrStrIA(filenamefull,"drivers\\"))
         {
-            basesize+=fe.size();
+            basesize+=st.file_size(i);
             basedownloaded+=file_progress[i];
             if(StrStrIA(filenamefull,"sdi"))
                 TorrentRevision=atol(StrStrIA(filenamefull,"sdi")+3);
@@ -878,7 +879,7 @@ int UpdateDialog_t::populate(int update,bool clearlist)
     }
 
     // Add driverpacks to the list
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i <Updater->numfiles; ++i)
     {
         const char *filename=nullptr;
         const char *filenamefull=nullptr;
@@ -959,7 +960,7 @@ void UpdateDialog_t::setFilePriority(const wchar_t *name,int pri)
     char buf[BUFLEN];
     wsprintfA(buf,"%S",name);
 
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i <Updater->numfiles; ++i)
     if(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),buf))
     {
         th.file_priority(i,pri);
@@ -1524,7 +1525,7 @@ int UpdaterImp::scriptDownloadApp()
     }
 
     // select everything that's not indexes and drivers in the torrent
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i <Updater->numfiles; ++i)
     {
         if(!(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"indexes\\"))&&
            !(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"drivers\\")))
@@ -1545,7 +1546,7 @@ int UpdaterImp::scriptDownloadIndexes()
     std::shared_ptr<lt::torrent_info const> ti=th.torrent_file();
     
     // select indexes in the torrent
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i < Updater->numfiles; ++i)
     {
         // get the file entry
         std::string file= ti->files().file_path(i);
@@ -1580,7 +1581,7 @@ int UpdaterImp::scriptDownloadDrivers(std::wstring mode)
     int updatecount=0;
 
     // iterate the torrent
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i <Updater->numfiles; ++i)
     {
         // disable all files by default
         th.file_priority(i,0);
@@ -1634,20 +1635,20 @@ int UpdaterImp::scriptDownloadEverything()
     }
 
     std::shared_ptr<lt::torrent_info const> ti;
-    ti=th.torrent_file();
+    ti = th.torrent_file();
 
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i < Updater->numfiles; ++i)
         th.file_priority(i,0);
 
     // select everything that's not drivers
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i <Updater->numfiles; ++i)
     {
         if(!(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"drivers\\")))
             th.file_priority(i,2);
     }
 
     // missing and updated drivers
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i <Updater->numfiles; ++i)
     {
         // get the file entry
         std::string file=to_lower(ti->files().file_path(i));
@@ -1672,7 +1673,7 @@ int UpdaterImp::scriptDownloadEverything()
 int UpdaterImp::scriptDoDownload()
 {
     int count=0;
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i < Updater->numfiles; ++i)
         if(th.file_priority(i))count++;
     if(!count)return 0;
     resumeDownloading();
@@ -1694,7 +1695,7 @@ int UpdaterImp::scriptInstall()
     // switch off all files by default
     if(Settings.flags&FLAG_UPDATESOK)
     {
-        for(int i=0;i<Updater->numfiles;i++)
+        for(file_index_t i(0); i < Updater->numfiles; ++i)
             th.file_priority(i,0);
     }
     manager_g->install(INSTALLDRIVERS);
@@ -1706,7 +1707,7 @@ int UpdaterImp::scriptInstall()
 
 void UpdaterImp::DownloadAll()
 {
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i < Updater->numfiles; ++i)
         if(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
             th.file_priority(i,2);
         else
@@ -1716,7 +1717,7 @@ void UpdaterImp::DownloadAll()
 
 void UpdaterImp::DownloadNetwork()
 {
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i < Updater->numfiles; ++i)
     {
         // indexes
         if(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
@@ -1724,7 +1725,7 @@ void UpdaterImp::DownloadNetwork()
         else
         {
             // the file name minus the path
-            std::string filename=strrchr(th.torrent_file()->files().file_path(i).c_str(),'\\')+1;
+            std::string filename=th.torrent_file()->files().file_name(i).to_string();
             // look for all networking packs
             size_t found1=filename.find("_LAN_");
             size_t found2=filename.find("_WLAN-WiFi_");
@@ -1738,7 +1739,7 @@ void UpdaterImp::DownloadNetwork()
 
 void UpdaterImp::DownloadIndexes()
 {
-    for(int i=0;i<Updater->numfiles;i++)
+    for(file_index_t i(0); i < Updater->numfiles; ++i)
         if(StrStrIA(th.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
             th.file_priority(i,2);
     Updater->resumeDownloading();
@@ -1992,7 +1993,7 @@ int  UpdaterImp::Populate(int flags){return UpdateDialog.populate(flags,!flags);
 void UpdaterImp::SetFilePriority(const wchar_t *name,int pri){UpdateDialog.setFilePriority(name,pri);}
 void UpdaterImp::SetLimits()
 {
-    if(!ses.is_valid())return;
+    if(!th.is_valid())return;
 
     th.set_download_limit(downlimit*1024);
     th.set_upload_limit(uplimit*1024);

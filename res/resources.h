@@ -15,11 +15,11 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "..\src\gitrev.h"
 
-#define VER_FILEVERSION             1,10,3,GIT_REV
-#define VER_FILEVERSION_STR         "1.10.3." GIT_REV_STR "\0"
+#define VER_FILEVERSION             2,0,0,GIT_REV
+#define VER_FILEVERSION_STR         "2.0.0." GIT_REV_STR "\0"
 
-#define VER_VERSION_STR             "Version 1.10.3." GIT_REV_STR
-#define VER_VERSION_STR2            "v1.10.3"
+#define VER_VERSION_STR             "Version 2.0.0." GIT_REV_STR
+#define VER_VERSION_STR2            "v2.0.0"
 
 #ifndef IDC_STATIC
 #define IDC_STATIC     -1
