@@ -125,7 +125,6 @@
     <ClCompile Include="..\..\ext\libtorrent\src\ut_pex.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\ut_metadata.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\smart_ban.cpp" />
-    <ClCompile Include="..\..\ext\libtorrent\src\pe_crypto.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\kademlia\dht_state.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\kademlia\dht_storage.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\kademlia\dos_blocker.cpp" />
@@ -399,9 +398,7 @@
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\kademlia\sample_infohashes.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\kademlia\traversal_algorithm.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\kademlia\types.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\ext\libtorrent\include\libtorrent\extensions" />
+    <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\extensions.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

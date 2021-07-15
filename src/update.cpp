@@ -776,7 +776,8 @@ int UpdateDialog_t::populate(int update,bool clearlist)
 				th.file_progress(file_progress);
     Updater->numfiles=0;
     
-				std::shared_ptr<const lt::torrent_info> ti = th.torrent_file();
+		std::shared_ptr<const lt::torrent_info> ti = th.torrent_file();
+    if (!ti) return 0;
     Updater->numfiles=ti->num_files();
 
     // Calculate size and progress for the app and indexes

@@ -339,7 +339,7 @@ static void BuildFilesList(HWND hwnd)
                     SourceFileName.append(L"\\");
                     SourceFileName.append(FindFileData.cFileName);
                     TargetFileName=targetDrive;
-                    TargetFileName.append(L"indexes\\SDI\\");
+                    TargetFileName.append(L"indexes\\");
                     TargetFileName.append(FindFileData.cFileName);
                     USBWiz->AddFile(SourceFileName,TargetFileName);
                 }
