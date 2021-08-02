@@ -6,7 +6,7 @@
 [Oo]bj/
 [Ll]ib
 *.pdb
-**/[Ll]og
+*.log
 **/[Ll]ogs/
 
 #-- Visual C++ cache files
@@ -58,3 +58,4 @@ update/
 # Other stuff
 
 *.ilk
+cmake*

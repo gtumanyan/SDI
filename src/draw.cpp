@@ -29,11 +29,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "main.h"     // todo: lots of Win32
 
 #include <setupapi.h>       // for SetupDiGetClassDescription()
-#ifdef _MSC_VER
-#include "webp\decode.h"
-#else
 #include <webp\decode.h>
-#endif
 #include <memory>
 
 #include "draw_imp.h"
@@ -555,7 +551,7 @@ void CanvasImp::loadGUID(GUID *g,const char *s)
     memcpy(d,s+15+6+12,2);g->Data4[6]=strtol(d,nullptr,16)&0xFF;
     memcpy(d,s+15+6+14,2);g->Data4[7]=strtol(d,nullptr,16)&0xFF;
 
-    /*Log.print_con("%s\n",s);
+    /*Log.print_con("%ses\n",ses);
     Log.print_con("{%08lX-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}\n\n",g->Data1,g->Data2,g->Data3,
     (int)(g->Data4[0]),(int)(g->Data4[1]),
     (int)(g->Data4[2]),(int)(g->Data4[3]),(int)(g->Data4[4]),

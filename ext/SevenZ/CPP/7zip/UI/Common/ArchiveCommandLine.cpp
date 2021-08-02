@@ -549,127 +549,127 @@ struct CEventSetEnd
 
 static const char * const k_IncorrectMapCommand = "Incorrect Map command";
 
-static const char *ParseMapWithPaths(
-    NWildcard::CCensor &censor,
-    const UString &s2, bool include,
-    NRecursedType::EEnum commonRecursedType,
-    bool wildcardMatching)
-{
-  UString s (s2);
-  int pos = s.Find(L':');
-  if (pos < 0)
-    return k_IncorrectMapCommand;
-  int pos2 = s.Find(L':', (unsigned)(pos + 1));
-  if (pos2 < 0)
-    return k_IncorrectMapCommand;
-
-  CEventSetEnd eventSetEnd((const wchar_t *)s + (unsigned)(pos2 + 1));
-  s.DeleteFrom((unsigned)pos2);
-  UInt32 size;
-  if (!StringToUInt32(s.Ptr((unsigned)(pos + 1)), size)
-      || size < sizeof(wchar_t)
-      || size > ((UInt32)1 << 31)
-      || size % sizeof(wchar_t) != 0)
-    return "Unsupported Map data size";
-
-  s.DeleteFrom((unsigned)pos);
-  CFileMapping map;
-  if (map.Open(FILE_MAP_READ, GetSystemString(s)) != 0)
-    return "Cannot open mapping";
-  LPVOID data = map.Map(FILE_MAP_READ, 0, size);
-  if (!data)
-    return "MapViewOfFile error";
-  CFileUnmapper unmapper(data);
-
-  UString name;
-  const wchar_t *p = (const wchar_t *)data;
-  if (*p != 0) // data format marker
-    return "Unsupported Map data";
-  UInt32 numChars = size / sizeof(wchar_t);
-  for (UInt32 i = 1; i < numChars; i++)
-  {
-    wchar_t c = p[i];
-    if (c == 0)
-    {
-      // MessageBoxW(0, name, L"7-Zip", 0);
-      AddNameToCensor(censor, name, include, commonRecursedType, wildcardMatching);
-      name.Empty();
-    }
-    else
-      name += c;
-  }
-  if (!name.IsEmpty())
-    return "Map data error";
-
-  return NULL;
-}
+//static const char *ParseMapWithPaths(
+//    NWildcard::CCensor &censor,
+//    const UString &s2, bool include,
+//    NRecursedType::EEnum commonRecursedType,
+//    bool wildcardMatching)
+//{
+//  UString s (s2);
+//  int pos = s.Find(L':');
+//  if (pos < 0)
+//    return k_IncorrectMapCommand;
+//  int pos2 = s.Find(L':', (unsigned)(pos + 1));
+//  if (pos2 < 0)
+//    return k_IncorrectMapCommand;
+//
+//  CEventSetEnd eventSetEnd((const wchar_t *)s + (unsigned)(pos2 + 1));
+//  s.DeleteFrom((unsigned)pos2);
+//  UInt32 size;
+//  if (!StringToUInt32(s.Ptr((unsigned)(pos + 1)), size)
+//      || size < sizeof(wchar_t)
+//      || size > ((UInt32)1 << 31)
+//      || size % sizeof(wchar_t) != 0)
+//    return "Unsupported Map data size";
+//
+//  s.DeleteFrom((unsigned)pos);
+//  CFileMapping map;
+//  if (map.Open(FILE_MAP_READ, GetSystemString(s)) != 0)
+//    return "Cannot open mapping";
+//  LPVOID data = map.Map(FILE_MAP_READ, 0, size);
+//  if (!data)
+//    return "MapViewOfFile error";
+//  CFileUnmapper unmapper(data);
+//
+//  UString name;
+//  const wchar_t *p = (const wchar_t *)data;
+//  if (*p != 0) // data format marker
+//    return "Unsupported Map data";
+//  UInt32 numChars = size / sizeof(wchar_t);
+//  for (UInt32 i = 1; i < numChars; i++)
+//  {
+//    wchar_t c = p[i];
+//    if (c == 0)
+//    {
+//      // MessageBoxW(0, name, L"7-Zip", 0);
+//      AddNameToCensor(censor, name, include, commonRecursedType, wildcardMatching);
+//      name.Empty();
+//    }
+//    else
+//      name += c;
+//  }
+//  if (!name.IsEmpty())
+//    return "Map data error";
+//
+//  return NULL;
+//}
 
 #endif
 
-static void AddSwitchWildcardsToCensor(
-    NWildcard::CCensor &censor,
-    const UStringVector &strings, bool include,
-    NRecursedType::EEnum commonRecursedType,
-    bool wildcardMatching,
-    UInt32 codePage)
-{
-  const char *errorMessage = NULL;
-  unsigned i;
-  for (i = 0; i < strings.Size(); i++)
-  {
-    const UString &name = strings[i];
-    NRecursedType::EEnum recursedType;
-    unsigned pos = 0;
-    
-    if (name.Len() < kSomeCludePostStringMinSize)
-    {
-      errorMessage = "Too short switch";
-      break;
-    }
-    
-    if (::MyCharLower_Ascii(name[pos]) == kRecursedIDChar)
-    {
-      pos++;
-      wchar_t c = name[pos];
-      int index = -1;
-      if (c <= 0x7F)
-        index = FindCharPosInString(kRecursedPostCharSet, (char)c);
-      recursedType = GetRecursedTypeFromIndex(index);
-      if (index >= 0)
-        pos++;
-    }
-    else
-      recursedType = commonRecursedType;
-    
-    if (name.Len() < pos + kSomeCludeAfterRecursedPostStringMinSize)
-    {
-      errorMessage = "Too short switch";
-      break;
-    }
-    
-    const UString tail = name.Ptr(pos + 1);
-    
-    if (name[pos] == kImmediateNameID)
-      AddNameToCensor(censor, tail, include, recursedType, wildcardMatching);
-    //else if (name[pos] == kFileListID)
-    //  AddToCensorFromListFile(NULL, censor, tail, include, recursedType, wildcardMatching, codePage);
-    #ifdef _WIN32
-    else if (name[pos] == kMapNameID)
-    {
-      errorMessage = ParseMapWithPaths(censor, tail, include, recursedType, wildcardMatching);
-      if (errorMessage)
-        break;
-    }
-    #endif
-    else
-    {
-      errorMessage = "Incorrect wildcard type marker";
-      break;
-    }
-  }
-  if (i != strings.Size())
-    throw CArcCmdLineException(errorMessage, strings[i]);
-}
+//static void AddSwitchWildcardsToCensor(
+//    NWildcard::CCensor &censor,
+//    const UStringVector &strings, bool include,
+//    NRecursedType::EEnum commonRecursedType,
+//    bool wildcardMatching,
+//    UInt32 codePage)
+//{
+//  const char *errorMessage = NULL;
+//  unsigned i;
+//  for (i = 0; i < strings.Size(); i++)
+//  {
+//    const UString &name = strings[i];
+//    NRecursedType::EEnum recursedType;
+//    unsigned pos = 0;
+//    
+//    if (name.Len() < kSomeCludePostStringMinSize)
+//    {
+//      errorMessage = "Too short switch";
+//      break;
+//    }
+//    
+//    if (::MyCharLower_Ascii(name[pos]) == kRecursedIDChar)
+//    {
+//      pos++;
+//      wchar_t c = name[pos];
+//      int index = -1;
+//      if (c <= 0x7F)
+//        index = FindCharPosInString(kRecursedPostCharSet, (char)c);
+//      recursedType = GetRecursedTypeFromIndex(index);
+//      if (index >= 0)
+//        pos++;
+//    }
+//    else
+//      recursedType = commonRecursedType;
+//    
+//    if (name.Len() < pos + kSomeCludeAfterRecursedPostStringMinSize)
+//    {
+//      errorMessage = "Too short switch";
+//      break;
+//    }
+//    
+//    const UString tail = name.Ptr(pos + 1);
+//    
+//    if (name[pos] == kImmediateNameID)
+//      AddNameToCensor(censor, tail, include, recursedType, wildcardMatching);
+//    //else if (name[pos] == kFileListID)
+//    //  AddToCensorFromListFile(NULL, censor, tail, include, recursedType, wildcardMatching, codePage);
+//    #ifdef _WIN32
+//    else if (name[pos] == kMapNameID)
+//    {
+//      errorMessage = ParseMapWithPaths(censor, tail, include, recursedType, wildcardMatching);
+//      if (errorMessage)
+//        break;
+//    }
+//    #endif
+//    else
+//    {
+//      errorMessage = "Incorrect wildcard type marker";
+//      break;
+//    }
+//  }
+//  if (i != strings.Size())
+//    throw CArcCmdLineException(errorMessage, strings[i]);
+//}
 
 /*
 static NUpdateArchive::NPairAction::EEnum GetUpdatePairActionType(int i)
@@ -1131,20 +1131,20 @@ void CArcCmdLineParser::Parse2(CArcCmdLineOptions &options)
 
   options.ConsoleCodePage = FindCharset(parser, NKey::kConsoleCharSet, true, -1);
 
-  UInt32 codePage = (UInt32)FindCharset(parser, NKey::kListfileCharSet, false, CP_UTF8);
+  //UInt32 codePage = (UInt32)FindCharset(parser, NKey::kListfileCharSet, false, CP_UTF8);
 
-  bool thereAreSwitchIncludes = false;
+  //bool thereAreSwitchIncludes = false;
   
-  if (parser[NKey::kInclude].ThereIs)
-  {
-    thereAreSwitchIncludes = true;
-    AddSwitchWildcardsToCensor(options.Censor,
-        parser[NKey::kInclude].PostStrings, true, recursedType, wildcardMatching, codePage);
-  }
+  //if (parser[NKey::kInclude].ThereIs)
+  //{
+  //  thereAreSwitchIncludes = true;
+  //  AddSwitchWildcardsToCensor(options.Censor,
+  //      parser[NKey::kInclude].PostStrings, true, recursedType, wildcardMatching, codePage);
+  //}
 
-  if (parser[NKey::kExclude].ThereIs)
-    AddSwitchWildcardsToCensor(options.Censor,
-        parser[NKey::kExclude].PostStrings, false, recursedType, wildcardMatching, codePage);
+  //if (parser[NKey::kExclude].ThereIs)
+  //  AddSwitchWildcardsToCensor(options.Censor,
+  //      parser[NKey::kExclude].PostStrings, false, recursedType, wildcardMatching, codePage);
  
   unsigned curCommandIndex = kCommandIndex + 1;
   bool thereIsArchiveName = !parser[NKey::kNoArName].ThereIs &&
@@ -1263,10 +1263,10 @@ void CArcCmdLineParser::Parse2(CArcCmdLineOptions &options)
 
     NWildcard::CCensor &arcCensor = options.arcCensor;
 
-    if (parser[NKey::kArInclude].ThereIs)
-      AddSwitchWildcardsToCensor(arcCensor, parser[NKey::kArInclude].PostStrings, true, NRecursedType::kNonRecursed, wildcardMatching, codePage);
-    if (parser[NKey::kArExclude].ThereIs)
-      AddSwitchWildcardsToCensor(arcCensor, parser[NKey::kArExclude].PostStrings, false, NRecursedType::kNonRecursed, wildcardMatching, codePage);
+    //if (parser[NKey::kArInclude].ThereIs)
+    //  AddSwitchWildcardsToCensor(arcCensor, parser[NKey::kArInclude].PostStrings, true, NRecursedType::kNonRecursed, wildcardMatching, codePage);
+    //if (parser[NKey::kArExclude].ThereIs)
+    //  AddSwitchWildcardsToCensor(arcCensor, parser[NKey::kArExclude].PostStrings, false, NRecursedType::kNonRecursed, wildcardMatching, codePage);
 
     if (thereIsArchiveName)
       AddNameToCensor(arcCensor, options.ArchiveName, true, NRecursedType::kNonRecursed, wildcardMatching);
@@ -1405,11 +1405,13 @@ void CArcCmdLineParser::Parse2(CArcCmdLineOptions &options)
   else if (options.Command.CommandType == NCommandType::kBenchmark)
   {
     options.NumIterations = 1;
+    options.NumIterations_Defined = false;
     if (curCommandIndex < numNonSwitchStrings)
     {
       if (!StringToUInt32(nonSwitchStrings[curCommandIndex], options.NumIterations))
         throw CArcCmdLineException("Incorrect number of benchmark iterations", nonSwitchStrings[curCommandIndex]);
       curCommandIndex++;
+      options.NumIterations_Defined = true;
     }
   }
   else if (options.Command.CommandType == NCommandType::kHash)

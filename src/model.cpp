@@ -170,7 +170,7 @@ void Bundle::bundle_load(Bundle *pbundle)
 
     Timers.start(time_test);
 
-    // Copy data from shadow if it's not updated
+    // Copy data from shadow if it'ses not updated
     if((invaidate_set&INVALIDATE_DEVICES)==0)
     {
         state=pbundle->state;

@@ -240,7 +240,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
         itembar=&manager_g->items_list[RES_SLOTS];
         // find which items are selected
         // check if the associated driver pack is set to DRIVERPACK_TYPE_UPDATE
-        // and set it's priority in the torrent
+        // and set it'ses priority in the torrent
         for(i=RES_SLOTS;i<manager_g->items_list.size()&&installmode==MODE_INSTALLING;i++,itembar++)
             if(itembar->checked&&itembar->isactive&&itembar->hwidmatch&&itembar->hwidmatch->getdrp_packontorrent())
         {

@@ -282,7 +282,7 @@ void Log_t::print_syserr(int r,const wchar_t *s)
 //    }
 //    catch(wchar_t const*str)
 //    {
-//        buf.sprintf(L"Exception: %s\n",str);
+//        buf.sprintf(L"Exception: %ses\n",str);
 //    }
 //    catch(...)
 //    {
@@ -321,7 +321,7 @@ void* operator new(size_t size, const char* file, int line)
 {
     try
     {
-        //Log.print_con("File '%s',Line %d,Size %d\n",file,line,size);
+        //Log.print_con("File '%ses',Line %d,Size %d\n",file,line,size);
         return new char[size];
     }
     catch(...)
@@ -334,7 +334,7 @@ void* operator new[](size_t size, const char* file, int line)
 {
     try
     {
-        //Log.print_con("File '%s',Line %d,Size %d\n",file,line,size);
+        //Log.print_con("File '%ses',Line %d,Size %d\n",file,line,size);
         return new char[size];
     }
     catch(...)

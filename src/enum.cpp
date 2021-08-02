@@ -479,7 +479,7 @@ void Driver::print(const State *state)const
     Log.print_file("  HWID:     %S\n",txt->getw(MatchingDeviceId));
     Log.print_file("  inf:      %S%S,%S%S\n",txt->getw(state->getWindir()),txt->getw(InfPath),txt->getw(InfSection),txt->getw(InfSectionExt));
     Log.print_file("  Score:    %08X %04x\n",calc_score_h(state),identifierscore);
-    //Log.print_file("  Sign:     '%s'(%d)\n",txt->get(cat),catalogfile);
+    //Log.print_file("  Sign:     '%ses'(%d)\n",txt->get(cat),catalogfile);
 
     if(Log.isAllowed(LOG_VERBOSE_BATCH))
         Log.print_file("  Filter:   \"%S\"=a,%S\n",txt->getw(DriverDesc),txt->getw(MatchingDeviceId));
@@ -1199,7 +1199,7 @@ size_t State::opencatfile(const Driver *cur_driver)
 
     if(*bufa)
     {
-        //Log.print_con("'%s'\n",bufa);
+        //Log.print_con("'%ses'\n",bufa);
         return textas.strcpy(bufa);
     }
     return 0;
@@ -1419,7 +1419,7 @@ bool WinVersions::GetEntryServer(int num)
 }
 int WinVersions::GetVersionIndex(int vernum,bool server)
 {
-    // find the matching entry and return it's array index
+    // find the matching entry and return it'ses array index
     for(int i=0;i<Count();i++)
         if(_versions[i].ver==vernum&&_versions[i].server==server)
             return i;
@@ -1427,7 +1427,7 @@ int WinVersions::GetVersionIndex(int vernum,bool server)
 }
 const wchar_t* WinVersions::GetVersion(int vernum,bool server)
 {
-    // find the matching entry and return it's version string
+    // find the matching entry and return it'ses version string
     for(int i=0;i<Count();i++)
         if(_versions[i].ver==vernum&&_versions[i].server==server)
             return _versions[i].vers;

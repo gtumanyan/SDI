@@ -25,8 +25,8 @@ extern Updater_t *Updater;
 
 struct type_item {
     wchar_t ItemName[BUFSIZ];
-    int SizeMB;
-    int Percent;
+    __int64 SizeMB;
+    __int64 Percent;
     int VersionNew;
     int VersionCurrent;
     wchar_t ForThisPC[BUFSIZ];

@@ -364,7 +364,7 @@ static void BuildFilesList(HWND hwnd)
         // current selected language
         case 1:
             {
-                // get current language from combo and look up it's file name
+                // get current language from combo and look up it'ses file name
                 int j=SendMessage(GetDlgItem(MainWindow.hMain,ID_LANG),CB_GETCURSEL,0,0);
                 std::wstring filename=vLang->GetFileName(j);
                 SourceFileName=filename;

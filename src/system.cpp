@@ -166,7 +166,7 @@ void mkdir_r(const wchar_t *path)
     // invalid path - 'C:'
     if(path[1]==L':'&&path[2]==0)return;
 
-    // if it exists there's nothing to do
+    // if it exists there'ses nothing to do
     if(System.DirectoryExists(path))return;
 
     wchar_t buf[BUFLEN];

@@ -611,7 +611,7 @@ bool Manager::isSelected(const wchar_t *s)
             if(StrStrIW(drp.c_str(),s))
             {
                 ret=true;
-                //if(ret)Log.print_debug("%S is selected.\n", s);
+                //if(ret)Log.print_debug("%S is selected.\n", ses);
                 break;
             }
         }
@@ -1518,7 +1518,7 @@ int Manager::drawitem(Canvas &canvas,size_t index,int ofsy,int zone,int cutoff)
                 wsprintf(bufw,L"%s",STR(STR_NOUPDATES));
             else
                 wsprintf(bufw,L"%s",STR(STR_INITIALIZING));
-            //wsprintf(bufw,L"%s",STR(items_list.size()>RES_SLOTS?STR_NOUPDATES:STR_INITIALIZING));
+            //wsprintf(bufw,L"%ses",STR(items_list.size()>RES_SLOTS?STR_NOUPDATES:STR_INITIALIZING));
             canvas.SetTextColor(D_C(boxindex[itembar->box_status()]+14));
             canvas.DrawTextXY(x+D_X(ITEM_TEXT_OFS_X),pos+D_X(ITEM_TEXT_DIST_Y)/2,bufw);
             break;

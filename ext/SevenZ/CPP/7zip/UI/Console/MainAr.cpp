@@ -56,7 +56,7 @@ int Extract7z(const WCHAR *str);
 int MY_CDECL _main
 (
   #ifndef _WIN32
-  int numArgs, const char *args[]
+  int numArgs, char *args[]
   #endif
 )
 {

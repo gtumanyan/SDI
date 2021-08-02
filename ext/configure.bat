@@ -70,12 +70,12 @@ if %TOOLSET%==gcc set path=%GCC_PATH%\bin;%GCC64_PATH%\bin;%path%
 
 rem Visual Studio
 if %TOOLSET%==gcc goto skipmscv
-set TOOLSET=msvc-14.2
+set TOOLSET=msvc-14.1
 set TOOLSET2=msvc
-set EXTRA_OPTIONS=--abbreviate-paths install-dependencies=on install-type=lib runtime-link=static deprecated-functions=off i2p=off extensions=off
+REM set EXTRA_OPTIONS=--abbreviate-paths install-dependencies=on install-type=lib runtime-link=static debug-symbols=on i2p=off extensions=off
 set LIBDIR=%CD%\..\lib
 set MSVC_PATH=C:\Program Files\Microsoft Visual Studio\%MSVC_VERSION%
-call "%MSVC_PATH%\VC\Auxiliary\Build\vcvars64.bat"
+call "%MSVC_PATH%\VC\Auxiliary\Build\vcvars32.bat"
 set LIBWEBP=%LIBDIR%\Release_x64\libwebp.lib
 set LIBTORREN32=%LIBDIR%\Release_Win32\libtorrent.lib
 set LIBTORREN64=%LIBDIR%\Release_x64\libtorrent.lib
@@ -254,19 +254,19 @@ if /I exist "%BOOST_INSTALL_PATH%\include\boost\version.hpp" (echo %c_skip% "Ski
 @rem pushd %BOOST_ROOT%
 @rem echo %c_do% "Installing BOOST32"[0m&echo.
 @rem rem BOOST_USE_WINAPI_VERSION=0x0501 = Win XP
-@rem b2.exe install toolset=%TOOLSET% release --layout=tagged -j%NUMBER_OF_PROCESSORS% define=BOOST_USE_WINAPI_VERSION=0x05010000 --show-locate-target --without-mpi
+@rem b2.exe install toolset=%TOOLSET% release --layout=tagged define=BOOST_USE_WINAPI_VERSION=0x05010000 --show-locate-target --without-mpi
 @rem popd
 :skipinstallboost32
 
 rem Install BOOST (64-bit)
-if /I exist "%BOOST64_INSTALL_PATH%\include\boost\version.hpp" (echo %c_skip% "Skipping installing BOOST64"[0m&echo. & goto skipinstallboost64)
-pushd %BOOST_ROOT%
-set oldpath=%path%
-set path=%GCC64_PATH%\bin;%BOOST_ROOT%;%MSYS_BIN%;%path%
-echo %c_do% "Installing BOOST64"[0m&echo.
-b2.exe toolset=%TOOLSET% --with-thread --layout=tagged address-model=64
-set path=%oldpath%
-popd
+REM if /I exist "%BOOST64_INSTALL_PATH%\include\boost\version.hpp" (echo %c_skip% "Skipping installing BOOST64"[0m&echo. & goto skipinstallboost64)
+REM pushd %BOOST_ROOT%
+REM set oldpath=%path%
+REM set path=%GCC64_PATH%\bin;%BOOST_ROOT%;%MSYS_BIN%;%path%
+REM echo %c_do% "Installing BOOST64"[0m&echo.
+REM b2.exe toolset=%TOOLSET% --with-thread --layout=tagged address-model=64
+REM set path=%oldpath%
+REM popd
 :skipinstallboost64
 
 echo.
@@ -336,13 +336,14 @@ echo %c_do% "Building libtorrent32"[0m&echo.
 @rem if %LIBTORRENT_VER2% LSS 1.1.0 (call :copyecho "libtorrent_patch\Jamfile_fixed" "%LIBTORRENT_PATH%\examples\Jamfile" /Y)
 @rem if %LIBTORRENT_VER2% GEQ 1.1.0 (call :copyecho "libtorrent_patch\Jamfile_fixed_110" "%LIBTORRENT_PATH%\examples\Jamfile" /Y)
 @rem if %BOOST_VER2% GEQ 1.75.0 (call :copyecho "libtorrent_patch\export.hpp" "%LIBTORRENT_PATH%\include\libtorrent\export.hpp" /Y) 
-pushd "%LIBTORRENT_PATH%\examples"
+pushd "%LIBTORRENT_PATH%\test"
 
 echo on
-b2 client_test toolset=%TOOLSET% release exception-handling=on %EXTRA_OPTIONS%
-call :copyecho ..\bin\%TOOLSET%\rls\dprct-fnctn-off\extns-off\i2p-off\lnk-sttc\rntm-lnk-sttc\thrd-mlt\libtorrent.lib %LIBDIR%\Release_Win32 /Y 
-b2 client_test toolset=%TOOLSET% debug exception-handling=on %EXTRA_OPTIONS% define=BOOST_USE_WINAPI_VERSION=0x0501
+b2 --hash toolset=%TOOLSET% address-model=32 link=static runtime-link=static boost-link=static picker-debugging=on invariant-checks=full variant=debug exception-handling=on asserts=on export-extra=on windows-version=xp cxxstd=14
 call :copyecho ..\bin\%TOOLSET%\dbg\dprct-fnctn-off\extns-off\i2p-off\lnk-sttc\rntm-lnk-sttc\thrd-mlt\libtorrent.lib %LIBDIR%\Debug_Win32 /Y
+b2 test_magnet toolset=%TOOLSET% release exception-handling=on %EXTRA_OPTIONS%
+call :copyecho ..\bin\%TOOLSET%\rls\dprct-fnctn-off\extns-off\i2p-off\lnk-sttc\rntm-lnk-sttc\thrd-mlt\libtorrent.lib %LIBDIR%\Release_Win32 /Y 
+
 
 call :copyecho ..\bin\gcc-mngw-%GCC_VERSION%\rls\libtorrent.a %GCC_PATH%%GCC_PREFIX%\lib /Y >nul
 call :copyecho ..\bin\gcc-mngw-%GCC_VERSION%\dbg\libtorrent.a %GCC_PATH%%GCC_PREFIX%\lib\libtorrent_dbg.a /Y >nul
