@@ -74,7 +74,6 @@
     <ClCompile Include="..\..\ext\libtorrent\src\session_handle.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\session_impl.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\session_settings.cpp" />
-    <ClCompile Include="..\..\ext\libtorrent\src\session_udp_sockets.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\proxy_settings.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\session_stats.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\settings_pack.cpp" />
@@ -115,7 +114,6 @@
     <ClCompile Include="..\..\ext\libtorrent\src\broadcast_socket.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\magnet_uri.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\parse_url.cpp" />
-    <ClCompile Include="..\..\ext\libtorrent\src\ConvertUTF.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\xml_parse.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\version.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\ffs.cpp" />
@@ -180,7 +178,6 @@
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\choker.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\close_reason.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\config.hpp" />
-    <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\ConvertUTF.h" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\copy_ptr.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\crc32c.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\create_torrent.hpp" />
@@ -238,7 +235,6 @@
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\packet_pool.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\parse_url.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\part_file.hpp" />
-    <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\pe_crypto.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\peer.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\peer_class.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\peer_class_set.hpp" />
@@ -399,6 +395,8 @@
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\kademlia\traversal_algorithm.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\kademlia\types.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\extensions.hpp" />
+    <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\aux_\keepalive.hpp" />
+    <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\aux_\pool.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
