@@ -1,0 +1,341 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include <windows.h>
+#ifndef IDC_STATIC
+#define IDC_STATIC -1
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// 100
+//
+
+IDR_UP                  100                     "..\\res\\up.webp"
+
+IDR_DOWN                100                     "..\\res\\down.webp"
+
+IDR_UP_H                100                     "..\\res\\up.webp"
+
+IDR_DOWN_H              100                     "..\\res\\down.webp"
+
+IDR_LOGO                100                     "..\\res\\logo.webp"
+
+IDR_PATREON             100                     "..\\res\\patreon.webp"
+
+IDR_LICENSE             100                     "..\\res\\gpl-3.0.txt"
+
+IDR_THEME               100                     "..\\tools\\themes\\metallic.txt"
+
+IDR_LANG                100                     "..\\tools\\langs\\english.txt"
+
+IDR_INSTALL64           100                     "..\\res\\install64.exe"
+
+IDR_CLI_HELP            100                     "..\\res\\CLI.txt"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_LOGO                BITMAP                  "..\\res\\logo128.bmp"
+
+IDB_WATERMARK           BITMAP                  "..\\res\\watermark.bmp"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST             "..\\res\\SDI.exe.manifest"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUT DIALOGEX 0, 0, 382, 290
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "About"
+FONT 9, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    CONTROL         VK_GAMEPAD_LEFT_THUMBSTICK_LEFT,IDC_STATIC,"Static",SS_BITMAP,10,7,32,32
+    CONTROL         "Snappy Driver Installer",IDC_VERSION,"Static",SS_SIMPLE | SS_REALSIZECONTROL | WS_GROUP,115,4,255,60
+    LTEXT           "",IDC_BUILD_INFO,115,24,200,16
+    LTEXT           "",IDC_COPYRIGHT,115,57,200,8
+    LTEXT           "",IDC_AUTHORS,10,97,360,30
+    CONTROL         "BadPointer, Glenn Delahoy, Greg Tumanyan",IDC_AUTHORNAME,
+                    "Static",WS_GROUP | 0x1c,0,70,134,8
+    LTEXT           "",IDC_WEBPAGE_TEXT,115,48,200,8,NOT WS_VISIBLE | WS_DISABLED
+    CONTROL         "",IDC_WEBPAGE_LINK,"SysLink",WS_TABSTOP,115,48,200,10
+    LTEXT           "",IDC_SDI_PAGE_TEXT,45,80,140,8,NOT WS_VISIBLE | WS_DISABLED
+    CONTROL         "",IDC_SDI_PAGE_LINK,"SysLink",WS_TABSTOP,45,88,144,10
+    LTEXT           "",IDC_WEBP_VERSION,45,100,140,8
+    LTEXT           "",IDC_TORR_VERSION,45,108,140,8
+    LTEXT           "Contact Gregory Tumanyan:",IDC_STATIC,45,120,140,8
+    DEFPUSHBUTTON   "&OK",IDOK,322,256,51,28
+    LTEXT           "",IDC_TELEGRAM_TEXT,45,128,140,8,NOT WS_VISIBLE | WS_DISABLED
+    CONTROL         "",IDC_TELEGRAM_LINK,"SysLink",WS_TABSTOP,45,128,140,10
+    LTEXT           "Support: www.patreon.com/SamLab",IDC_PATREON_LINK,45,138,200,10,SS_NOTIFY
+END
+
+IDD_DIALOG1 DIALOGEX 0, 0, 335, 295
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Snappy Driver Installer License"
+FONT 8, "Courier New", 0, 0, 0x1
+BEGIN
+    LTEXT           "Please read the following License Agreement carefully before using this program.",0,10,10,300,20
+    DEFPUSHBUTTON   "&Decline",IDCANCEL,10,268,70,20
+    PUSHBUTTON      "&Accept",IDOK,255,268,70,20
+    EDITTEXT        IDC_EDIT1,10,30,315,230,ES_MULTILINE | ES_READONLY | WS_VSCROLL
+END
+
+IDD_DIALOG2 DIALOGEX 0, 0, 400, 300
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Update"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    CONTROL         "",IDLIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,5,5,389,200,WS_EX_NOPARENTNOTIFY
+    GROUPBOX        "Selection",IDSELECTION,5,206,182,86
+    PUSHBUTTON      "Check All",IDCHECKALL,10,216,80,14
+    PUSHBUTTON      "Uncheck All",IDUNCHECKALL,10,234,80,14
+    PUSHBUTTON      "This PC Only",IDCHECKTHISPC,96,216,80,14
+    PUSHBUTTON      "Network Only",IDCHECKNETWORK,96,234,80,14
+    LTEXT           "Total download size: xx MB",IDTOTALSIZE,10,266,150,12
+    LTEXT           "Total available space: xx MB",IDTOTALAVAIL,10,278,150,12
+    GROUPBOX        "Options",IDOPTIONS,200,206,194,66
+    CONTROL         "Only update",IDONLYUPDATE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,205,216,180,12
+    CONTROL         "Preallocate space for downloads to avoid fragmentation",PREALLOCATE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,205,228,180,12
+    DEFPUSHBUTTON   "OK",IDOK,230,248,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,283,248,50,14
+    PUSHBUTTON      "Accept",IDACCEPT,336,248,50,14
+END
+
+IDD_DIALOG3 DIALOGEX 0, 0, 263, 261
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTROLPARENT
+CAPTION "Options"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,152,238,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,205,238,50,14
+    CONTROL         "",IDC_TAB1,"SysTabControl32",WS_TABSTOP,5,5,253,220
+END
+
+IDD_Page1 DIALOGEX 0, 0, 0, 0
+STYLE DS_SETFONT | DS_CONTROL | WS_CHILD
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "DriverPack Names",IDD_P1_DRV,5,5,236,73
+    CONTROL         "Do not show DriverPack names",IDD_P1_DRV1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,15,20,218,14
+    CONTROL         "Show DriverPack names on the right",IDD_P1_DRV2,"Button",BS_AUTORADIOBUTTON,15,38,218,14
+    CONTROL         "Show DriverPack names above",IDD_P1_DRV3,"Button",BS_AUTORADIOBUTTON,15,56,218,14
+    GROUPBOX        "Interface scaling",IDD_P1_ZOOMG,5,85,236,63
+    LTEXT           "You can also zoom via Ctrl+mouse wheel",IDD_P1_ZOOML,15,100,218,14
+    CONTROL         "",IDD_P1_ZOOMI,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,10,115,225,15
+    LTEXT           "Small",IDD_P1_ZOOMS,15,132,218,14
+    RTEXT           "Big",IDD_P1_ZOOMB,130,132,100,14
+    PUSHBUTTON      "Reset",IDD_P1_ZOOMR,180,96,50,14
+    GROUPBOX        "Hint",IDD_P1_HINTG,5,155,236,35
+    LTEXT           "Popup window delay (in ms)",IDD_P1_HINTL,15,170,218,14
+    EDITTEXT        IDD_P1_HINTE,180,167,50,14,ES_AUTOHSCROLL
+END
+
+IDD_Page2 DIALOGEX 0, 0, 0, 0
+STYLE DS_SETFONT | DS_CONTROL | WS_CHILD
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "Torrent",IDD_P2_TOR,5,5,236,157
+    LTEXT           "Port",IDD_P2_PORT,15,20,218,14
+    LTEXT           "Max connections (0 - unlimited)",IDD_P2_CON,15,48,218,14
+    LTEXT           "Max download speed in KB/s (0 - unlimited)",IDD_P2_DOWN,15,76,218,14
+    LTEXT           "Max upload speed in KB/s (0 - unlimited)",IDD_P2_UP,15,104,218,14
+    EDITTEXT        IDD_P2_PORTE,15,30,50,14,ES_AUTOHSCROLL
+    EDITTEXT        IDD_P2_CONE,15,58,50,14,ES_AUTOHSCROLL
+    EDITTEXT        IDD_P2_DOWNE,15,86,50,14,ES_AUTOHSCROLL
+    EDITTEXT        IDD_P2_UPE,15,114,50,14,ES_AUTOHSCROLL
+    CONTROL         "Do not check for updates",IDD_P2_UPD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,164,236,14
+    CONTROL         "Do not notify about missing DriverPacks",IDONLYUPDATE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,175,236,14
+END
+
+IDD_Page3 DIALOGEX 0, 0, 0, 0
+STYLE DS_SETFONT | DS_CONTROL | WS_CHILD
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "",0,5,5,236,190
+    LTEXT           "Drivers",IDD_P3_DIR1,15,20,218,14
+    LTEXT           "Indexes",IDD_P3_DIR2,15,56,218,14
+    LTEXT           "Indexes (human-readable)",IDD_P3_DIR3,15,92,218,14
+    LTEXT           "Data",IDD_P3_DIR4,15,128,218,14
+    LTEXT           "Logs",IDD_P3_DIR5,15,182,218,14
+    EDITTEXT        IDD_P3_DIR1E,15,30,210,14,ES_AUTOHSCROLL
+    EDITTEXT        IDD_P3_DIR2E,15,66,210,14,ES_AUTOHSCROLL
+    EDITTEXT        IDD_P3_DIR3E,15,102,210,14,ES_AUTOHSCROLL
+    EDITTEXT        IDD_P3_DIR4E,15,138,210,14,ES_AUTOHSCROLL
+    EDITTEXT        IDD_P3_DIR5E,15,174,210,14,ES_AUTOHSCROLL
+END
+
+IDD_Page4 DIALOGEX 0, 0, 0, 0
+STYLE DS_SETFONT | DS_CONTROL | WS_CHILD
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "Commands",IDD_P4_CMDG,5,5,236,157
+    LTEXT           "You can define commands that will be excecuted after specifed action is complited",IDD_P4_CMDL,15,24,200,14
+    LTEXT           "After installation",IDD_P4_CMD1,15,56,218,14
+    EDITTEXT        IDD_P4_CMD1E,15,66,210,14,ES_AUTOHSCROLL
+    LTEXT           "After installation(reboot)",IDD_P4_CMD2,15,92,218,14
+    EDITTEXT        IDD_P4_CMD2E,15,102,210,14,ES_AUTOHSCROLL
+    LTEXT           "After download",IDD_P4_CMD3,15,128,218,14
+    EDITTEXT        IDD_P4_CMD3E,15,138,210,14,ES_AUTOHSCROLL
+    CONTROL         "Show console window",IDD_P4_CONSL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,167,236,14
+END
+
+IDD_WELCOME DIALOGEX 0, 0, 400, 300
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Welcome"
+FONT 9, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    CONTROL         VK_GAMEPAD_LEFT_THUMBSTICK_LEFT,IDC_STATIC,"Static",SS_BITMAP,5,5,32,32
+    LTEXT           "Snappy Driver Installer",IDD_WELC_TITLE,115,4,300,90
+    LTEXT           "(C) Copyright 2021",IDD_WELC_TEXT,115,24,250,90
+    LTEXT           "VER_VERSION_STR",IDC_STATIC,115,44,250,90
+    LTEXT           "Revision: R791",IDC_STATIC,115,64,250,90
+    LTEXT           "Build Date: 15 Jul 2021",IDC_STATIC,115,84,250,90
+    LTEXT           "TEST BUILD - NOT FOR DISTRIBUTION",IDC_STATIC,115,104,250,90
+    LTEXT           "Home Page: www.sdi-tool.org",IDD_WELC_LINK1,115,124,200,10,SS_NOTIFY
+    LTEXT           "Support: www.patreon.com/SamLab",IDD_WELC_LINK2,115,144,200,10,SS_NOTIFY
+    LTEXT           "Welcome To Snappy Driver Installer",IDD_WELC_SUBTITLE,40,95,380,40
+    LTEXT           "Before you can begin, you'll need to download DriverPacks or indexes. Select one of ",IDD_WELC_INTRO,40,105,320,40
+    LTEXT           "the following options to start downloading. The Updates bar will keep you apprised of",IDC_STATIC,40,115,320,40
+    LTEXT           "the download status.",IDC_STATIC,40,125,320,40
+    LTEXT           "Note: Look for additional tools on the System Menu at the top left of the main application window.",IDD_WELC_INTRO2,40,126,320,40
+    DEFPUSHBUTTON   "Download All DriverPacks",IDD_WELC_BUTTON1,40,148,75,35,BS_MULTILINE
+    LTEXT           "Get the entire DriverPacks collection.",IDD_WELC_BUTTON1_DESC,130,148,240,35
+    LTEXT           "This is a big download and will take anywhere from an hour to a day depending on availability and internet speed.",IDC_STATIC,130,168,240,35
+    LTEXT           "When complete, you'll have everything required to work offline. If you're a technician, this is the option you want.",IDC_STATIC,130,188,240,35
+    PUSHBUTTON      "Download Network Drivers Only",IDD_WELC_BUTTON2,40,188,75,35,BS_MULTILINE
+    LTEXT           "Get the latest LAN, WLAN, and Wifi drivers. This allows you to get any PC online quickly and is a relatively small download.",IDD_WELC_BUTTON2_DESC,130,196,240,35
+    PUSHBUTTON      "Download Indexes Only",IDD_WELC_BUTTON3,40,228,75,35,BS_MULTILINE
+    LTEXT           "This allows you to scan your PC to see which drivers need to be installed or updated.",IDD_WELC_BUTTON3_DESC,130,228,240,35
+    LTEXT           "The download will only take a few minutes but you'll need an internet connection when the required DriverPacks need to be downloaded.",IDC_STATIC,130,248,240,35
+    LTEXT           "If you're a casual user, this is the option you want.",IDC_STATIC,130,268,240,35
+    PUSHBUTTON      "&Close",IDD_WELC_CLOSE,339,266,51,28
+END
+
+IDD_TRANSL_EDITDIALOG DIALOGEX 0, 0, 350, 200
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Snappy Driver Installer Language Translation Tool"
+FONT 9, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    LTEXT           "Key:",0,10,8,20,12
+    LTEXT           "KEY_VALUE",IDC_TRANSL_KEYVALUE,30,8,330,12
+    LTEXT           "Reference (English):",IDC_STATIC,10,19,330,12
+    EDITTEXT        IDC_TRANSL_EDIT1,10,28,330,60,ES_MULTILINE | ES_READONLY | WS_DISABLED | WS_VSCROLL
+    LTEXT           "Translation:",IDC_TRANSL_LANGUAGEID,10,93,330,12
+    EDITTEXT        IDC_TRANSL_EDIT2,10,102,330,60,ES_MULTILINE | WS_VSCROLL
+    PUSHBUTTON      "Copy Reference To Clipboard",IDC_TRANSL_COPYCLIP,260,3,80,23,BS_MULTILINE
+    DEFPUSHBUTTON   "&Accept",IDOK,210,180,60,15
+    PUSHBUTTON      "&Cancel",IDCANCEL,280,180,60,15
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include <windows.h>\r\n"
+    "#ifndef IDC_STATIC\r\n"
+    "#define IDC_STATIC -1\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINWND             ICON                    "..\\res\\icon.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUT, DIALOG
+    BEGIN
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_ABOUT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
