@@ -181,6 +181,7 @@ Updater_t *CreateUpdater(){return new UpdaterImp;}
 //{ Global variables
 lt::session ses(settings());
 lt::torrent_handle h;
+lt::add_torrent_params p;
 
 UpdateDialog_t UpdateDialog;
 Updater_t *Updater;
@@ -450,7 +451,7 @@ void UpdateDialog_t::updateTexts()
     SetWindowText(GetDlgItem(hUpdate,IDSELECTION),STR(STR_UPD_SELECTION));
     SetWindowText(GetDlgItem(hUpdate,IDOPTIONS),STR(STR_UPD_OPTIONS));
     SetWindowText(GetDlgItem(hUpdate,IDONLYUPDATE),STR(STR_UPD_ONLYUPDATES));
-    SetWindowText(GetDlgItem(hUpdate,IDKEEPSEEDING),STR(STR_UPD_KEEPSEEDING));
+    SetWindowText(GetDlgItem(hUpdate,IDPREALLOCATE),STR(STR_UPD_PREALLOCATE));
     SetWindowText(GetDlgItem(hUpdate,IDCHECKALL),STR(STR_UPD_BTN_ALL));
     SetWindowText(GetDlgItem(hUpdate,IDUNCHECKALL),STR(STR_UPD_BTN_NONE));
     SetWindowText(GetDlgItem(hUpdate,IDCHECKNETWORK),STR(STR_UPD_BTN_NETWORK));
@@ -599,7 +600,7 @@ BOOL CALLBACK UpdateDialog_t::UpdateProcedure(HWND hwnd,UINT Message,WPARAM wPar
 
     thispcbut=GetDlgItem(hwnd,IDCHECKTHISPC);
     chk1=GetDlgItem(hwnd,IDONLYUPDATE);
-    chk2=GetDlgItem(hwnd,IDKEEPSEEDING);
+    chk2=GetDlgItem(hwnd,IDPREALLOCATE);
 
     switch(Message)
     {
@@ -621,7 +622,7 @@ BOOL CALLBACK UpdateDialog_t::UpdateProcedure(HWND hwnd,UINT Message,WPARAM wPar
             UpdateDialog.updateTexts();
             UpdateDialog.setCheckboxes();
             if(Settings.flags&FLAG_ONLYUPDATES)SendMessage(chk1,BM_SETCHECK,BST_CHECKED,0);
-            if(Settings.flags&FLAG_KEEPSEEDING)SendMessage(chk2,BM_SETCHECK,BST_CHECKED,0);
+            if(p.storage_mode == storage_mode_allocate)SendMessage(chk2,BM_SETCHECK,BST_CHECKED,0);
 
             wpOrigButtonProc=(WNDPROC)SetWindowLongPtr(thispcbut,GWLP_WNDPROC,(LONG_PTR)NewButtonProc);
             SetTimer(hwnd,1,2000,nullptr);
@@ -677,8 +678,8 @@ BOOL CALLBACK UpdateDialog_t::UpdateProcedure(HWND hwnd,UINT Message,WPARAM wPar
                     UpdateDialog.setPriorities();
                     Settings.flags&=~FLAG_ONLYUPDATES;
                     if(SendMessage(chk1,BM_GETCHECK,0,0))Settings.flags|=FLAG_ONLYUPDATES;
-                    Settings.flags&=~FLAG_KEEPSEEDING;
-                    if(SendMessage(chk2,BM_GETCHECK,0,0))Settings.flags|=FLAG_KEEPSEEDING;
+                    //Settings.flags&=~FLAG_KEEPSEEDING;
+                    if(SendMessage(chk2,BM_GETCHECK,0,0))p.storage_mode = storage_mode_allocate;
                     Updater->resumeDownloading();
                     EndDialog(hwnd,IDOK);
                     return TRUE;
@@ -687,8 +688,8 @@ BOOL CALLBACK UpdateDialog_t::UpdateProcedure(HWND hwnd,UINT Message,WPARAM wPar
                     UpdateDialog.setPriorities();
                     Settings.flags&=~FLAG_ONLYUPDATES;
                     if(SendMessage(chk1,BM_GETCHECK,0,0))Settings.flags|=FLAG_ONLYUPDATES;
-                    Settings.flags&=~FLAG_KEEPSEEDING;
-                    if(SendMessage(chk2,BM_GETCHECK,0,0))Settings.flags|=FLAG_KEEPSEEDING;
+                    //Settings.flags&=~FLAG_KEEPSEEDING;
+                    if (SendMessage(chk2, BM_GETCHECK, 0, 0))p.storage_mode = storage_mode_allocate;
                     Updater->resumeDownloading();
                     if(Settings.flags&FLAG_KEEPSEEDING)
                         EndDialog(hwnd,IDOK);
@@ -705,7 +706,7 @@ BOOL CALLBACK UpdateDialog_t::UpdateProcedure(HWND hwnd,UINT Message,WPARAM wPar
                     UpdateDialog.populate(0,true);
                     break;
 
-                case IDKEEPSEEDING:
+                case IDPREALLOCATE:
                     UpdateDialog.updateButtons();
                     return TRUE;
 
@@ -1032,7 +1033,7 @@ void UpdaterImp::updateTorrentStatus()
         t->status_strid=STR_TR_ST4;
     }
     // if torrent is seeding
-    else if((st.state==lt::torrent_status::finished)&SeedMode)
+    else if((st.state==lt::torrent_status::finished)&&SeedMode)
         t->status_strid=STR_TR_ST5;
     // if we're moving the downloaded files
     else if(movingfiles)
@@ -1234,7 +1235,7 @@ void UpdaterImp::ShowProgress(wchar_t *buf)
         else if(st.state==torrent_status::downloading)
             wsprintf(buf,STR(STR_UPD_PROGRES),num1,num2,
                 (TorrentStatus.downloadsize)?TorrentStatus.downloaded*100/TorrentStatus.downloadsize:0);
-        else if((st.state==torrent_status::finished)&SeedMode)
+        else if((st.state==torrent_status::finished)&&SeedMode)
             wsprintf(buf,STR(STR_DWN_SEEDING),num3,num4);
         else if(st.state==torrent_status::finished)
             wsprintf(buf,STR(STR_TR_ST4));
@@ -1355,11 +1356,10 @@ int UpdaterImp::downloadTorrent()
     // Settings
     lt::session_params params;
     auto& settings = params.settings;
-    settings.set_int(settings_pack::file_pool_size, 543);
-	settings.set_int(settings_pack::choking_algorithm, settings_pack::rate_based_choker);
+	  settings.set_int(settings_pack::choking_algorithm, settings_pack::rate_based_choker);
 
-    settings.set_str(lt::settings_pack::user_agent, "Snappy Drivers Installer " VER_VERSION_STR2);
-	settings.set_int(settings_pack::alert_mask
+    settings.set_str(lt::settings_pack::user_agent,VERSION_FILEVERSION_LONG);
+	  settings.set_int(settings_pack::alert_mask
 		, lt::alert_category::error
 		| lt::alert_category::peer
 		| lt::alert_category::port_mapping
@@ -1376,14 +1376,12 @@ int UpdaterImp::downloadTorrent()
 		| lt::alert_category::file_progress);
     ses.apply_settings(std::move(settings));
 
-    lt::add_torrent_params p;
     // we don't want to waste time checking the torrent, just go straight into
     // seeding it, announcing to trackers and connecting to peers
     p.flags |= add_torrent_params::flag_seed_mode;
 	  p.flags |= add_torrent_params::flag_paused;
     p.flags |= add_torrent_params::flag_auto_managed;
 	  p.save_path = spath;
-	  p.storage_mode = storage_mode_allocate;
 	  p.url = url;
     
 

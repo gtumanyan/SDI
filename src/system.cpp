@@ -166,7 +166,7 @@ void mkdir_r(const wchar_t *path)
     // invalid path - 'C:'
     if(path[1]==L':'&&path[2]==0)return;
 
-    // if it exists there'ses nothing to do
+    // if it exists there's nothing to do
     if(System.DirectoryExists(path))return;
 
     wchar_t buf[BUFLEN];
@@ -174,7 +174,7 @@ void mkdir_r(const wchar_t *path)
     wchar_t *p=buf;
 
     // unc path - skip past server name
-    if((wcslen(buf)>2)&&(buf[0]==L'\\')&&(buf[1]=L'\\'))
+    if((wcslen(buf)>2)&&(buf[0]==L'\\')&&(buf[1]==L'\\'))
     {
         p++;p++;
         p=wcschr(p,L'\\');
@@ -183,7 +183,7 @@ void mkdir_r(const wchar_t *path)
 
     // work through the path one directory at a time
     // by searching for the backslash delimiter
-    while((p=wcschr(p,L'\\')))
+    while((p==wcschr(p,L'\\')))
     {
         *p=0;
         if(_wmkdir(buf)<0&&errno!=EEXIST&&wcslen(buf)>2)
@@ -574,7 +574,7 @@ std::string SystemImp::AppPathS()
 
 int SystemImp::FindLatestExeVersion(int bit)
 {
-    int ver=GIT_REV;
+    int ver=VERSION_REV;
     std::wstring spec;
     if(bit==32)spec=AppPathW()+L"\\SDI*.exe";
     else if(bit==64)spec=AppPathW()+L"\\SDI_x64*.exe";
@@ -1182,6 +1182,6 @@ void ShowHelp()
     CLIHelp_Font=CreateFont(-12,0,0,0,FW_DONTCARE,FALSE,FALSE,FALSE,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,
                             CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,VARIABLE_PITCH,L"Consolas");
 
-    DialogBox(ghInst,MAKEINTRESOURCE(IDD_DIALOG1),nullptr,(DLGPROC)ShowHelpProcedure);
+    DialogBox(ghInst,MAKEINTRESOURCE(IDD_LICENSE),nullptr,(DLGPROC)ShowHelpProcedure);
     DeleteObject(CLIHelp_Font);
 }

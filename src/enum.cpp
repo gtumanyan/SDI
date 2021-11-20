@@ -610,10 +610,10 @@ State::State():
     cs_manuf(0),
     cs_model(0),
     ChassisType(0),
-    revision(GIT_REV)
+    revision(VERSION_REV)
 {
     memset(this,0,sizeof(state_m_t));
-    revision=GIT_REV;
+    revision= VERSION_REV;
 
     //Log.print_con("sizeof(Device)=%d\nsizeof(Driver)=%d\n\n",sizeof(Device),sizeof(Driver));
 }

@@ -15,8 +15,10 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #ifndef GITREV_H
 #define GITREV_H
-#define GIT_REV $WCLOGCOUNT+729$
-#define GIT_REV_STR "$WCLOGCOUNT+729$"
+#define GIT_REV         $WCLOGCOUNT+729$
+#define GIT_REV_STR     "$WCLOGCOUNT+729$"
+#define VER_VERSION_STR "Version 2.0.0." GIT_REV_STR
+#define VER_VERSION_STR2 "v2.0.0"
 
 /* Date of the last commit */
 #define GIT_REV_D "$WCDATE=%d$"

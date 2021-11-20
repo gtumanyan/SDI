@@ -12,14 +12,23 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more d
 You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
+#pragma once
 
-#include "..\src\gitrev.h"
+//
+// SDI version: begin
+//
+#include "gitrev.h"
 
+#define VER_VERSION_STR        TEXT("Version 2.0.0.736")
+
+// should be X.Y : ie. if VERSION_DIGITALVALUE == 4, 7, 1, 0 , then X = 4, Y = 71
+// ex : #define VERSION_VALUE TEXT("5.63\0")
+#define VER_VERSION_STR2            "v2.0.0"
 #define VER_FILEVERSION             2,0,0,GIT_REV
 #define VER_FILEVERSION_STR         "2.0.0." GIT_REV_STR "\0"
 
-#define VER_VERSION_STR             "Version 2.0.0." GIT_REV_STR
-#define VER_VERSION_STR2            "v2.0.0"
+// SDI version: end
+
 
 #ifndef IDC_STATIC
 #define IDC_STATIC     -1
@@ -60,7 +69,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #define IDTOTALSIZE   310
 #define IDONLYUPDATE  311
 #define IDTOTALAVAIL  313
-#define IDKEEPSEEDING 314
+#define PREALLOCATE		314
 #define IDOPTIONS     315
 #define IDCHECKNETWORK 316
 #define IDSELECTION   317
@@ -146,13 +155,16 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #define IDD_ABOUT_T1  801
 #define IDD_ABOUT_T2  802
 #define IDD_ABOUT_T3  803
-#define IDD_ABOUT_T4  804
-#define IDD_ABOUT_T5  805
-#define IDD_ABOUT_T6  806
+#define IDC_AUTHORNAME	804
+#define IDC_MAINTAINERS 805
+#define IDC_PATREON			806
+#define IDD_ABOUT_T6  807
 #define IDD_ABOUT_T7  808
 #define IDD_ABOUT_T8  809
 #define IDD_ABOUT_T9  810
-#define IDC_SYSLINK1  811
+#define IDD_ABOUT_T10 811
+#define IDC_WEBPAGE		812
+#define IDC_SYSLINK1  813
 
 // welcome box
 #define IDD_WELCOME           900

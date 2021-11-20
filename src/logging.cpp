@@ -126,7 +126,7 @@ void Log_t::start(wchar_t *logdir)
         logfile=_wfopen(filename.Get(),L"wb");
     }
     if((log_verbose&LOG_VERBOSE_BATCH)==0)
-        Log.print_file("{start logging\n%s\n\n", GIT_REV_STR);
+        Log.print_file("{start logging\n%s\n\n", VERSION_FILEVERSION_LONG);
 }
 
 void Log_t::save()
@@ -321,7 +321,7 @@ void* operator new(size_t size, const char* file, int line)
 {
     try
     {
-        //Log.print_con("File '%ses',Line %d,Size %d\n",file,line,size);
+        //Log.print_con("File '%s',Line %d,Size %d\n",file,line,size);
         return new char[size];
     }
     catch(...)
@@ -334,7 +334,7 @@ void* operator new[](size_t size, const char* file, int line)
 {
     try
     {
-        //Log.print_con("File '%ses',Line %d,Size %d\n",file,line,size);
+        //Log.print_con("File '%s',Line %d,Size %d\n",file,line,size);
         return new char[size];
     }
     catch(...)

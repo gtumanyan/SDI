@@ -149,6 +149,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <CallingConvention>FastCall</CallingConvention>
     </ClCompile>
     <Link>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
@@ -174,6 +175,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <!-- <ClInclude Include="..\..\ext\SevenZ\C\7z.h" /> -->
+    <ClInclude Include="..\..\ext\SevenZ\CPP\Common\DynLimBuf.h" />
     <ClInclude Include="..\..\ext\SevenZ\C\7zAlloc.h" />
     <ClInclude Include="..\..\ext\SevenZ\C\7zBuf.h" />
     <ClInclude Include="..\..\ext\SevenZ\C\7zCrc.h" />
@@ -340,6 +342,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ext\SevenZ\CPP\7zip\UI\Console\List.cpp" />
+    <ClCompile Include="..\..\ext\SevenZ\CPP\Common\DynLimBuf.cpp" />
     <ClCompile Include="..\..\ext\SevenZ\C\7zAlloc.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='ReleaseU'">MaxSpeed</Optimization>
       <PrecompiledHeader />

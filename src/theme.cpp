@@ -200,7 +200,7 @@ bool VaultImp::loadFromEncodedFile(const wchar_t *filename)
     }
     datav_ptr.reset(new wchar_t[sz+1]);
     wchar_t *datav=datav_ptr.get();
-    Log.print_con("Read '%S':%d\n",filename,sz);
+    //Log.print_con("Read '%S':%d\n",filename,sz);
 
     fread(datav,2,1,f);
     if(!memcmp(datav,"\xEF\xBB",2))// UTF-8
@@ -300,7 +300,7 @@ VaultImp::VaultImp(entry_t *entryv,size_t numv,int resv,int elem_id_,const wchar
 
 void VaultImp::load(int i)
 {
-    Log.print_con("vault %d,'%S'\n",i,namelist[i]);
+    //Log.print_con("vault %d,'%S'\n",i,namelist[i]);
     loadFromRes(res);
     if(i<0)return;
     loadFromFile(namelist[i]);

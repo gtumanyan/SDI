@@ -28,15 +28,15 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "theme.h"
 #include "usbwizard.h"
 
-#include <windows.h>
+#include <winuser.h>
 #include <setupapi.h>       // for CommandLineToArgvW
 #include <shobjidl.h>       // for TBPF_NORMAL
 #ifdef _MSC_VER
 #include <shellapi.h>
-#include <iostream>
 #endif
 #include <process.h>
 #include <signal.h>
+#include <iostream>
 
 // Depend on Win32API
 #include "enum.h"   // non-portable
@@ -144,13 +144,8 @@ int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hinst,LPSTR pStr,int nCmd)
 
     Timers.start(time_total);
 
-    char bit[]="32";
-    #ifdef _WIN64
-    strcpy(bit,"64");
-    #endif // _WIN64
-
-    std::cout << "\nSnappy Driver Installer " << VER_VERSION_STR2 << " (" << bit << "bit)\n";
-    std::cout << GIT_BUILD_NOTE << "\n\n";
+    std::cout << VERSION_FILEVERSION_LONG << "\n";
+    std::cout << VERSION_COMMIT_ID << "\n\n";
 
     // Determine number of CPU cores ("Logical Processors")
     SYSTEM_INFO siSysInfo;
@@ -191,8 +186,7 @@ int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hinst,LPSTR pStr,int nCmd)
     // Load settings
     init_CLIParam();
     if(!Settings.load_cfg_switch(GetCommandLineW()))
-        if(!Settings.load(L"sdi.cfg"))
-            Settings.load(L"tools\\settings.cfg");
+        Settings.load(L"sdi.cfg");
 
     Settings.parse(GetCommandLineW(),1);
     RUN_CLI();
@@ -394,7 +388,7 @@ void MainWindow_t::MainLoop(int nCmd)
     wcx.cbSize=         sizeof(WNDCLASSEX);
     wcx.lpfnWndProc=    WndProcMainCallback;
     wcx.hInstance=      ghInst;
-    wcx.hIcon=          LoadIcon(ghInst,MAKEINTRESOURCE(IDI_ICON1));
+    wcx.hIcon=          LoadIcon(ghInst,MAKEINTRESOURCE(IDR_MAINWND));
     wcx.hCursor=        LoadCursor(nullptr,IDC_ARROW);
     wcx.lpszClassName=  classMain;
     wcx.hbrBackground=  (HBRUSH)(COLOR_WINDOW+1);
@@ -429,7 +423,7 @@ void MainWindow_t::MainLoop(int nCmd)
     // Main windows
     hMain=CreateWindowEx(WS_EX_LAYERED,
                         classMain,
-                        APPTITLE,
+                        _W(APPTITLE),
                         WS_OVERLAPPEDWINDOW|WS_CLIPCHILDREN,
                         CW_USEDEFAULT,CW_USEDEFAULT,D(MAINWND_WX),D(MAINWND_WY),
                         nullptr,nullptr,ghInst,nullptr);
@@ -441,7 +435,7 @@ void MainWindow_t::MainLoop(int nCmd)
 
     // license dialog
     if(!Settings.license)
-        DialogBox(ghInst,MAKEINTRESOURCE(IDD_DIALOG1),nullptr,(DLGPROC)LicenseProcedure);
+        DialogBox(ghInst,MAKEINTRESOURCE(IDD_LICENSE),nullptr,(DLGPROC)LicenseProcedure);
 
     // Enable updates notifications
     if(Settings.license==2)
@@ -809,7 +803,7 @@ static BOOL CALLBACK DialogProc1(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
                 SetWindowText(GetDlgItem(data.pages[1],IDD_P2_UP),STR(STR_OPTION_MAX_UPLOAD));
                 SetWindowText(GetDlgItem(data.pages[1],IDD_P2_UPD),STR(STR_OPTION_CHECKUPDATES));
                 SetWindowText(GetDlgItem(data.pages[1],IDONLYUPDATE),STR(STR_UPD_ONLYUPDATES));
-                SetWindowText(GetDlgItem(data.pages[1],IDKEEPSEEDING),STR(STR_UPD_KEEPSEEDING));
+                SetWindowText(GetDlgItem(data.pages[1],IDPREALLOCATE),STR(STR_UPD_PREALLOCATE));
 
                 SetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR1),STR(STR_OPTION_DIR_DRIVERS));
                 SetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR2),STR(STR_OPTION_DIR_INDEXES));
@@ -985,21 +979,58 @@ static BOOL CALLBACK DialogProc1(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
     return FALSE;
 }
 
+//=============================================================================
+//
+// AboutBoxProc()
+//
 static BOOL CALLBACK AboutBoxProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 {
-    switch (msg)
-    {
-    case WM_INITDIALOG:
-        {
-            SetWindowText(GetDlgItem(hwnd,IDD_ABOUT_T3),STR(STR_ABOUT_DEV_TITLE));
-            return TRUE;
-        }
+    switch (msg) {
+    case WM_INITDIALOG: {
+		SetWindowText(GetDlgItem(hwnd,IDC_AUTHORS),STR(STR_ABOUT_DEV_TITLE));
+		//SetDlgItemText(hwnd, IDC_VERSION, TEXT(VERSION_FILEVERSION_LONG));
+		//SetDlgItemText(hwnd, IDC_BUILD_INFO, wch);
+		//SetDlgItemText(hwnd, IDC_COPYRIGHT, VERSION_LEGALCOPYRIGHT);
+  //  SetDlgItemText(hwnd, IDC_WEBP_VERSION, VERSION_WEBP);
+  //  SetDlgItemText(hwnd, IDC_TORR_VERSION, VERSION_LIBTORRENT);
+
+		//HFONT hFontTitle = (HFONT)SendDlgItemMessage(hwnd, IDC_VERSION, WM_GETFONT, 0, 0);
+		//if (hFontTitle == NULL) {
+		//	hFontTitle = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+		//}
+
+		//LOGFONT lf;
+		//GetObject(hFontTitle, sizeof(LOGFONT), &lf);
+		//lf.lfWeight = FW_BOLD;
+		//hFontTitle = CreateFontIndirect(&lf);
+		//SendDlgItemMessage(hwnd, IDC_VERSION, WM_SETFONT, (WPARAM)hFontTitle, TRUE);
+		//SetWindowLongPtr(hwnd, DWLP_USER, (LONG_PTR)(hFontTitle));
+
+		//if (GetDlgItem(hwnd, IDC_WEBPAGE_LINK) == NULL) {
+		//	SetDlgItemText(hwnd, IDC_WEBPAGE_TEXT, VERSION_WEBPAGE_DISPLAY);
+		//	ShowWindow(GetDlgItem(hwnd, IDC_WEBPAGE_TEXT), SW_SHOWNORMAL);
+		//} else {
+		//	wsprintf(wch, L"<A>%s</A>", VERSION_WEBPAGE_DISPLAY);
+		//	SetDlgItemText(hwnd, IDC_WEBPAGE_LINK, wch);
+		//}
+
+		//if (GetDlgItem(hwnd, IDC_TELEGRAM_LINK) == NULL) {
+		//	SetDlgItemText(hwnd, IDC_TELEGRAM_TEXT, VERSION_TELEGRAM_DISPLAY);
+		//	ShowWindow(GetDlgItem(hwnd, IDC_TELEGRAM_TEXT), SW_SHOWNORMAL);
+		//} else {
+		//	wsprintf(wch, L"<A>%s</A>", VERSION_TELEGRAM_DISPLAY);
+		//	SetDlgItemText(hwnd, IDC_TELEGRAM_LINK, wch);
+		//}
+
+		//CenterDlgInParent(hwnd);
+	  }
+	  return TRUE;
 
     case WM_SETCURSOR:
         // 2 hyperlinks
         if ((LOWORD(lParam)==HTCLIENT) &&
-            ((GetDlgCtrlID((HWND)wParam) == IDD_ABOUT_T8)||
-             (GetDlgCtrlID((HWND)wParam) == IDD_ABOUT_T9)))
+            ((GetDlgCtrlID((HWND)wParam) == IDC_WEBPAGE_LINK)||
+             (GetDlgCtrlID((HWND)wParam) == IDC_TELEGRAM_LINK)))
         {
             SetCursor(LoadCursor(nullptr, IDC_HAND));
             SetWindowLongPtr(hwnd, DWLP_MSGRESULT, TRUE);
@@ -1008,47 +1039,39 @@ static BOOL CALLBACK AboutBoxProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam
         break;
 
     case WM_COMMAND:
-        switch(wParam)
-        {
+		switch (LOWORD(wParam)) {
             case IDOK:
-                EndDialog(hwnd,wParam);
-                return TRUE;
             case IDCANCEL:
-                EndDialog(hwnd,wParam);
-                break;
-            case IDD_ABOUT_T8:
-                System.run_command(L"open",WEB_HOMEPAGE,SW_SHOWNORMAL,0);
-                break;
-            case IDD_ABOUT_T9:
+			EndDialog(hwnd, IDOK);
+            case IDC_WEBPAGE_LINK:
+                System.run_command(L"open", VERSION_WEBPAGE_DISPLAY,SW_SHOWNORMAL,0);
+            case IDC_PATREON_LINK:
                 System.run_command(L"open",WEB_PATREONPAGE,SW_SHOWNORMAL,0);
-                break;
-            default:
-                break;
-        }
-        break;
-
+			break;
+		}
+		return TRUE;
     case WM_CTLCOLORSTATIC:
     {
         // modify the fonts for colours and bold and size etc
-        HWND Ctl1=GetDlgItem(hwnd,IDD_ABOUT_T1);
-        HWND Ctl3=GetDlgItem(hwnd,IDD_ABOUT_T3);
-        HWND Ctl4=GetDlgItem(hwnd,IDD_ABOUT_T4);
-        HWND Ctl6=GetDlgItem(hwnd,IDD_ABOUT_T6);
+        //HWND Ctl1=GetDlgItem(hwnd,IDD_ABOUT_T1);
+        HWND Ctl3=GetDlgItem(hwnd, IDC_AUTHORS);
+        //HWND Ctl4=GetDlgItem(hwnd,IDD_MAINTAINERS);
+       /* HWND Ctl6=GetDlgItem(hwnd,IDD_ABOUT_T6);
         HWND Ctl8=GetDlgItem(hwnd,IDD_ABOUT_T8);
-        HWND Ctl9=GetDlgItem(hwnd,IDD_ABOUT_T9);
+        HWND Ctl9=GetDlgItem(hwnd,IDD_ABOUT_T9);*/
         HDC hdcStatic=(HDC)wParam;
 
-        if((HWND)lParam==Ctl1)
-        {
-            HFONT hTitleFont = CreateFont(28,12,0,0,620,
-                                         FALSE,FALSE,FALSE,
-                                         ANSI_CHARSET,OUT_DEVICE_PRECIS,CLIP_MASK,
-                                         ANTIALIASED_QUALITY,DEFAULT_PITCH,
-                                         L"Tahoma");
-            SelectObject(hdcStatic,hTitleFont);
-            SetTextColor(hdcStatic, RGB(248,171,3));
-        }
-        else if((HWND)lParam==Ctl3||((HWND)lParam==Ctl4)||(HWND)lParam==Ctl6)
+        //if((HWND)lParam==Ctl1)
+        //{
+        //    HFONT hTitleFont = CreateFont(28,12,0,0,620,
+        //                                 FALSE,FALSE,FALSE,
+        //                                 ANSI_CHARSET,OUT_DEVICE_PRECIS,CLIP_MASK,
+        //                                 ANTIALIASED_QUALITY,DEFAULT_PITCH,
+        //                                 L"Tahoma");
+        //    SelectObject(hdcStatic,hTitleFont);
+        //    SetTextColor(hdcStatic, RGB(248,171,3));
+        //}
+        if((HWND)lParam==Ctl3)//||((HWND)lParam==Ctl4)||(HWND)lParam==Ctl6)
         {
             HFONT hFont = CreateFont(9,0,0,0,700,
                                          FALSE,FALSE,FALSE,
@@ -1057,7 +1080,7 @@ static BOOL CALLBACK AboutBoxProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam
                                          L"MS Sans Serif");
             SelectObject(hdcStatic,hFont);
         }
-        else if(((HWND)lParam==Ctl8)||(HWND)lParam==Ctl9)
+      /*  if(((HWND)lParam==Ctl8)||(HWND)lParam==Ctl9)
         {
             HFONT hFont = CreateFont(10,0,0,0,550,
                                          FALSE,FALSE,FALSE,
@@ -1066,7 +1089,7 @@ static BOOL CALLBACK AboutBoxProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam
                                          L"MS Sans Serif");
             SelectObject(hdcStatic,hFont);
             SetTextColor(hdcStatic, RGB(0,0,255));
-        }
+        }*/
         SetBkMode(hdcStatic,TRANSPARENT);
         return (INT_PTR)g_hbrDlgBackground;
     }
@@ -1541,7 +1564,7 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
     int i;
 	int f;
     int wp;
-    long long timer=System.GetTickCountWr();
+    //long long timer=System.GetTickCountWr();
 
     x=LOWORD(lParam);
     y=HIWORD(lParam);
@@ -1833,6 +1856,8 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
                 ClickVisiter cv{ID_REBOOT};
                 wPanels->Accept(cv);
             }
+            if(wParam==VK_F1)
+                DialogBox(ghInst, MAKEINTRESOURCE(IDD_ABOUT), MainWindow.hMain, (DLGPROC)AboutBoxProc);
             if(wParam==VK_F5&&ctrl_down)
                 invalidate(INVALIDATE_DEVICES);else
             if(wParam==VK_F5)
@@ -1941,7 +1966,6 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
                         #ifdef USE_TORRENT
                         if(Updater)
                         {
-                            Settings.flags&=~FLAG_KEEPSEEDING;
                             if(Updater->isSeedingDrivers())Updater->StopSeedingDrivers();
                             else Updater->StartSeedingDrivers();
                         }
@@ -2038,7 +2062,7 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
                     }
                     case IDM_LICENSE:
                     {
-                        DialogBox(ghInst,MAKEINTRESOURCE(IDD_DIALOG1),MainWindow.hMain,(DLGPROC)LicenseProcedure);
+                        DialogBox(ghInst,MAKEINTRESOURCE(IDD_LICENSE),MainWindow.hMain,(DLGPROC)LicenseProcedure);
                         return 0;
                     }
                     case IDM_USBWIZARD:
@@ -2210,11 +2234,11 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
         default:
             {
                 LRESULT j=DefWindowProc(hwnd,uMsg,wParam,lParam);
-                checktimer(L"MainD",timer,uMsg);
+                //checktimer(L"MainD",timer,uMsg);
                 return j;
             }
     }
-    checktimer(L"Main",timer,uMsg);
+    //checktimer(L"Main",timer,uMsg);
     return 0;
 }
 
@@ -2756,7 +2780,7 @@ BOOL CALLBACK WelcomeProcedure(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
                 Updater->DownloadIndexes();
                 return TRUE;
             case IDD_WELC_LINK1:
-                System.run_command(L"open",WEB_HOMEPAGE,SW_SHOWNORMAL,0);
+                System.run_command(L"open", VERSION_WEBPAGE_DISPLAY,SW_SHOWNORMAL,0);
                 break;
             case IDD_WELC_LINK2:
                 System.run_command(L"open",WEB_PATREONPAGE,SW_SHOWNORMAL,0);

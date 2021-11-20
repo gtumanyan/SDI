@@ -27,10 +27,10 @@ class Combobox;
 
 extern class Popup_t *Popup;
 
-#include "resources.h"
+#include "resource.h"
 
-// gitrev_template.h
-#define APPTITLE            L"Snappy Driver Installer " TEXT(VER_VERSION_STR2) " " TEXT(GIT_BUILD_NOTE)
+// VersionEx.h.tpl
+#define APPTITLE            MY_APPNAME
 #define VER_MARKER          "SDW"
 #define VER_STATE           0x102
 #define VER_INDEX           0x205

@@ -316,12 +316,12 @@ void wText::draw(Canvas &canvas)
 
 void wTextRev::draw(Canvas &canvas)
 {
-    Version v{atoi(GIT_REV_D),atoi(GIT_REV_M),GIT_REV_Y};
+    Version v{VERSION_REV%100,VERSION_REV/100,VERSION_MINOR+2000 };
     WStringShort buf;
     WStringShort date;
 
     v.str_date(date);
-    buf.sprintf(L"%s (%s)",TEXT(GIT_REV_STR),date.Get());
+    buf.sprintf(L"%d (%s)",VERSION_REV,date.Get());
     if(rtl)buf.append(L"\u200E");
     canvas.SetTextColor(D_C(CHKBOX_TEXT_COLOR));
     canvas.DrawTextXY(mirw(x1,0,wx),y1,buf.Get());

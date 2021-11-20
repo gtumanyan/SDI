@@ -18,7 +18,12 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <stddef.h>
 #include <wchar.h>
-#include "gitrev.h"
+#include "Version.h"
+
+#ifndef _W
+#define __CC(p,s) p ## s
+#define _W(s)  __CC(L,s)
+#endif
 
 typedef unsigned ofst;
 

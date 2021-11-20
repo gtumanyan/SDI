@@ -226,9 +226,9 @@ int calc_secttype(const char *s)
 
     strcpy(buf,s);
 
-    if((p=strchr(p+1,'.')))
-        if((p=strchr(p+1,'.')))
-            if((p=strchr(p+1,'.')))*p=0;
+    if((p==strchr(p+1,'.')))
+        if((p==strchr(p+1,'.')))
+            if((p==strchr(p+1,'.')))*p=0;
 
     for(int i=0;i<NUM_DECS;i++)if(!_strcmpi(buf+3,nts[i]+2))return i;
     return -1;
