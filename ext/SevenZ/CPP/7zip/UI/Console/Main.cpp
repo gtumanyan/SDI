@@ -66,6 +66,9 @@ extern const CCodecInfo *g_Codecs[];
 extern unsigned g_NumHashers;
 extern const CHasherInfo *g_Hashers[];
 
+#ifdef EXTERNAL_CODECS
+const CExternalCodecs *g_ExternalCodecs_Ptr;
+#endif
 
 #if defined(PROG_VARIANT_Z)
   #define PROG_POSTFIX      "z"
@@ -325,6 +328,98 @@ static inline char GetHex(unsigned val)
   return (char)((val < 10) ? ('0' + val) : ('A' + (val - 10)));
 }
 
+static void PrintWarningsPaths(const CErrorPathCodes &pc, CStdOutStream &so)
+{
+  FOR_VECTOR(i, pc.Paths)
+  {
+    so.NormalizePrint_UString(fs2us(pc.Paths[i]));
+    so << " : ";
+    so << NError::MyFormatMessage(pc.Codes[i]) << endl;
+  }
+  so << "----------------" << endl;
+}
+
+static int WarningsCheck(HRESULT result, const CCallbackConsoleBase &callback,
+    const CUpdateErrorInfo &errorInfo,
+    CStdOutStream *so,
+    CStdOutStream *se,
+    bool showHeaders)
+{
+  int exitCode = NExitCode::kSuccess;
+  
+  if (callback.ScanErrors.Paths.Size() != 0)
+  {
+    if (se)
+    {
+      *se << endl;
+      *se << "Scan WARNINGS for files and folders:" << endl << endl;
+      PrintWarningsPaths(callback.ScanErrors, *se);
+      *se << "Scan WARNINGS: " << callback.ScanErrors.Paths.Size();
+      *se << endl;
+    }
+    exitCode = NExitCode::kWarning;
+  }
+  
+  if (result != S_OK || errorInfo.ThereIsError())
+  {
+    if (se)
+    {
+      UString message;
+      if (!errorInfo.Message.IsEmpty())
+      {
+        message += errorInfo.Message.Ptr();
+        message.Add_LF();
+      }
+      {
+        FOR_VECTOR(i, errorInfo.FileNames)
+        {
+          message += fs2us(errorInfo.FileNames[i]);
+          message.Add_LF();
+        }
+      }
+      if (errorInfo.SystemError != 0)
+      {
+        message += NError::MyFormatMessage(errorInfo.SystemError);
+        message.Add_LF();
+      }
+      if (!message.IsEmpty())
+        *se << L"\nError:\n" << message;
+    }
+
+    // we will work with (result) later
+    // throw CSystemException(result);
+    return NExitCode::kFatalError;
+  }
+
+  unsigned numErrors = callback.FailedFiles.Paths.Size();
+  if (numErrors == 0)
+  {
+    if (showHeaders)
+      if (callback.ScanErrors.Paths.Size() == 0)
+        if (so)
+        {
+          if (se)
+            se->Flush();
+          *so << kEverythingIsOk << endl;
+        }
+  }
+  else
+  {
+    if (se)
+    {
+      *se << endl;
+      *se << "WARNINGS for files:" << endl << endl;
+      PrintWarningsPaths(callback.FailedFiles, *se);
+      *se << "WARNING: Cannot open " << numErrors << " file";
+      if (numErrors > 1)
+        *se << 's';
+      *se << endl;
+    }
+    exitCode = NExitCode::kWarning;
+  }
+  
+  return exitCode;
+}
 
 static void ThrowException_if_Error(HRESULT res)
 {
@@ -762,9 +857,11 @@ int Main2(
   codecs->CaseSensitiveChange = options.CaseSensitiveChange;
   codecs->CaseSensitive = options.CaseSensitive;
   ThrowException_if_Error(codecs->Load());
+  Codecs_AddHashArcHandler(codecs);
 
   #ifdef EXTERNAL_CODECS
   {
+    g_ExternalCodecs_Ptr = &__externalCodecs;
     UString s;
     codecs->GetCodecsErrorMessage(s);
     if (!s.IsEmpty())
@@ -775,8 +872,7 @@ int Main2(
   }
   #endif
 
-
-  bool isExtractGroupCommand = options.Command.IsFromExtractGroup();
+  const bool isExtractGroupCommand = options.Command.IsFromExtractGroup();
 
   if (codecs->Formats.Size() == 0 &&
         (isExtractGroupCommand
@@ -791,13 +887,15 @@ int Main2(
       throw s;
     }
     #endif
-    
     throw kNoFormats;
   }
 
   CObjectVector<COpenType> types;
   if (!ParseOpenTypes(*codecs, options.ArcType, types))
+  {
     throw kUnsupportedArcTypeMessage;
+  }
+
 
   CIntVector excludedFormats;
   FOR_VECTOR (k, options.ExcludedArcTypes)
@@ -806,13 +904,16 @@ int Main2(
     if (!codecs->FindFormatForArchiveType(options.ExcludedArcTypes[k], tempIndices)
         || tempIndices.Size() != 1)
       throw kUnsupportedArcTypeMessage;
+    
+    
+    
     excludedFormats.AddToUniqueSorted(tempIndices[0]);
     // excludedFormats.Sort();
   }
-
   
   #ifdef EXTERNAL_CODECS
   if (isExtractGroupCommand
+      || options.Command.IsFromUpdateGroup()
       || options.Command.CommandType == NCommandType::kHash
       || options.Command.CommandType == NCommandType::kBenchmark)
     ThrowException_if_Error(__externalCodecs.Load());
@@ -846,7 +947,7 @@ int Main2(
 
     so << endl << "Formats:" << endl;
     
-    const char * const kArcFlags = "KSNFMGOPBELHX";
+    const char * const kArcFlags = "KSNFMGOPBELHXC";
     const unsigned kNumArcFlags = (unsigned)strlen(kArcFlags);
     
     for (i = 0; i < codecs->Formats.Size(); i++)
@@ -856,7 +957,7 @@ int Main2(
       #ifdef EXTERNAL_CODECS
       PrintLibIndex(so, arc.LibIndex);
       #else
-      so << "  ";
+      so << "   ";
       #endif
 
       so << (char)(arc.UpdateEnabled ? 'C' : ' ');
@@ -891,6 +992,8 @@ int Main2(
       
       if (arc.SignatureOffset != 0)
         so << "offset=" << arc.SignatureOffset << ' ';
+
+      // so << "numSignatures = " << arc.Signatures.Size() << " ";
 
       FOR_VECTOR(si, arc.Signatures)
       {
@@ -933,6 +1036,7 @@ int Main2(
       
       so << (char)(cod.CreateEncoder ? 'E' : ' ');
       so << (char)(cod.CreateDecoder ? 'D' : ' ');
+      so << (char)(cod.IsFilter      ? 'F' : ' ');
 
       so << ' ';
       PrintHexId(so, cod.Id);
@@ -956,6 +1060,12 @@ int Main2(
       
       so << (char)(codecs->GetCodec_EncoderIsAssigned(j) ? 'E' : ' ');
       so << (char)(codecs->GetCodec_DecoderIsAssigned(j) ? 'D' : ' ');
+      {
+        bool isFilter_Assigned;
+        const bool isFilter = codecs->GetCodec_IsFilter(j, isFilter_Assigned);
+        so << (char)(isFilter ? 'F' : isFilter_Assigned ? ' ' : '*');
+      }
+
 
       so << ' ';
       UInt64 id;
@@ -1118,6 +1228,7 @@ int Main2(
       }
       
       hresultMain = Extract(
+          // EXTERNAL_CODECS_VARS_L
           codecs,
           types,
           excludedFormats,
@@ -1232,7 +1343,12 @@ int Main2(
       
       // options.ExtractNtOptions.StoreAltStreams = true, if -sns[-] is not definmed
 
+      CListOptions lo;
+      lo.ExcludeDirItems = options.Censor.ExcludeDirItems;
+      lo.ExcludeFileItems = options.Censor.ExcludeFileItems;
+
       hresultMain = ListArchives(
+          lo,
           codecs,
           types,
           excludedFormats,
