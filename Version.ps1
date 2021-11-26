@@ -93,7 +93,7 @@ try
 	$TorrentVer = $Matches.0
 	DebugOutput("Libtorrent $TorrentVer")
 	if (!$TorrentVer) { $TorrentVer = "0.0.0" }
-	$BoostVer = [string](Get-Content "ext\boost\bin.v2\tools\boost_install\BoostConfigVersion.cmake"-TotalCount 1).Substring(21)
+	$BoostVer = [string](Get-Content "ext\boost\tools\boost_install\test\BoostVersion.cmake"-TotalCount 1).Substring(18,6)
 	if (!$BoostVer) { $BoostVer = "0.0.0" }
 	DebugOutput("$BoostVer")
 	[string](Get-Content "ext\SevenZ\C\7zVersion.h"-TotalCount 4)[-1]-match '[\d.]+'

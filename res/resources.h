@@ -157,13 +157,13 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #define IDD_ABOUT_T3  803
 #define IDC_AUTHORNAME	804
 #define IDC_MAINTAINERS 805
-#define IDC_PATREON			806
+#define IDC_PATREON		806
 #define IDD_ABOUT_T6  807
 #define IDD_ABOUT_T7  808
 #define IDD_ABOUT_T8  809
 #define IDD_ABOUT_T9  810
 #define IDD_ABOUT_T10 811
-#define IDC_WEBPAGE		812
+#define IDC_WEBPAGE	  812
 #define IDC_SYSLINK1  813
 
 // welcome box

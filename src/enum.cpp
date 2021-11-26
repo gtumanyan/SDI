@@ -479,7 +479,7 @@ void Driver::print(const State *state)const
     Log.print_file("  HWID:     %S\n",txt->getw(MatchingDeviceId));
     Log.print_file("  inf:      %S%S,%S%S\n",txt->getw(state->getWindir()),txt->getw(InfPath),txt->getw(InfSection),txt->getw(InfSectionExt));
     Log.print_file("  Score:    %08X %04x\n",calc_score_h(state),identifierscore);
-    //Log.print_file("  Sign:     '%ses'(%d)\n",txt->get(cat),catalogfile);
+    //Log.print_file("  Sign:     '%s'(%d)\n",txt->get(cat),catalogfile);
 
     if(Log.isAllowed(LOG_VERBOSE_BATCH))
         Log.print_file("  Filter:   \"%S\"=a,%S\n",txt->getw(DriverDesc),txt->getw(MatchingDeviceId));
@@ -961,6 +961,7 @@ void State::getsysinfo_fast()
 {
     Log.print_debug("State::getsysinfo_fast\n");
     wchar_t buf[BUFLEN];
+    HKEY   hkey;
 
     // Battery
     Log.print_debug("State::getsysinfo_fast::GetSystemPowerStatus\n");
@@ -1002,6 +1003,43 @@ void State::getsysinfo_fast()
         if(!GetVersionEx((OSVERSIONINFO*)&platform))
             Log.print_syserr(GetLastError(),L"GetVersionEx()");
     }
+
+    // Windows 11
+    wsprintf(buf,L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion");
+    int ret=RegOpenKeyEx(HKEY_LOCAL_MACHINE,buf,0,KEY_QUERY_VALUE,&hkey);
+    if(ret==ERROR_SUCCESS)
+    {
+        // build number
+        wchar_t currentbuild[MAX_PATH];
+        DWORD size=MAX_PATH;
+        RegQueryValueEx(hkey,L"CurrentBuild",nullptr,nullptr,(LPBYTE)&currentbuild,&size);
+        wchar_t* endString;
+        DWORD build=wcstoul(currentbuild, &endString, 10);
+        // only change the platform info if I detect windows 11
+        if(build>=22000)
+        {
+            platform.dwBuildNumber=build;
+            // major version
+            platform.dwMajorVersion=(DWORD)11;
+            // minor version
+            platform.dwMinorVersion=0;
+            //DWORD dwData;
+            //DWORD cbData=sizeof(DWORD);
+            //DWORD dwType=REG_DWORD;
+            //RegQueryValueEx(hkey,L"UBR",nullptr,&dwType,(LPBYTE)&dwData,&cbData);
+            //platform.dwMinorVersion=dwData;
+            // display version can be "DisplayVersion" or "ReleaseId"
+            //wchar_t displayversion[MAX_PATH];
+            //RegQueryValueEx(hkey,L"DisplayVersion",nullptr,nullptr,(LPBYTE)&displayversion,&size);
+            //
+            //wchar_t releaseid[MAX_PATH];
+            //RegQueryValueEx(hkey,L"ReleaseId",nullptr,nullptr,(LPBYTE)&releaseid,&size);
+        }
+    }
+    RegCloseKey(hkey);
+    Log.print_con("Windows v%d.%d.%d\n",platform.dwMajorVersion,platform.dwMinorVersion,platform.dwBuildNumber);
+
+
     locale=GetUserDefaultLCID();
 #ifdef _MSC_VER
 #pragma warning(pop)
@@ -1199,7 +1237,7 @@ size_t State::opencatfile(const Driver *cur_driver)
 
     if(*bufa)
     {
-        //Log.print_con("'%ses'\n",bufa);
+        //Log.print_con("'%s'\n",bufa);
         return textas.strcpy(bufa);
     }
     return 0;
@@ -1377,7 +1415,7 @@ int iswide(int x,int y)
 //}
 
 // https://msdn.microsoft.com/en-au/library/windows/desktop/ms724832(v=vs.85).aspx
-const VER_STRUCT WinVersions::_versions[16]={{50, false,L"Windows 2000"},
+const VER_STRUCT WinVersions::_versions[17]={{50, false,L"Windows 2000"},
                                              {51, false,L"Windows XP"},
                                              {52, false,L"Windows XP 64"},
                                              {52, true, L"Windows Server 2003"},
@@ -1392,7 +1430,8 @@ const VER_STRUCT WinVersions::_versions[16]={{50, false,L"Windows 2000"},
                                              {63, false,L"Windows 8.1"},
                                              {64, false,L"Windows 10 Tech Preview"},
                                              {100,true, L"Windows Server 2016"},
-                                             {100,false,L"Windows 10"}};
+                                             {100,false,L"Windows 10"},
+                                             {110,false,L"Windows 11"}};
 int WinVersions::GetEntry(int num)
 {
     // returns a version number
@@ -1419,7 +1458,7 @@ bool WinVersions::GetEntryServer(int num)
 }
 int WinVersions::GetVersionIndex(int vernum,bool server)
 {
-    // find the matching entry and return it'ses array index
+    // find the matching entry and return it's array index
     for(int i=0;i<Count();i++)
         if(_versions[i].ver==vernum&&_versions[i].server==server)
             return i;
@@ -1427,7 +1466,7 @@ int WinVersions::GetVersionIndex(int vernum,bool server)
 }
 const wchar_t* WinVersions::GetVersion(int vernum,bool server)
 {
-    // find the matching entry and return it'ses version string
+    // find the matching entry and return it's version string
     for(int i=0;i<Count();i++)
         if(_versions[i].ver==vernum&&_versions[i].server==server)
             return _versions[i].vers;

@@ -321,7 +321,7 @@ void wTextRev::draw(Canvas &canvas)
     WStringShort date;
 
     v.str_date(date);
-    buf.sprintf(L"%d (%s)",VERSION_REV,date.Get());
+    //buf.sprintf(L"%d.%d",VERSION_FILEVERSION_NUM);
     if(rtl)buf.append(L"\u200E");
     canvas.SetTextColor(D_C(CHKBOX_TEXT_COLOR));
     canvas.DrawTextXY(mirw(x1,0,wx),y1,buf.Get());
@@ -394,10 +394,10 @@ void wTextSys3::draw(Canvas &canvas)
     State *state=manager_g->getState();
     WStringShort buf;
 
-    buf.sprintf(L"%s",(wx<10+SYSINFO_COL1)?state->getProduct():state->get_szCSDVersion());
+    //buf.sprintf(L"%s",(wx<10+SYSINFO_COL1)?state->getProduct():state->get_szCSDVersion());
     if(rtl)buf.append(L"\u200E");
     canvas.DrawTextXY(x1+10+SYSINFO_COL0,y1,buf.Get());
-    buf.sprintf(L"%s: %s",STR(STR_SYSINF_TYPE),STR(state->isLaptop?STR_SYSINF_LAPTOP:STR_SYSINF_DESKTOP));
+    //buf.sprintf(L"%s: %s",STR(STR_SYSINF_TYPE),STR(state->isLaptop?STR_SYSINF_LAPTOP:STR_SYSINF_DESKTOP));
     canvas.DrawTextXY(x1+10+SYSINFO_COL1,y1,buf.Get());
     canvas.DrawTextXY(x1+10+SYSINFO_COL2,y1,STR(STR_SYSINF_TEMP));
     canvas.DrawTextXY(x1+10+SYSINFO_COL3,y1,state->textas.getw(state->getTemp()));

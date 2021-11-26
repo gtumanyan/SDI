@@ -929,7 +929,7 @@ static BOOL CALLBACK DialogProc1(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
                     Updater->downlimit=_wtoi_my(num);
                     GetWindowText(GetDlgItem(data.pages[1],IDD_P2_UPE),num,32);
                     Updater->uplimit=_wtoi_my(num);
-                    Updater->SetLimits();
+                    Updater->set_torrent_params();
 
                     if(!SendMessage(GetDlgItem(data.pages[1],IDD_P2_UPD),BM_GETCHECK,0,0))
                         Settings.flags|=FLAG_CHECKUPDATES;

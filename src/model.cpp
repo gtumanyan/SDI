@@ -170,7 +170,7 @@ void Bundle::bundle_load(Bundle *pbundle)
 
     Timers.start(time_test);
 
-    // Copy data from shadow if it'ses not updated
+    // Copy data from shadow if it's not updated
     if((invaidate_set&INVALIDATE_DEVICES)==0)
     {
         state=pbundle->state;
@@ -212,7 +212,7 @@ void Bundle::bundle_load(Bundle *pbundle)
 void Bundle::bundle_lowpriority()
 {
     Timers.stoponce(time_startup,time_total);
-    Timers.print();
+    //Timers.print();
 
     MainWindow.redrawmainwnd();
 

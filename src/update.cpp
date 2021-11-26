@@ -127,7 +127,7 @@ class UpdaterImp:public Updater_t
     static bool finisheddownloading;
     static bool movingfiles;
     static bool closingsession;
-    static bool SeedMode;
+    static bool seed_mode;
 
     int averageSpeed=0;
     long long torrenttime=0;
@@ -135,6 +135,7 @@ class UpdaterImp:public Updater_t
 private:
     std::wstring const* active_torrent_url;
     std::wstring const* active_torrent_save_path;
+    char save_path[BUFSIZ];
     int downloadTorrent();
     void updateTorrentStatus();
     void removeOldDriverpacks(const wchar_t *ptr);
@@ -159,7 +160,7 @@ public:
 
     int  Populate(int flags);
     void SetFilePriority(const wchar_t *name,int pri);
-    void SetLimits();
+    void set_torrent_params();
     void OpenDialog();
 
     void DownloadAll();
@@ -182,6 +183,8 @@ Updater_t *CreateUpdater(){return new UpdaterImp;}
 lt::session ses(settings());
 lt::torrent_handle h;
 lt::add_torrent_params p;
+lt::storage_mode_t allocation_mode = lt::storage_mode_sparse;
+
 
 UpdateDialog_t UpdateDialog;
 Updater_t *Updater;
@@ -213,15 +216,15 @@ const std::wstring Updater_t::torrent_save_path=L"update";
 const std::wstring Updater_t::torrent2_save_path=L"update\\SDI_RUS";
 int Updater_t::activetorrent=1;
 int Updater_t::torrentport=50171;
-int Updater_t::downlimit=0;
 int Updater_t::uplimit=0;
-int Updater_t::connections=0;
+int Updater_t::downlimit=0;
+int Updater_t::connections=50;
 int UpdaterImp::downloadmangar_exitflag;
 bool UpdaterImp::finishedupdating;
 bool UpdaterImp::finisheddownloading;
 bool UpdaterImp::movingfiles;
 bool UpdaterImp::closingsession;
-bool UpdaterImp::SeedMode;
+bool UpdaterImp::seed_mode=false;
 Event *UpdaterImp::downloadmangar_event=nullptr;
 ThreadAbs *UpdaterImp::thandle_download=nullptr;
 //}
@@ -622,7 +625,7 @@ BOOL CALLBACK UpdateDialog_t::UpdateProcedure(HWND hwnd,UINT Message,WPARAM wPar
             UpdateDialog.updateTexts();
             UpdateDialog.setCheckboxes();
             if(Settings.flags&FLAG_ONLYUPDATES)SendMessage(chk1,BM_SETCHECK,BST_CHECKED,0);
-            if(p.storage_mode == storage_mode_allocate)SendMessage(chk2,BM_SETCHECK,BST_CHECKED,0);
+            if(allocation_mode == storage_mode_allocate)SendMessage(chk2,BM_SETCHECK,BST_CHECKED,0);
 
             wpOrigButtonProc=(WNDPROC)SetWindowLongPtr(thispcbut,GWLP_WNDPROC,(LONG_PTR)NewButtonProc);
             SetTimer(hwnd,1,2000,nullptr);
@@ -679,7 +682,7 @@ BOOL CALLBACK UpdateDialog_t::UpdateProcedure(HWND hwnd,UINT Message,WPARAM wPar
                     Settings.flags&=~FLAG_ONLYUPDATES;
                     if(SendMessage(chk1,BM_GETCHECK,0,0))Settings.flags|=FLAG_ONLYUPDATES;
                     //Settings.flags&=~FLAG_KEEPSEEDING;
-                    if(SendMessage(chk2,BM_GETCHECK,0,0))p.storage_mode = storage_mode_allocate;
+                    if(SendMessage(chk2,BM_GETCHECK,0,0))allocation_mode = storage_mode_allocate;
                     Updater->resumeDownloading();
                     EndDialog(hwnd,IDOK);
                     return TRUE;
@@ -689,7 +692,7 @@ BOOL CALLBACK UpdateDialog_t::UpdateProcedure(HWND hwnd,UINT Message,WPARAM wPar
                     Settings.flags&=~FLAG_ONLYUPDATES;
                     if(SendMessage(chk1,BM_GETCHECK,0,0))Settings.flags|=FLAG_ONLYUPDATES;
                     //Settings.flags&=~FLAG_KEEPSEEDING;
-                    if (SendMessage(chk2, BM_GETCHECK, 0, 0))p.storage_mode = storage_mode_allocate;
+                    if (SendMessage(chk2, BM_GETCHECK, 0, 0))allocation_mode = storage_mode_allocate;
                     Updater->resumeDownloading();
                     if(Settings.flags&FLAG_KEEPSEEDING)
                         EndDialog(hwnd,IDOK);
@@ -1033,7 +1036,7 @@ void UpdaterImp::updateTorrentStatus()
         t->status_strid=STR_TR_ST4;
     }
     // if torrent is seeding
-    else if((st.state==lt::torrent_status::finished)&&SeedMode)
+    else if((st.state==lt::torrent_status::finished)&&seed_mode)
         t->status_strid=STR_TR_ST5;
     // if we're moving the downloaded files
     else if(movingfiles)
@@ -1235,7 +1238,7 @@ void UpdaterImp::ShowProgress(wchar_t *buf)
         else if(st.state==torrent_status::downloading)
             wsprintf(buf,STR(STR_UPD_PROGRES),num1,num2,
                 (TorrentStatus.downloadsize)?TorrentStatus.downloaded*100/TorrentStatus.downloadsize:0);
-        else if((st.state==torrent_status::finished)&&SeedMode)
+        else if((st.state==torrent_status::finished)&&seed_mode)
             wsprintf(buf,STR(STR_DWN_SEEDING),num3,num4);
         else if(st.state==torrent_status::finished)
             wsprintf(buf,STR(STR_TR_ST4));
@@ -1299,7 +1302,7 @@ void UpdaterImp::ShowPopup(Canvas &canvas)
 
 UpdaterImp::UpdaterImp()
 {
-    SeedMode=false;
+    //seed_mode=false;
     closingsession=false;
     TorrentStatus.sessionpaused=1;
     downloadmangar_exitflag=DOWNLOAD_STATUS_WAITING;
@@ -1349,8 +1352,7 @@ int UpdaterImp::downloadTorrent()
     // Setup path and URL
     char url[BUFSIZ];
     wcstombs(url, active_torrent_url->c_str(), BUFSIZ);
-    char spath[BUFSIZ];
-    wcstombs(spath, active_torrent_save_path->c_str(), BUFSIZ);
+    wcstombs(save_path, active_torrent_save_path->c_str(), BUFSIZ);
     ses.pause();
 
     // Settings
@@ -1376,24 +1378,24 @@ int UpdaterImp::downloadTorrent()
 		| lt::alert_category::file_progress);
     ses.apply_settings(std::move(settings));
 
-    // we don't want to waste time checking the torrent, just go straight into
-    // seeding it, announcing to trackers and connecting to peers
-    p.flags |= add_torrent_params::flag_seed_mode;
 	  p.flags |= add_torrent_params::flag_paused;
     p.flags |= add_torrent_params::flag_auto_managed;
-	  p.save_path = spath;
+		p.save_path = save_path;
+		p.storage_mode = allocation_mode;
 	  p.url = url;
     
+	set_torrent_params();
 
     Log.print_con("adding URL: %s\n", url); 
-    lt::error_code ec;
-    h = ses.add_torrent(p,ec);
-    if (ec)Log.print_err("ERROR: failed to add torrent: %s\n", ec.message().c_str());
+    //lt::error_code ec;
+	torrent_handle h = ses.add_torrent(p);
+	
 
-    SetLimits();
-    std::this_thread::sleep_for(lt::milliseconds(2000));
-    h.resume();
-    std::this_thread::sleep_for(lt::milliseconds(1000));
+    //if (ec)Log.print_err("ERROR: failed to add torrent: %s\n", ec.message().c_str());
+
+    //std::this_thread::sleep_for(lt::milliseconds(2000));
+    //h.resume();
+    //std::this_thread::sleep_for(lt::milliseconds(1000));
 
     Timers.start(time_chkupdate);
 
@@ -1789,7 +1791,7 @@ void UpdaterImp::StartSeedingDrivers()
     }
 
     // restart the torrent
-    SeedMode=true;
+    seed_mode=true;
     resumeDownloading();
 
     // update the system menu text
@@ -1798,7 +1800,7 @@ void UpdaterImp::StartSeedingDrivers()
 
 void UpdaterImp::StopSeedingDrivers()
 {
-    // switching off SeedMode will trigger MoveFiles which we don't want
+    // switching off seed_mode will trigger MoveFiles which we don't want
     if(isSeedingDrivers())
     {
         // update the button status via ShowProgress
@@ -1863,7 +1865,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
         if(downloadmangar_exitflag==DOWNLOAD_STATUS_STOPPING)break;
 
         // Downloading loop
-        Log.print_con("{torrent_start\n");
+        Log.print_con("{torrent_starting\n");
         while(downloadmangar_exitflag==DOWNLOAD_STATUS_DOWLOADING_DATA&&ses.is_valid())
         {
             Sleep(500);
@@ -1886,7 +1888,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
             }
 
             // process the downloads when finished and not seeding
-            if((TorrentStatus.status_strid==STR_TR_ST0+libtorrent::torrent_status::finished)&&!SeedMode)
+            if((TorrentStatus.status_strid==STR_TR_ST0+libtorrent::torrent_status::finished)&&!seed_mode)
             {
                 Log.print_con("Torrent: finished\n");
                 ses.pause();
@@ -1984,17 +1986,21 @@ void UpdaterImp::pause(){downloadmangar_exitflag=DOWNLOAD_STATUS_PAUSING;}
 bool UpdaterImp::isTorrentReady(){return h.torrent_file()!=nullptr;}
 bool UpdaterImp::isPaused(){return TorrentStatus.sessionpaused;}
 bool UpdaterImp::isUpdateCompleted(){return finishedupdating;}
-bool UpdaterImp::isSeedingDrivers(){return SeedMode;}
+bool UpdaterImp::isSeedingDrivers(){return seed_mode;}
 int  UpdaterImp::Populate(int flags){return UpdateDialog.populate(flags,!flags);}
 void UpdaterImp::SetFilePriority(const wchar_t *name,int pri){UpdateDialog.setFilePriority(name,pri);}
-void UpdaterImp::SetLimits()
+void UpdaterImp::set_torrent_params()
 {
-    if(!h.is_valid())return;
+  p.max_connections=connections;
+	p.max_uploads = -1;
+	p.upload_limit = uplimit*1024;
+	p.download_limit = downlimit*1024;
 
-    h.set_download_limit(downlimit*1024);
-    h.set_upload_limit(uplimit*1024);
-    if(connections)h.set_max_connections(connections);
+	if (seed_mode) p.flags |= lt::torrent_flags::seed_mode;
+	p.save_path = save_path;
+	p.storage_mode = allocation_mode;
 }
+
 void UpdaterImp::OpenDialog(){UpdateDialog.openDialog();}
 //}
 #else

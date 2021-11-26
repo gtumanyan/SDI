@@ -38,7 +38,7 @@ class Updater_t
 {
 public:
 	int numfiles=0;
-    static bool SeedMode;
+    static bool seed_mode;
     static int torrentport,downlimit,uplimit,connections,activetorrent;
     static const std::wstring torrent_url;
     static const std::wstring torrent2_url;
@@ -61,7 +61,7 @@ public:
 
     virtual int  Populate(int flags)=0;
     virtual void SetFilePriority(const wchar_t *name,int pri)=0;
-    virtual void SetLimits()=0;
+    virtual void set_torrent_params()=0;
     virtual void OpenDialog()=0;
     virtual void DownloadAll()=0;
     virtual void DownloadNetwork()=0;
