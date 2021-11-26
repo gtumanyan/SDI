@@ -180,9 +180,9 @@ public:
 Updater_t *CreateUpdater(){return new UpdaterImp;}
 
 //{ Global variables
-lt::session ses(settings());
-lt::torrent_handle h;
+lt::session ses;
 lt::add_torrent_params p;
+torrent_handle h;
 lt::storage_mode_t allocation_mode = lt::storage_mode_sparse;
 
 
@@ -1376,19 +1376,19 @@ int UpdaterImp::downloadTorrent()
 		| lt::alert_category::dht_operation
 		| lt::alert_category::port_mapping_log
 		| lt::alert_category::file_progress);
-    ses.apply_settings(std::move(settings));
+    //ses(std::move(params));
 
 	  p.flags |= add_torrent_params::flag_paused;
     p.flags |= add_torrent_params::flag_auto_managed;
-		p.save_path = save_path;
 		p.storage_mode = allocation_mode;
-	  p.url = url;
+	p.url = url;
+	p.save_path = save_path;
     
 	set_torrent_params();
 
     Log.print_con("adding URL: %s\n", url); 
     //lt::error_code ec;
-	torrent_handle h = ses.add_torrent(p);
+	h = ses.add_torrent(p);
 	
 
     //if (ec)Log.print_err("ERROR: failed to add torrent: %s\n", ec.message().c_str());

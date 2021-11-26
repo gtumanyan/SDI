@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\..\ext\libtorrent\test\setting.cpp" />
     <ClCompile Include="..\..\src\baseboard.cpp" />
     <ClCompile Include="..\..\src\cli.cpp" />
     <ClCompile Include="..\..\src\common.cpp" />
@@ -25,7 +24,6 @@
     <ClCompile Include="..\..\src\usbwizard.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ext\libtorrent\test\setting.hpp" />
     <ClInclude Include="..\..\res\gitrev.h" />
     <ClInclude Include="..\..\res\wizards.h" />
     <ClInclude Include="..\..\src\7zip.h" />
