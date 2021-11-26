@@ -57,7 +57,6 @@ typedef unsigned ofst;
 #define TORRENT_DISABLE_GEO_IP
 //#define TORRENT_NO_DEPRECATE  todo: comply with torrent 2.0
 #define TORRENT_PRODUCTION_ASSERTS 1
-#define TORRENT_RELEASE_ASSERTS 1
 #define TORRENT_USE_I2P 0
 #define TORRENT_USE_ICONV 0
 #define TORRENT_USE_IPV6 1

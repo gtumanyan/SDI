@@ -1123,9 +1123,9 @@ void UpdaterImp::moveNewFiles()
         // Determine destination dirs
         wchar_t filenamefull_dst[BUFLEN];
         wsprintf(filenamefull_dst,L"%S",filenamefull.c_str());
-        strsub(filenamefull_dst,L"indexes",Settings.index_dir);
+        strsub(filenamefull_dst,L"indexes\\SDI",Settings.index_dir);
         strsub(filenamefull_dst,L"drivers",Settings.drp_dir);
-        strsub(filenamefull_dst,L"tools",Settings.data_dir);
+        strsub(filenamefull_dst,L"tools\\SDI",Settings.data_dir);
 
         // Delete old driverpacks
         if(StrStrIA(filenamefull.c_str(),"drivers\\"))
@@ -1136,7 +1136,7 @@ void UpdaterImp::moveNewFiles()
         if(p)
         {
             while(wcschr(p,L'\\'))p=wcschr(p,L'\\')+1;
-            if(StrStrIW(filenamefull_src,L"indexes\\"))*p=L'_';
+            if(StrStrIW(filenamefull_src,L"indexes\\SDI\\"))*p=L'_';
 
             // Create dirs for the file
             WStringShort dirs;
@@ -1519,7 +1519,7 @@ int UpdaterImp::scriptDownloadApp()
         return 1;
     }
 
-    // select everything that'ses not indexes and drivers in the torrent
+    // select everything that's not indexes and drivers in the torrent
     for(lt::file_index_t i(0); i <Updater->numfiles; ++i)
     {
         if(!(StrStrIA(h.torrent_file()->files().file_path(i).c_str(),"indexes\\"))&&
