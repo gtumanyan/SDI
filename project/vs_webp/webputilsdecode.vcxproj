@@ -113,6 +113,7 @@
 			<WarningLevel>Level3</WarningLevel>
 			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
 			<ObjectFileName>$(IntDir)</ObjectFileName>
+			<CallingConvention>FastCall</CallingConvention>
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
@@ -146,6 +147,7 @@
 			<ObjectFileName>$(IntDir)</ObjectFileName>
 			<DebugInformationFormat>
 			</DebugInformationFormat>
+			<CallingConvention>FastCall</CallingConvention>
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
@@ -179,6 +181,7 @@
 			<ObjectFileName>$(IntDir)</ObjectFileName>
 			<DebugInformationFormat>
 			</DebugInformationFormat>
+			<CallingConvention>FastCall</CallingConvention>
 		</ClCompile>
 		<ResourceCompile>
 			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
@@ -198,8 +201,9 @@
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
 		<ClCompile>
-			<AdditionalIncludeDirectories>.;E:\sdi\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 			<AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+			<CallingConvention>FastCall</CallingConvention>
 			<DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
 			<ExceptionHandling>
 			</ExceptionHandling>
@@ -308,6 +312,7 @@
 			<WarningLevel>Level3</WarningLevel>
 			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
 			<ObjectFileName>$(IntDir)</ObjectFileName>
+			<CallingConvention>FastCall</CallingConvention>
 			<DebugInformationFormat>
 			</DebugInformationFormat>
 		</ClCompile>
