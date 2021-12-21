@@ -1037,7 +1037,7 @@ void State::getsysinfo_fast()
         }
     }
     RegCloseKey(hkey);
-    Log.print_con("Windows v%d.%d.%d\n",platform.dwMajorVersion,platform.dwMinorVersion,platform.dwBuildNumber);
+    //Log.print_con("Windows v%d.%d.%d\n",platform.dwMajorVersion,platform.dwMinorVersion,platform.dwBuildNumber);
 
 
     locale=GetUserDefaultLCID();

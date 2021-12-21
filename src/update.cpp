@@ -1637,7 +1637,7 @@ int UpdaterImp::scriptDownloadEverything()
     for(lt::file_index_t i(0); i < Updater->numfiles; ++i)
         h.file_priority(i,0);
 
-    // select everything that'ses not drivers
+    // select everything but drivers
     for(lt::file_index_t i(0); i <Updater->numfiles; ++i)
     {
         if(!(StrStrIA(h.torrent_file()->files().file_path(i).c_str(),"drivers\\")))

@@ -528,7 +528,7 @@ void Collection::scanfolder(const wchar_t *path,void *arg)
 void Collection::loadOnlineIndexes()
 {
     // load online indexes for DriverPacks
-    // that i don't have
+    // that is missing
     WStringShort buf;;
     buf.sprintf(L"%s\\_*.*",index_bin_dir);
     WIN32_FIND_DATA FindFileData;
@@ -597,6 +597,9 @@ void Collection::populate()
     queuedriverpack_p=&queuedriverpack1;
     UInt32 num_thr=num_cores;
     UInt32 num_thr_1=num_cores;
+    #ifndef _WIN64
+    if(drp_count&&num_thr>1)num_thr=1;
+    #endif
 
     Log.print_debug("Collection::populate::num_thr::%d\n",num_thr);
 
@@ -1391,9 +1394,9 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
                 /*                  char *strings_base=inf_base+(*it).second.ofs;
                                     int strings_len=(*it).second.len-(*it).second.ofs;
                                     if(*(strings_base-1)!=']')
-                                    log_file("B'%.*ses'\n",1,strings_base-1);
+                                    log_file("B'%.*s'\n",1,strings_base-1);
                                     if(*(strings_base+strings_len)!='[')
-                                    log_file("E'%.*ses'\n",1,strings_base+strings_len);*/
+                                    log_file("E'%.*s'\n",1,strings_base+strings_len);*/
 #endif
                 p++;
                 p2=p;
@@ -1415,7 +1418,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
                     strtolower(p,sectnmend-p);
                     auto a=section_list.insert({std::string(p,sectnmend-p),sect_data_t(p2,inf_base+inf_len)});
                     lnk_s2=&a->second;
-                    //Log.print_con("  %8d,%8d '%ses' \n",strlink.ofs,strlink.len,std::string(p,sectnmend-p).c_str());
+                    //Log.print_con("  %8d,%8d '%s' \n",strlink.ofs,strlink.len,std::string(p,sectnmend-p).c_str());
                 }
                 p=p2;
                 break;
@@ -1423,7 +1426,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
             default:
                 //b=p;
                 //while(*p!='\n'&&*p!='\r'&&*p!='['&&p<strend)p++;
-                //if(*p=='['&&p<strend)log_file("ERROR in %S%S:\t\t\t'%.*ses'(%d/%d)\n",drpdir,inffile,p-b+20,b,p,strend);
+                //if(*p=='['&&p<strend)log_file("ERROR in %S%S:\t\t\t'%.*s'(%d/%d)\n",drpdir,inffile,p-b+20,b,p,strend);
                 while(p<strend&&*p!='\n'&&*p!='\r'/*&&*p!='['*/)cur_inffile->infcrc+=*p++;
         }
     }
@@ -1444,7 +1447,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
             {
                 parse_info.readStr(&s2b,&s2e);
                 strtolower(s1b,s1e-s1b);
-                //Log.print_con("%ses,%d,%d: tolower '%.10ses'\n",line,s2b,s2e-s2b,s2b);
+                //Log.print_con("%s,%d,%d: tolower '%.10s'\n",line,s2b,s2e-s2b,s2b);
                 string_list.insert({std::string(s1b,s1e-s1b),std::string(s2b,s2e-s2b)});
             }
         }
@@ -1466,7 +1469,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
         while(parse_info.parseItem())
         {
             parse_info.readStr(&s1b,&s1e);
-            //Log.print_con("%ses,%d,%d: tolower '%.10ses'\n",line,s1b,s1e,s1b);
+            //Log.print_con("%s,%d,%d: tolower '%.10s'\n",line,s1b,s1e,s1b);
             strtolower(s1b,s1e-s1b);
 
             int i;
@@ -1504,7 +1507,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
             if(i==NUM_VER_NAMES)
             {
                 //s1e=parse_info.se;
-                //log_file("QQ '%.*ses'\n",s1e-s1b,s1b);
+                //log_file("QQ '%.*s'\n",s1e-s1b,s1b);
             }
             while(parse_info.parseField());
         }
@@ -1597,7 +1600,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
                                 {
                                     range3=section_list.equal_range(installsection);
                                     if(range3.first!=range3.second)break;
-                                    //log_file("Tried '%ses'\n",installsection);
+                                    //log_file("Tried '%s'\n",installsection);
                                     installsection[strlen(installsection)-1]=0;
                                 }
                             }
@@ -1609,7 +1612,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
                                 int i;
                                 for(i=0;i<NUM_DECS;i++)
                                 {
-                                    //sprintf(installsection,"%.*ses.%ses",s1e-s1b,s1b,nts[i]);
+                                    //sprintf(installsection,"%.*s.%s",s1e-s1b,s1b,nts[i]);
                                     memcpy(installsection,s1b,s1e-s1b);installsection[s1e-s1b]=0;
                                     strcat(installsection,".");strcat(installsection,nts[i]);
                                     strtolower(installsection,strlen(installsection));
@@ -1621,11 +1624,11 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
                                         strcat(iii,installsection);
                                         strcat(iii,",");
                                     }
-                                    //if(lnk3){log_file("Found '%ses'\n",installsection);cnt++;}
+                                    //if(lnk3){log_file("Found '%s'\n",installsection);cnt++;}
                                 }
                             }
                             //if(cnt>1)log_file("@num: %d\n",cnt);
-                            //if(cnt>1&&!lnk3)log_file("ERROR in %S%S:\t\t\tMissing [%ses]\n",drpdir,inffilename,iii);
+                            //if(cnt>1&&!lnk3)log_file("ERROR in %S%S:\t\t\tMissing [%s]\n",drpdir,inffilename,iii);
                             if(range3.first!=range3.second)
                             {
                                 if(*iii)wsprintfA(installsection,"$%s",iii);
@@ -2031,9 +2034,9 @@ void Driverpack::print_index_hr()
                                     hwidmatch.setHWID_index(HWID_index_last);
 
                                     //if(text+manufacturer_list[manuf_index].manufacturer!=get_manufacturer(&hwidmatch))
-                                    //fprintf(f,"*%ses\n",get_manufacturer(&hwidmatch));
+                                    //fprintf(f,"*%s\n",get_manufacturer(&hwidmatch));
                                     //get_section(&hwidmatch,buf+500);
-                                    //fprintf(f,"*%ses,%ses\n",buf+1000,buf+500);
+                                    //fprintf(f,"*%s,%s\n",buf+1000,buf+500);
                                     if(i>=0)cnts[i]++;
                                     if(pos==0&&i<0)plain++;
 
@@ -2071,7 +2074,7 @@ void Driverpack::print_index_hr()
 void Driverpack::fillinfo(const char *sect,const char *hwid,unsigned start_index,int *inf_pos,ofst *cat,int *catalogfile,int *feature)
 {
     *inf_pos=-1;
-    //log_file("Search[%ses,%ses,%d]\n",sect,hwid,start_index);
+    //log_file("Search[%s,%s,%d]\n",sect,hwid,start_index);
     for(unsigned HWID_index=start_index;HWID_index<HWID_list.size();HWID_index++)
     {
         if(!_strcmpi(text_ind.get(HWID_list[HWID_index].getHWID()),hwid))
@@ -2086,7 +2089,7 @@ void Driverpack::fillinfo(const char *sect,const char *hwid,unsigned start_index
                     *catalogfile=hwidmatch.calc_catalogfile();
                     *inf_pos=hwidmatch.getdrp_drvinfpos();
                 }
-                //log_file("Sect %ses, %d, %d, %d (%d),%ses\n",sect,*catalogfile,*feature,*inf_pos,HWID_index,hwidmatch.getdrp_drvinstallPicked());
+                //log_file("Sect %s, %d, %d, %d (%d),%s\n",sect,*catalogfile,*feature,*inf_pos,HWID_index,hwidmatch.getdrp_drvinstallPicked());
             }
         }
     }
@@ -2136,7 +2139,7 @@ void Driverpack::parsecat(wchar_t const *pathinf,wchar_t const *inffilename,cons
         wsprintfA(filename,"%ws%ws",pathinf,inffilename);
         strtolower(filename,strlen(filename));
         cat_list.insert({filename,static_cast<ofst>(text_ind.memcpyz_dup(bufa,strlen(bufa)))});
-        //Log.print_con("(%ses)\n##%ses\n",filename,bufa);
+        //Log.print_con("(%s)\n##%s\n",filename,bufa);
     }
     else
     {

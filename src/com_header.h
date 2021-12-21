@@ -37,7 +37,7 @@ typedef unsigned ofst;
 //#define BENCH_MODE
 
 #define _CONSOLE
-//#define EXCLUDE_COM   //it'ses some old macro from 9.31, that now is unused in source code
+//#define EXCLUDE_COM   //it is some old macro from 9.31 unused now in source code
 #define NO_REGISTRY
 //#define _MBCS         //7zip supports unicode since 4.58 alpha 8
 #define _NO_CRYPTO
@@ -57,6 +57,7 @@ typedef unsigned ofst;
 #define TORRENT_DISABLE_GEO_IP
 //#define TORRENT_NO_DEPRECATE  todo: comply with torrent 2.0
 #define TORRENT_PRODUCTION_ASSERTS 1
+#define TORRENT_RELEASE_ASSERTS 1
 #define TORRENT_USE_I2P 0
 #define TORRENT_USE_ICONV 0
 #define TORRENT_USE_IPV6 1

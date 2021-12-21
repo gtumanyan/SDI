@@ -487,7 +487,7 @@ int SystemImp::run_command(const wchar_t* file,const wchar_t* cmd,int show,int w
     ShExecInfo.lpParameters=cmd;
     ShExecInfo.nShow=show;
 
-    Log.print_con("Run(%S,%S,%d,%d)\n",file,cmd,show,wait);
+    Log.print_con("Run(%S%S,%d,%d)\n",file,cmd,show,wait);
     // is file "open"
     if(!wcscmp(file,L"open"))
         ShellExecute(nullptr,L"open",cmd,nullptr,nullptr,SW_SHOWNORMAL);
