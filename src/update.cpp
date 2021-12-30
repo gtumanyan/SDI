@@ -44,9 +44,8 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "libtorrent/alert_types.hpp"
 #include "libtorrent/bencode.hpp"
 #include "libtorrent/session.hpp"
-#include "libtorrent/session_settings.hpp"
-#include "libtorrent/file.hpp"
-#include "../../ext/libtorrent/test/setting.hpp"
+#include <libtorrent/add_torrent_params.hpp>
+#include <libtorrent/torrent_handle.hpp>
 
 #ifdef _MSC_VER
 #pragma comment(lib, "IPHLPAPI.lib") 
