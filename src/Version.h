@@ -21,11 +21,11 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #define DO_STRINGIFY(x)		#x
 #define STRINGIFY(x)		DO_STRINGIFY(x)
 
-#define MY_APPNAME					"SDI"
+#define MY_APPNAME					"SDI2"
 #define VERSION_FILEVERSION_NUM      VERSION_MINOR,VERSION_REV,VERSION_BUILD
 #define VERSION_FILEVERSION          STRINGIFY(VERSION_MAJOR) "." STRINGIFY(VERSION_MINOR) "." \
 				STRINGIFY(VERSION_REV) "." STRINGIFY(VERSION_BUILD)
-#define VERSION_LEGALCOPYRIGHT      L"Copyright © 2021"
+#define VERSION_LEGALCOPYRIGHT      L"Copyright © 2022"
 #define VERSION_AUTHORNAME					L"BadPointer, WindR, Delahoy"
 #define VERSION_WEBPAGE_DISPLAY			L"http://sdi-tool.org/"
 #define WEB_PATREONPAGE							L"https://www.patreon.com/SamLab"

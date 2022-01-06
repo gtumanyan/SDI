@@ -39,8 +39,8 @@
 	</ItemGroup>
 	<PropertyGroup Label="Globals">
 		<ProjectGuid>{BA188557-1B9A-3461-AD3F-2009BE8C5B71}</ProjectGuid>
-		<WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
 		<Keyword>Win32Proj</Keyword>
+		<WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
 		<ProjectName>torrent-rasterbar</ProjectName>
 		<VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
 		<XPDeprecationWarning>false</XPDeprecationWarning>
@@ -103,28 +103,26 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 		<ClCompile>
 			<AdditionalIncludeDirectories>..\..\ext\libtorrent\include;..\..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus /bigobj</AdditionalOptions>
+			<AdditionalOptions>%(AdditionalOptions) /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
 			<AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
 			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
 			<DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
 			<DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
 			<ExceptionHandling>Sync</ExceptionHandling>
-			<ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
 			<InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
 			<MultiProcessorCompilation>true</MultiProcessorCompilation>
 			<Optimization>Disabled</Optimization>
 			<PrecompiledHeader>NotUsing</PrecompiledHeader>
 			<RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
 			<RuntimeTypeInfo>true</RuntimeTypeInfo>
-			<TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
 			<UseFullPaths>false</UseFullPaths>
-			<WarningLevel>Level3</WarningLevel>
+			<WarningLevel>Level4</WarningLevel>
 			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;TORRENT_USE_ASSERTS;BOOST_ASIO_ENABLE_CANCELIO;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0600</PreprocessorDefinitions>
 			<ObjectFileName>$(IntDir)</ObjectFileName>
 			<CallingConvention>FastCall</CallingConvention>
 		</ClCompile>
 		<ResourceCompile>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;TORRENT_USE_ASSERTS;BOOST_ASIO_ENABLE_CANCELIO;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0600"</PreprocessorDefinitions>
+			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;TORRENT_USE_ASSERTS;BOOST_ASIO_ENABLE_CANCELIO;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0600</PreprocessorDefinitions>
 			<AdditionalIncludeDirectories>..\..\ext\libtorrent\include;..\..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ResourceCompile>
 		<Midl>
@@ -142,18 +140,16 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
 		<ClCompile>
 			<AdditionalIncludeDirectories>..\..\ext\libtorrent\include;..\..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus /bigobj</AdditionalOptions>
+			<AdditionalOptions>%(AdditionalOptions) /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
 			<AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
 			<DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
 			<ExceptionHandling>Sync</ExceptionHandling>
-			<ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
 			<InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
 			<MultiProcessorCompilation>true</MultiProcessorCompilation>
 			<Optimization>MaxSpeed</Optimization>
 			<PrecompiledHeader>NotUsing</PrecompiledHeader>
 			<RuntimeLibrary>MultiThreaded</RuntimeLibrary>
 			<RuntimeTypeInfo>true</RuntimeTypeInfo>
-			<TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
 			<UseFullPaths>false</UseFullPaths>
 			<WarningLevel>Level4</WarningLevel>
 			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0600;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
@@ -181,18 +177,16 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
 		<ClCompile>
 			<AdditionalIncludeDirectories>..\..\ext\libtorrent\include;..\..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus /bigobj</AdditionalOptions>
+			<AdditionalOptions>%(AdditionalOptions) /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
 			<AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
 			<DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
 			<ExceptionHandling>Sync</ExceptionHandling>
-			<ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
 			<InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
 			<MultiProcessorCompilation>true</MultiProcessorCompilation>
 			<Optimization>MinSpace</Optimization>
 			<PrecompiledHeader>NotUsing</PrecompiledHeader>
 			<RuntimeLibrary>MultiThreaded</RuntimeLibrary>
 			<RuntimeTypeInfo>true</RuntimeTypeInfo>
-			<TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
 			<UseFullPaths>false</UseFullPaths>
 			<WarningLevel>Level4</WarningLevel>
 			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0600;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
@@ -220,19 +214,17 @@
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
 		<ClCompile>
 			<AdditionalIncludeDirectories>..\..\ext\libtorrent\include;..\..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus /bigobj</AdditionalOptions>
+			<AdditionalOptions>%(AdditionalOptions) /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
 			<AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
 			<DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
 			<DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
 			<ExceptionHandling>Sync</ExceptionHandling>
-			<ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
 			<InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
 			<MultiProcessorCompilation>true</MultiProcessorCompilation>
 			<Optimization>MaxSpeed</Optimization>
 			<PrecompiledHeader>NotUsing</PrecompiledHeader>
 			<RuntimeLibrary>MultiThreaded</RuntimeLibrary>
 			<RuntimeTypeInfo>true</RuntimeTypeInfo>
-			<TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
 			<UseFullPaths>false</UseFullPaths>
 			<WarningLevel>Level4</WarningLevel>
 			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0600;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
@@ -473,6 +465,7 @@
 		<ClCompile Include="..\..\ext\libtorrent\src\magnet_uri.cpp" />
 		<ClCompile Include="..\..\ext\libtorrent\src\merkle.cpp" />
 		<ClCompile Include="..\..\ext\libtorrent\src\natpmp.cpp" />
+		<ClCompile Include="..\..\ext\libtorrent\src\openssl.cpp" />
 		<ClCompile Include="..\..\ext\libtorrent\src\packet_buffer.cpp" />
 		<ClCompile Include="..\..\ext\libtorrent\src\parse_url.cpp" />
 		<ClCompile Include="..\..\ext\libtorrent\src\part_file.cpp" />

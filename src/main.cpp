@@ -186,7 +186,7 @@ int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hinst,LPSTR pStr,int nCmd)
     // Load settings
     init_CLIParam();
     if(!Settings.load_cfg_switch(GetCommandLineW()))
-        Settings.load(L"sdi.cfg");
+        Settings.load(L"sdi2.cfg");
 
     Settings.parse(GetCommandLineW(),1);
     RUN_CLI();

@@ -243,12 +243,12 @@ void Settings_t::parse(const wchar_t *str,size_t ind)
 void Settings_t::save()
 {
     if(flags&FLAG_PRESERVECFG)return;
-    if(!System.canWriteFile(L"sdi.cfg",L"wt"))
+    if(!System.canWriteFile(L"sdi2.cfg",L"wt"))
     {
-        Log.print_err("ERROR in settings_save(): Write-protected,'sdi.cfg'\n");
+        Log.print_err("ERROR in settings_save(): Write-protected,'sdi2.cfg'\n");
         return;
     }
-    FILE *f=_wfopen(L"sdi.cfg",L"wt");
+    FILE *f=_wfopen(L"sdi2.cfg",L"wt");
     if(!f)return;
     fwprintf(f,L"\"-drp_dir:%ws\"\n\"-index_dir:%ws\"\n\"-output_dir:%ws\"\n"
               L"\"-data_dir:%ws\"\n\"-log_dir:%ws\"\n\n"

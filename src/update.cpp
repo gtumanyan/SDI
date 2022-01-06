@@ -28,6 +28,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "draw.h"
 #include "install.h"
 #include <direct.h>     // _wgetcwd
+#include <io.h>					// _findfirst
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -784,7 +785,7 @@ int UpdateDialog_t::populate(int update,bool clearlist)
 		Updater->numfiles=ti->num_files();
 
 		// Calculate size and progress for the app and indexes
-		int missingindexes=0;
+		bool missingindexes;
 		int newver=0;
 		__int64 basesize=0,basedownloaded=0;
 		__int64 indexsize=0,indexdownloaded=0;
@@ -802,9 +803,17 @@ int UpdateDialog_t::populate(int update,bool clearlist)
 						wsprintf(buf,L"%S",filenamefull);
 						*wcsstr(buf,L"DP_")=L'_';
 						strsub(buf,L"indexes\\SDI",Settings.index_dir);
-						if(!System.FileExists(buf))
-								missingindexes=1;
-				}
+						if (!System.FileExists(buf))
+						{
+								missingindexes = true;
+								struct _wfinddata_t index_file;
+								intptr_t hFile;
+								// Find old index file
+								if ((hFile = _wfindfirst(buf, &index_file)) == -1L)
+										printf("No old index\n");
+								
+						}
+				}		
 				else if(!StrStrIA(filenamefull,"drivers\\"))
 				{
 						basesize+=fs.file_size(i);

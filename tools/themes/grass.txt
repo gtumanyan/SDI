@@ -24,6 +24,7 @@ PANEL_BITMAP_FILL        = hstr_vstr
 PANEL1_OFSX              = 209
 PANEL1_OFSY              = 4
 PANEL1_WX                = -620
+PANEL1_INSIDE_COLOR      = 0x0090F0
 
 // Panel, install
 PANEL2_OFSX              = 0
@@ -127,7 +128,7 @@ DRVLIST_BITMAP_FILL      = hstr_vstr
 // Driver item (generic style)
 DRVITEM_OUTLINE_ROUND    = 0
 DRVITEM_OUTLINE_ROUND_H  = 0
-DRVITEM_INSIDE_COLOR     = 0xFFE98B
+DRVITEM_INSIDE_COLOR     = 0xDFA050
 DRVITEM_INSIDE_COLOR_H   = 0xFFC250
 
 // BETTER_NEW

@@ -435,7 +435,7 @@ static void BuildFilesList(HWND hwnd)
 
     // configuration file
     // most things are default and so don't need to be defined
-    SourceFileName=wTempPath+(std::wstring)L"\\sdi.cfg";
+    SourceFileName=wTempPath+(std::wstring)L"\\sdi2.cfg";
     FILE *f=_wfopen(SourceFileName.c_str(),L"wt");
     if(f)
     {
@@ -454,7 +454,7 @@ static void BuildFilesList(HWND hwnd)
         if(Settings.flags&FLAG_SHOWDRPNAMES2)fwprintf(f,L"-showdrpnames2 ");
         fclose(f);
 
-        TargetFileName=targetDrive+(std::wstring)L"sdi.cfg";
+        TargetFileName=targetDrive+(std::wstring)L"sdi2.cfg";
         USBWiz->AddFile(SourceFileName,TargetFileName);
     }
 

@@ -1148,7 +1148,7 @@
 #define WM_CTLCOLORSTATIC               0x0138
 #define IDC_TAB1                        312
 #define IDTOTALAVAIL                    313
-#define IDPREALLOCATE                     314
+#define IDPREALLOCATE                   314
 #define IDOPTIONS                       315
 #define IDCHECKNETWORK                  316
 #define IDSELECTION                     317
