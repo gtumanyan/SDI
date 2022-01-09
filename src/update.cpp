@@ -785,7 +785,7 @@ int UpdateDialog_t::populate(int update,bool clearlist)
 		Updater->numfiles=ti->num_files();
 
 		// Calculate size and progress for the app and indexes
-		bool missingindexes;
+		bool missingindexes=false;
 		int newver=0;
 		__int64 basesize=0,basedownloaded=0;
 		__int64 indexsize=0,indexdownloaded=0;
