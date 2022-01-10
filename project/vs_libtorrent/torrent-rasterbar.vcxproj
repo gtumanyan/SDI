@@ -43,7 +43,6 @@
 		<WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
 		<ProjectName>torrent-rasterbar</ProjectName>
 		<VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
-		<XPDeprecationWarning>false</XPDeprecationWarning>
 	</PropertyGroup>
 	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -733,6 +732,7 @@
 		<ClInclude Include="..\..\ext\libtorrent\include\libtorrent\aux_\session_settings.hpp" />
 		<ClInclude Include="..\..\ext\libtorrent\include\libtorrent\aux_\session_udp_sockets.hpp" />
 		<ClInclude Include="..\..\ext\libtorrent\include\libtorrent\aux_\set_socket_buffer.hpp" />
+		<ClInclude Include="..\..\ext\libtorrent\include\libtorrent\aux_\set_traffic_class.hpp" />
 		<ClInclude Include="..\..\ext\libtorrent\include\libtorrent\aux_\socket_type.hpp" />
 		<ClInclude Include="..\..\ext\libtorrent\include\libtorrent\aux_\storage_piece_set.hpp" />
 		<ClInclude Include="..\..\ext\libtorrent\include\libtorrent\aux_\storage_utils.hpp" />

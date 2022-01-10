@@ -451,7 +451,7 @@ int SystemImp::canWriteDirectory(const wchar_t *path)
     {
         wchar_t tmpFile[MAX_PATH];
         // the function opens and closes the temp file
-        flagsv=(GetTempFileName(path,L"SDIO",0,tmpFile));
+        flagsv=(GetTempFileName(path,L"SDI",0,tmpFile));
         // if temp file was successfully created then I should delete it
         if(flagsv)
             DeleteFile(tmpFile);

@@ -68,7 +68,6 @@
     <None Include="..\..\res\down.webp" />
     <None Include="..\..\res\logo.webp" />
     <None Include="..\..\res\patreon.webp" />
-    <None Include="..\..\res\up.webp" />
     <None Include="cpp.hint" />
     <None Include="..\..\Versions\VersionEx.h.tpl">
       <Filter>Templates</Filter>
@@ -76,6 +75,7 @@
     <None Include="..\..\src\SDI.ver">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\..\res\up.webp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\res\cli.txt" />

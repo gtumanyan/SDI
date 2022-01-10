@@ -15,6 +15,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "com_header.h"
 
+
 #ifdef USE_TORRENT
 #include "common.h"
 #include "logging.h"

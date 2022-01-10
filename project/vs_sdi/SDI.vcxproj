@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\res\install64.exe" />
+    <None Include="..\..\res\up.webp" />
     <None Include="..\..\src\SDI.ver" />
     <None Include="..\..\Versions\VersionEx.h.tpl" />
     <None Include="ClassDiagram.cd" />
@@ -352,7 +353,6 @@
     <None Include="..\..\res\down.webp" />
     <None Include="..\..\res\logo.webp" />
     <None Include="..\..\res\patreon.webp" />
-    <None Include="..\..\res\up.webp" />
     <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
