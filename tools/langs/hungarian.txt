@@ -1,5 +1,4 @@
-﻿// send updates to translations@snappy-driver-installer.org
-
+﻿// send updates to thttps://t.me/Snappy_Driver_Installer
 STR_TRANSLATORS               = "LaMoLa"
 
 STR_LANG_NAME                 = "Magyar"
@@ -30,8 +29,8 @@ STR_REFRESH                   = "Frissítés"
 STR_REFRESH_H                 = "Driver lista frissítése"
 STR_UPDATES                   = "Frissítések"
 STR_UPDATES_H                 = "Válassza ki a forrás-frissítést"
-STR_UPDATES_SDIO              = "Válassza ki az SDIO frissítéseket"
-STR_UPDATES_SDIO_H            = "Válassza ki a standard SDIO frissítéseket"
+STR_UPDATES_SDI         = "Válassza ki az SDI frissítéseket"
+STR_UPDATES_SDI_H       = "Válassza ki a standard SDI frissítéseket"
 STR_UPDATES_DRIVERS           = "Válassza ki az illesztőprogram-frissítéseket"
 STR_UPDATES_DRIVERS_H         = "Válassza ki a legújabb illesztőprogram-csomagok frissítéseit"
 STR_TOOLS                     = "Eszközök"
@@ -127,15 +126,6 @@ STR_SYSINF_LOCALE             = "Helyi"
 STR_SYSINF_CPU_ARCH           = "CPU kialakítás"
 STR_SYSINF_32BIT              = "32-bit"
 STR_SYSINF_64BIT              = "64-bit"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "Fejlesztők:"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "Ismeretlen"
@@ -256,7 +246,7 @@ STR_RESTOREPOINT_H            = "Visszaállítási pont létrehozása arra az es
 STR_REST_SCHEDULE             = "Ütemezett Visszaállítási pont létrehozása"
 STR_REST_ROLLBACK             = "Visszaállítás egy meglévõ helyreállítási pontra..."
 STR_REST_SYSPROPS             = "Rendszer tulajdonságok"
-STR_SYSPROPS_ADV              = "Advanced System Properties"
+STR_SYSPROPS_ADV              = "Järjestelmän lisäominaisuudet"
 STR_REST_CREATING             = "Létrehozás..."
 STR_REST_CREATED              = "Létrehozva"
 STR_REST_FAILED               = "Nem sikerült létrehozni"
@@ -289,6 +279,7 @@ STR_UPD_BTN_THISPC            = "Csak erre a PC-re valók"
 STR_UPD_BTN_THISPC_H          = "A szükséges Driver-csomagok meghatározása érdekében, először az Indexeket kell letöltenie."
 STR_UPD_OPTIONS               = "Beállítások"
 STR_UPD_ONLYUPDATES           = "Ne értesítsen a hiányzó Driver-csomagokról"
+STR_UPD_PREALLOCATE				= "Minden fájl helyének lefoglalása előre"
 STR_UPD_TOTALSIZE             = "Kijelölt letöltések össz mérete: %d MB"
 STR_UPD_TOTALAVAIL            = "Teljes tárterület: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -322,9 +313,9 @@ STR_UPD_UPDATEHINT2           = "Elõszõr frissítenie kell a szoftvert, hogy e
 
 // Update hint
 STR_UPD_CHECKING              = "Frissítések keresése"
-STR_UPD_AVAIL1                = "Programfrissítés érhető el : SDIO R%d"
+STR_UPD_AVAIL1          = "Programfrissítés érhető el : SDI R%d"
 STR_UPD_AVAIL2                = "Driver-frissítés érhető el : %d csomag"
-STR_UPD_AVAIL3                = "Programfrissítés érhető el : SDIO R%d, valamint: %d Driver-csomag tölthető le"
+STR_UPD_AVAIL3          = "Programfrissítés érhető el : SDI R%d, valamint: %d Driver-csomag tölthető le"
 STR_UPD_START                 = "(Klikkeljen ide a letöltéshez)"
 STR_UPD_PROGRES               = "%s letöltve >>> %s-ból (%d%%)"
 STR_UPD_MODIFY                = "(Klikkeljen ide a letöltendő frissítések - csomagok kijelöléséhez...)"
@@ -409,9 +400,13 @@ STR_OPTION_CMD_FINISHRB       = "A telepítés után  (újraindítás szüksége
 STR_OPTION_CMD_FINISHDN       = "A letöltés után"
 STR_OPTION_CONSOLE            = "Konzol megjelenítése"
 
+// Patreon
+STR_PATREON1             = "Látogassa meg Patreon oldalunkat további információkért, tippekért és a projekt fejlesztés támogatásához."
+STR_PATREON2             = "(Patreon Weboldalunk megnyitásához klikkeljen ide)"
+STR_PATREON_H            = ""
 // Welcome
-STR_WELCOME_TITLE             = "Snappy Driver Installer Origin"
-STR_WELCOME_SUBTITLE          = "Üdvözöli a Snappy Driver Installer Origin"
+STR_WELCOME_TITLE        = "Snappy Driver Installer"
+STR_WELCOME_SUBTITLE     = "Üdvözöli a Snappy Driver Installer"
 STR_WELCOME_INTRO             = "Mielőtt bármit tenne, le kell töltenie a Driver-csomagokat vagy az Indexeket. A letöltés megkezdéséhez válasszon az alábbi lehetőségek közül. Frissítések sávon láthatja a letöltés állapotát."
 STR_WELCOME_INTRO2            = "Megjegyzés: Keressen további eszközöket a Rendszer menüben az alkalmazás főablakának bal felső részén."
 STR_WELCOME_BUTTON1           = "Töltse le az összes csomagot"
@@ -426,12 +421,12 @@ STR_WELCOME_CLOSE             = "Bezár"
 STR_USBWIZ_TITLE              = "Hozzon létre egy USB meghajtót"
 STR_USBWIZ_SPACEREQ           = "Szükséges lemezterület:"
 STR_USBWIZ_SPACEAVAIL         = "Rendelkezésre álló hely:"
-STR_USBWIZ_PAGE1_DESC         = "A varázsló segíti létrehozni egy hordozható USB-meghajtót, amely tartalmazza az Snappy Driver Installer Origin-t és a kiválasztott fájlokat.\n\nA letöltött fájlok a kiválasztott eszköz Gyökérkönyvtárába kerülnek. Biztosítsa, hogy a készülék elegendő tárhellyel rendelkezzen a fájlok tárolásához. Lehetősége lesz az eszköz tartalmának törlésére."
+STR_USBWIZ_PAGE1_DESC    = "A varázsló segíti létrehozni egy hordozható USB-meghajtót, amely tartalmazza az Snappy Driver Installer-t és a kiválasztott fájlokat.\n\nA letöltött fájlok a kiválasztott eszköz Gyökérkönyvtárába kerülnek. Biztosítsa, hogy a készülék elegendő tárhellyel rendelkezzen a fájlok tárolásához. Lehetősége lesz az eszköz tartalmának törlésére."
 
 // USB Wizard - page 2
 STR_USBWIZ_PAGE2_TITLE        = "Külső meghajtó"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Válassza ki a külső meghajtót."
-STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer Origin a külső meghajtó Gyökér könyvtárába lesz telepítve . Helyezze be az USB-meghajtót."
+STR_USBWIZ_PAGE2_DESC    = "Snappy Driver Installer a külső meghajtó Gyökér könyvtárába lesz telepítve . Helyezze be az USB-meghajtót."
 STR_USBWIZ_PAGE2_DRIVE        = "Cél külső meghajtó:"
 STR_USBWIZ_PAGE2_MORE         = "További meghajtók megjelenítése"
 STR_USBWIZ_PAGE2_CLEAR        = "A kijelölt meghajtó törlése"
@@ -469,7 +464,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Szakértő mód engedélyezése"
 STR_USBWIZ_PAGE4_NOUPD        = "Ne keressen frissítéseket"
 STR_USBWIZ_PAGE4_NOSNAP       = "Ne hozzon létre a Pillanatképeket"
 STR_USBWIZ_PAGE4_NOLOG        = "Ne hozzon létre naplófájlokat"
-STR_USBWIZ_PAGE4_INCAUTO      = "Tartalmazza az autorun.inf és a SDIO_auto.bat-ot"
+STR_USBWIZ_PAGE4_INCAUTO = "Tartalmazza az autorun.inf és a SDI_auto.bat-ot"
 STR_USBWIZ_PAGE4_EXESIZE      = "Végrehajtható méret:"
 
 // USB Wizard - page 5

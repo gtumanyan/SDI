@@ -1,4 +1,6 @@
-﻿STR_TRANSLATORS         = "bfgxp"
+﻿// send updates to https://t.me/Snappy_Driver_Installer
+
+STR_TRANSLATORS         = "bfgxp"
 
 STR_LANG_NAME           = "简体中文"
 STR_LANG_ID             = "zh_CN"
@@ -287,7 +289,7 @@ STR_UPD_BTN_THISPC      = "仅检查本机需要的"
 STR_UPD_BTN_THISPC_H    = "为了能够确定你需要哪些驱动包，你必须首先下载索引。"
 STR_UPD_OPTIONS         = "选项"
 STR_UPD_ONLYUPDATES     = "仅显示更新，隐藏缺少的驱动包"
-STR_UPD_KEEPSEEDING     = "在下载完成后继续做种"
+STR_UPD_PREALLOCATE 		= "为所有文件预分配磁盘空间"
 STR_UPD_TOTALSIZE       = "总计下载大小: %d MB"
 STR_UPD_TOTALAVAIL      = "总计可用空间: %d MB"
 STR_UPD_BTN_OK          = "确定"

@@ -1,4 +1,4 @@
-﻿// send updates to translations@snappy-driver-installer.org
+﻿// send updates to https://t.me/Snappy_Driver_Installer
 
 STR_TRANSLATORS               = "Hoangduong92"
 
@@ -30,8 +30,8 @@ STR_REFRESH                   = "Làm tươi"
 STR_REFRESH_H                 = "Làm mới danh sách trình điều khiển"
 STR_UPDATES                   = "Cập nhật"
 STR_UPDATES_H                 = "Chọn nguồn cập nhật"
-STR_UPDATES_SDIO              = "Chọn cập nhật SDIO"
-STR_UPDATES_SDIO_H            = "Chọn bản cập nhật SDIO tiêu chuẩn"
+STR_UPDATES_SDI               = "Chọn cập nhật SDI"
+STR_UPDATES_SDI_H             = "Chọn bản cập nhật SDI tiêu chuẩn"
 STR_UPDATES_DRIVERS           = "Chọn Bản cập nhật Trình điều khiển"
 STR_UPDATES_DRIVERS_H         = "Chọn gói cập nhật trình điều khiển mới nhất"
 STR_TOOLS                     = "Công cụ"
@@ -127,15 +127,6 @@ STR_SYSINF_LOCALE             = "Vùng"
 STR_SYSINF_CPU_ARCH           = "Cấu trúc CPU"
 STR_SYSINF_32BIT              = "32 bit"
 STR_SYSINF_64BIT              = "64 bit"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "Nhà phát triển:"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "không biết"
@@ -256,7 +247,7 @@ STR_RESTOREPOINT_H            = "Tạo điểm khôi phục để khôi phục h
 STR_REST_SCHEDULE             = "Tạo khôi phục theo tiến trình đặt sẵn"
 STR_REST_ROLLBACK             = "Khôi phục lại từ 1 bản khôi phục"
 STR_REST_SYSPROPS             = "Thuộc tính Hệ thống"
-STR_SYSPROPS_ADV              = "Advanced System Properties"
+STR_SYSPROPS_ADV              = "Tiến Hệ Thống Tài Sản"
 STR_REST_CREATING             = "Tạo 1 bản khôi phục"
 STR_REST_CREATED              = "Đã khôi phục lại 1 bản"
 STR_REST_FAILED               = "Từ chối Tạo 1 bản khôi phục"
@@ -289,6 +280,7 @@ STR_UPD_BTN_THISPC            = "Chỉ driver cần cho máy này"
 STR_UPD_BTN_THISPC_H          = "Để lấy bộ cài bạn cần hãy tải danh mục trước"
 STR_UPD_OPTIONS               = "Tùy chọn"
 STR_UPD_ONLYUPDATES           = "Đừng báo bộ cài lỗi"
+STR_UPD_PREALLOCATE				= "Phân bổ trước dung lượng đĩa cho tất cả các tệp"
 STR_UPD_TOTALSIZE             = "Tổng kích thước tải: %d MB"
 STR_UPD_TOTALAVAIL            = "Bộ nhớ có sẵn: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -322,9 +314,9 @@ STR_UPD_UPDATEHINT2           = "Bạn phải cập nhật cơ bản trước kh
 
 // Update hint
 STR_UPD_CHECKING              = "Kiểm tra cập nhật"
-STR_UPD_AVAIL1                = "Cập nhật có sẵn: SDIO R%d"
+STR_UPD_AVAIL1                = "Cập nhật có sẵn: SDI R%d"
 STR_UPD_AVAIL2                = "Cập nhật có sẵn: %d bộ cài"
-STR_UPD_AVAIL3                = "Cập nhật có sẵn: SDIO R%d và %d bộ cài"
+STR_UPD_AVAIL3                = "Cập nhật có sẵn: SDI R%d và %d bộ cài"
 STR_UPD_START                 = "(CHọn đây để tải)"
 STR_UPD_PROGRES               = "Đã tải %s trong số %s (%d%%)"
 STR_UPD_MODIFY                = "(CHọn đây để chọn các cập nhật)"
@@ -409,9 +401,13 @@ STR_OPTION_CMD_FINISHRB       = "Sau khi cài ( cần khởi động lại)"
 STR_OPTION_CMD_FINISHDN       = "Sau khi tải"
 STR_OPTION_CONSOLE            = "Hiện cửa sổ kiểm soát"
 
+// Patreon
+STR_PATREON1             = "SDI được các tình nguyện viên thiết kế. Nếu bạn thích hãy hỗ trợ chúng tôi trên Patreon."
+STR_PATREON2                  = "(CHọn đây để vào trang Patreon)"
+STR_PATREON_H                 = "Nhấp vào đây để mở trang Patreon"
 // Welcome
-STR_WELCOME_TITLE             = "Snappy Driver Installer Origin"
-STR_WELCOME_SUBTITLE          = "Chào mừng bạn đến Snappy Driver Installer Origin"
+STR_WELCOME_TITLE             = "Snappy Driver Installer"
+STR_WELCOME_SUBTITLE          = "Chào mừng bạn đến Snappy Driver Installer"
 STR_WELCOME_INTRO             = "Trước khi bạn có thể bắt đầu, bạn sẽ cần phải tải xuống gói trình điều khiển hoặc chỉ mục. Chọn một trong các tùy chọn sau để bắt đầu tải xuống. Thanh Cập nhật sẽ giữ cho bạn biết về tình trạng tải xuống."
 STR_WELCOME_INTRO2            = "Lưu ý: Tìm kiếm các công cụ bổ sung trên Menu Hệ thống ở phía trên bên trái của cửa sổ ứng dụng chính."
 STR_WELCOME_BUTTON1           = "Tải xuống Tất cả các Gói Trình điều khiển"
@@ -426,12 +422,12 @@ STR_WELCOME_CLOSE             = "Gần"
 STR_USBWIZ_TITLE              = "Tạo một ổ USB"
 STR_USBWIZ_SPACEREQ           = "Không gian bắt buộc:"
 STR_USBWIZ_SPACEAVAIL         = "Không gian sẵn có:"
-STR_USBWIZ_PAGE1_DESC         = "Trình hướng dẫn này sẽ giúp bạn tạo ra một ổ USB di động chứa Snappy Driver Installer Origin và các tập tin được chọn. \ N \ nCác tập tin sẽ được sao chép vào thư mục gốc của thiết bị đã chọn. Bạn nên đảm bảo thiết bị có dung lượng đủ để lưu trữ các tệp tin yêu cầu. Bạn sẽ được cung cấp tùy chọn để xóa thiết bị đầu tiên."
+STR_USBWIZ_PAGE1_DESC         = "Trình hướng dẫn này sẽ giúp bạn tạo ra một ổ USB di động chứa Snappy Driver Installer và các tập tin được chọn. \ N \ nCác tập tin sẽ được sao chép vào thư mục gốc của thiết bị đã chọn. Bạn nên đảm bảo thiết bị có dung lượng đủ để lưu trữ các tệp tin yêu cầu. Bạn sẽ được cung cấp tùy chọn để xóa thiết bị đầu tiên."
 
 // USB Wizard - page 2
 STR_USBWIZ_PAGE2_TITLE        = "Drive mục tiêu"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Chọn một ổ đĩa rời."
-STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer Origin sẽ được cài đặt vào thư mục gốc của ổ đĩa di động đã chọn. Lắp ổ USB của bạn bây giờ."
+STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer sẽ được cài đặt vào thư mục gốc của ổ đĩa di động đã chọn. Lắp ổ USB của bạn bây giờ."
 STR_USBWIZ_PAGE2_DRIVE        = "Nhắm mục tiêu ổ đĩa rời:"
 STR_USBWIZ_PAGE2_MORE         = "Show more drives"
 STR_USBWIZ_PAGE2_CLEAR        = "Xóa ổ đã chọn"
@@ -469,7 +465,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Bật chế độ chuyên gia"
 STR_USBWIZ_PAGE4_NOUPD        = "Không kiểm tra cập nhật"
 STR_USBWIZ_PAGE4_NOSNAP       = "Không tạo ảnh chụp nhanh"
 STR_USBWIZ_PAGE4_NOLOG        = "Không tạo tệp nhật ký"
-STR_USBWIZ_PAGE4_INCAUTO      = "Bao gồm autorun.inf và SDIO_auto.bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "Bao gồm autorun.inf và SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "Kích thước thực thi:"
 
 // USB Wizard - page 5

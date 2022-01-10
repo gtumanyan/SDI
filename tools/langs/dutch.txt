@@ -1,4 +1,4 @@
-﻿// send updates to translations@snappy-driver-installer.org
+﻿// send updates to https://t.me/Snappy_Driver_Installer
 
 STR_TRANSLATORS               = "Dannyict"
 
@@ -30,8 +30,8 @@ STR_REFRESH                   = "Verversen"
 STR_REFRESH_H                 = "Herstel stuurprogramma lijst"
 STR_UPDATES                   = "Updates"
 STR_UPDATES_H                 = "Selecteer updatebron"
-STR_UPDATES_SDIO              = "Selecteer SDIO-updates"
-STR_UPDATES_SDIO_H            = "Selecteer de standaard SDIO-updates"
+STR_UPDATES_SDI               = "Selecteer SDI-updates"
+STR_UPDATES_SDI_H             = "Selecteer de standaard SDI-updates"
 STR_UPDATES_DRIVERS           = "Selecteer Driver Packs Updates"
 STR_UPDATES_DRIVERS_H         = "Selecteer de laatste updates voor stuurprogramma's"
 STR_TOOLS                     = "Gereedschap"
@@ -48,9 +48,9 @@ STR_OPTIONS_BTN               = "Opties..."
 STR_OPTIONS_BTN_H             = "Dialoogvenster openen met instellingen"
 
 STR_SHOW_FOUND                = "Gevonden in driverpacks"
-STR_SHOW_FOUND_H              = "Stuurprogramma's zijn te vinden in driverpacks en kunnen geïnstalleerd worden.\n\nWe raden u aan het installeren van stuurprogramma's vanaf de volgende categorieën: niet geïnstalleerde, nieuwere, betere match."
+STR_SHOW_FOUND_H        = "Stuurprogramma's zijn te vinden in DriverPacks en kunnen geïnstalleerd worden.\n\nWe raden u aan het installeren van stuurprogramma's vanaf de volgende categorieën: niet geïnstalleerde, nieuwere, betere match."
 STR_SHOW_MISSING              = "Niet geïnstalleerd"
-STR_SHOW_MISSING_H            = "Beeldschermstuurprogramma's van driverpacks voor apparaten waarvoor drivers nodig zijn.\n\nWe adviseren u deze stuurprogramma's te installeren."
+STR_SHOW_MISSING_H      = "Beeldschermstuurprogramma's van DriverPacks voor apparaten waarvoor drivers nodig zijn.\n\nWe adviseren u deze stuurprogramma's te installeren."
 STR_SHOW_NEWER                = "Nieuwer"
 STR_SHOW_NEWER_H              = "Beeldschermstuurprogramma's van driverpacks die nieuwer zijn dan de geïnstalleerde drivers.\n\nWij adviseren u deze stuurprogramma's te installeren."
 STR_SHOW_CURRENT              = "Huidige"
@@ -62,21 +62,21 @@ STR_SHOW_BETTER_H             = "Beeldschermstuurprogramma's van driverpacks die
 STR_SHOW_WORSE_RANK           = "Slechtste match"
 STR_SHOW_WORSE_RANK_H         = "Beeldschermstuurprogramma's van driverpacks die slechtere match zijn dan momenteel geïnstalleerde drivers.\n\nWij adviseren u deze niet te installeren, tenzij je een goede reden hebt om dit te doen."
 
-STR_SHOW_NOTFOUND             = "Afwezig in driverpacks"
-STR_SHOW_NOTFOUND_H           = "Stuurprogramma's zijn niet gevonden in driverpacks en kunnen niet worden geïnstalleerd."
+STR_SHOW_NOTFOUND       = "Afwezig in DriverPacks"
+STR_SHOW_NOTFOUND_H     = "Stuurprogramma's zijn niet gevonden in DriverPacks en kunnen niet worden geïnstalleerd."
 STR_SHOW_NF_MISSING           = "Niet geïnstalleerd"
 STR_SHOW_NF_MISSING_H         = "Weergave-apparaten waarvoor drivers nodig zijn, maar geen driver is te vinden in driverpacks.\n \nU kunt op zoek naar deze drivers op Internet of dvd's. Om uw HardwareID te kopiëren, klikt u met de rechtermuisknop op het apparaat.\n\n adviseren wij om ons op de hoogte over ontbrekende drivers, zodat ze konden worden toegevoegd aan driverpacks."
 STR_SHOW_NF_UNKNOWN           = "Onbekend"
 STR_SHOW_NF_UNKNOWN_H         = "Display onbekende drivers die in het systeem zijn geïnstalleerd maar niet gevonden in driverpacks.\n\nWij adviseren om ons te melden dat u sommige drivers heeft die kunnen worden toegevoegd aan driverpacks."
 STR_SHOW_NF_STANDARD          = "Standaard"
-STR_SHOW_NF_STANDARD_H        = "Display standaard drivers die in het systeem zijn geïnstalleerd maar niet gevonden in driverpacks.\n\n Deze drivers zijn meestal geleverd met Windows en vereisen geen updates."
+STR_SHOW_NF_STANDARD_H  = "Display standaard drivers die in het systeem zijn geïnstalleerd maar niet gevonden in DriverPacks.\n\n Deze drivers zijn meestal geleverd met Windows en vereisen geen updates."
 
 STR_SHOW_DISPLAY              = "Beeldscherm"
 STR_SHOW_DISPLAY_H            = "Toon filters"
 STR_SHOW_ONE                  = "Toon enkel de beste"
 STR_SHOW_ONE_H                = "Toon alleen de beste drivers per toestel.\n\nAls deze optie is ingeschakeld, wordt alleen de meest overeenkomende driver per apparaat weergegeven in tegenstelling tot het weergegeven van alle beschikbare drivers voor elk apparaat."
 STR_SHOW_DUP                  = "Toon duplicaten"
-STR_SHOW_DUP_H                = "Toon dubbele drivers.\n\nSommige drivers  worden gedupliceerd binnen driverpacks om technische redenen."
+STR_SHOW_DUP_H          = "Toon dubbele drivers.\n\nSommige drivers  worden gedupliceerd binnen DriverPacks om technische redenen."
 STR_SHOW_INVALID              = "Toon ongeldige"
 STR_SHOW_INVALID_H            = "Toon drivers die onverenigbaar zijn met het huidige systeem.\nWij adviseren u deze niet te installeren omdat ze incompatibel is met uw versie van Windows."
 
@@ -127,15 +127,6 @@ STR_SYSINF_LOCALE             = "Lokaal"
 STR_SYSINF_CPU_ARCH           = "CPU Architecture"
 STR_SYSINF_32BIT              = "32-bit"
 STR_SYSINF_64BIT              = "64-bit"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "Ontwikkelaars"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "onbekend"
@@ -225,7 +216,7 @@ STR_VIRUS_HIDDEN_H            = "De hoofdmap bevat verborgen mappen. Virussen ku
 
 // Status
 STR_CLOSE_SNAPSHOT            = "(Klik hier om te stoppen met emulatie)"
-STR_EMPTYDRP                  = "Verbind met het Internet om driverpacks te downloaden of plaats uitgepakte stuurprogramma's in de volgende map"
+STR_EMPTYDRP            = "Verbind met het Internet om DriverPacks te downloaden of plaats uitgepakte stuurprogramma's in de volgende map"
 STR_CLOSE_DRPEXT              = "(Klik hier om terug te keren naar de standaardmap)"
 STR_NOUPDATES                 = "Stuurprogramma's zijn up to date"
 STR_INITIALIZING              = "Initialiseren..."
@@ -289,6 +280,7 @@ STR_UPD_BTN_THISPC            = "Enkel deze PC"
 STR_UPD_BTN_THISPC_H          = "Om te kunnen bepalen welke driverpacks u nodig heeft, dient u de indexen eerst te downloaden"
 STR_UPD_OPTIONS               = "Opties"
 STR_UPD_ONLYUPDATES           = "Niet informeren bij ontbrekende driverpacks\n"
+STR_UPD_PREALLOCATE				= "Wijs HDD-ruimte vooraf toe om fragmentatie te voorkomen"
 STR_UPD_TOTALSIZE             = "Totale downloadgrootte: %d MB"
 STR_UPD_TOTALAVAIL            = "Totale beschikbare ruimte: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -322,9 +314,9 @@ STR_UPD_UPDATEHINT2           = "U dient Base eerst bij te werken om deze functi
 
 // Update hint
 STR_UPD_CHECKING              = "Controleren op updates"
-STR_UPD_AVAIL1                = "Updates zijn beschikbaar: SDIO R%d"
+STR_UPD_AVAIL1                = "Updates zijn beschikbaar: SDI R%d"
 STR_UPD_AVAIL2                = "Updates zijn beschikbaar: %d driverpacks"
-STR_UPD_AVAIL3                = "Updates zijn beschikbaar : SDIO R %d en %d driverpacks"
+STR_UPD_AVAIL3                = "Updates zijn beschikbaar : SDI R%d en %d driverpacks"
 STR_UPD_START                 = "(Klik hier om de download te starten)"
 STR_UPD_PROGRES               = "Gedownload %s van %s (%d%%)"
 STR_UPD_MODIFY                = "(Klik hier om updates te selecteren)"
@@ -409,10 +401,14 @@ STR_OPTION_CMD_FINISHRB       = "Na installatie (U dient te rebooten)"
 STR_OPTION_CMD_FINISHDN       = "Na downloaden"
 STR_OPTION_CONSOLE            = "Toon consolevenster"
 
+// Patreon
+STR_PATREON1             = "SDI is ontwikkeld door vrijwilligers in hun vrije tijd. Gelieve ons te steunen op Patreon."
+STR_PATREON2             = "(Klik hier om de Patreon pagina te openen)"
+STR_PATREON_H            = ""
 // Welcome
-STR_WELCOME_TITLE             = "Snappy Driver Installer Origin"
-STR_WELCOME_SUBTITLE          = "Welkom bij Snappy Driver Installer Origin"
-STR_WELCOME_INTRO             = "Voordat u kunt beginnen, dient u driverpakketen of indexen te downloaden. Selecteer een van de volgende opties om te downloaden. De balk Updates houdt u op de hoogte van de downloadstatus."
+STR_WELCOME_TITLE             = "Snappy Driver Installer"
+STR_WELCOME_SUBTITLE          = "Welkom bij Snappy Driver Installer"
+STR_WELCOME_INTRO             = "Voordat u kunt beginnen, moet u driverpakketen of indexen downloaden. Selecteer een van de volgende opties om te downloaden. De balk Updates houdt u op de hoogte van de downloadstatus."
 STR_WELCOME_INTRO2            = "Opmerking: Zoek extra hulpmiddelen in het systeemmenu boven in het hoofdvenster."
 STR_WELCOME_BUTTON1           = "Download alle stuurprogramma's"
 STR_WELCOME_BUTTON1_DESC      = "Krijg de volledige driverspakket collectie. Dit is een grote download en zal ergens van een uur tot een dag duren, afhankelijk van beschikbaarheid en internet snelheid. Wanneer u klaar bent, heeft u alles wat nodig is om offline te werken. Als u een technicus bent, is dit de optie die u wilt."
@@ -431,7 +427,7 @@ STR_USBWIZ_PAGE1_DESC         = "Deze wizard helpt u bij het maken van een draag
 // USB Wizard - page 2
 STR_USBWIZ_PAGE2_TITLE        = "Doel Drive"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Selecteer een verwijderbare drive."
-STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer Origin wordt geïnstalleerd in de hoofdmap van de geselecteerde verwijderbare drive. Plaats nu uw USB-drive."
+STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer wordt geïnstalleerd in de hoofdmap van de geselecteerde verwijderbare drive. Plaats nu uw USB-drive."
 STR_USBWIZ_PAGE2_DRIVE        = "Doel verwijderbare drive:"
 STR_USBWIZ_PAGE2_MORE         = "Toon meer drivers"
 STR_USBWIZ_PAGE2_CLEAR        = "Geselecteerde drive wissen"
@@ -469,7 +465,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Expert modus inschakelen"
 STR_USBWIZ_PAGE4_NOUPD        = "Controleer niet voor updates"
 STR_USBWIZ_PAGE4_NOSNAP       = "Maak geen snapshots"
 STR_USBWIZ_PAGE4_NOLOG        = "Maak geen logbestanden"
-STR_USBWIZ_PAGE4_INCAUTO      = "Inclusief autorun.inf en SDIO_auto.bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "Inclusief autorun.inf en SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "Uitvoerbare grootte:"
 
 // USB Wizard - page 5

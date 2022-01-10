@@ -1,4 +1,4 @@
-﻿// send updates to translations@snappy-driver-installer.org
+﻿// send updates to https://t.me/Snappy_Driver_Installer
 
 STR_TRANSLATORS               = "علیرضا ذوالفقار"
 
@@ -30,8 +30,8 @@ STR_REFRESH                   = "تازه سازی"
 STR_REFRESH_H                 = "تازه سازی لیست درایورها"
 STR_UPDATES                   = "به‌روزرسانی‌ها"
 STR_UPDATES_H                 = "انتخاب منبع به‌روزرسانی"
-STR_UPDATES_SDIO              = "انتخاب به روزرسانی‌های SDIO"
-STR_UPDATES_SDIO_H            = "انتخاب به روزرسانی‌های استناندارد"
+STR_UPDATES_SDI               = "انتخاب به روزرسانی‌های SDI "
+STR_UPDATES_SDI_H             = "انتخاب به روزرسانی‌های استناندارد "
 STR_UPDATES_DRIVERS           = "انتخاب به روزرسانی بسته آپدیت"
 STR_UPDATES_DRIVERS_H         = "انتخاب آخرین به‌روزرسانی بسته درایور"
 STR_TOOLS                     = "Tools"
@@ -127,15 +127,6 @@ STR_SYSINF_LOCALE             = "محل"
 STR_SYSINF_CPU_ARCH           = "معماری پردازنده"
 STR_SYSINF_32BIT              = "۳۲ بیت"
 STR_SYSINF_64BIT              = "۶۴ بیت"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "برنامه‌نویسان:"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "ناشناخته"
@@ -285,10 +276,11 @@ STR_UPD_SELECTION             = "انتخاب"
 STR_UPD_BTN_ALL               = "انتخاب همه"
 STR_UPD_BTN_NONE              = "انتخاب هیچ‌کدام"
 STR_UPD_BTN_NETWORK           = "فقط شبکه"
-STR_UPD_BTN_THISPC            = "فقط انتخاب موارد موردنیاز این سیستم"
+STR_UPD_BTN_THISPC            = "مورد نیاز این سیستم"
 STR_UPD_BTN_THISPC_H          = "برای تشخیص درایورهای موردنیاز اول باید نمایه‌ها را دانلود کنید."
 STR_UPD_OPTIONS               = "گزینه‌ها"
 STR_UPD_ONLYUPDATES           = "برای درایورهای گم‌شده اخطار نده"
+STR_UPD_PREALLOCATE				= "برای جلوگیری از تکه تکه شدن، فضای HDD را از قبل اختصاص دهید"	
 STR_UPD_TOTALSIZE             = "مجموع اندازه دانلود شده: %d مگابایت"
 STR_UPD_TOTALAVAIL            = "مجموع فضای در دسترس: %d مگابایت"
 STR_UPD_BTN_OK                = "تأیید"
@@ -322,9 +314,9 @@ STR_UPD_UPDATEHINT2           = "برای استفاده از این ویژگی 
 
 // Update hint
 STR_UPD_CHECKING              = "برسی برای به‌روزرسانی"
-STR_UPD_AVAIL1                = "به‌روزرسانی موجود است: SDIO R%d"
+STR_UPD_AVAIL1          = "به‌روزرسانی موجود است: SDI R%d"
 STR_UPD_AVAIL2                = "به‌روزرسانی موجود است: %d بسته‌ درایور"
-STR_UPD_AVAIL3                = "به‌روزرسانی موجود است SDIO R%d و %d بسته‌ درایور"
+STR_UPD_AVAIL3          = "به‌روزرسانی موجود است SDI R%d و %d بسته‌ درایور"
 STR_UPD_START                 = "(برای شروع دانلود اینجا را کلیک کنید)"
 STR_UPD_PROGRES               = "دانلود شده %s از %s (%d%%)"
 STR_UPD_MODIFY                = "(برای انتخاب به‌روزرسانی‌ها اینجا را کلیک کنید)"
@@ -409,8 +401,12 @@ STR_OPTION_CMD_FINISHRB       = "پس از نصب(نیاز به راه اندا�
 STR_OPTION_CMD_FINISHDN       = "پس از دانلود"
 STR_OPTION_CONSOLE            = "نمایش پنجره کنسول"
 
+// Patreon
+STR_PATREON1             = "SDI توسط داوطلبان توسعه می یابد. اگر این نرم افزار را دوست دارید، لطفا از ما در Patreon حمایت کنید."
+STR_PATREON2             = "(برای باز کردن صفحه Patreon اینجا را کلیک کنید.)"
+STR_PATREON_H            = ""
 // Welcome
-STR_WELCOME_TITLE             = "Snappy Driver Installer Origin"
+STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "به مبدا نصب درایور Snappy خوش آمدید"
 STR_WELCOME_INTRO             = "قبل از شروع کار ، باید بسته های درایور یا فهرست ها را بارگیری کنید. یکی از گزینه های زیر را برای شروع بارگیری انتخاب کنید. نوار به روزرسانی شما را در مورد وضعیت بارگیری تایید می کند."
 STR_WELCOME_INTRO2            = "توجه: در منوی System در سمت چپ بالای پنجره اصلی برنامه ، به دنبال ابزارهای اضافی باشید."
@@ -426,12 +422,12 @@ STR_WELCOME_CLOSE             = "نزدیک"
 STR_USBWIZ_TITLE              = "Create a USB Drive"
 STR_USBWIZ_SPACEREQ           = "Space Required:"
 STR_USBWIZ_SPACEAVAIL         = "Space Available:"
-STR_USBWIZ_PAGE1_DESC         = "This wizard will help you create a portable USB drive containing Snappy Driver Installer Origin and selected files.\n\nThe files will be copied to the root directory of the selected device. You should ensure the device has sufficient capacity to store the required files. You will be given the option to clear the device first."
+STR_USBWIZ_PAGE1_DESC         = "This wizard will help you create a portable USB drive containing Snappy Driver Installer and selected files.\n\nThe files will be copied to the root directory of the selected device. You should ensure the device has sufficient capacity to store the required files. You will be given the option to clear the device first."
 
 // USB Wizard - page 2
 STR_USBWIZ_PAGE2_TITLE        = "Target Drive"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Select a removable drive."
-STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer Origin will be installed into the root directory of the selected removable drive. Insert your USB drive now."
+STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer will be installed into the root directory of the selected removable drive. Insert your USB drive now."
 STR_USBWIZ_PAGE2_DRIVE        = "Target removable drive:"
 STR_USBWIZ_PAGE2_MORE         = "Show more drives"
 STR_USBWIZ_PAGE2_CLEAR        = "Clear Selected Drive"
@@ -469,7 +465,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Enable expert mode"
 STR_USBWIZ_PAGE4_NOUPD        = "Don't check for updates"
 STR_USBWIZ_PAGE4_NOSNAP       = "Don't create snapshots"
 STR_USBWIZ_PAGE4_NOLOG        = "Don't create log files"
-STR_USBWIZ_PAGE4_INCAUTO      = "Include autorun.inf and SDIO_auto.bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "Include autorun.inf and SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "Executable Size:"
 
 // USB Wizard - page 5

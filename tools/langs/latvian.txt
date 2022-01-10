@@ -1,4 +1,4 @@
-﻿// send updates to translations@snappy-driver-installer.org
+﻿// send updates to https://t.me/Snappy_Driver_Installer
 
 STR_TRANSLATORS               = "Jurris"
 
@@ -30,8 +30,8 @@ STR_REFRESH                   = "atjaunot"
 STR_REFRESH_H                 = "Atsvaidziniet draiveru sarakstu"
 STR_UPDATES                   = "Atjauninājumi"
 STR_UPDATES_H                 = "Izvēlieties atjauninājumu avotu"
-STR_UPDATES_SDIO              = "Atlasiet SDIO atjauninājumus"
-STR_UPDATES_SDIO_H            = "Atlasiet standarta SDIO atjauninājumus"
+STR_UPDATES_SDI               = "Atlasiet SDI atjauninājumus"
+STR_UPDATES_SDI_H             = "Atlasiet standarta SDI atjauninājumus"
 STR_UPDATES_DRIVERS           = "Atlasiet draiveru pakotņu atjauninājumus"
 STR_UPDATES_DRIVERS_H         = "Atlasiet jaunākos draiveru atjauninājumus"
 STR_TOOLS                     = "Rīki"
@@ -127,15 +127,6 @@ STR_SYSINF_LOCALE             = "Valodas kods"
 STR_SYSINF_CPU_ARCH           = "Joslas platums"
 STR_SYSINF_32BIT              = "32-bit"
 STR_SYSINF_64BIT              = "64-bit"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "Izstrādātāji:"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "nezinam"
@@ -289,6 +280,7 @@ STR_UPD_BTN_THISPC            = "Izvēlēties tikai šim datoram"
 STR_UPD_BTN_THISPC_H          = "Lai noteiktu, kuras vadītāju pakotnes satur jauninājumus šim datoram, sākumā jāielādē indeksi."
 STR_UPD_OPTIONS               = "Iespējas"
 STR_UPD_ONLYUPDATES           = "Neinformēt par trūkstošajām vadītāju pakotnēm"
+STR_UPD_PREALLOCATE				= "Rezervēt brīvu vietu uz diska jaunajiem failiem"
 STR_UPD_TOTALSIZE             = "Atjaunojumu kopējais apjoms: %d MB"
 STR_UPD_TOTALAVAIL            = "Kopējā pieejamā telpa: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -322,9 +314,9 @@ STR_UPD_UPDATEHINT2           = "Sākumā vajag atjaunot programmu ar indeksiem.
 
 // Update hint
 STR_UPD_CHECKING              = "Pārbaude par atjauninājumiem"
-STR_UPD_AVAIL1                = "Pieejami atjauninājumi no Interneta: SDIO R%d"
+STR_UPD_AVAIL1                = "Pieejami atjauninājumi no Interneta: SDI R%d"
 STR_UPD_AVAIL2                = "Pieejami atjauninājumi no Interneta: %d vadītāju pakotnes"
-STR_UPD_AVAIL3                = "Pieejami atjauninājumi no Interneta: SDIO R%d un %d vadītāju pakotnes"
+STR_UPD_AVAIL3                = "Pieejami atjauninājumi no Interneta: SDI R%d un %d vadītāju pakotnes"
 STR_UPD_START                 = "(Uzklikšķiniet šeit, lai uzsāktu lejuplādi)"
 STR_UPD_PROGRES               = "Lejuplādēts %s no %s (%d%%)"
 STR_UPD_MODIFY                = "(Uzklikšķiniet šeit, lai izvēlētos atjauninājumu)"
@@ -410,7 +402,7 @@ STR_OPTION_CMD_FINISHDN       = "Pēc lejupielādes"
 STR_OPTION_CONSOLE            = "Rādīt konsoles logu"
 
 // Welcome
-STR_WELCOME_TITLE             = "Snappy Driver Installer Origin"
+STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Laipni lūdzam Snappy Driver Installer izcelsmē!"
 STR_WELCOME_INTRO             = "Lai sāktu, jums būs jālejupielādē draiveru pakotnes vai indeksi. Lai sāktu lejupielādi, atlasiet vienu no šīm iespējām. Atjauninājumu josla ļaus jums uzzināt par lejupielādes statusu."
 STR_WELCOME_INTRO2            = "Piezīme. Sistēmas izvēlnē, kas atrodas lietojumprogrammas galvenā loga augšējā kreisajā stūrī, meklējiet papildu rīkus."
@@ -426,12 +418,12 @@ STR_WELCOME_CLOSE             = "Aizveriet"
 STR_USBWIZ_TITLE              = "Izveidojiet USB disku"
 STR_USBWIZ_SPACEREQ           = "Nepieciešamā vieta:"
 STR_USBWIZ_SPACEAVAIL         = "Brīva vieta:"
-STR_USBWIZ_PAGE1_DESC         = "Šis vednis palīdzēs jums izveidot portatīvo USB disku, kurā ir Snappy Driver Installer Origin un atlasītie faili. \n\nFaili tiks kopēti izvēlētās ierīces saknes direktorijā. Pārliecinieties, vai ierīcei ir pietiekama ietilpība nepieciešamo failu glabāšanai. Jums tiks dota iespēja vispirms notīrīt ierīci."
+STR_USBWIZ_PAGE1_DESC         = "Šis vednis palīdzēs jums izveidot portatīvo USB disku, kurā ir Snappy Driver Installer un atlasītie faili. \n\nFaili tiks kopēti izvēlētās ierīces saknes direktorijā. Pārliecinieties, vai ierīcei ir pietiekama ietilpība nepieciešamo failu glabāšanai. Jums tiks dota iespēja vispirms notīrīt ierīci."
 
 // USB Wizard - page 2
 STR_USBWIZ_PAGE2_TITLE        = "Mērķa disks"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Atlasiet noņemamo disku."
-STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer Origin tiks instalēts izvēlētā noņemamā diska saknes direktorijā. Ievietojiet USB disku tūlīt."
+STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer tiks instalēts izvēlētā noņemamā diska saknes direktorijā. Ievietojiet USB disku tūlīt."
 STR_USBWIZ_PAGE2_DRIVE        = "Atlasīt noņemamo disku:"
 STR_USBWIZ_PAGE2_MORE         = "Rādīt vairāk diskus"
 STR_USBWIZ_PAGE2_CLEAR        = "Notīrīt atlasīto disku"
@@ -469,7 +461,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Iespējot eksperta režīmu"
 STR_USBWIZ_PAGE4_NOUPD        = "Nepārbaudiet atjauninājumus"
 STR_USBWIZ_PAGE4_NOSNAP       = "Neveidojiet momentuzņēmumus"
 STR_USBWIZ_PAGE4_NOLOG        = "Neveidojiet žurnālfailus"
-STR_USBWIZ_PAGE4_INCAUTO      = "Iekļaujiet autorun.inf un SDIO_auto.bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "Iekļaujiet autorun.inf un SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "Izpildāms izmērs:"
 
 // USB Wizard - page 5

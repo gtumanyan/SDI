@@ -1,4 +1,4 @@
-﻿// send updates to translations@snappy-driver-installer.org
+﻿// send updates to https://t.me/Snappy_Driver_Installer
 
 STR_TRANSLATORS               = "Joseph Salazar"
 
@@ -30,8 +30,8 @@ STR_REFRESH                   = "Actualització"
 STR_REFRESH_H                 = "Actualitza la llista de controladors"
 STR_UPDATES                   = "Actualitzacions"
 STR_UPDATES_H                 = "Seleccioneu l'origen de les actualitzacions"
-STR_UPDATES_SDIO              = "Seleccioneu Actualitzacions SDIO"
-STR_UPDATES_SDIO_H            = "Seleccioneu les actualitzacions estàndard de SDIO"
+STR_UPDATES_SDI               = "Seleccioneu Actualitzacions SDI"
+STR_UPDATES_SDI_H             = "Seleccioneu les actualitzacions estàndard de SDI"
 STR_UPDATES_DRIVERS           = "Seleccioneu les actualitzacions dels paquets de controladors"
 STR_UPDATES_DRIVERS_H         = "Seleccioneu les darreres actualitzacions dels paquets del controlador"
 STR_TOOLS                     = "Eines"
@@ -127,15 +127,6 @@ STR_SYSINF_LOCALE             = "Lloc"
 STR_SYSINF_CPU_ARCH           = "Arquitectura CPU"
 STR_SYSINF_32BIT              = "32-bit"
 STR_SYSINF_64BIT              = "64-bit"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "Desenvolupadors:"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "desconegut"
@@ -285,10 +276,11 @@ STR_UPD_SELECTION             = "селекция"
 STR_UPD_BTN_ALL               = "Comprovar a tots"
 STR_UPD_BTN_NONE              = "Desmarcar a tots"
 STR_UPD_BTN_NETWORK           = "Само мрежа"
-STR_UPD_BTN_THISPC            = "Tic només necessari per aquest ordinador"
+STR_UPD_BTN_THISPC            = "Per aquest ordinador"
 STR_UPD_BTN_THISPC_H          = "Per determinar quins paquets de controladors en necessita, s'ha de primer baixar els indexos."
 STR_UPD_OPTIONS               = "Настроики"
 STR_UPD_ONLYUPDATES           = "No notificar de paquets de controladors que fan falta"
+STR_UPD_PREALLOCATE				= "Assigna prèviament l'espai del disc dur per evitar la fragmentació"
 STR_UPD_TOTALSIZE             = "Tamany total de baixada: %d MB"
 STR_UPD_TOTALAVAIL            = "Espai total disponible: %d MB"
 STR_UPD_BTN_OK                = "Добре"
@@ -322,9 +314,9 @@ STR_UPD_UPDATEHINT2           = "S'ha de primer baixar la base per fer servir aq
 
 // Update hint
 STR_UPD_CHECKING              = "Comprovació de les actualitzacions"
-STR_UPD_AVAIL1                = "N'ha ha actualitzacions disponibles: SDIO R%d"
-STR_UPD_AVAIL2                = "N'ha ha actualitzacions disponibles: %d driverpacks"
-STR_UPD_AVAIL3                = "N'ha ha actualitzacions disponibles: SDIO R%d i %d driverpacks"
+STR_UPD_AVAIL1          = "N'ha ha actualitzacions disponibles: SDI R%d"
+STR_UPD_AVAIL2          = "N'ha ha actualitzacions disponibles: %d DriverPacks"
+STR_UPD_AVAIL3          = "N'ha ha actualitzacions disponibles: SDI R%d i %d DriverPacks"
 STR_UPD_START                 = "(Fes clic per començar a baixar)"
 STR_UPD_PROGRES               = "Baixat %s de %s (%d%%)"
 STR_UPD_MODIFY                = "(Fes clic per seleccionar actualitzacions)"
@@ -409,8 +401,12 @@ STR_OPTION_CMD_FINISHRB       = "Després d'instal.lar (cal reiniciar)"
 STR_OPTION_CMD_FINISHDN       = "Després de baixar"
 STR_OPTION_CONSOLE            = "Mostrar finestre de la consola"
 
+// Patreon
+STR_PATREON1             = "SDI està desenvolupat per voluntaris al seu temps lliure. Si t'agrada, dona'ns suport a Patreon"
+STR_PATREON2             = "(Fes clic per obrir la pàgina de Patreon)"
+STR_PATREON_H            = ""
 // Welcome
-STR_WELCOME_TITLE             = "Snappy Driver Installer Origin"
+STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Benvingut a l’origen del instal·lador de controladors de Snappy"
 STR_WELCOME_INTRO             = "Abans de començar, haureu de descarregar paquets o índexs de controladors. Seleccioneu una de les opcions següents per començar a descarregar. La barra d'actualitzacions us mantindrà informat de l'estat de la descàrrega."
 STR_WELCOME_INTRO2            = "Nota: busqueu eines addicionals al menú del sistema, a la part superior esquerra de la finestra principal de l'aplicació."
@@ -426,12 +422,12 @@ STR_WELCOME_CLOSE             = "Tancar"
 STR_USBWIZ_TITLE              = "Creeu una unitat USB"
 STR_USBWIZ_SPACEREQ           = "Espai necessari:"
 STR_USBWIZ_SPACEAVAIL         = "Espai disponible:"
-STR_USBWIZ_PAGE1_DESC         = "Aquest assistent us ajudarà a crear una unitat USB portàtil que contingui Snappy Driver Installer Origin i els fitxers seleccionats. \ N \ n Els fitxers es copiaran al directori arrel del dispositiu seleccionat. Heu d'assegurar-vos que el dispositiu tingui la capacitat suficient per emmagatzemar els fitxers necessaris. Se us donarà l’opció d’esborrar primer el dispositiu."
+STR_USBWIZ_PAGE1_DESC         = "Aquest assistent us ajudarà a crear una unitat USB portàtil que contingui Snappy Driver Installer i els fitxers seleccionats. \ N \ n Els fitxers es copiaran al directori arrel del dispositiu seleccionat. Heu d'assegurar-vos que el dispositiu tingui la capacitat suficient per emmagatzemar els fitxers necessaris. Se us donarà l’opció d’esborrar primer el dispositiu."
 
 // USB Wizard - page 2
 STR_USBWIZ_PAGE2_TITLE        = "Unitat objectiu"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Seleccioneu una unitat extraïble."
-STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer Origin s’instal·larà al directori arrel de la unitat extraïble seleccionada. Introduïu la vostra unitat USB ara."
+STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer s’instal·larà al directori arrel de la unitat extraïble seleccionada. Introduïu la vostra unitat USB ara."
 STR_USBWIZ_PAGE2_DRIVE        = "Orientació de la unitat extraïble:"
 STR_USBWIZ_PAGE2_MORE         = "Mostra més unitats"
 STR_USBWIZ_PAGE2_CLEAR        = "Esborra la unitat seleccionada"
@@ -469,7 +465,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Enable expert mode"
 STR_USBWIZ_PAGE4_NOUPD        = "Don't check for updates"
 STR_USBWIZ_PAGE4_NOSNAP       = "Don't create snapshots"
 STR_USBWIZ_PAGE4_NOLOG        = "Don't create log files"
-STR_USBWIZ_PAGE4_INCAUTO      = "Include autorun.inf and SDIO_auto.bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "Include autorun.inf and SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "Executable Size:"
 
 // USB Wizard - page 5

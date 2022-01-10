@@ -1,4 +1,5 @@
-﻿// send updates to translations@snappy-driver-installer.org
+﻿
+// send updates to https://t.me/Snappy_Driver_Installer
 
 STR_TRANSLATORS               = "Mihai Pasare"
 
@@ -30,8 +31,8 @@ STR_REFRESH                   = "Reîmprospăta"
 STR_REFRESH_H                 = "Actualizați lista de drivere"
 STR_UPDATES                   = "Actualizări"
 STR_UPDATES_H                 = "Selectați sursa de actualizări"
-STR_UPDATES_SDIO              = "Selectați Actualizări SDIO"
-STR_UPDATES_SDIO_H            = "Selectați actualizările SDIO standard"
+STR_UPDATES_SDI               = "Selectați Actualizări SDI"
+STR_UPDATES_SDI_H             = "Selectați actualizările SDI standard"
 STR_UPDATES_DRIVERS           = "Selectați actualizările pachetelor de drivere"
 STR_UPDATES_DRIVERS_H         = "Selectați cele mai recente actualizări ale pachetelor de drivere"
 STR_TOOLS                     = "Unelte"
@@ -127,15 +128,6 @@ STR_SYSINF_LOCALE             = "Local"
 STR_SYSINF_CPU_ARCH           = "Arhitectură CPU"
 STR_SYSINF_32BIT              = "32-bit"
 STR_SYSINF_64BIT              = "64-bit"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "Dezvoltatori:"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "necunoscut"
@@ -289,6 +281,7 @@ STR_UPD_BTN_THISPC            = "Selectează necesarul pentru acest PC"
 STR_UPD_BTN_THISPC_H          = "Pentru a determina driverele necesare, trebuiesc descărcați cei mai noi indecși."
 STR_UPD_OPTIONS               = "Iespējas"
 STR_UPD_ONLYUPDATES           = "Nu avertiza despre lipsa pachetelor de drivere"
+STR_UPD_PREALLOCATE				= "Pre-alocă spațiu pe disc pentru toate fișierele"
 STR_UPD_TOTALSIZE             = "Dimensiune de descărcat: %d MB"
 STR_UPD_TOTALAVAIL            = "Kopējā pieejamā telpa: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -322,9 +315,9 @@ STR_UPD_UPDATEHINT2           = "Trebuie actualizată baza de date mai întâi."
 
 // Update hint
 STR_UPD_CHECKING              = "Verificarea actualizărilor"
-STR_UPD_AVAIL1                = "Sunt actualizări disponibile: SDIO R%d"
+STR_UPD_AVAIL1                = "Sunt actualizări disponibile: SDI R%d"
 STR_UPD_AVAIL2                = "Sunt actualizări disponibile: %d pachete drivere"
-STR_UPD_AVAIL3                = "Sunt actualizări disponibile: SDIO R%d și %d pachete drivere"
+STR_UPD_AVAIL3                = "Sunt actualizări disponibile: SDI R%d și %d pachete drivere"
 STR_UPD_START                 = "(Apasă pentru a porni descărarea)"
 STR_UPD_PROGRES               = "Descărcat %s din %s (%d%%)"
 STR_UPD_MODIFY                = "(Apasă aici pentru a selecta actualizările)"
@@ -386,13 +379,13 @@ STR_OPTION_HINT               = "Aluzie"
 STR_OPTION_HINT_LABEL         = "Întârziere în milisecunde"
 
 // Updates tab
-STR_OPTION_CHECKUPDATES       = "Do not check for new version of app/driverpacks"
+STR_OPTION_CHECKUPDATES       = "Nu căuta versiuni noi ale aplicației sau pachetelor de drivere"
 STR_OPTION_ONLYUPDATES        = STR_UPD_ONLYUPDATES
-STR_OPTION_TORRENT            = "Torent"
+STR_OPTION_TORRENT            = "Setări Torrent"
 STR_OPTION_PORT               = "Port"
-STR_OPTION_MAX_CON            = "Conexiuni maxime (0 - unlimited)"
-STR_OPTION_MAX_DOWNLOAD       = "Viteza maximă de descărcare în KB/s (0 - unlimited)"
-STR_OPTION_MAX_UPLOAD         = "Viteza maximă de încărcare în KB/s (0 - unlimited)"
+STR_OPTION_MAX_CON            = "Nr.maxim de conexiuni (0 - nelimitat)"
+STR_OPTION_MAX_DOWNLOAD       = "Viteza maximă de descărcare în KB/s (0 - nelimitat)"
+STR_OPTION_MAX_UPLOAD         = "Viteza maximă de încărcare în KB/s (0 - nelimitat)"
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Conducătorii auto"
@@ -407,10 +400,10 @@ STR_OPTION_CMD_LABEL          = "Puteți defini comenzile care vor fi executate 
 STR_OPTION_CMD_FINISH         = "După instalare"
 STR_OPTION_CMD_FINISHRB       = "După instalare (trebuie să reporniți)"
 STR_OPTION_CMD_FINISHDN       = "După descărcare"
-STR_OPTION_CONSOLE            = "Show window window"
+STR_OPTION_CONSOLE            = "Arată fereastra consolei"
 
 // Welcome
-STR_WELCOME_TITLE             = "Snappy Driver Installer Origin"
+STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Bine ați venit la programul de instalare a driverului Snappy"
 STR_WELCOME_INTRO             = "Înainte de a începe, va trebui să descărcați pachete de drivere sau indexuri. Selectați una dintre următoarele opțiuni pentru a începe descărcarea. Bara Actualizări vă va ține la curent cu starea descărcării."
 STR_WELCOME_INTRO2            = "Notă: Căutați instrumente suplimentare în Meniul Sistem din partea stângă sus a ferestrei principale a aplicației."
@@ -426,12 +419,12 @@ STR_WELCOME_CLOSE             = "Închide"
 STR_USBWIZ_TITLE              = "Creați o unitate USB"
 STR_USBWIZ_SPACEREQ           = "Necesita spatiu:"
 STR_USBWIZ_SPACEAVAIL         = "Spatiu disponibil:"
-STR_USBWIZ_PAGE1_DESC         = "Acest asistent vă va ajuta să creați o unitate USB portabilă care să conțină Snappy Driver Installer Origin și fișierele selectate. \ N \ n Fișierele vor fi copiate în directorul rădăcină al dispozitivului selectat. Ar trebui să vă asigurați că dispozitivul are o capacitate suficientă pentru a stoca fișierele necesare. Vi se va da opțiunea de a șterge mai întâi dispozitivul."
+STR_USBWIZ_PAGE1_DESC         = "Acest asistent vă va ajuta să creați o unitate USB portabilă care să conțină Snappy Driver Installer și fișierele selectate. \ N \ n Fișierele vor fi copiate în directorul rădăcină al dispozitivului selectat. Ar trebui să vă asigurați că dispozitivul are o capacitate suficientă pentru a stoca fișierele necesare. Vi se va da opțiunea de a șterge mai întâi dispozitivul."
 
 // USB Wizard - page 2
 STR_USBWIZ_PAGE2_TITLE        = "Direcționare țintă"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Selectați o unitate amovibilă."
-STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer Origin va fi instalat în directorul rădăcină al unității amovibile selectate. Introduceți unitatea USB acum."
+STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer va fi instalat în directorul rădăcină al unității amovibile selectate. Introduceți unitatea USB acum."
 STR_USBWIZ_PAGE2_DRIVE        = "Unitate detașabilă vizată:"
 STR_USBWIZ_PAGE2_MORE         = "Afișați mai multe unități"
 STR_USBWIZ_PAGE2_CLEAR        = "Ștergeți unitatea selectată"
@@ -469,7 +462,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Activați modul expert"
 STR_USBWIZ_PAGE4_NOUPD        = "Nu verificați dacă există actualizări"
 STR_USBWIZ_PAGE4_NOSNAP       = "Nu creați instantanee"
 STR_USBWIZ_PAGE4_NOLOG        = "Nu creați fișiere jurnal"
-STR_USBWIZ_PAGE4_INCAUTO      = "Includeți autorun.inf și SDIO_auto.bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "Includeți autorun.inf și SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "Dimensiune executabilă:"
 
 // USB Wizard - page 5

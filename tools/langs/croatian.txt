@@ -1,4 +1,4 @@
-﻿// send updates to translations@snappy-driver-installer.org
+﻿// send updates to https://t.me/Snappy_Driver_Installer
 
 STR_TRANSLATORS               = "Matija Matečić, MarinoMarino"
 
@@ -30,8 +30,8 @@ STR_REFRESH                   = "Osvježi"
 STR_REFRESH_H                 = "Osvježi popis upravljačkih programa"
 STR_UPDATES                   = "Nadogradnje"
 STR_UPDATES_H                 = "Odaberi izvor nadogradnji"
-STR_UPDATES_SDIO              = "Odaberi SDIO nadogradnje"
-STR_UPDATES_SDIO_H            = "Odaberi standardne SDIO nadogradnje"
+STR_UPDATES_SDI               = "Odaberi SDI nadogradnje"
+STR_UPDATES_SDI_H             = "Odaberi standardne SDI nadogradnje"
 STR_UPDATES_DRIVERS           = "Odaberi nadogradnje paketa upravljačkih programa"
 STR_UPDATES_DRIVERS_H         = "Odaberi najnovije nadogradnje upravljačkih paketa"
 STR_TOOLS                     = "Alati"
@@ -127,15 +127,6 @@ STR_SYSINF_LOCALE             = "Jezik"
 STR_SYSINF_CPU_ARCH           = "CPU arhitektura"
 STR_SYSINF_32BIT              = "32-bit"
 STR_SYSINF_64BIT              = "64-bit"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "Programeri:"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "nepoznato"
@@ -289,6 +280,7 @@ STR_UPD_BTN_THISPC            = "Samo ovo računalo"
 STR_UPD_BTN_THISPC_H          = "Kako bi mogli odrediti koje pakete upravljačkih programa trebaš, potrebno je prvo preuzeti indekse."
 STR_UPD_OPTIONS               = "Mogućnosti"
 STR_UPD_ONLYUPDATES           = "Prikaži samo nadogradnje, sakrij pakete koji nedostaju"
+STR_UPD_PREALLOCATE				= "Unaprijed dodijelite prostor na tvrdom disku kako biste izbjegli fragmentaciju"
 STR_UPD_TOTALSIZE             = "Ukupno za preuzimanje: %d MB"
 STR_UPD_TOTALAVAIL            = "Ukupno raspoloživi prostor: %d MB"
 STR_UPD_BTN_OK                = "U redu"
@@ -322,9 +314,9 @@ STR_UPD_UPDATEHINT2           = "Prvo moraš nadograditi bazu za korištenje ove
 
 // Update hint
 STR_UPD_CHECKING              = "Provjeravanje za nadogradnje"
-STR_UPD_AVAIL1                = "Dostupne nadogradnje: SDIO R%d"
+STR_UPD_AVAIL1                = "Dostupne nadogradnje: SDI R%d"
 STR_UPD_AVAIL2                = "Dostupne nadogradnje: %d paket(a) upravljačkih programa"
-STR_UPD_AVAIL3                = "Dostupne nadogradnje: SDIO R%d i %d paketa upravljačkih programa"
+STR_UPD_AVAIL3                = "Dostupne nadogradnje: SDI R%d i %d paketa upravljačkih programa"
 STR_UPD_START                 = "(Klikni ovdje za početak preuzimanja)"
 STR_UPD_PROGRES               = "Preuzeto %s od %s (%d%%)"
 STR_UPD_MODIFY                = "(Klikni ovdje za odabir nadogradnji)"
@@ -409,9 +401,13 @@ STR_OPTION_CMD_FINISHRB       = "Nakon preuzimanja (potrebno ponovno pokretanje)
 STR_OPTION_CMD_FINISHDN       = "Nakon preuzimanja"
 STR_OPTION_CONSOLE            = "Pokaži prozor konzole"
 
+// Patreon
+STR_PATREON1             = "SDI su razvili dobrovoljci u slobodno vrijeme. Ako vam se program sviđa, podržite nas na Patreon."
+STR_PATREON2             = "(Kliknite ovdje da biste otvorili Patreon stranicu)"
+STR_PATREON_H            = ""
 // Welcome
-STR_WELCOME_TITLE             = "Snappy Driver Installer Origin"
-STR_WELCOME_SUBTITLE          = "Dobrodošli u Snappy Driver Installer Origin"
+STR_WELCOME_TITLE             = "Snappy Driver Installer"
+STR_WELCOME_SUBTITLE          = "Dobrodošli u Snappy Driver Installer"
 STR_WELCOME_INTRO             = "Prije uporabe trebaš preuzeti pakete upravljačkih programa ili indekse. Odaberi jednu od ponuđenih opcija za početak preuzimanja."
 STR_WELCOME_INTRO2            = "Napomena: otkrij dodatne mogućnosti u sistemskom izborniku u gornjem lijevom rubu prozora s aplikacijom."
 STR_WELCOME_BUTTON1           = "Preuzmi sve pakete upravljačkih programa"
@@ -426,12 +422,12 @@ STR_WELCOME_CLOSE             = "Zatvori"
 STR_USBWIZ_TITLE              = "Stvorite USB pogon"
 STR_USBWIZ_SPACEREQ           = "Potreban prostor:"
 STR_USBWIZ_SPACEAVAIL         = "Slobodan prostor:"
-STR_USBWIZ_PAGE1_DESC         = "Ovaj čarobnjak pomoći će vam u stvaranju prijenosnog USB pogona koji sadrži izvor softvera Snappy Driver Origin i odabrane datoteke. \ N \ nDatoteke će se kopirati u korijenski direktorij odabranog uređaja. Trebali biste osigurati da uređaj ima dovoljan kapacitet za pohranu potrebnih datoteka. Dobit ćete opciju da prvo očistite uređaj."
+STR_USBWIZ_PAGE1_DESC         = "Ovaj čarobnjak pomoći će vam u stvaranju prijenosnog USB pogona koji sadrži izvor softvera Snappy Driver i odabrane datoteke. \ N \ nDatoteke će se kopirati u korijenski direktorij odabranog uređaja. Trebali biste osigurati da uređaj ima dovoljan kapacitet za pohranu potrebnih datoteka. Dobit ćete opciju da prvo očistite uređaj."
 
 // USB Wizard - page 2
 STR_USBWIZ_PAGE2_TITLE        = "Ciljani pogon"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Odaberite prijenosni pogon."
-STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer Origin bit će instaliran u korijenski direktorij odabranog prijenosnog pogona. Umetnite svoj USB pogon odmah."
+STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer bit će instaliran u korijenski direktorij odabranog prijenosnog pogona. Umetnite svoj USB pogon odmah."
 STR_USBWIZ_PAGE2_DRIVE        = "Ciljani prijenosni pogon:"
 STR_USBWIZ_PAGE2_MORE         = "Prikaži više pogona"
 STR_USBWIZ_PAGE2_CLEAR        = "Očisti odabrani pogon"
@@ -469,7 +465,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Enable expert mode"
 STR_USBWIZ_PAGE4_NOUPD        = "Don't check for updates"
 STR_USBWIZ_PAGE4_NOSNAP       = "Don't create snapshots"
 STR_USBWIZ_PAGE4_NOLOG        = "Don't create log files"
-STR_USBWIZ_PAGE4_INCAUTO      = "Include autorun.inf and SDIO_auto.bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "Include autorun.inf and SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "Executable Size:"
 
 // USB Wizard - page 5

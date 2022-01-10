@@ -1,4 +1,4 @@
-﻿// send updates to translations@snappy-driver-installer.org
+﻿// send updates to https://t.me/Snappy_Driver_Installer
 
 STR_TRANSLATORS               = "Hugga Bugga, Star, Krigsholm"
 
@@ -30,8 +30,8 @@ STR_REFRESH                   = "Uppdatera"
 STR_REFRESH_H                 = "Uppdatera drivrutinslistan"
 STR_UPDATES                   = "Uppdateringar"
 STR_UPDATES_H                 = "Välj uppdateringskälla"
-STR_UPDATES_SDIO              = "Välj SDIO-uppdateringar"
-STR_UPDATES_SDIO_H            = "Välj standard SDIO-uppdateringar"
+STR_UPDATES_SDI              = "Välj SDI-uppdateringar"
+STR_UPDATES_SDI_H            = "Välj standard SDI-uppdateringar"
 STR_UPDATES_DRIVERS           = "Välj drivrutinsuppdateringar"
 STR_UPDATES_DRIVERS_H         = "Välj de senaste drivrutinsuppdateringarna"
 STR_TOOLS                     = "Verktyg"
@@ -127,15 +127,6 @@ STR_SYSINF_LOCALE             = "Lokal språkkod"
 STR_SYSINF_CPU_ARCH           = "CPU Arkitektur"
 STR_SYSINF_32BIT              = "32-bit"
 STR_SYSINF_64BIT              = "64-bit"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "Utvecklare:"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "okänd"
@@ -289,6 +280,7 @@ STR_UPD_BTN_THISPC            = "Markera endast för denna PC"
 STR_UPD_BTN_THISPC_H          = "För att kunna avgöra vilka drivrutinpaket du behöver, så måste du ladda ner index först."
 STR_UPD_OPTIONS               = "Alternativ"
 STR_UPD_ONLYUPDATES           = "Meddela inte om saknade drivrutinpaket"
+STR_UPD_PREALLOCATE				= "Förallokera diskutrymme för alla filer"
 STR_UPD_TOTALSIZE             = "Total hämtningsstorlek: %d MB"
 STR_UPD_TOTALAVAIL            = "Totalt tillgängligt utrymme: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -322,9 +314,9 @@ STR_UPD_UPDATEHINT2           = "Du måste uppdatera databasens index först fö
 
 // Update hint
 STR_UPD_CHECKING              = "Söker efter uppdateringar"
-STR_UPD_AVAIL1                = "Uppdateringar finns: SDIO R%d"
+STR_UPD_AVAIL1          = "Uppdateringar finns: SDI R%d"
 STR_UPD_AVAIL2                = "Uppdateringar finns: %d drivrutinpaket"
-STR_UPD_AVAIL3                = "Uppdateringar finns: SDIO R%d och %d drivrutinpaket"
+STR_UPD_AVAIL3          = "Uppdateringar finns: SDI R%d och %d drivrutinpaket"
 STR_UPD_START                 = "(Klicka här för att komma till nedladdning)"
 STR_UPD_PROGRES               = "Nedladdade %s utav %s (%d%%)"
 STR_UPD_MODIFY                = "(klicka här för att välja uppdateringar)"
@@ -409,9 +401,13 @@ STR_OPTION_CMD_FINISHRB       = "Efter installationen (kräver omstart)"
 STR_OPTION_CMD_FINISHDN       = "Efter nedladdning"
 STR_OPTION_CONSOLE            = "Visa terminalfönster"
 
+// Patreon
+STR_PATREON1             = "SDI är utvecklat av frivilliga på sin fritid. Om du gillar detta program, vänligen stödj oss på Patreon."
+STR_PATREON2             = "(Klicka här för att öppna Patreonsidan)"
+STR_PATREON_H            = ""
 // Welcome
-STR_WELCOME_TITLE             = "Snappy Driver Installer Origin"
-STR_WELCOME_SUBTITLE          = "Välkommen till Snappy Driver Installer Origin"
+STR_WELCOME_TITLE             = "Snappy Driver Installer"
+STR_WELCOME_SUBTITLE          = "Välkommen till Snappy Driver Installer"
 STR_WELCOME_INTRO             = "Innan du kan börja måste du hämta drivrutinspaket eller index. Välj ett av följande alternativ för att starta nedladdningen. Uppdateringsfältet kommer att hålla dig informerad om nedladdningsstatusen."
 STR_WELCOME_INTRO2            = "Obs! Leta efter ytterligare verktyg på systemmenyn längst upp till vänster i huvudprogramfönstret."
 STR_WELCOME_BUTTON1           = "Ladda ner alla drivrutiner"
@@ -431,7 +427,7 @@ STR_USBWIZ_PAGE1_DESC         = "Den här guiden hjälper dig att skapa en porta
 // USB Wizard - page 2
 STR_USBWIZ_PAGE2_TITLE        = "Mål enhet"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Välj en flyttbar enhet."
-STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer Origin installeras i rotkatalogen för den valda flyttbara enheten. Sätt i din USB-enhet nu."
+STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer installeras i rotkatalogen för den valda flyttbara enheten. Sätt i din USB-enhet nu."
 STR_USBWIZ_PAGE2_DRIVE        = "Mål flyttbar enhet:"
 STR_USBWIZ_PAGE2_MORE         = "Visa fler enheter"
 STR_USBWIZ_PAGE2_CLEAR        = "Rensa vald enhet"
@@ -469,7 +465,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Aktivera expertläge"
 STR_USBWIZ_PAGE4_NOUPD        = "Sök inte efter uppdateringar"
 STR_USBWIZ_PAGE4_NOSNAP       = "Skapa inte ögonblicksbilder"
 STR_USBWIZ_PAGE4_NOLOG        = "Skapa inte loggfiler"
-STR_USBWIZ_PAGE4_INCAUTO      = "Inkludera autorun.inf och SDIO_auto.bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "Inkludera autorun.inf och SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "Exekverbar storlek:"
 
 // USB Wizard - page 5

@@ -1,4 +1,4 @@
-﻿// send updates to translations@snappy-driver-installer.org
+﻿// send updates to https://t.me/Snappy_Driver_Installer
 
 STR_TRANSLATORS               = "blc"
 
@@ -30,8 +30,8 @@ STR_REFRESH                   = "Forfriske"
 STR_REFRESH_H                 = "Oppdater driverlisten"
 STR_UPDATES                   = "oppdateringer"
 STR_UPDATES_H                 = "Velg oppdaterings kilde"
-STR_UPDATES_SDIO              = "Velg SDIO-oppdateringer"
-STR_UPDATES_SDIO_H            = "Velg standard SDIO-oppdateringer"
+STR_UPDATES_SDI               = "Velg SDI-oppdateringer"
+STR_UPDATES_SDI_H             = "Velg standard SDI-oppdateringer"
 STR_UPDATES_DRIVERS           = "Velg Driver Packs oppdateringer"
 STR_UPDATES_DRIVERS_H         = "Velg de nyeste driverpakkeoppdateringene"
 STR_TOOLS                     = "Verktøy"
@@ -127,15 +127,6 @@ STR_SYSINF_LOCALE             = "Locale"
 STR_SYSINF_CPU_ARCH           = "CPU Arkitektur"
 STR_SYSINF_32BIT              = "32-bit"
 STR_SYSINF_64BIT              = "64-bit"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "Utviklere:"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "Ukjent"
@@ -289,6 +280,7 @@ STR_UPD_BTN_THISPC            = "Sjekk bare de nødvendig for denne PC"
 STR_UPD_BTN_THISPC_H          = "For å vite hvilke driverpakker du trenger å laste ned, må du laste ned indeksene først."
 STR_UPD_OPTIONS               = "alternativer"
 STR_UPD_ONLYUPDATES           = "Ikke varsle om manglende driverpakker"
+STR_UPD_PREALLOCATE				= "Forhåndstildel diskplass for alle filer"
 STR_UPD_TOTALSIZE             = "Total nedlastet størrelse: %d MB"
 STR_UPD_TOTALAVAIL            = "Total tilgjengelig plass: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -322,9 +314,9 @@ STR_UPD_UPDATEHINT2           = "Du må oppdatere basefilene først for å bruke
 
 // Update hint
 STR_UPD_CHECKING              = "Ser etter oppdateringer"
-STR_UPD_AVAIL1                = "Oppdateringer er tilgjengelig: SDIO R%d"
+STR_UPD_AVAIL1                = "Oppdateringer er tilgjengelig: SDI R%d"
 STR_UPD_AVAIL2                = "Oppdateringer er tilgjengelig: %d driverpakker"
-STR_UPD_AVAIL3                = "Oppdateringer er tilgjengelig: SDIO R%d og %d driverpakker"
+STR_UPD_AVAIL3                = "Oppdateringer er tilgjengelig: SDI R%d og %d driverpakker"
 STR_UPD_START                 = "(Klikk her for å starte nedlasting)"
 STR_UPD_PROGRES               = "Lastet ned %s av %s (%d%%)"
 STR_UPD_MODIFY                = "(Klikk her for utvalgte oppdateringer)"
@@ -409,9 +401,13 @@ STR_OPTION_CMD_FINISHRB       = "Etter installasjon (trenger omstart)"
 STR_OPTION_CMD_FINISHDN       = "Etter nedlasting"
 STR_OPTION_CONSOLE            = "Vis konsollvindu"
 
+// Patreon
+STR_PATREON1             = "SDI er utviklet av frivillige på fritiden. Hvis du liker programvaren, vennligst støtt oss på Patreon."
+STR_PATREON2             = "(Klikk her for å åpne Patreon i nettleseren)"
+STR_PATREON_H            = ""
 // Welcome
-STR_WELCOME_TITLE             = "Snappy Driver Installer Origin"
-STR_WELCOME_SUBTITLE          = "Velkommen til Snappy Driver Installer Origin"
+STR_WELCOME_TITLE             = "Snappy Driver Installer"
+STR_WELCOME_SUBTITLE          = "Velkommen til Snappy Driver Installer"
 STR_WELCOME_INTRO             = "Før du kan begynne, må du laste ned driverpakker eller indekser. Velg ett av følgende alternativer for å starte nedlastingen. Oppdateringslinjen holder deg kjent med nedlastningsstatusen."
 STR_WELCOME_INTRO2            = "Merk: Se etter flere verktøy på systemmenyen øverst til venstre i hovedprogramvinduet."
 STR_WELCOME_BUTTON1           = "Last ned alle driverpakker"
@@ -426,12 +422,12 @@ STR_WELCOME_CLOSE             = "Lukk"
 STR_USBWIZ_TITLE              = "Opprett en USB-stasjon"
 STR_USBWIZ_SPACEREQ           = "Plass som kreves:"
 STR_USBWIZ_SPACEAVAIL         = "Plass tilgjengelig:"
-STR_USBWIZ_PAGE1_DESC         = "Denne veiviseren hjelper deg med å lage en bærbar USB-stasjon som inneholder Snappy Driver Installer Origin og valgte filer. \n\nFilene kopieres til rotkatalogen til den valgte enheten. Du bør sørge for at enheten har tilstrekkelig kapasitet til å lagre de nødvendige filene. Du får muligheten til å tømme enheten først."
+STR_USBWIZ_PAGE1_DESC         = "Denne veiviseren hjelper deg med å lage en bærbar USB-stasjon som inneholder Snappy Driver Installer og valgte filer. \n\nFilene kopieres til rotkatalogen til den valgte enheten. Du bør sørge for at enheten har tilstrekkelig kapasitet til å lagre de nødvendige filene. Du får muligheten til å tømme enheten først."
 
 // USB Wizard - page 2
 STR_USBWIZ_PAGE2_TITLE        = "Target Drive"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Velg en flyttbar stasjon."
-STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer Origin vil bli installert i rotkatalogen til den valgte flyttbare stasjonen. Sett inn USB-stasjonen nå."
+STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer vil bli installert i rotkatalogen til den valgte flyttbare stasjonen. Sett inn USB-stasjonen nå."
 STR_USBWIZ_PAGE2_DRIVE        = "Target flyttbar stasjon:"
 STR_USBWIZ_PAGE2_MORE         = "Vis flere stasjoner"
 STR_USBWIZ_PAGE2_CLEAR        = "Fjern valgt stasjon"
@@ -469,7 +465,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Aktiver ekspertmodus"
 STR_USBWIZ_PAGE4_NOUPD        = "Ikke se etter oppdateringer"
 STR_USBWIZ_PAGE4_NOSNAP       = "Ikke lag øyeblikksbilder"
 STR_USBWIZ_PAGE4_NOLOG        = "Ikke opprett loggfiler"
-STR_USBWIZ_PAGE4_INCAUTO      = "Inkluder autorun.inf og SDIO_auto.bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "Inkluder autorun.inf og SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "Kjørbar størrelse:"
 
 // USB Wizard - page 5

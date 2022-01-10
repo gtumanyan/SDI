@@ -1,4 +1,4 @@
-﻿// send updates to translations@snappy-driver-installer.org
+﻿// send updates to https://t.me/Snappy_Driver_Installer
 
 STR_TRANSLATORS               = "Marius Stauga"
 
@@ -30,53 +30,53 @@ STR_REFRESH                   = "Atnaujinti"
 STR_REFRESH_H                 = "Atnaujinkite tvarkyklių sąrašą"
 STR_UPDATES                   = "Atnaujinimai"
 STR_UPDATES_H                 = "Pasirinkite atnaujinimų šaltinį"
-STR_UPDATES_SDIO              = "Pasirinkite SDIO atnaujinimus"
-STR_UPDATES_SDIO_H            = "Pasirinkite standartinius SDIO naujinius"
-STR_UPDATES_DRIVERS           = "Pasirinkite "Driver Pack Updates"
+STR_UPDATES_SDI              = "Pasirinkite SDI atnaujinimus"
+STR_UPDATES_SDI_H            = "Pasirinkite standartinius SDI naujinius"
+STR_UPDATES_DRIVERS           = "Pasirinkite "Driver Pack Updates""
 STR_UPDATES_DRIVERS_H         = "Pasirinkite naujausius tvarkykles paketų atnaujinimus"
 STR_TOOLS                     = "Įrankiai"
-STR_TOOLS_H                   = "Windows" įrankių nuorodos"
+STR_TOOLS_H                   = ""Windows" įrankių nuorodos"
 STR_OPENLOGS                  = "Atidaryti žurnalus"
 STR_OPENLOGS_H                = "Atidarykite aplanką, kuriame yra žurnalų ir momentinės nuotraukos.\n\nGalite pateikti žurnalo failus kūrėjui, apsilankant www.sdi-tool.org ir nuėjus į palaikymo puslapį.\n\nMomentinės nuotraukos gali būti naudojamos nuotoliniu būdu padėti naudotojams išsirinkti tinkamas tvarkykles."
 STR_SNAPSHOT                  = "Įkelti momentinę nuotrauką…"
-STR_SNAPSHOT_H                = "Įkelti momentinę nuotrauką iš kitos sistemos.\n\nMomentinės nuotraukos automatiškai kuriamos žurnalo aplanke. Juose pateikiama informacija apie įrenginius, tvarkykles, Windows versiją, bateriją ir monitorius.\n\nMomentinės nuotraukos nesaugo informacijos apie driverpack kitose sistemose.\n\nTaigi,  įkeliant momentines nuotraukas galima imituoti kitą sistemą, tačiau tvarkyklės yra ieškomos vietiniuosese driverpacks."
+STR_SNAPSHOT_H          = "Įkelti momentinę nuotrauką iš kitos sistemos.\n\nMomentinės nuotraukos automatiškai kuriamos žurnalo aplanke. Juose pateikiama informacija apie įrenginius, tvarkykles, Windows versiją, bateriją ir monitorius.\n\nMomentinės nuotraukos nesaugo informacijos apie DriverPack kitose sistemose.\n\nTaigi,  įkeliant momentines nuotraukas galima imituoti kitą sistemą, tačiau tvarkyklės yra ieškomos vietiniuosese DriverPacks."
 STR_EXTRACT                   = "Išskleisti į…"
 STR_EXTRACT_H                 = "Išskleisti pasirinktas tvarkykles\n\nGalite jį naudoti norėdami kurti atsarginės kopijos tvarkykles. Įsitikinkite, kad neseniai įdiegtos tvarkyklės veikia tinkamai, aktyvinti dabartinių tvarkyklių rodymą žymės langelį ir spustelėkite 'Išskleisti į…'"
 STR_DRVDIR                    = "Tvarkyklių kat…"
-STR_DRVDIR_H                  = "Pasirinkite kitą aplanką su driverpacks ar su išpakuotomis tvarkyklėmis.\n\nGalite jį naudoti norėdami ieškoti tvarkykles diskiniuose kaupikliuose CD ar DVD."
+STR_DRVDIR_H            = "Pasirinkite kitą aplanką su DriverPacks ar su išpakuotomis tvarkyklėmis.\n\nGalite jį naudoti norėdami ieškoti tvarkykles diskiniuose kaupikliuose CD ar DVD."
 STR_OPTIONS_BTN               = "Pasirinktys…"
 STR_OPTIONS_BTN_H             = "Atidaryti parametrų langą."
 
 STR_SHOW_FOUND                = "Rasta paketuose"
-STR_SHOW_FOUND_H              = "Tvarkyklės yra driverpacks ir gali būti įdiegtos.\n\nPatariame įdiegti tvarkykles iš šių kategorijų: neįdiegta, naujesnės, geresnio atitikmens."
+STR_SHOW_FOUND_H        = "Tvarkyklės yra DriverPacks ir gali būti įdiegtos.\n\nPatariame įdiegti tvarkykles iš šių kategorijų: neįdiegta, naujesnės, geresnio atitikmens."
 STR_SHOW_MISSING              = "Neįdiegta"
-STR_SHOW_MISSING_H            = "Rodyti tvarkykles iš driverpacks įrenginiams, kuriems reikia tvarkyklių.\n\nPatariame įdiegti šias tvarkykles."
+STR_SHOW_MISSING_H      = "Rodyti tvarkykles iš DriverPacks įrenginiams, kuriems reikia tvarkyklių.\n\nPatariame įdiegti šias tvarkykles."
 STR_SHOW_NEWER                = "Naujesnės"
-STR_SHOW_NEWER_H              = "Rodyti tvarkykles iš driverpacks, kurios yra naujesnės nei šiuo metu įdiegtos tvarkyklės.\n\nPatariame įdiegti šias tvarkykles."
+STR_SHOW_NEWER_H        = "Rodyti tvarkykles iš DriverPacks, kurios yra naujesnės nei šiuo metu įdiegtos tvarkyklės.\n\nPatariame įdiegti šias tvarkykles."
 STR_SHOW_CURRENT              = "Dabartinės"
-STR_SHOW_CURRENT_H            = "Rodyti tvarkykles, kurie atitiktų driverpacks šiuo metu įdiegti tvarkykles."
+STR_SHOW_CURRENT_H      = "Rodyti tvarkykles, kurie atitiktų DriverPacks šiuo metu įdiegti tvarkykles."
 STR_SHOW_OLD                  = "Senos"
-STR_SHOW_OLD_H                = "Rodyti tvarkykles, kurios yra senesnės iš driverpacks nei šiuo metu įdiegtos tvarkykles.\n\nNe patariame įdiegti šias tvarkykles, nebent turite problemų su naujesnėmis tvarkyklėmis."
+STR_SHOW_OLD_H          = "Rodyti tvarkykles, kurios yra senesnės iš DriverPacks nei šiuo metu įdiegtos tvarkykles.\n\nNe patariame įdiegti šias tvarkykles, nebent turite problemų su naujesnėmis tvarkyklėmis."
 STR_SHOW_BETTER               = "Geriau atitinka"
-STR_SHOW_BETTER_H             = "Rodyti tvarkykles, kurios atitiktų geriau iš driverpacks nei šiuo metu įdiegtas tvarkykles.\n\nPatariame įdiegti šias tvarkykles."
+STR_SHOW_BETTER_H       = "Rodyti tvarkykles, kurios atitiktų geriau iš DriverPacks nei šiuo metu įdiegtas tvarkykles.\n\nPatariame įdiegti šias tvarkykles."
 STR_SHOW_WORSE_RANK           = "Prasčiau atitinka"
-STR_SHOW_WORSE_RANK_H         = "Rodyti tvarkykles, kurios atitiktų prasčiau iš driverpacks nei šiuo metu įdiegtas tvarkykles.\n\nNe patariame įdiegti šias tvarkykles, nebent turite rimta priežastį tam."
+STR_SHOW_WORSE_RANK_H   = "Rodyti tvarkykles, kurios atitiktų prasčiau iš DriverPacks nei šiuo metu įdiegtas tvarkykles.\n\nNe patariame įdiegti šias tvarkykles, nebent turite rimta priežastį tam."
 
-STR_SHOW_NOTFOUND             = "Nėra driverpacks"
-STR_SHOW_NOTFOUND_H           = "Tvarkyklės nerastos driverpacks ir negali būti įdiegtos."
+STR_SHOW_NOTFOUND       = "Nėra DriverPacks"
+STR_SHOW_NOTFOUND_H     = "Tvarkyklės nerastos DriverPacks ir negali būti įdiegtos."
 STR_SHOW_NF_MISSING           = "Neįdiegta"
-STR_SHOW_NF_MISSING_H         = "Rodyti įtaisus, kurie reikalauja tvarkyklių, tačiau tvarkyklės ne rastos driverpacks.\n\nGalite bandyti ieškoti šių tvarkyklių internete arba DVD. Norėdami nukopijuoti HardwareID, galite dešiniuoju pelės mygtuku spustelėkite įrenginį.\n\nPatariame pranešti mums apie trūkstamas tvarkykles, kad jos galėtų būti įtrauktos į driverpacks."
+STR_SHOW_NF_MISSING_H   = "Rodyti įtaisus, kurie reikalauja tvarkyklių, tačiau tvarkyklės ne rastos DriverPacks.\n\nGalite bandyti ieškoti šių tvarkyklių internete arba DVD. Norėdami nukopijuoti HardwareID, galite dešiniuoju pelės mygtuku spustelėkite įrenginį.\n\nPatariame pranešti mums apie trūkstamas tvarkykles, kad jos galėtų būti įtrauktos į DriverPacks."
 STR_SHOW_NF_UNKNOWN           = "Nežinomos"
-STR_SHOW_NF_UNKNOWN_H         = "Rodyti nežinomas tvarkykles, kurios yra įdiegtos sistemoje, bet jų nėra driverpacks.\n\nPatariame pranešti mums apie trūkstamas tvarkykles, kad jos galėtų būti įtrauktos į driverpacks."
+STR_SHOW_NF_UNKNOWN_H   = "Rodyti nežinomas tvarkykles, kurios yra įdiegtos sistemoje, bet jų nėra DriverPacks.\n\nPatariame pranešti mums apie trūkstamas tvarkykles, kad jos galėtų būti įtrauktos į DriverPacks."
 STR_SHOW_NF_STANDARD          = "Standartinės"
-STR_SHOW_NF_STANDARD_H        = "Rodyti standartines tvarkykles, kurios yra įdiegtos sistemoje, bet jų nėra driverpacks.\n\nŠios tvarkyklės paprastai teikiamos su Windows ir nereikalauja naujinimų."
+STR_SHOW_NF_STANDARD_H  = "Rodyti standartines tvarkykles, kurios yra įdiegtos sistemoje, bet jų nėra DriverPacks.\n\nŠios tvarkyklės paprastai teikiamos su Windows ir nereikalauja naujinimų."
 
 STR_SHOW_DISPLAY              = "Rodyti ekrane"
 STR_SHOW_DISPLAY_H            = "Ekrano filtrai"
 STR_SHOW_ONE                  = "Rodyti tik geriausias"
 STR_SHOW_ONE_H                = "Rodyti tik geriausias tvarkykles įrenginiui.\n\nKai įgalinta, tik geriausiai atitinkančios kiekvieną įrenginį tvarkyklės yra rodomos, priešingai nei rodomos visos kiekvieno įrenginio tvarkykles."
 STR_SHOW_DUP                  = "Rodyti dubliuotas"
-STR_SHOW_DUP_H                = "Rodyti dubliuotas tvarkykles.\n\nKai kurios tvarkyklės kartojasi kelis kartus viduje driverpacks, dėl techninių priežasčių."
+STR_SHOW_DUP_H          = "Rodyti dubliuotas tvarkykles.\n\nKai kurios tvarkyklės kartojasi kelis kartus viduje DriverPacks, dėl techninių priežasčių."
 STR_SHOW_INVALID              = "Rodyti klaidingas"
 STR_SHOW_INVALID_H            = "Rodyti tvarkykles, kurios nesuderinamos su esama sistema.\n\nNe patariame įdiegti šias tvarkykles, nes jos yra nesuderinamos su jūsų Windows versija."
 
@@ -127,15 +127,6 @@ STR_SYSINF_LOCALE             = "Lokalė"
 STR_SYSINF_CPU_ARCH           = "Procesoriaus archtektūra"
 STR_SYSINF_32BIT              = "32-bitų"
 STR_SYSINF_64BIT              = "64-bitų"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "Kūrėjai:"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "Nežinoma"
@@ -210,8 +201,8 @@ STR_STATUS_WORSE_OLD          = "Senesnė tvarkyklė ir taip pat mažiau optimal
 
 STR_STATUS_DUP                = "(dublikatas)"
 
-STR_STATUS_NF_MISSING         = "Įrenginys reikalauja tvarkyklės, bet ji nebuvo rasta driverpacks."
-STR_STATUS_NF_UNKNOWN         = "Įrenginys veikia tinkamai, nors nebuvo rasta tvarkyklė driverpacks"
+STR_STATUS_NF_MISSING   = "Įrenginys reikalauja tvarkyklės, bet ji nebuvo rasta DriverPacks."
+STR_STATUS_NF_UNKNOWN   = "Įrenginys veikia tinkamai, nors nebuvo rasta tvarkyklė DriverPacks"
 STR_STATUS_NF_STANDARD        = "Standartinė tvarkyklė"
 
 // Virus
@@ -225,7 +216,7 @@ STR_VIRUS_HIDDEN_H            = "Šakniniame aplanke yra paslėptų aplankų. Vi
 
 // Status
 STR_CLOSE_SNAPSHOT            = "(Spustelėkite čia, norėdami sustabdyti imitavimą)"
-STR_EMPTYDRP                  = "Prisijungti prie interneto ir atsisiųsti driverpacks arba išpakuoti tvarkykles aplanke"
+STR_EMPTYDRP            = "Prisijungti prie interneto ir atsisiųsti DriverPacks arba išpakuoti tvarkykles aplanke"
 STR_CLOSE_DRPEXT              = "(Spustelėkite čia, kad grįžtumėte į numatytąjį aplanką)"
 STR_NOUPDATES                 = "Tvarkyklės yra naujausios"
 STR_INITIALIZING              = "Inicijuojama…"
@@ -277,8 +268,8 @@ STR_SYS_DISRESTPNT            = "Išjungti sistemos atkūrimo taškus"
 
 // Update
 STR_UPD_DIALOG_TITLE          = "Atnaujinti tikrinimą"
-STR_UPD_DIALOG_MSG            = "Ar norėtumėte įjungti automatinį ieškojimą internete naujų versijų driverpacks ir programos?"
-STR_UPD_DIALOG_INDEX          = "Ar norite atsisiųsti naujausius indeksus, kad būtų galima nustatyti, kuriuos driverpacks turite atsisiųsti?"
+STR_UPD_DIALOG_MSG      = "Ar norėtumėte įjungti automatinį ieškojimą internete naujų versijų DriverPacks ir programos?"
+STR_UPD_DIALOG_INDEX    = "Ar norite atsisiųsti naujausius indeksus, kad būtų galima nustatyti, kuriuos DriverPacks turite atsisiųsti?"
 
 STR_UPD_TITLE                 = "Atnaujinti"
 STR_UPD_SELECTION             = "Pasirinkimas"
@@ -289,6 +280,7 @@ STR_UPD_BTN_THISPC            = "Pažymėti tik tuos, kuriu reikia šiam kompiut
 STR_UPD_BTN_THISPC_H          = "Siekiant, kad būtų galima nustatyti, kurių driverpacks reikia, turite atsisiųsti indeksus."
 STR_UPD_OPTIONS               = "Galimybės"
 STR_UPD_ONLYUPDATES           = "Nepranešti apie trūkstamus driverpacks"
+STR_UPD_PREALLOCATE				= "Iš anksto priskirti disko vietą visiems failams"
 STR_UPD_TOTALSIZE             = "Visas atsisiuntimo dydis: %d MB"
 STR_UPD_TOTALAVAIL            = "Iš viso laisvos vietos: %d MB"
 STR_UPD_BTN_OK                = "Gerai"
@@ -322,9 +314,9 @@ STR_UPD_UPDATEHINT2           = "Pirmiausia turite atnaujinti bazę, kad būtų 
 
 // Update hint
 STR_UPD_CHECKING              = "Tikrinama, ar yra naujinių"
-STR_UPD_AVAIL1                = "Naujinimai yra prieinami: SDIO R%d"
-STR_UPD_AVAIL2                = "Naujinimai yra prieinami: %d driverpacks"
-STR_UPD_AVAIL3                = "Naujinimai yra prieinami: SDIO R%d ir %d driverpacks"
+STR_UPD_AVAIL1          = "Naujinimai yra prieinami: SDI R%d"
+STR_UPD_AVAIL2          = "Naujinimai yra prieinami: %d DriverPacks"
+STR_UPD_AVAIL3          = "Naujinimai yra prieinami: SDI R%d ir %d DriverPacks"
 STR_UPD_START                 = "(Spustelėkite čia, norėdami atsisiųsti)"
 STR_UPD_PROGRES               = "parsisiųsti %s iš %s (%d%%)"
 STR_UPD_MODIFY                = "(Spustelėkite čia, kad pasirinktumėte atnaujinimus)"
@@ -373,10 +365,10 @@ STR_OPTION_OK_BUTTON          = STR_UPD_BTN_OK
 STR_OPTION_CANCEL_BUTTON      = STR_UPD_BTN_CANCEL
 
 // View tab
-STR_OPTION_DRPNAMES           = "Driverpack pavadinimai"
-STR_OPTION_HIDE_NAMES         = "Ne rodyti driverpack pavadinimų"
-STR_OPTION_SHOW_RIGHT         = "Rodyti driverpack pavadinimus dešiniau"
-STR_OPTION_SHOW_ABOVE         = "Rodyti driverpack pavadinimus pirmiau"
+STR_OPTION_DRPNAMES     = "DriverPack pavadinimai"
+STR_OPTION_HIDE_NAMES   = "Ne rodyti DriverPack pavadinimų"
+STR_OPTION_SHOW_RIGHT   = "Rodyti DriverPack pavadinimus dešiniau"
+STR_OPTION_SHOW_ABOVE   = "Rodyti DriverPack pavadinimus pirmiau"
 STR_OPTION_SCALLING           = "Sąsajos mastelio keitimas"
 STR_OPTION_SCALLING_H         = "Padarykite sąsajos elementus didesni arba mažesni"
 STR_OPTION_SCALLING_SML       = "Mažas"
@@ -386,7 +378,7 @@ STR_OPTION_HINT               = "Patarimas"
 STR_OPTION_HINT_LABEL         = "Delsa milisekundėmis"
 
 // Updates tab
-STR_OPTION_CHECKUPDATES       = "Ne tikrinti, ar nėra naujos programos/driverpacks versijos"
+STR_OPTION_CHECKUPDATES = "Ne tikrinti, ar nėra naujos programos/DriverPacks versijos "
 STR_OPTION_ONLYUPDATES        = STR_UPD_ONLYUPDATES
 STR_OPTION_TORRENT            = "Torentas"
 STR_OPTION_PORT               = "Prievadas"
@@ -409,8 +401,12 @@ STR_OPTION_CMD_FINISHRB       = "Po įdiegimo (reikia perkrauti)"
 STR_OPTION_CMD_FINISHDN       = "Po atsisiuntimo"
 STR_OPTION_CONSOLE            = "Rodyti konsolės langą"
 
+// Patreon
+STR_PATREON1             = "SDI yra sukurtas savanorių. Jei Jums patinka ši programinė įranga, prašome paremti mus Patreon."
+STR_PATREON2             = "(Spustelėkite čia, jei norite atidaryti Patreon puslapį)"
+STR_PATREON_H            = ""
 // Welcome
-STR_WELCOME_TITLE             = "Snappy Driver Installer Origin"
+STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Sveiki atvykę į „Snappy Driver Installer“ kilmę"
 STR_WELCOME_INTRO             = "Prieš pradėdami, turėsite atsisiųsti tvarkyklių paketus arba indeksus. Norėdami pradėti atsisiųsti, pasirinkite vieną iš šių parinkčių. Atnaujinimų juosta informuos jus apie atsisiuntimo būseną."
 STR_WELCOME_INTRO2            = "Pastaba: ieškokite papildomų įrankių sistemos meniu pagrindinio programos lango viršuje, kairėje."
@@ -426,12 +422,12 @@ STR_WELCOME_CLOSE             = "Uždaryti"
 STR_USBWIZ_TITLE              = "Sukurkite USB diską"
 STR_USBWIZ_SPACEREQ           = "Reikalinga vieta:"
 STR_USBWIZ_SPACEAVAIL         = "Laisva vieta:"
-STR_USBWIZ_PAGE1_DESC         = "Šis vedlys padės jums sukurti nešiojamąjį USB diską, kuriame yra „Snappy Driver Installer Origin“ kilmė ir pasirinkti failai. \n\nFailai bus nukopijuoti į pasirinkto įrenginio šakninį katalogą. Turėtumėte įsitikinti, kad įrenginyje yra pakankamai pajėgumų saugoti reikiamus failus. Pirmiausia jums bus suteikta galimybė išvalyti įrenginį."
+STR_USBWIZ_PAGE1_DESC         = "Šis vedlys padės jums sukurti nešiojamąjį USB diską, kuriame yra „Snappy Driver Installer“ kilmė ir pasirinkti failai. \n\nFailai bus nukopijuoti į pasirinkto įrenginio šakninį katalogą. Turėtumėte įsitikinti, kad įrenginyje yra pakankamai pajėgumų saugoti reikiamus failus. Pirmiausia jums bus suteikta galimybė išvalyti įrenginį."
 
 // USB Wizard - page 2
 STR_USBWIZ_PAGE2_TITLE        = "Tikslinis diskas"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Pasirinkite nuimamą diską."
-STR_USBWIZ_PAGE2_DESC         = "„Snappy Driver Installer Origin“ bus įdiegtas į pasirinkto keičiamo disko šakninį katalogą. Įdėkite USB diską dabar."
+STR_USBWIZ_PAGE2_DESC         = "„Snappy Driver Installer“ bus įdiegtas į pasirinkto keičiamo disko šakninį katalogą. Įdėkite USB diską dabar."
 STR_USBWIZ_PAGE2_DRIVE        = "Tikslinis nuimamas diskas:"
 STR_USBWIZ_PAGE2_MORE         = "Rodyti daugiau diskų"
 STR_USBWIZ_PAGE2_CLEAR        = "Išvalyti pasirinktą diską"
@@ -469,7 +465,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Įgalinti eksperto režimą"
 STR_USBWIZ_PAGE4_NOUPD        = "Netikrinkite, ar nėra naujinių"
 STR_USBWIZ_PAGE4_NOSNAP       = "Nekurkite momentinių nuotraukų"
 STR_USBWIZ_PAGE4_NOLOG        = "Nekurkite žurnalo failų"
-STR_USBWIZ_PAGE4_INCAUTO      = "Įtraukite autorun.inf ir SDIO_auto.bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "Įtraukite autorun.inf ir SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "Vykdomas dydis:"
 
 // USB Wizard - page 5

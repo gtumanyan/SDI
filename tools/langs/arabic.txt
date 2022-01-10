@@ -1,4 +1,4 @@
-﻿// send updates to translations@snappy-driver-installer.org
+﻿// send updates to https://t.me/Snappy_Driver_Installer
 
 STR_TRANSLATORS               = "مؤشر سيء"
 
@@ -30,8 +30,8 @@ STR_REFRESH                   = "تحديث"
 STR_REFRESH_H                 = "تحديث قائمة برنامج التشغيل"
 STR_UPDATES                   = "التحديثات"
 STR_UPDATES_H                 = "حدد مصدر التحديثات"
-STR_UPDATES_SDIO              = "حدد تحديثات سديو"
-STR_UPDATES_SDIO_H            = "حدد تحديثات سديو القياسية"
+STR_UPDATES_SDI               = "حدد تحديثات سديو"
+STR_UPDATES_SDI_H             = "حدد تحديثات سديو القياسية"
 STR_UPDATES_DRIVERS           = "حدد تحديثات حزم برنامج التشغيل"
 STR_UPDATES_DRIVERS_H         = "حدد أحدث تحديثات حزم برامج التشغيل"
 STR_TOOLS                     = "أدوات"
@@ -127,15 +127,6 @@ STR_SYSINF_LOCALE             = "لغة"
 STR_SYSINF_CPU_ARCH           = "بنية وحدة المعالجة المركزية"
 STR_SYSINF_32BIT              = "32-bit"
 STR_SYSINF_64BIT              = "64-bit"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "المطورون"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "غير معروف"
@@ -285,10 +276,11 @@ STR_UPD_SELECTION             = "اختيار"
 STR_UPD_BTN_ALL               = "أختيار الكل"
 STR_UPD_BTN_NONE              = "إلغاء أختيار الكل"
 STR_UPD_BTN_NETWORK           = "الشبكة فقط"
-STR_UPD_BTN_THISPC            = "أختار فقط الذي يحتاجه هذا الحاسب الشخصي"
+STR_UPD_BTN_THISPC            = "هذا الكمبيوتر فقط"
 STR_UPD_BTN_THISPC_H          = "من أجل تحديد أي حزمة تعريفات التي تحتاج إليها، يجب عليك تحميل الفهارس أولا."
 STR_UPD_OPTIONS               = "خيارات"
 STR_UPD_ONLYUPDATES           = "لا تبلغ عن حزمة التعريفات الناقصة"
+STR_UPD_PREALLOCATE				= "قم بتخصيص مساحة HDD مسبقًا لتجنب التجزئة"
 STR_UPD_TOTALSIZE             = "إجمالي حجم التحميل: %d ميجا بايت"
 STR_UPD_TOTALAVAIL            = "إجمالي المساحة المتاحة: %d MB"
 STR_UPD_BTN_OK                = "حسنا"
@@ -322,9 +314,9 @@ STR_UPD_UPDATEHINT2           = "يجب عليك تحديث القاعدة أو�
 
 // Update hint
 STR_UPD_CHECKING              = "البحث عن تحديثات"
-STR_UPD_AVAIL1                = "التحديثات المتوفرة: SDIO R%d"
+STR_UPD_AVAIL1                = "التحديثات المتوفرة: SDI R%d"
 STR_UPD_AVAIL2                = "التحديثات المتوفرة: %d حزمة تعريفات"
-STR_UPD_AVAIL3                = "التحديثات المتوفرة: SDIO R%d و %d حزمة تعريفات"
+STR_UPD_AVAIL3                = "التحديثات المتوفرة: SDI R%d و %d حزمة تعريفات"
 STR_UPD_START                 = "(انقر هنا لبدء التحميل)"
 STR_UPD_PROGRES               = "تم التحميل %s من %s (%d%%)"
 STR_UPD_MODIFY                = "(انقر هنا لتحديد التحديثات)"
@@ -409,6 +401,10 @@ STR_OPTION_CMD_FINISHRB       = "بعد التثبيت (تحتاج الي إعا
 STR_OPTION_CMD_FINISHDN       = "بعد التحميل"
 STR_OPTION_CONSOLE            = "إظهار نافذة وحدة التحكم"
 
+// Patreon
+STR_PATREON1             = "تم تطوير SDI من قبل متطوعين في أوقات فراغهم. إذا أعجبك هذا البرنامج, يرجي تقديم الدعم لنا علي Patreon."
+STR_PATREON2             = "(أضغط هنا لفتح صفحة الـPatreon)"
+STR_PATREON_H                 = "أضغط هنا لفتح صفحة الـPatreon"
 // Welcome
 STR_WELCOME_TITLE             = "مثبت سائق المثبت المنشأ"
 STR_WELCOME_SUBTITLE          = "مرحبا بكم في المثبت سائق المثبت المنشأ"
@@ -469,7 +465,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "تمكين وضع الخبراء"
 STR_USBWIZ_PAGE4_NOUPD        = "لا تحقق من وجود تحديثات"
 STR_USBWIZ_PAGE4_NOSNAP       = "لا تنشئ لقطات"
 STR_USBWIZ_PAGE4_NOLOG        = "لا تقم بإنشاء ملفات السجل"
-STR_USBWIZ_PAGE4_INCAUTO      = "تضمين autorun.inf و SDIO_auto.bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "تضمين autorun.inf و SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "حجم قابل للتنفيذ:"
 
 // USB Wizard - page 5

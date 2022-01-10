@@ -1,4 +1,4 @@
-﻿// send updates to translations@snappy-driver-installer.org
+﻿// send updates to https://t.me/Snappy_Driver_Installer
 
 STR_TRANSLATORS               = "EK"
 
@@ -30,8 +30,8 @@ STR_REFRESH                   = "Värskenda"
 STR_REFRESH_H                 = "Värskenda draiverite loendit"
 STR_UPDATES                   = "Värskendused"
 STR_UPDATES_H                 = "Valige värskenduste allikas"
-STR_UPDATES_SDIO              = "Valige SDIO värskendused"
-STR_UPDATES_SDIO_H            = "Valige standardse SDIO värskendused"
+STR_UPDATES_SDI               = "Valige SDI värskendused"
+STR_UPDATES_SDI_H             = "Valige standardse SDI värskendused"
 STR_UPDATES_DRIVERS           = "Valige draiveripakettide värskendused"
 STR_UPDATES_DRIVERS_H         = "Valige uusimad draiveripaketid värskendused"
 STR_TOOLS                     = "Tööriistad"
@@ -127,15 +127,6 @@ STR_SYSINF_LOCALE             = "Süsteemilokaat"
 STR_SYSINF_CPU_ARCH           = "CPU Arhitektuur"
 STR_SYSINF_32BIT              = "32-bit"
 STR_SYSINF_64BIT              = "64-bit"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "Arendajad:"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "tundmatu"
@@ -285,10 +276,11 @@ STR_UPD_SELECTION             = "Valimine"
 STR_UPD_BTN_ALL               = "Vali kõik"
 STR_UPD_BTN_NONE              = "Tühista kõik valikud"
 STR_UPD_BTN_NETWORK           = "Ainult võrk"
-STR_UPD_BTN_THISPC            = "Vali ainult need mida on vaja selle arvuti jaoks"
+STR_UPD_BTN_THISPC            = "Selle arvuti jaoks"
 STR_UPD_BTN_THISPC_H          = "Vajalike draiveri kogumikkude kindlaks määramiseks on vajalik enne allalaadida indeksid."
 STR_UPD_OPTIONS               = "Valikud"
 STR_UPD_ONLYUPDATES           = "Ära näita puuduvaid kogumikke"
+STR_UPD_PREALLOCATE				= "Hõiva ette ketta ruum kõikidele failidele"
 STR_UPD_TOTALSIZE             = "Allalaadimise suurus: %d MB"
 STR_UPD_TOTALAVAIL            = "Vaba kettaruum: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -322,9 +314,9 @@ STR_UPD_UPDATEHINT2           = "Enne tuleb uuendada baas, et kasutada seda sät
 
 // Update hint
 STR_UPD_CHECKING              = "Värskenduste kontrollimine"
-STR_UPD_AVAIL1                = "Uuendused on saadaval: SDIO R%d"
+STR_UPD_AVAIL1          = "Uuendused on saadaval: SDI R%d"
 STR_UPD_AVAIL2                = "Uuendused on saadaval: %d draiveri kogumikku"
-STR_UPD_AVAIL3                = "Uuendused on saadaval: SDIO R%d ja %d draiveri kogumikke jaoks"
+STR_UPD_AVAIL3          = "Uuendused on saadaval: SDI R%d ja %d draiveri kogumikke jaoks"
 STR_UPD_START                 = "(Vajutage siia, et alustad allalaadimist)"
 STR_UPD_PROGRES               = "Allalaetud %s / %s (%d%%)"
 STR_UPD_MODIFY                = "(Vajutage siia, et valida uuendused)"
@@ -409,8 +401,12 @@ STR_OPTION_CMD_FINISHRB       = "Peale paigaldamist (taaskäivitus vajalik)"
 STR_OPTION_CMD_FINISHDN       = "Peale allalaadimist"
 STR_OPTION_CONSOLE            = "Näita konsooli"
 
+// Patreon
+STR_PATREON1             = "SDI on loodud vabatahtlike poolt vabal ajal. Kui teile meeldib tarkvara palun toetage meid Patreon'is."
+STR_PATREON2             = "(Vajutage siia, et avada Patreoni lehekülg)"
+STR_PATREON_H            = ""
 // Welcome
-STR_WELCOME_TITLE             = "Snappy Driver Installer Origin"
+STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Tere tulemast Snappy Driver Installeri algusesse"
 STR_WELCOME_INTRO             = "Enne alustamist peate alla laadima draiveripaketid või indeksid. Allalaadimise alustamiseks valige üks järgmistest valikutest. Uuenduste riba hoiab teid kursis allalaadimise olekuga."
 STR_WELCOME_INTRO2            = "Märkus: otsige põhirakenduse akna vasakus ülanurgas System Menu (süsteemimenüü) täiendavaid tööriistu."
@@ -426,12 +422,12 @@ STR_WELCOME_CLOSE             = "Sulge"
 STR_USBWIZ_TITLE              = "Loo USB-draiv"
 STR_USBWIZ_SPACEREQ           = "Nõutav ruum:"
 STR_USBWIZ_SPACEAVAIL         = "Saadaval ruumi:"
-STR_USBWIZ_PAGE1_DESC         = "See viisard aitab teil luua kaasaskantava USB-draivi, mis sisaldab Snappy Driver Installer Origin'i ja valitud faile. N Failid kopeeritakse valitud seadme juurkataloogi. Peaksite veenduma, et seadmel on piisav maht nõutavate failide salvestamiseks. Teile antakse võimalus esmalt seade kustutada."
+STR_USBWIZ_PAGE1_DESC         = "See viisard aitab teil luua kaasaskantava USB-draivi, mis sisaldab Snappy Driver Installer ja valitud faile. N Failid kopeeritakse valitud seadme juurkataloogi. Peaksite veenduma, et seadmel on piisav maht nõutavate failide salvestamiseks. Teile antakse võimalus esmalt seade kustutada."
 
 // USB Wizard - page 2
 STR_USBWIZ_PAGE2_TITLE        = "Sihtauto"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Valige eemaldatav draiv."
-STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer Origin paigaldatakse valitud eemaldatava draivi juurkataloogi. Sisestage USB-draiv nüüd."
+STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer paigaldatakse valitud eemaldatava draivi juurkataloogi. Sisestage USB-draiv nüüd."
 STR_USBWIZ_PAGE2_DRIVE        = "Sihtmärgi eemaldatav draiv:"
 STR_USBWIZ_PAGE2_MORE         = "Näita rohkem draive"
 STR_USBWIZ_PAGE2_CLEAR        = "Tühjenda valitud draiv"
@@ -469,7 +465,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Luba ekspertrežiim"
 STR_USBWIZ_PAGE4_NOUPD        = "Ärge kontrollige värskendusi"
 STR_USBWIZ_PAGE4_NOSNAP       = "Ära loo hetktõmmiseid"
 STR_USBWIZ_PAGE4_NOLOG        = "Ärge looge logifaile"
-STR_USBWIZ_PAGE4_INCAUTO      = "Kaasa autorun.inf ja SDIO_auto.bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "Kaasa autorun.inf ja SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "Täidetav suurus:"
 
 // USB Wizard - page 5

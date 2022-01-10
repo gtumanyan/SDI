@@ -1,6 +1,6 @@
-﻿// send updates to translations@snappy-driver-installer.org
+﻿// send updates to https://t.me/Snappy_Driver_Installer
 
-STR_TRANSLATORS               = "X-FoRcE, Kabaqtepeli"
+STR_TRANSLATORS         = "X-FoRcE, Kabaqtepeli, yaschir""
 
 STR_LANG_NAME                 = "Türkçe"
 STR_LANG_ID                   = "Turkish"
@@ -19,19 +19,19 @@ STR_SELECT_ALL_H              = "Ctrl+A"
 STR_SELECT_NONE               = "Hiçbirini seçme"
 STR_SELECT_NONE_H             = "Ctrl+N"
 
-STR_LANG                      = "Dil (Language)"
-STR_LANG_H                    = "Dilinizi seçiniz"
-STR_THEME                     = "Tema"
-STR_THEME_H                   = "Bir tema seçin"
-STR_EXPERT                    = "Uzman modu"
-STR_EXPERT_H                  = "Uzman Modunu Aç\n\nİPUCU: Sürücü üzerindeyken Ctrl veya Boşluk tuşunu basılı tutarak sürücü hakkında ek bilgi alabilirsiniz."
+STR_LANG                = "Dil"
+STR_LANG_H              = "Dilinizi seçin"
+STR_THEME               = "Tema"
+STR_THEME_H             = "Bir tema seç"
+STR_EXPERT              = "Uzman modu"
+STR_EXPERT_H            = "Uzman Modunu Aç\n\nİPUCU: Sürücü üzerindeyken Ctrl veya Boşluk tuşunu basılı tutarak sürücü hakkında ek bilgi alabilirsiniz."
 
 STR_REFRESH                   = "Yenile"
 STR_REFRESH_H                 = "Sürücü listesini yenile"
 STR_UPDATES                   = "Güncellemeler"
 STR_UPDATES_H                 = "Güncelleme kaynaklarını seçin"
-STR_UPDATES_SDIO              = "SDIO Güncellemelerini Seçin"
-STR_UPDATES_SDIO_H            = "Standart SDIO güncellemelerini seçin"
+STR_UPDATES_SDI               = "SDI Güncellemelerini Seçin"
+STR_UPDATES_SDI_H             = "Standart SDI güncellemelerini seçin"
 STR_UPDATES_DRIVERS           = "Sürücü Paketleri Güncellemelerini Seçin"
 STR_UPDATES_DRIVERS_H         = "En son sürücü paketleri güncelleştirmelerini seçin"
 STR_TOOLS                     = "Araçlar"
@@ -127,15 +127,6 @@ STR_SYSINF_LOCALE             = "Dil Kodu"
 STR_SYSINF_CPU_ARCH           = "İşlemci Mimarisi"
 STR_SYSINF_32BIT              = "32-bit"
 STR_SYSINF_64BIT              = "64-bit"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "Geliştiriciler:"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "bilinmeyen"
@@ -289,6 +280,7 @@ STR_UPD_BTN_THISPC            = "Yalnız bu bilgisayar için gerekenleri seç"
 STR_UPD_BTN_THISPC_H          = "İhityacınız olan sürücü paketlerini belirlemek için  öncelikle indeksleri indirmeniz gerekiyor."
 STR_UPD_OPTIONS               = "Seçenekler"
 STR_UPD_ONLYUPDATES           = "Eksik sürücü paketleriyle ilgili bir daha uyarma"
+STR_UPD_PREALLOCATE				= "Tüm dosyalar için disk alanını önceden ayır"
 STR_UPD_TOTALSIZE             = "İndirilecek toplam dosya boyutu: %d MB"
 STR_UPD_TOTALAVAIL            = "Toplam boş alan: %d MB"
 STR_UPD_BTN_OK                = "Tamam"
@@ -321,10 +313,10 @@ STR_UPD_UPDATEHINT1           = "İpucu"
 STR_UPD_UPDATEHINT2           = "Bu özelliği kullanabilmek için önce güncelleştirmeniz gerekir."
 
 // Update hint
-STR_UPD_CHECKING              = "Güncellemeleri kontrol etme"
-STR_UPD_AVAIL1                = "Güncelleme mevcut: SDIO R%d"
-STR_UPD_AVAIL2                = "Güncelleme mevcut: %d sürücü paketi"
-STR_UPD_AVAIL3                = "Güncelleme mevcut: SDIO R%d ve %d sürücü paketi"
+STR_UPD_CHECKING        = "Güncellemeleri kontrol etme"
+STR_UPD_AVAIL1          = "Güncelleme mevcut: SDI R%d"
+STR_UPD_AVAIL2          = "Güncelleme mevcut: %d sürücü paketi"
+STR_UPD_AVAIL3          = "Güncelleme mevcut: SDI R%d ve %d sürücü paketi"
 STR_UPD_START                 = "(İndirmeyi başlatmak için tıklayın)"
 STR_UPD_PROGRES               = "İndirilen %s / %s (%d%%)"
 STR_UPD_MODIFY                = "(Güncellemeleri seçmek için tıklayın)"
@@ -409,8 +401,12 @@ STR_OPTION_CMD_FINISHRB       = "Kurulumdan sonra (yeniden başlatmaya ihtiyaç 
 STR_OPTION_CMD_FINISHDN       = "İndirmeden sonra"
 STR_OPTION_CONSOLE            = "Konsol penceresini göster"
 
+// Patreon
+STR_PATREON1             = "SDI gönüllüler tarafından geliştirilmektedir. Eğer beğeniyorsanız lütfen Patreon üzerinden destek olun."
+STR_PATREON2             = "(Patreon sitesini açmak için tıklayın)"
+STR_PATREON_H            = "Patreon sitesini açmak için tıklayın"
 // Welcome
-STR_WELCOME_TITLE             = "Snappy Driver Installer Origin"
+STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Snappy Sürücüsünün Kurulumuna Hoş Geldiniz"
 STR_WELCOME_INTRO             = "Başlamadan önce, sürücü paketleri veya dizinler indirmeniz gerekir. İndirmeye başlamak için aşağıdaki seçeneklerden birini seçin. Güncellemeler çubuğu, indirme durumunu size bildirir."
 STR_WELCOME_INTRO2            = "Not: Ana uygulama penceresinin sol üst kısmındaki Sistem Menüsü'ndeki ek araçları bulun."
@@ -469,7 +465,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Uzman modunu etkinleştir"
 STR_USBWIZ_PAGE4_NOUPD        = "Güncellemeleri kontrol etmeyin"
 STR_USBWIZ_PAGE4_NOSNAP       = "Enstantane oluşturma"
 STR_USBWIZ_PAGE4_NOLOG        = "Günlük dosyaları oluşturma"
-STR_USBWIZ_PAGE4_INCAUTO      = "Autorun.inf ve SDIO_auto.bat'ı ekleyin"
+STR_USBWIZ_PAGE4_INCAUTO      = "Autorun.inf ve SDI_auto.bat'ı ekleyin"
 STR_USBWIZ_PAGE4_EXESIZE      = "Yürütülebilir Dosya Boyutu:"
 
 // USB Wizard - page 5

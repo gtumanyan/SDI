@@ -1,4 +1,4 @@
-﻿// send updates to translations@snappy-driver-installer.org
+﻿// send updates to https://t.me/Snappy_Driver_Installer
 
 STR_TRANSLATORS               = "lenochod,Stoker"
 
@@ -30,8 +30,8 @@ STR_REFRESH                   = "Obnovit"
 STR_REFRESH_H                 = "Aktualizovat seznam ovladačů"
 STR_UPDATES                   = "Aktualizace"
 STR_UPDATES_H                 = "Vybrat zdroj aktualizací"
-STR_UPDATES_SDIO              = "Vybrat aktualizace SDIO"
-STR_UPDATES_SDIO_H            = "Vybrat standardní aktualizace SDIO"
+STR_UPDATES_SDI               = "Vybrat aktualizace SDI"
+STR_UPDATES_SDI_H             = "Vybrat standardní aktualizace SDI"
 STR_UPDATES_DRIVERS           = "Vybrat Aktualizace Balíčků Ovladačů"
 STR_UPDATES_DRIVERS_H         = "Vybrat nejnovější aktualizace balíčků ovladačů"
 STR_TOOLS                     = "Nástroje"
@@ -127,15 +127,6 @@ STR_SYSINF_LOCALE             = "Národní prostředí"
 STR_SYSINF_CPU_ARCH           = "CPU architektura"
 STR_SYSINF_32BIT              = "32-bit"
 STR_SYSINF_64BIT              = "64-bit"
-
-// About (deprecated)
-STR_ABOUT_VER                 = ""
-STR_ABOUT_DEV_TITLE           = "Vývojáři:"
-STR_ABOUT_DEV_LIST            = ""
-STR_ABOUT_TESTERS_TITLE       = ""
-STR_ABOUT_TESTERS_LIST        = ""
-STR_ABOUT_TRANS_TITLE         = ""
-STR_ABOUT_LICENSE             = ""
 
 // Popup on drivers(while holding Ctrl or spacebar)
 STR_HINT_UNKNOWN              = "Neznámý"
@@ -285,10 +276,11 @@ STR_UPD_SELECTION             = "Výběr"
 STR_UPD_BTN_ALL               = "Označit vše"
 STR_UPD_BTN_NONE              = "Odebrat označení"
 STR_UPD_BTN_NETWORK           = "Pouze síť"
-STR_UPD_BTN_THISPC            = "Zkontrolovat balíčky pouze pro toto PC"
+STR_UPD_BTN_THISPC            = "Pouze pro toto PC"
 STR_UPD_BTN_THISPC_H          = "Abychom mohli určit, které balíčky ovladačů potřebujete, musíte nejprve stáhnout indexy."
 STR_UPD_OPTIONS               = "Možnosti"
 STR_UPD_ONLYUPDATES           = "Zobrazit pouze aktualizace, skrýt chybějící balíčky ovladačů"
+STR_UPD_PREALLOCATE				= "Předem přidělte místo na HDD, abyste zabránili fragmentaci"
 STR_UPD_TOTALSIZE             = "Celková velikost pro stažení: %d MB"
 STR_UPD_TOTALAVAIL            = "Celkové dostupné místo: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -322,9 +314,9 @@ STR_UPD_UPDATEHINT2           = "Chcete-li použít tuto funkci, musíte nejprve
 
 // Update hint
 STR_UPD_CHECKING              = "Kontrola aktualizací"
-STR_UPD_AVAIL1                = "Jsou dostupné aktualizace: SDIO R%d"
+STR_UPD_AVAIL1                = "Jsou dostupné aktualizace: SDI R%d"
 STR_UPD_AVAIL2                = "Jsou dostupné aktualizace: %d balíčků"
-STR_UPD_AVAIL3                = "Jsou dostupné aktualizace: SDIO R%d a %d balíčků"
+STR_UPD_AVAIL3                = "Jsou dostupné aktualizace: SDI R%d a %d balíčků"
 STR_UPD_START                 = "(Klikneme zde pro spuštění stažení)"
 STR_UPD_PROGRES               = "Staženo %s z %s (%d%%)"
 STR_UPD_MODIFY                = "(Klikneme zde pro výběr aktualizací)"
@@ -409,9 +401,13 @@ STR_OPTION_CMD_FINISHRB       = "Po instalaci (vyžadující restart)"
 STR_OPTION_CMD_FINISHDN       = "Po stažení"
 STR_OPTION_CONSOLE            = "Zobrazit okno konzole"
 
+// Patreon
+STR_PATREON1             = "SDI vývojáři programují ve svém volném čase. Pokud se vám aplikace líbí, podpořte nás prosím na Patreonu."
+STR_PATREON2             = "(Klikněte zde pro otevření stránky Patreon)"
+STR_PATREON_H            = ""
 // Welcome
-STR_WELCOME_TITLE             = "Snappy Driver Installer Origin"
-STR_WELCOME_SUBTITLE          = "Vítejte v Snappy Driver Installer Origin"
+STR_WELCOME_TITLE             = "Snappy Driver Installer"
+STR_WELCOME_SUBTITLE          = "Vítejte v Snappy Driver Installer"
 STR_WELCOME_INTRO             = "Než začnete, musíte si stáhnout ovladače nebo indexy ovladačů. Chcete-li zahájit stahování, vyberte jednu z následujících možností. Panel Aktualizace vás bude informovat o stavu stahování."
 STR_WELCOME_INTRO2            = "Poznámka: Další nástroje hledejte v nabídce systém v levé horní části hlavního okna aplikace."
 STR_WELCOME_BUTTON1           = "Stáhnout všechny balíčky ovladačů"
@@ -431,7 +427,7 @@ STR_USBWIZ_PAGE1_DESC         = "Tento průvodce vám pomůže vytvořit přenos
 // USB Wizard - page 2
 STR_USBWIZ_PAGE2_TITLE        = "Cílová jednotka"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Vyberte vyměnitelnou jednotku."
-STR_USBWIZ_PAGE2_DESC         = "Do kořenového adresáře vybrané vyměnitelné jednotky bude nainstalován instalační program Snappy Driver Installer Origin. Nyní vložte jednotku USB."
+STR_USBWIZ_PAGE2_DESC         = "Do kořenového adresáře vybrané vyměnitelné jednotky bude nainstalován instalační program Snappy Driver Installer. Nyní vložte jednotku USB."
 STR_USBWIZ_PAGE2_DRIVE        = "Cílová vyměnitelná jednotka:"
 STR_USBWIZ_PAGE2_MORE         = "Zobrazit více jednotek"
 STR_USBWIZ_PAGE2_CLEAR        = "Smazat vybranou jednotku"
@@ -469,7 +465,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Povolit expertní režim"
 STR_USBWIZ_PAGE4_NOUPD        = "Nekontrolovat aktualizace"
 STR_USBWIZ_PAGE4_NOSNAP       = "Nevytvářet snímky"
 STR_USBWIZ_PAGE4_NOLOG        = "Nevytvářet log soubory"
-STR_USBWIZ_PAGE4_INCAUTO      = "Zahrnout soubor Autorun. inf a SDIO_auto. bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "Zahrnout soubor Autorun. inf a SDI_auto. bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "Velikost spustitelného souboru:"
 
 // USB Wizard - page 5
