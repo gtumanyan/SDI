@@ -490,7 +490,7 @@ void registerall()
     registerLZMA();
     registerLZMA2();
 
-    //CrcGenerateTable();
+    CrcGenerateTable();
 }
 //}
 

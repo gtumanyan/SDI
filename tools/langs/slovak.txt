@@ -391,7 +391,7 @@ STR_OPTION_PORT         = "Port"
 STR_OPTION_MAX_CON      = "Maximum pripojení (0-neobmedzene)"
 STR_OPTION_MAX_DOWNLOAD = "Maximálna rýchlosť sťahovania v KB/s (0 - neobmedzene)"
 STR_OPTION_MAX_UPLOAD   = "Maximálna rýchlosť nahrávania v KB/s (0 - neobmedzene)"
-STR_OPTION_TORRENT_URL  = "Torrent URL (requires app restart)"
+//STR_OPTION_TORRENT_URL  = "Torrent URL (requires app restart)"
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS  = "Ovládače"

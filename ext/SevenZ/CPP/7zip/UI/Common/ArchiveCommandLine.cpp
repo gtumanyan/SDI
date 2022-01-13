@@ -511,68 +511,69 @@ static void AddNameToCensor(NWildcard::CCensor &censor,
 //    FOR_VECTOR (i, names)
 //      AddNameToCensor(censor, nop, names[i]);
 //}
-//
-//static void AddToCensorFromNonSwitchesStrings(
-//    CObjectVector<CRenamePair> *renamePairs,
-//    unsigned startIndex,
-//    NWildcard::CCensor &censor,
-//    const UStringVector &nonSwitchStrings,
-//    int stopSwitchIndex,
-//    const CNameOption &nop,
-//    bool thereAreSwitchIncludes, UInt32 codePage)
-//{
-//  // another default
-//  if ((renamePairs || nonSwitchStrings.Size() == startIndex) && !thereAreSwitchIncludes)
-//  {
-//    /* for rename command: -i switch sets the mask for archive item reading.
-//       if (thereAreSwitchIncludes), { we don't use UniversalWildcard. }
-//       also for non-rename command: we set UniversalWildcard, only if there are no nonSwitches. */
-//    // we use default fileds in (CNameOption) for UniversalWildcard.
-//    CNameOption nop2;
-//    // recursive mode is not important for UniversalWildcard (*)
-//    // nop2.RecursedType = nop.RecursedType; // we don't need it
-//    /*
-//    nop2.RecursedType = NRecursedType::kNonRecursed;
-//    nop2.Include = true;
-//    nop2.WildcardMatching = true;
-//    nop2.MarkMode = NWildcard::kMark_FileOrDir;
-//    */
-//    AddNameToCensor(censor, nop2, UString(kUniversalWildcard));
-//  }
-//
-//  int oldIndex = -1;
-//  
-//  if (stopSwitchIndex < 0)
-//    stopSwitchIndex = (int)nonSwitchStrings.Size();
-//
-//  for (unsigned i = startIndex; i < nonSwitchStrings.Size(); i++)
-//  {
-//    const UString &s = nonSwitchStrings[i];
-//    if (s.IsEmpty())
-//      throw CArcCmdLineException(kEmptyFilePath);
-//    if (i < (unsigned)stopSwitchIndex && s[0] == kFileListID)
-//      AddToCensorFromListFile(renamePairs, censor, nop, s.Ptr(1), codePage);
-//    else if (renamePairs)
-//    {
-//      if (oldIndex == -1)
-//        oldIndex = (int)i;
-//      else
-//      {
-//        // NRecursedType::EEnum type is used for global wildcard (-i! switches)
-//        AddRenamePair(renamePairs, nonSwitchStrings[(unsigned)oldIndex], s, NRecursedType::kNonRecursed, nop.WildcardMatching);
-//        // AddRenamePair(renamePairs, nonSwitchStrings[oldIndex], s, type);
-//        oldIndex = -1;
-//      }
-//    }
-//    else
-//      AddNameToCensor(censor, nop, s);
-//  }
-//  
-//  if (oldIndex != -1)
-//  {
-//    throw CArcCmdLineException("There is no second file name for rename pair:", nonSwitchStrings[(unsigned)oldIndex]);
-//  }
-//}
+
+static void AddToCensorFromNonSwitchesStrings(
+		CObjectVector<CRenamePair> *renamePairs,
+		unsigned startIndex,
+		NWildcard::CCensor &censor,
+		const UStringVector &nonSwitchStrings,
+		int stopSwitchIndex,
+		const CNameOption &nop,
+		bool thereAreSwitchIncludes, UInt32 codePage)
+{
+	// another default
+	if ((renamePairs || nonSwitchStrings.Size() == startIndex) && !thereAreSwitchIncludes)
+	{
+		/* for rename command: -i switch sets the mask for archive item reading.
+			 if (thereAreSwitchIncludes), { we don't use UniversalWildcard. }
+			 also for non-rename command: we set UniversalWildcard, only if there are no nonSwitches. */
+		// we use default fileds in (CNameOption) for UniversalWildcard.
+		CNameOption nop2;
+		// recursive mode is not important for UniversalWildcard (*)
+		// nop2.RecursedType = nop.RecursedType; // we don't need it
+		/*
+		nop2.RecursedType = NRecursedType::kNonRecursed;
+		nop2.Include = true;
+		nop2.WildcardMatching = true;
+		nop2.MarkMode = NWildcard::kMark_FileOrDir;
+		*/
+		AddNameToCensor(censor, nop2, UString(kUniversalWildcard));
+	}
+
+	int oldIndex = -1;
+	
+	if (stopSwitchIndex < 0)
+		stopSwitchIndex = (int)nonSwitchStrings.Size();
+
+	for (unsigned i = startIndex; i < nonSwitchStrings.Size(); i++)
+	{
+		const UString &s = nonSwitchStrings[i];
+		if (s.IsEmpty())
+			throw CArcCmdLineException(kEmptyFilePath);
+		if (i < (unsigned)stopSwitchIndex && s[0] == kFileListID)
+		//	AddToCensorFromListFile(renamePairs, censor, nop, s.Ptr(1), codePage);
+				{}
+		//else if (renamePairs)
+		//{
+		//	if (oldIndex == -1)
+		//		oldIndex = (int)i;
+		//	else
+		//	{
+		//		// NRecursedType::EEnum type is used for global wildcard (-i! switches)
+		//		AddRenamePair(renamePairs, nonSwitchStrings[(unsigned)oldIndex], s, NRecursedType::kNonRecursed, nop.WildcardMatching);
+		//		// AddRenamePair(renamePairs, nonSwitchStrings[oldIndex], s, type);
+		//		oldIndex = -1;
+		//	}
+		//}
+		else
+			AddNameToCensor(censor, nop, s);
+	}
+	
+	if (oldIndex != -1)
+	{
+		throw CArcCmdLineException("There is no second file name for rename pair:", nonSwitchStrings[(unsigned)oldIndex]);
+	}
+}
 
 #ifdef _WIN32
 
@@ -591,59 +592,59 @@ struct CEventSetEnd
 
 static const char * const k_IncorrectMapCommand = "Incorrect Map command";
 
-//static const char *ParseMapWithPaths(
-//    NWildcard::CCensor &censor,
-//    const UString &s2,
-//    const CNameOption &nop)
-//{
-//  UString s (s2);
-//  int pos = s.Find(L':');
-//  if (pos < 0)
-//    return k_IncorrectMapCommand;
-//  int pos2 = s.Find(L':', (unsigned)(pos + 1));
-//  if (pos2 < 0)
-//    return k_IncorrectMapCommand;
-//
-//  CEventSetEnd eventSetEnd((const wchar_t *)s + (unsigned)(pos2 + 1));
-//  s.DeleteFrom((unsigned)pos2);
-//  UInt32 size;
-//  if (!StringToUInt32(s.Ptr((unsigned)(pos + 1)), size)
-//      || size < sizeof(wchar_t)
-//      || size > ((UInt32)1 << 31)
-//      || size % sizeof(wchar_t) != 0)
-//    return "Unsupported Map data size";
-//
-//  s.DeleteFrom((unsigned)pos);
-//  CFileMapping map;
-//  if (map.Open(FILE_MAP_READ, GetSystemString(s)) != 0)
-//    return "Cannot open mapping";
-//  LPVOID data = map.Map(FILE_MAP_READ, 0, size);
-//  if (!data)
-//    return "MapViewOfFile error";
-//  CFileUnmapper unmapper(data);
-//
-//  UString name;
-//  const wchar_t *p = (const wchar_t *)data;
-//  if (*p != 0) // data format marker
-//    return "Unsupported Map data";
-//  UInt32 numChars = size / sizeof(wchar_t);
-//  for (UInt32 i = 1; i < numChars; i++)
-//  {
-//    wchar_t c = p[i];
-//    if (c == 0)
-//    {
-//      // MessageBoxW(0, name, L"7-Zip", 0);
-//      AddNameToCensor(censor, nop, name);
-//      name.Empty();
-//    }
-//    else
-//      name += c;
-//  }
-//  if (!name.IsEmpty())
-//    return "Map data error";
-//
-//  return NULL;
-//}
+static const char *ParseMapWithPaths(
+		NWildcard::CCensor &censor,
+		const UString &s2,
+		const CNameOption &nop)
+{
+	UString s (s2);
+	int pos = s.Find(L':');
+	if (pos < 0)
+		return k_IncorrectMapCommand;
+	int pos2 = s.Find(L':', (unsigned)(pos + 1));
+	if (pos2 < 0)
+		return k_IncorrectMapCommand;
+
+	CEventSetEnd eventSetEnd((const wchar_t *)s + (unsigned)(pos2 + 1));
+	s.DeleteFrom((unsigned)pos2);
+	UInt32 size;
+	if (!StringToUInt32(s.Ptr((unsigned)(pos + 1)), size)
+			|| size < sizeof(wchar_t)
+			|| size > ((UInt32)1 << 31)
+			|| size % sizeof(wchar_t) != 0)
+		return "Unsupported Map data size";
+
+	s.DeleteFrom((unsigned)pos);
+	CFileMapping map;
+	if (map.Open(FILE_MAP_READ, GetSystemString(s)) != 0)
+		return "Cannot open mapping";
+	LPVOID data = map.Map(FILE_MAP_READ, 0, size);
+	if (!data)
+		return "MapViewOfFile error";
+	CFileUnmapper unmapper(data);
+
+	UString name;
+	const wchar_t *p = (const wchar_t *)data;
+	if (*p != 0) // data format marker
+		return "Unsupported Map data";
+	UInt32 numChars = size / sizeof(wchar_t);
+	for (UInt32 i = 1; i < numChars; i++)
+	{
+		wchar_t c = p[i];
+		if (c == 0)
+		{
+			// MessageBoxW(0, name, L"7-Zip", 0);
+			AddNameToCensor(censor, nop, name);
+			name.Empty();
+		}
+		else
+			name += c;
+	}
+	if (!name.IsEmpty())
+		return "Map data error";
+
+	return NULL;
+}
 
 #endif
 
@@ -1290,24 +1291,24 @@ void CArcCmdLineParser::Parse2(CArcCmdLineOptions &options)
 
 	options.ConsoleCodePage = FindCharset(parser, NKey::kConsoleCharSet, true, -1);
 
-	//UInt32 codePage = (UInt32)FindCharset(parser, NKey::kListfileCharSet, false, CP_UTF8);
+	UInt32 codePage = (UInt32)FindCharset(parser, NKey::kListfileCharSet, false, CP_UTF8);
 
-	//bool thereAreSwitchIncludes = false;
+	bool thereAreSwitchIncludes = false;
 	
-	//if (parser[NKey::kInclude].ThereIs)
-	//{
-	//  thereAreSwitchIncludes = true;
-	//  nop.Include = true;
-	//  AddSwitchWildcardsToCensor(options.Censor,
-	//      parser[NKey::kInclude].PostStrings, nop, codePage);
-	//}
+	if (parser[NKey::kInclude].ThereIs)
+	{
+		thereAreSwitchIncludes = true;
+		nop.Include = true;
+		AddSwitchWildcardsToCensor(options.Censor,
+				parser[NKey::kInclude].PostStrings, nop, codePage);
+	}
 
-	//if (parser[NKey::kExclude].ThereIs)
-	//{
-	//  nop.Include = false;
-	//  AddSwitchWildcardsToCensor(options.Censor,
-	//      parser[NKey::kExclude].PostStrings, nop, codePage);
-	//}
+	if (parser[NKey::kExclude].ThereIs)
+	{
+		nop.Include = false;
+		AddSwitchWildcardsToCensor(options.Censor,
+				parser[NKey::kExclude].PostStrings, nop, codePage);
+	}
  
 	unsigned curCommandIndex = kCommandIndex + 1;
 	bool thereIsArchiveName = !parser[NKey::kNoArName].ThereIs &&
@@ -1338,11 +1339,11 @@ void CArcCmdLineParser::Parse2(CArcCmdLineOptions &options)
 	}
 
 	nop.Include = true;
-	//AddToCensorFromNonSwitchesStrings(isRename ? &options.UpdateOptions.RenamePairs : NULL,
-	//    curCommandIndex, options.Censor,
-	//    nonSwitchStrings, parser.StopSwitchIndex,
-	//    nop,
-	//    thereAreSwitchIncludes, codePage);
+	AddToCensorFromNonSwitchesStrings(isRename ? &options.UpdateOptions.RenamePairs : NULL,
+			curCommandIndex, options.Censor,
+			nonSwitchStrings, parser.StopSwitchIndex,
+			nop,
+			thereAreSwitchIncludes, codePage);
 
 	options.YesToAll = parser[NKey::kYes].ThereIs;
 
@@ -1441,16 +1442,16 @@ void CArcCmdLineParser::Parse2(CArcCmdLineOptions &options)
 		nopArc.WildcardMatching = nop.WildcardMatching;
 		nopArc.MarkMode = nop.MarkMode;
 
-		//if (parser[NKey::kArInclude].ThereIs)
-		//{
-		//  nopArc.Include = true;
-		//  AddSwitchWildcardsToCensor(arcCensor, parser[NKey::kArInclude].PostStrings, nopArc, codePage);
-		//}
-		//if (parser[NKey::kArExclude].ThereIs)
-		//{
-		//  nopArc.Include = false;
-		//  AddSwitchWildcardsToCensor(arcCensor, parser[NKey::kArExclude].PostStrings, nopArc, codePage);
-		//}
+		if (parser[NKey::kArInclude].ThereIs)
+		{
+			nopArc.Include = true;
+			AddSwitchWildcardsToCensor(arcCensor, parser[NKey::kArInclude].PostStrings, nopArc, codePage);
+		}
+		if (parser[NKey::kArExclude].ThereIs)
+		{
+			nopArc.Include = false;
+			AddSwitchWildcardsToCensor(arcCensor, parser[NKey::kArExclude].PostStrings, nopArc, codePage);
+		}
 
 		if (thereIsArchiveName)
 		{

@@ -153,6 +153,7 @@
     <ClCompile Include="..\..\ext\libtorrent\ed25519\src\verify.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\hasher512.cpp" />
     <ClCompile Include="..\..\ext\libtorrent\src\sha512.cpp" />
+    <ClCompile Include="..\..\ext\libtorrent\src\openssl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\add_torrent_params.hpp" />
@@ -397,6 +398,7 @@
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\extensions.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\aux_\keepalive.hpp" />
     <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\aux_\pool.hpp" />
+    <ClInclude Include="..\..\ext\libtorrent\include\libtorrent\aux_\set_traffic_class.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

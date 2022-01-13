@@ -394,7 +394,7 @@ STR_OPTION_PORT         = "端口"
 STR_OPTION_MAX_CON      = "最大连接数(0 表示无限制)"
 STR_OPTION_MAX_DOWNLOAD = "最大下载速度 KB/s (0 表示无限制)"
 STR_OPTION_MAX_UPLOAD   = "最大上传速度 KB/s (0 表示无限制)"
-STR_OPTION_TORRENT_URL  = "种子 URL （需要重启程序）"
+//STR_OPTION_TORRENT_URL  = "种子 URL （需要重启程序）"
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS  = "驱动"

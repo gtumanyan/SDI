@@ -465,7 +465,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "ჩართეთ ექსპერტის 
 STR_USBWIZ_PAGE4_NOUPD        = "არ შეამოწმოთ განახლებები"
 STR_USBWIZ_PAGE4_NOSNAP       = "ნუ შექმნით კადრებს"
 STR_USBWIZ_PAGE4_NOLOG        = "არ შექმნათ ჟურნალის ფაილები"
-STR_USBWIZ_PAGE4_INCAUTO      = "ჩართეთ autorun.inf და SDIO_auto.bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "ჩართეთ autorun.inf და SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "შესრულებადი ზომა:"
 
 // USB Wizard - page 5
