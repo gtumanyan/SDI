@@ -50,8 +50,10 @@
     <ClInclude Include="..\..\src\VersionEx.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Version.h" />
     <ClInclude Include="..\..\src\resource.h" />
+    <ClInclude Include="..\..\src\Version.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\res\logo128.bmp" />
@@ -72,10 +74,10 @@
     <None Include="..\..\Versions\VersionEx.h.tpl">
       <Filter>Templates</Filter>
     </None>
-    <None Include="..\..\src\SDI.ver">
+    <None Include="..\..\res\up.webp" />
+    <None Include="..\..\src\SDI.rc2">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\res\up.webp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\res\cli.txt" />

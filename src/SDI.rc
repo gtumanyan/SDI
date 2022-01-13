@@ -7,16 +7,22 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "winres.h"
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#ifndef APSTUDIO_INVOKED
+#include "SDI.rc2"
+#endif
+
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (United States) resources
+// Neutral resources
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 #pragma code_page(1252)
 
 #ifdef APSTUDIO_INVOKED
@@ -32,27 +38,13 @@ END
 
 2 TEXTINCLUDE 
 BEGIN
-    "#include ""winres.h""\r\n"
-    "\0"
-END
-
-3 TEXTINCLUDE 
-BEGIN
-    "\r\n"
-    "\0"
-END
-
-1 TEXTINCLUDE 
-BEGIN
-    "resource.h\0"
-END
-
-2 TEXTINCLUDE 
-BEGIN
-    "#include <windows.h>\r\n"
-    "#ifndef IDC_STATIC\r\n"
-    "#define IDC_STATIC -1\r\n"
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""SDI.rc2""\r\n"
     "#endif\r\n"
+    "\r\n"
     "\0"
 END
 
@@ -60,21 +52,6 @@ END
 BEGIN
     "\r\n"
     "\0"
-END
-
-1 TEXTINCLUDE 
-BEGIN
-    "resource.h\0"
-END
-
-2 TEXTINCLUDE 
-BEGIN
-    "#include <winres.h>\0"
-END
-
-3 TEXTINCLUDE 
-BEGIN
-    "#include ""SDI.ver""\0"
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -390,7 +367,7 @@ BEGIN
     0
 END
 
-#endif    // English (United States) resources
+#endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 
 

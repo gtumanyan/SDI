@@ -2,6 +2,11 @@
 // Microsoft Visual C++ generated include file.
 // Used by SDI.rc
 //
+
+#ifndef IDC_STATIC
+#define IDC_STATIC    -1
+#endif
+
 #define SW_HIDE                         0
 #define HIDE_WINDOW                     0
 #define WM_NULL                         0x0000

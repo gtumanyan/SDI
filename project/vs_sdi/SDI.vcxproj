@@ -24,7 +24,7 @@
   <ItemGroup>
     <None Include="..\..\res\install64.exe" />
     <None Include="..\..\res\up.webp" />
-    <None Include="..\..\src\SDI.ver" />
+    <None Include="..\..\src\SDI.rc2" />
     <None Include="..\..\Versions\VersionEx.h.tpl" />
     <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
