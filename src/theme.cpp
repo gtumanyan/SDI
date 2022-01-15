@@ -278,13 +278,14 @@ void VaultImp::loadFromRes(int id)
     wchar_t *datav=datav_ptr.get();
     for(size_t i=0;i<sz;i++)
     {
-        if(data1[i]==L'\r')datav[i]=L' ';else
+        if(data1[i]==L'\r') datav[i]=L' ';else
         datav[i]=data1[i];
     }
     datav[sz]=0;
     parse();
     for(size_t i=0;i<num;i++)
-        if(entry[i].init<1)Log.print_err("ERROR in vault_loadfromres: not initialized '%S'\n",entry[i].name);
+        if(entry[i].init<1)
+            Log.print_err("ERROR in vault_loadfromres: not initialized '%S'\n",entry[i].name);
 }
 
 VaultImp::VaultImp(entry_t *entryv,size_t numv,int resv,int elem_id_,const wchar_t *folder_):
