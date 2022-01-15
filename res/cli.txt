@@ -67,7 +67,7 @@ sdi.cfg
 -oldstyle         Shows driver list using old style.
 -preservecfg      Prevents updating of sdi.cfg.
 -hidepatreon      Hides the Patreon button.
--cfg:<FileName>   Loads <file> instead of "sdi.cfg".
+-cfg:<FileName>   Loads <file> instead of "sdi2.cfg".
 
 -------
 Torrent
