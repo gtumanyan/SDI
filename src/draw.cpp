@@ -181,7 +181,7 @@ void ImageImp::Release()
     iscopy=0;
 }
 
-void ImageImp::LoadFromFile(wchar_t *filename)
+void ImageImp::LoadFromFile(const wchar_t *filename)
 {
     if(!filename||!*filename)return;
 
@@ -355,7 +355,7 @@ void ImageStorangeImp::LoadAll()
         wchar_t *str=D_STR(index[i]+add);
         size_t j;
         for(j=0;j<i;j++)
-            Log.print_con("%d Coping %S %d\n",i,str,j);
+            Log.print_con("%d Copying %S %d\n",i,str,j);
             if(!wcscmp(str,D_STR(index[j]+add)))
         {
             a[i].MakeCopy(a[j]);
