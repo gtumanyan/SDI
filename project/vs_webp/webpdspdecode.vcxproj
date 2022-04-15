@@ -366,6 +366,7 @@
 	<ItemGroup>
 		<ClCompile Include="..\..\ext\libwebp\src\dsp\alpha_processing.c" />
 		<ClCompile Include="..\..\ext\libwebp\src\dsp\cpu.c" />
+		<ClInclude Include="..\..\ext\libwebp\src\dsp\cpu.h" />
 		<ClCompile Include="..\..\ext\libwebp\src\dsp\dec.c" />
 		<ClCompile Include="..\..\ext\libwebp\src\dsp\dec_clip_tables.c" />
 		<ClInclude Include="..\..\ext\libwebp\src\dsp\dsp.h" />
