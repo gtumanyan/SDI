@@ -65,8 +65,8 @@ public:
 
     virtual void Clear()=0;
     virtual void AddItem(const wchar_t *str)=0;
-    virtual int FindItem(const wchar_t *str)=0;
-    virtual int GetNumItems()=0;
+    virtual int  FindItem(const wchar_t *str)=0;
+    virtual int  GetNumItems()=0;
     virtual void SetCurSel(int i)=0;
     virtual void Focus()=0;
     virtual void SetFont(wFont *font)=0;

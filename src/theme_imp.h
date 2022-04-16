@@ -33,7 +33,7 @@ protected:
     int elem_id;
     const wchar_t *folder;
 
-    wchar_t namelist[64][128];
+    wchar_t namelist[41][128];
 
 protected:
     int  findvar(wchar_t *str);
@@ -62,7 +62,7 @@ public:
 //{ VaultLang
 class VaultLang:public VaultImp
 {
-    wchar_t lang_ids[64][128];
+    wchar_t lang_ids[40][128];
 
 public:
     VaultLang(entry_t *entry,size_t num,int res,int elem_id_,const wchar_t *folder_);
@@ -81,7 +81,7 @@ public:
 //{ VaultTheme
 class VaultTheme:public VaultImp
 {
-     wchar_t theme_ids[64][128];
+    wchar_t theme_ids[64][128];
     ImageStorange *Images;
     ImageStorange *Icons;
 

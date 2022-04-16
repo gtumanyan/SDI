@@ -1,4 +1,5 @@
-﻿STR_TRANSLATORS         = "BadPointer, Glenn Delahoy"
+﻿// send updates to https://t.me/Snappy_Driver_Installer
+STR_TRANSLATORS         = "BadPointer, Glenn Delahoy"
 
 STR_LANG_NAME           = "English"
 STR_LANG_ID             = "English"

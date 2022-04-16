@@ -23,7 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\res\install64.exe" />
-    <None Include="..\..\res\up.webp" />
     <None Include="..\..\src\SDI.rc2" />
     <None Include="..\..\Versions\VersionEx.h.tpl" />
     <None Include="ClassDiagram.cd" />
@@ -127,11 +126,11 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>USE_TORRENT;WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);USE_TORRENT;WIN32;_WINDOWS;BOOST_ASIO_ENABLE_CANCELIO;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0600</PreprocessorDefinitions>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <CallingConvention>FastCall</CallingConvention>
       <LanguageStandard>stdcpp17</LanguageStandard>

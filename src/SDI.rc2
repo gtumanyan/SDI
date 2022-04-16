@@ -1,0 +1,49 @@
+//
+// SDI.rc2 - resources Microsoft Visual C++ does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Add manually edited resources here...
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+#include "Version.h"
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION    VERSION_FILEVERSION_NUM
+PRODUCTVERSION VERSION_FILEVERSION_NUM
+FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS VS_FF_PATCHED | VS_FF_DEBUG
+#else
+ FILEFLAGS VS_FF_PATCHED
+#endif
+ FILEOS VOS_NT_WINDOWS32
+ FILETYPE VFT_APP
+ FILESUBTYPE VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+      VALUE "FileDescription",  MY_APPNAME_DESCRIPTION
+      VALUE "InternalName",     MY_APPNAME
+      VALUE "ProductName",      MY_APPNAME
+      VALUE "FileVersion",      VERSION_FILEVERSION
+            VALUE "InternalName", "GitWCRev"
+      VALUE "LegalCopyright",   VERSION_LEGALCOPYRIGHT
+      VALUE "OriginalFilename", "SDI.exe"
+      VALUE "ProductVersion",   VERSION_FILEVERSION
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+    VALUE "Translation",
+            0x409, 1252, // English
+    END
+END

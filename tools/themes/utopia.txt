@@ -105,7 +105,7 @@ PANEL11_WY               = PANEL10_WY
 PANEL11_OFSY             = 88
 
 // Items on left panel
-PNutopiaM_WY               = 22
+PNLITEM_WY						= 22
 
 // Packname
 DRVITEM_TEXT1_COLOR_PN 		= 0xffffff

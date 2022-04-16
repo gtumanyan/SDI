@@ -347,35 +347,35 @@ void MainWindow_t::LoadMenuItems()
 
 		// the tools menu - reverse order
 		ToolsMenu=CreatePopupMenu();
-		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_DEVICEPRNT,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYST_DEVICEPRNT));
-		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_SYSCONTROL,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYST_SYSCONTROL));
-		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_SYSREST,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYST_SYSREST));
-		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_SYSPROT,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYST_SYSPROT));
-		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_SYSPROPS_ADV,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYSPROPS_ADV));
-		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_SYSPROPS,0,0,nullptr,const_cast<wchar_t *>STR(STR_REST_SYSPROPS));
-		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_DEVICEMNG,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYS_DEVICEMNG));
-		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_COMPMNG,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYST_COMPMNG));
+		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_DEVICEPRNT,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYST_DEVICEPRNT)));
+		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_SYSCONTROL,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYST_SYSCONTROL)));
+		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_SYSREST,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYST_SYSREST)));
+		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_SYSPROT,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYST_SYSPROT)));
+		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_SYSPROPS_ADV,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYSPROPS_ADV)));
+		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_SYSPROPS,0,0,nullptr,const_cast<wchar_t *> (STR(STR_REST_SYSPROPS)));
+		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_DEVICEMNG,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYS_DEVICEMNG)));
+		AddMenuItem(ToolsMenu,MIIM_STRING|MIIM_ID,ID_COMPMNG,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYST_COMPMNG)));
 
 		// the updates sub-menu - reverse order
 		UpdatesMenu=CreatePopupMenu();
-		AddMenuItem(UpdatesMenu,MIIM_STRING|MIIM_ID,IDM_UPDATES_DRIVERS,0,0,nullptr,const_cast<wchar_t *>STR(STR_UPDATES_DRIVERS));
-		AddMenuItem(UpdatesMenu,MIIM_STRING|MIIM_ID,IDM_UPDATES_SDI,0,0,nullptr,const_cast<wchar_t *>STR(STR_UPDATES_SDI));
+		AddMenuItem(UpdatesMenu,MIIM_STRING|MIIM_ID,IDM_UPDATES_DRIVERS,0,0,nullptr,const_cast<wchar_t *> (STR(STR_UPDATES_DRIVERS)));
+		AddMenuItem(UpdatesMenu,MIIM_STRING|MIIM_ID,IDM_UPDATES_SDI,0,0,nullptr,const_cast<wchar_t *> (STR((STR_UPDATES_SDI))));
 		AddMenuItem(UpdatesMenu,MIIM_FTYPE,0,MFT_SEPARATOR,0,nullptr,const_cast<wchar_t *>(L""));
-		AddMenuItem(UpdatesMenu,MIIM_STRING|MIIM_ID|MIIM_STATE,IDM_SEED,0,MFS_DISABLED,nullptr,const_cast<wchar_t *>STR(STR_SYST_START_SEED));
+		AddMenuItem(UpdatesMenu,MIIM_STRING|MIIM_ID|MIIM_STATE,IDM_SEED,0,MFS_DISABLED,nullptr,const_cast<wchar_t *> (STR(STR_SYST_START_SEED)));
 
 		// add options to the system menu - reverse order
 		AddMenuItem(pSysMenu,MIIM_FTYPE,0,MFT_SEPARATOR,0,nullptr,const_cast<wchar_t *>(L""));
 		#ifndef NDEBUG
 		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_WELCOME,0,0,nullptr,const_cast<wchar_t *>(L"Welcome"));
 		#endif // NDEBUG
-		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_LICENSE,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYST_LICENSE));
-		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_ABOUT,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYST_ABOUT));
-		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_TRANSLATE,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYST_TRANSLATE));
-		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_USBWIZARD,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYST_USBWIZARD));
-		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_DRVDIR,0,0,nullptr,const_cast<wchar_t *>STR(STR_DRVDIR));
-		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_OPENLOGS,0,0,nullptr,const_cast<wchar_t *>STR(STR_OPENLOGS));
-		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID|MIIM_SUBMENU,IDM_TOOLS,0,0,ToolsMenu,const_cast<wchar_t *>STR(STR_TOOLS));
-		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID|MIIM_SUBMENU,IDM_UPDATES,0,0,UpdatesMenu,const_cast<wchar_t *>STR(STR_UPDATES));
+		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_LICENSE,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYST_LICENSE)));
+		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_ABOUT,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYST_ABOUT)));
+		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_TRANSLATE,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYST_TRANSLATE)));
+		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_USBWIZARD,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYST_USBWIZARD)));
+		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_DRVDIR,0,0,nullptr,const_cast<wchar_t *> (STR(STR_DRVDIR)));
+		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_OPENLOGS,0,0,nullptr,const_cast<wchar_t *> (STR(STR_OPENLOGS)));
+		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID|MIIM_SUBMENU,IDM_TOOLS,0,0,ToolsMenu,const_cast<wchar_t *> (STR(STR_TOOLS)));
+		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID|MIIM_SUBMENU,IDM_UPDATES,0,0,UpdatesMenu,const_cast<wchar_t *> (STR(STR_UPDATES)));
 }
 
 void MainWindow_t::MainLoop(int nCmd)
@@ -595,7 +595,7 @@ void MainWindow_t::lang_refresh()
 				return;
 		}
 
-		rtl=language[STR_RTL].val;
+		rtl=std::get<int>(language[STR_RTL].value);
 		if(rtl!=1)rtl=0;
 		setMirroring(hField);
 		setMirroring(hMain);
@@ -1375,7 +1375,7 @@ void MainWindow_t::ResetUpdater(int activetorrent)
 {
 		#ifdef USE_TORRENT
 		// update the menu items
-		ModifyMenuItem(pSysMenu,MIIM_STRING|MIIM_STATE,IDM_SEED,MFS_DISABLED,const_cast<wchar_t *>STR(STR_SYST_START_SEED));
+		ModifyMenuItem(pSysMenu,MIIM_STRING|MIIM_STATE,IDM_SEED,MFS_DISABLED,const_cast<wchar_t *>(STR(STR_SYST_START_SEED)));
 		UpdateTorrentItems(0);
 		Settings.flags|=FLAG_CHECKUPDATES;
 
@@ -1664,10 +1664,10 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 								switch(lParam)
 								{
 										case 1:
-												ModifyMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_SEED,0,const_cast<wchar_t *>STR(STR_SYST_STOP_SEED));
+												ModifyMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_SEED,0,const_cast<wchar_t *>(STR(STR_SYST_STOP_SEED)));
 												break;
 										case 0:
-												ModifyMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_SEED,0,const_cast<wchar_t *>STR(STR_SYST_START_SEED));
+												ModifyMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_SEED,0,const_cast<wchar_t *>(STR(STR_SYST_START_SEED)));
 												break;
 										default:
 												break;

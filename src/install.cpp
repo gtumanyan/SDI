@@ -293,6 +293,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 				int restorePointFrequency=System.GetRestorePointCreationFrequency();
 				// set to always create a restore point
 				System.SetRestorePointCreationFrequency(0);
+				// System Restore client dll
 				hinstLib=LoadLibrary(L"SrClient.dll");
 				if(hinstLib!=NULL)
 						WIN5f_SRSetRestorePointW=(WINAPI5t_SRSetRestorePointW)GetProcAddress(hinstLib,"SRSetRestorePointW");
@@ -319,8 +320,6 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 								restorePointSucceeded=WIN5f_SRSetRestorePointW(&pRestorePtSpec,&pSMgrStatus);
 								Log.print_con("rt rest point{ %d(%d)\n",(int)restorePointSucceeded,pSMgrStatus.nStatus);
 						}
-						// return it to the state we found it in
-						System.SetRestorePointCreationFrequency(restorePointFrequency);
 						if(CRITICAL_SECTION_ACTIVE)EnterCriticalSection(&sync);
 
 						manager_g->items_list[SLOT_RESTORE_POINT].percent=1000;
@@ -344,6 +343,9 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 				}
 				MainWindow.redrawfield();
 				if(hinstLib)FreeLibrary(hinstLib);
+				// return it to the state we found it in
+				System.SetRestorePointCreationFrequency(restorePointFrequency);
+				//
 				manager_g->set_rstpnt(0);
 				manager_g->items_list[SLOT_RESTORE_POINT].percent=0;
 		}

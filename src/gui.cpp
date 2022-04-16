@@ -147,7 +147,7 @@ void ExpertmodeCheckboxCommand::UpdateCheckbox(bool *checked)
 
 void wPanel::arrange()
 {
-    int ofsx=D_X(PNLITEM_OFSX),ofsy=D_X(PNLITEM_OFSY);
+    int ofsx=(D_X(PNLITEM_OFSX)), ofsy=D_X(PNLITEM_OFSY);
     int wy1=D_X(PANEL_WY+indofs);
 
     x1=Xm(D_X(PANEL_OFSX+indofs),D_X(PANEL_WX+indofs));

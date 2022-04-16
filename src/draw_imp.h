@@ -77,7 +77,7 @@ class ImageImp:public Image
     int iscopy=0;
 
 private:
-    void LoadFromFile(wchar_t *filename);
+    void LoadFromFile(wchar_t const* filename);
     void LoadFromRes(int id);
     void CreateMyBitmap(BYTE *data,size_t sz);
     void Draw(HDC dc,int x1,int y1,int x2,int y2,int anchor,int fill);

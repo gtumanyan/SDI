@@ -103,7 +103,7 @@ KBHLT_BITMAP_FILL        = 0
 
 // Panel, generic
 PANEL_OFSX               = 10
-PANEL_OFSY               = 10
+
 PANEL_WX                 = 188
 PANEL_WY                 = 21
 PANEL_INSIDE_COLOR       = 0xD0A0A0 // set 0xFF000000 to expose the background

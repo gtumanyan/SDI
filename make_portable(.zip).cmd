@@ -88,8 +88,8 @@ IF NOT EXIST "%TEMP_NAME%" MD "%TEMP_NAME%"
 FOR %%A IN ("SDI_x64.exe" ^
     "SDI.exe") DO COPY /Y /V "%%A" "%TEMP_NAME%\"
 
-SET "LNG=%TEMP_NAME%\langs"
-SET "THEMES=%TEMP_NAME%\Themes"
+SET "LNG=%TEMP_NAME%\tools\langs"
+SET "THEMES=%TEMP_NAME%\tools\Themes"
 SET "DOCS=%TEMP_NAME%\Docs"
 IF NOT EXIST %LNG% MD %LNG%
 IF NOT EXIST %THEMES% MD %THEMES%
@@ -102,7 +102,7 @@ COPY /Y /V "Changes.txt" "%DOCS%"
 PUSHD "%TEMP_NAME%"
 "%SEVENZIP%" a -tzip -mcu=on -mx=7^
  "%ZIP_NAME%.zip" "SDI*.exe" "Readme.txt"^
- "langs" "Themes" "Docs">NUL
+ "tools" "Docs">NUL
 IF %ERRORLEVEL% NEQ 0 CALL :SUBMSG "ERROR" "Compilation failed!"
 
 CALL :SUBMSG "INFO" "%ZIP_NAME%.zip created successfully!"
