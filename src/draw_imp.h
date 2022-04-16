@@ -136,7 +136,7 @@ public:
 
     void DrawEmptyRect(int x1,int y1,int x2,int y2,int color);
     void DrawFilledRect(int x1,int y1,int x2,int y2,int color1,int color2,int w,int r);
-    void DrawWidget(int x1,int y1,int x2,int y2,int i);
+    void DrawWidget(int x1,int y1,int x2,int y2,int i) noexcept;
     void DrawImage(Image &image,int x1,int y1,int wx,int wy,int flags1,int flags2);
     void DrawLine(int x1,int y1,int x2,int y2);
     void DrawCheckbox(int x,int y,int wx,int wy,int checked,int active,int type);

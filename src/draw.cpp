@@ -646,7 +646,7 @@ void CanvasImp::DrawFilledRect(int x1,int y1,int x2,int y2,int color1,int color2
 		}
 }
 
-void CanvasImp::DrawWidget(int x1,int y1,int x2,int y2,int id)
+void CanvasImp::DrawWidget(int x1,int y1,int x2,int y2,int id) noexcept
 {
 		if(id<0||id>=BOX_NUM)
 		{
