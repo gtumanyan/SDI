@@ -764,7 +764,9 @@ void Popup_t::drawpopup(size_t itembar,int str_id,int type,int x,int y,HWND hwnd
 		int needupdate;
 
 		if((type==FLOATING_CMPDRIVER||type==FLOATING_DRIVERLST)&&itembar==0)type=FLOATING_NONE;
-		if(type==FLOATING_TOOLTIP&&(str_id<=1||!*STR(str_id)))type=FLOATING_NONE;
+		auto floating_string = *STR(str_id);
+		//Log.print_debug("%S\n", floating_string);
+		if(type==FLOATING_TOOLTIP && (str_id<=1 || !floating_string)) type=FLOATING_NONE;
 
 		if(rtl)p.x+=floating_x;
 		ClientToScreen(hwnd,&p);
