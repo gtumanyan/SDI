@@ -173,8 +173,8 @@ int itembar_t::box_status()
         case SLOT_PATREON:
             return BOX_PATREON;
 
-        case SLOT_TRANSLATION:
-            return BOX_TRANSLATION;
+        //case SLOT_TRANSLATION:
+        //    return BOX_TRANSLATION;
 
         case SLOT_RESTORE_POINT:
             switch(install_status)
