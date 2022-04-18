@@ -35,7 +35,7 @@ BEGIN
       VALUE "InternalName",     MY_APPNAME
       VALUE "ProductName",      MY_APPNAME
       VALUE "FileVersion",      VERSION_FILEVERSION
-            VALUE "InternalName", "GitWCRev"
+      VALUE "InternalName",     "GitWCRev"
       VALUE "LegalCopyright",   VERSION_LEGALCOPYRIGHT
       VALUE "OriginalFilename", "SDI.exe"
       VALUE "ProductVersion",   VERSION_FILEVERSION

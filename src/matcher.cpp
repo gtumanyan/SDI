@@ -53,7 +53,7 @@ const char *nts[NUM_DECS]=
     "nt.6.2","ntx86.6.2","ntamd64.6.2","ntia64.6.2", // 8
     "nt.6.3","ntx86.6.3","ntamd64.6.3","ntia64.6.3", // 8.1
     "nt.6.4","ntx86.6.4","ntamd64.6.4","ntia64.6.4", // 10
-    "nt.10.0","ntx86.10.0","ntamd64.10.0","ntia64.10.0", // 10
+    "nt.10.0","ntx86.10.0","ntamd64.10.0","ntia64.10.0", // Server 2016 
     "nt.10.0.1","ntx86.10.0.1","ntamd64.10.0.1","ntia64.10.0.1", // 10
     "nt",    "ntx86",    "ntamd64",    "ntia64",
     "nt..",  "ntx86..",  "ntamd64..",  "ntia64..",
@@ -984,6 +984,7 @@ int Hwidmatch::isvalidcat(const State *state)
 
     int major,minor;
     state->getWinVer(&major,&minor);
+    if (major == 11) major = 10;    //On 2022 there is no windows 11 cats
     wsprintfA(bufa,"2:%d.%d",major,minor);
     if(!*s)return 0;
     return strstr(s,bufa)?1:0;

@@ -1,6 +1,6 @@
 ﻿// send updates to https://t.me/Snappy_Driver_Installer
 
-STR_TRANSLATORS               = "BadPointer"
+STR_TRANSLATORS               = "BadPointer, WindR"
 
 STR_LANG_NAME                 = "Русский"
 STR_LANG_ID                   = "Russian"
@@ -14,7 +14,7 @@ STR_SHOW_SYSINFO_H            = "Информация о системе"
 
 STR_INSTALL                   = "Установить"
 STR_INSTALL_H                 = "Запустить установку выбранных драйверов(Ctrl+I).\n\nСОВЕТ: Установку отдельного драйвера также можно запустить, кликнув на нём при нажатом Shift."
-STR_SELECT_ALL                = "Выделить всё"
+STR_SELECT_ALL                = "Выделить все"
 STR_SELECT_ALL_H              = "Ctrl+A"
 STR_SELECT_NONE               = "Снять выделение"
 STR_SELECT_NONE_H             = "Ctrl+N"
