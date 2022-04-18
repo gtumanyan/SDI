@@ -370,7 +370,7 @@ void MainWindow_t::LoadMenuItems()
 		#endif // NDEBUG
 		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_LICENSE,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYST_LICENSE)));
 		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_ABOUT,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYST_ABOUT)));
-		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_TRANSLATE,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYST_TRANSLATE)));
+		// AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_TRANSLATE,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYST_TRANSLATE));
 		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_USBWIZARD,0,0,nullptr,const_cast<wchar_t *> (STR(STR_SYST_USBWIZARD)));
 		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_DRVDIR,0,0,nullptr,const_cast<wchar_t *> (STR(STR_DRVDIR)));
 		AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_OPENLOGS,0,0,nullptr,const_cast<wchar_t *> (STR(STR_OPENLOGS)));
