@@ -423,7 +423,7 @@ int calc_signature(int catalogfile,const State *state,int isnt)
 {
     if(state->getArchitecture())
     {
-        if(catalogfile&(1<<CatalogFile|1<<CatalogFile_nt|1<<CatalogFile_ntamd64|1<<CatalogFile_ntia64))
+        if(catalogfile&(1<<CatalogFile|1<<CatalogFile_nt|1<<CatalogFile_ntamd64|1<<CatalogFile_ntarm64))
             return 0;
     }
     else

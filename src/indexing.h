@@ -64,7 +64,7 @@ enum
     CatalogFile,
     CatalogFile_nt,
     CatalogFile_ntx86,
-    CatalogFile_ntia64,
+    CatalogFile_ntarm64,
     CatalogFile_ntamd64,
     DriverVer,
     DriverPackageDisplayName,

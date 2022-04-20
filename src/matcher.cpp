@@ -43,20 +43,21 @@ Invalid:
 */
 const char *nts[NUM_DECS]=
 {
-    "nt.5",  "ntx86.5",  "ntamd64.5"  ,"ntia64.5",   // 2000
-    "nt.5.0","ntx86.5.0","ntamd64.5.0","ntia64.5.0", // 2000
-    "nt.5.1","ntx86.5.1","ntamd64.5.1","ntia64.5.1", // XP
-    "nt.5.2","ntx86.5.2","ntamd64.5.2","ntia64.5.2", // Server 2003
-    "nt.6",  "ntx86.6",  "ntamd64.6"  ,"ntia64.6",   // Vista
-    "nt.6.0","ntx86.6.0","ntamd64.6.0","ntia64.6.0", // Vista
-    "nt.6.1","ntx86.6.1","ntamd64.6.1","ntia64.6.1", // 7
-    "nt.6.2","ntx86.6.2","ntamd64.6.2","ntia64.6.2", // 8
-    "nt.6.3","ntx86.6.3","ntamd64.6.3","ntia64.6.3", // 8.1
-    "nt.6.4","ntx86.6.4","ntamd64.6.4","ntia64.6.4", // 10
-    "nt.10.0","ntx86.10.0","ntamd64.10.0","ntia64.10.0", // Server 2016 
-    "nt.10.0.1","ntx86.10.0.1","ntamd64.10.0.1","ntia64.10.0.1", // 10
-    "nt",    "ntx86",    "ntamd64",    "ntia64",
-    "nt..",  "ntx86..",  "ntamd64..",  "ntia64..",
+    "nt.5",  "ntx86.5",  "ntamd64.5"  ,"ntarm64.5",                                       // 2000
+    "nt.5.0","ntx86.5.0","ntamd64.5.0","ntarm64.5.0",                                     // 2000
+    "nt.5.1","ntx86.5.1","ntamd64.5.1","ntarm64.5.1",                                     // XP
+    "nt.5.2","ntx86.5.2","ntamd64.5.2","ntarm64.5.2",                                     // Server 2003
+    "nt.6",  "ntx86.6",  "ntamd64.6"  ,"ntarm64.6",                                       // Vista
+    "nt.6.0","ntx86.6.0","ntamd64.6.0","ntarm64.6.0",                                     // Vista
+    "nt.6.1","ntx86.6.1","ntamd64.6.1","ntarm64.6.1",                                     // 7
+    "nt.6.2","ntx86.6.2","ntamd64.6.2","ntarm64.6.2",                                     // 8
+    "nt.6.3","ntx86.6.3","ntamd64.6.3","ntarm64.6.3",                                     // 8.1
+    "nt.6.4","ntx86.6.4","ntamd64.6.4","ntarm64.6.4",                                     // 10
+    "nt.10.0","ntx86.10.0","ntamd64.10.0","ntarm64.10.0",                                 // Server 2016 
+    "nt.10.0.1","ntx86.10.0.1","ntamd64.10.0.1","ntarm64.10.0.1",                         // 10
+    "NT.10.0...22000","NTx86.10.0...22000","NTamd64.10.0...22000","ntarm64.10.0...22000", // 11
+    "nt",    "ntx86",    "ntamd64",    "ntarm64",
+    "nt..",  "ntx86..",  "ntamd64..",   "ntarm64..",
 };
 
 const int nts_version[NUM_DECS]=
@@ -71,8 +72,9 @@ const int nts_version[NUM_DECS]=
     62,    62,    62,    62, // 8
     63,    63,    63,    63, // 8.1
     64,    64,    64,    64, // 10
-    64,    64,    64,    64, // 10
-    64,    64,    64,    64, // 10
+    10,    10,    10,    10, // Server 2016
+    10,    10,    10,    10, // 10
+    10,    10,    10,    10, // 11
      0,     0,     0,     0,
      0,     0,     0,     0,
 };
@@ -82,15 +84,16 @@ const int nts_arch[NUM_DECS]=
     0,  1,  2,  3, // 2000
     0,  1,  2,  3, // 2000
     0,  1,  2,  3, // XP
-    0,  1,  2,  3, // Serve
+    0,  1,  2,  3, // Server
     0,  1,  2,  3, // Vista
     0,  1,  2,  3, // Vista
     0,  1,  2,  3, // 7
     0,  1,  2,  3, // 8
     0,  1,  2,  3, // 8.1
     0,  1,  2,  3, // 10
+    0,  1,  2,  3, // Server 2016
     0,  1,  2,  3, // 10
-    0,  1,  2,  3, // 10
+    0,  1,  2,  3, // 11
     0,  1,  2,  3,
     0,  1,  2,  3,
 };
@@ -107,8 +110,9 @@ const int nts_score[NUM_DECS]=
     62,   162,   162,   162, // 8
     63,   163,   163,   163, // 8.1
     64,   164,   164,   164, // 10
+    64,   164,   164,   164, // Server 2016
     64,   164,   164,   164, // 10
-    64,   164,   164,   164, // 10
+    64,   164,   164,   164, // 11
     10,   100,   100,   100,
     10,   100,   100,   100,
 };
@@ -230,7 +234,8 @@ int calc_secttype(const char *s)
         if((p=strchr(p+1,'.')))
             if((p=strchr(p+1,'.')))*p=0;
 
-    for(int i=0;i<NUM_DECS;i++)if(!_strcmpi(buf+3,nts[i]+2))return i;
+    for(int i=0;i<NUM_DECS;i++)if(!_strcmpi(buf+3,nts[i]+2))
+        return i;
     return -1;
 }
 
@@ -984,7 +989,7 @@ int Hwidmatch::isvalidcat(const State *state)
 
     int major,minor;
     state->getWinVer(&major,&minor);
-    if (major == 11) major = 10;    //On 2022 there is no windows 11 cats
+    //if (major == 11) major = 10;    //On 2022 there is no windows 11 cats
     wsprintfA(bufa,"2:%d.%d",major,minor);
     if(!*s)return 0;
     return strstr(s,bufa)?1:0;

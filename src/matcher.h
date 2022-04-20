@@ -16,7 +16,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef MATCHER_H
 #define MATCHER_H
 
-#define NUM_DECS 14*4
+#define NUM_DECS 15*4
 #define NUM_MARKERS 39
 #define NUM_FILTERS 22
 

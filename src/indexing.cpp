@@ -52,7 +52,7 @@ const tbl_t table_version[NUM_VER_NAMES]=
     {"catalogfile",                11},
     {"catalogfile.nt",             14},
     {"catalogfile.ntx86",          17},
-    {"catalogfile.ntia64",         18},
+    {"catalogfile.ntarm64",         18},
     {"catalogfile.ntamd64",        19},
     {"driverver",                  9},
     {"driverpackagedisplayname",   24},
