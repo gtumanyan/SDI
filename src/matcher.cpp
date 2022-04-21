@@ -55,7 +55,7 @@ const char *nts[NUM_DECS]=
     "nt.6.4","ntx86.6.4","ntamd64.6.4","ntarm64.6.4",                                     // 10
     "nt.10.0","ntx86.10.0","ntamd64.10.0","ntarm64.10.0",                                 // Server 2016 
     "nt.10.0.1","ntx86.10.0.1","ntamd64.10.0.1","ntarm64.10.0.1",                         // 10
-    "NT.10.0...22000","NTx86.10.0...22000","NTamd64.10.0...22000","ntarm64.10.0...22000", // 11
+    "NT.10.0...22000","NTx86.10.0...22000","ntamd64.10.0...22000","ntarm64.10.0...22000", // 11
     "nt",    "ntx86",    "ntamd64",    "ntarm64",
     "nt..",  "ntx86..",  "ntamd64..",   "ntarm64..",
 };
@@ -227,12 +227,13 @@ int calc_secttype(const char *s)
 
     s=StrStrIA(s,".nt");
     if(!s)return -1;
+    if (!_strcmpi(s, ".ntamd64.10.0...22000")) return 50;
 
     strcpy(buf,s);
 
-    if((p=strchr(p+1,'.')))
-        if((p=strchr(p+1,'.')))
-            if((p=strchr(p+1,'.')))*p=0;
+    if ((p = strchr(p + 1, '.')))
+        if ((p = strchr(p + 1, '.')))
+            if ((p = strchr(p + 1, '.')))*p = 0;
 
     for(int i=0;i<NUM_DECS;i++)if(!_strcmpi(buf+3,nts[i]+2))
         return i;
@@ -885,7 +886,7 @@ void Hwidmatch::print_hr()
     log_file("  CRC:  %8X%\n",              getdrp_infcrc(this));
     log_file("  Marker %d\n",                markerscore);
     log_file("  Status %3X\n",               status);*/
-    Log.print_file("  Pack:     %S\\%S\n",       getdrp_packpath(),getdrp_packname());
+    Log.print_file("  Pack:     %S\\%S\n", getdrp_packpath(),getdrp_packname());
 
     Log.print_file("  Name:     %s\n",     getdrp_drvdesc());
     Log.print_file("  Provider: %s\n",     getdrp_drvmanufacturer());
@@ -1075,6 +1076,7 @@ const char *Hwidmatch::getdrp_drvcat(int n)const
     size_t desc_index=drp->HWID_list[HWID_index].desc_index;
     size_t manufacturer_index=drp->desc_list[desc_index].manufacturer_index;
     size_t inffile_index=drp->manufacturer_list[manufacturer_index].inffile_index;
+    Log.print_debug(drp->text_ind.get(drp->inffile[inffile_index].cats[n]));
     if(!drp->inffile[inffile_index].cats[n])return "";
     return drp->text_ind.get(drp->inffile[inffile_index].cats[n]);
 }

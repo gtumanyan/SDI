@@ -52,7 +52,7 @@ const tbl_t table_version[NUM_VER_NAMES]=
     {"catalogfile",                11},
     {"catalogfile.nt",             14},
     {"catalogfile.ntx86",          17},
-    {"catalogfile.ntarm64",         18},
+    {"catalogfile.ntarm64",        18},
     {"catalogfile.ntamd64",        19},
     {"driverver",                  9},
     {"driverpackagedisplayname",   24},
@@ -1366,7 +1366,8 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
     WStringShort inffull;
     inffull.sprintf(L"%s%s",drpdir,inffilename);
 
-    for(int i=0; i<NUM_VER_NAMES; i++)cur_inffile->fields[i]=cur_inffile->cats[i]=0;
+    for(int i=0; i<NUM_VER_NAMES; i++)
+        cur_inffile->fields[i]=cur_inffile->cats[i]=0;
 
     Parser parse_info{this,string_list,inffull.Get()};
     Parser parse_info2{this,string_list,inffull.Get()};
@@ -1984,7 +1985,7 @@ void Driverpack::print_index_hr()
     getindexfilename(col->getIndex_linear_dir(),L"txt",filename);
     f=_wfopen(filename,L"wt");
 
-    Log.print_con("Saving %s\n",filename);
+    Log.print_con("Saving %S\n",filename);
     fwprintf(f,L"%s\\%s (%d inf files)\n",getPath(),getFilename(),static_cast<int>(n));
     for(inffile_index=0;inffile_index<n;inffile_index++)
     {
@@ -2001,9 +2002,9 @@ void Driverpack::print_index_hr()
         for(i=0;i<NUM_VER_NAMES;i++)
             if(d_i->fields[i])
             {
-                fprintf(f,"    %-28s%s\n",table_version[i].s,text_ind.get(d_i->fields[i]));
+                fprintf(f,"    %-28s%s\n", table_version[i].s,text_ind.get(d_i->fields[i]));
+                Log.print_debug("Saving cat version %s\n", text_ind.get(d_i->cats[i]));
                 if(d_i->cats[i])fprintf(f,"      %s\n",text_ind.get(d_i->cats[i]));
-
             }
 
         memset(cnts,-1,sizeof(cnts));plain=0;
@@ -2060,10 +2061,10 @@ void Driverpack::print_index_hr()
             else if(manuf_index!=manuf_index_last)break;
 
         fprintf(f,"  Decors:\n");
-        fprintf(f,"    %-15s%d\n","plain",plain);
+        fprintf(f,"    %-21s%-d\n","plain",plain);
         for(i=0;i<NUM_DECS;i++)
         {
-            if(cnts[i]>=0)fprintf(f,"    %-15s%d\n",nts[i],cnts[i]);
+            if(cnts[i]>=0)fprintf(f,"    %-21s%-d\n",nts[i],cnts[i]);
         }
         fprintf(f,"\n");
     }
