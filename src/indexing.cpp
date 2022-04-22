@@ -139,7 +139,7 @@ void findosattr(char *bufa,const char *adr,size_t len)
 {
     size_t bufal=0;
     const char *p=adr;
-    static wchar_t osatt[]={L'O',L'S',L'A',L't',L't'}; // OSAtt
+    static wchar_t osatt[]={L'O',L'S',L'A',L't',L't'}; // OSAtt https://docs.microsoft.com/en-us/windows-hardware/drivers/install/creating-a-catalog-file-for-a-non-pnp-driver-package
 
     *bufa=0;
     while(p+11<adr+len)

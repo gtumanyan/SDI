@@ -112,7 +112,7 @@ const int nts_score[NUM_DECS]=
     64,   164,   164,   164, // 10
     64,   164,   164,   164, // Server 2016
     64,   164,   164,   164, // 10
-    64,   164,   164,   164, // 11
+    65,   165,   165,   165, // 11
     10,   100,   100,   100,
     10,   100,   100,   100,
 };
@@ -125,8 +125,8 @@ const markers_t markers[NUM_MARKERS]=
     {"7x86",    6, 1, 0},
     {"8x86",    6, 2, 0},
     {"81x86",   6, 3, 0},
-    {"9x86",    6, 4, 0},
     {"10x86",  10, 0, 0},
+    {"11x86",  10, 0, 0},
 
     {"67x86",   6, 0, 0},
     {"6xx86",   6, 0, 0},
@@ -139,8 +139,8 @@ const markers_t markers[NUM_MARKERS]=
     {"7x64",    6, 1, 1},
     {"8x64",    6, 2, 1},
     {"81x64",   6, 3, 1},
-    {"9x64",    6, 4, 1},
     {"10x64",  10, 0, 1},
+    {"11x64",  10, 0, 1},
 
     {"67x64",   6, 0, 1},
     {"6xx64",   6, 0, 1},
@@ -154,8 +154,8 @@ const markers_t markers[NUM_MARKERS]=
     {"all7",    6, 1,-1},
     {"all8\\",  6, 2,-1},
     {"all81",   6, 3,-1},
-    {"all9",    6, 4,-1},
     {"all10",  10, 0,-1},
+    {"all11",  10, 0,-1},
 
     // arch
     {"allx86", -1,-1, 0},
@@ -677,7 +677,8 @@ int Hwidmatch::calc_altsectscore(const State *state,int curscore)
     {
         char buf[BUFLEN];
         drp->getdrp_drvsectionAtPos(buf,pos,manufacturer_index);
-        if(calc_decorscore(calc_secttype(buf),state)>curscore)return 0;
+        if(calc_decorscore(calc_secttype(buf),state)>curscore)
+            return 0;
     }
 
     if(!calc_notebook())return 0;
@@ -990,7 +991,7 @@ int Hwidmatch::isvalidcat(const State *state)
 
     int major,minor;
     state->getWinVer(&major,&minor);
-    //if (major == 11) major = 10;    //On 2022 there is no windows 11 cats
+    if (major == 11) major = 10;    //For the 2022 there is no windows 11 cats
     wsprintfA(bufa,"2:%d.%d",major,minor);
     if(!*s)return 0;
     return strstr(s,bufa)?1:0;
@@ -1073,6 +1074,7 @@ const char *Hwidmatch::getdrp_drvfield(int n)const
 }
 const char *Hwidmatch::getdrp_drvcat(int n)const
 {
+    //if (cnts[50]) //ToDo isolate windows 11 drivers based on their buildnumber
     size_t desc_index=drp->HWID_list[HWID_index].desc_index;
     size_t manufacturer_index=drp->desc_list[desc_index].manufacturer_index;
     size_t inffile_index=drp->manufacturer_list[manufacturer_index].inffile_index;
