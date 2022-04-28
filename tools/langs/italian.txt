@@ -351,7 +351,6 @@ STR_TR_ST2                    = "scaricamento metadata"
 STR_TR_ST3                    = "scaricamento file"
 STR_TR_ST4                    = "terminato"
 STR_TR_ST5                    = "seeding"
-STR_TR_ST6                    = "spazio occupato"
 STR_TR_ST7                    = "controllo dati recupero"
 STR_TR_ST8                    = "Spostamento File"
 

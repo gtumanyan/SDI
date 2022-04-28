@@ -351,7 +351,6 @@ STR_TR_ST2                    = "metaduomenų atsisiuntimas"
 STR_TR_ST3                    = "failų atsisiuntimas"
 STR_TR_ST4                    = "Užbaigta"
 STR_TR_ST5                    = "skleisti"
-STR_TR_ST6                    = "vietos paskirstymas"
 STR_TR_ST7                    = "tikrinimas duomenų atnaujinimas"
 STR_TR_ST8                    = "perkeliami failai"
 

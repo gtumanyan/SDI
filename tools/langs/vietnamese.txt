@@ -351,7 +351,6 @@ STR_TR_ST2                    = "Dữ liệu meta đang tải"
 STR_TR_ST3                    = "Tệp đang tải"
 STR_TR_ST4                    = "Hoàn thành"
 STR_TR_ST5                    = "đang truyền"
-STR_TR_ST6                    = "đang tính khoảng trống còn lại"
 STR_TR_ST7                    = "đang kiểm tra dữ liệu hồi phục"
 STR_TR_ST8                    = "đang chuyển tệp"
 

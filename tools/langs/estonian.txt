@@ -351,7 +351,6 @@ STR_TR_ST2                    = "metaandmete allalaadimine"
 STR_TR_ST3                    = "failide allalaadimine"
 STR_TR_ST4                    = "valmis"
 STR_TR_ST5                    = "külvamine"
-STR_TR_ST6                    = "kettaruumi eraldamine"
 STR_TR_ST7                    = "kontrollin jätkamise andmeid"
 STR_TR_ST8                    = "liigutan faile"
 

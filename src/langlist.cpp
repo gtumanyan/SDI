@@ -374,7 +374,6 @@ entry_t language[STR_NM]=
 		DEF_STR("STR_TR_ST3")
 		DEF_STR("STR_TR_ST4")
 		DEF_STR("STR_TR_ST5")
-		DEF_STR("STR_TR_ST6")
 		DEF_STR("STR_TR_ST7")
 		DEF_STR("STR_TR_ST8")
 

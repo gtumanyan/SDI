@@ -374,7 +374,6 @@ enum
 		STR_TR_ST3,
 		STR_TR_ST4,
 		STR_TR_ST5,
-		STR_TR_ST6,
 		STR_TR_ST7,
 		STR_TR_ST8,
 

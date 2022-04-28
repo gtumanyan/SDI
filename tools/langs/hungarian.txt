@@ -350,7 +350,6 @@ STR_TR_ST2                    = "Metaadatok letöltése"
 STR_TR_ST3                    = "Letöltési folyamat >>>"
 STR_TR_ST4                    = "Elkészült - Letöltve"
 STR_TR_ST5                    = "Feltöltés"
-STR_TR_ST6                    = "Lemezterület lefoglalása"
 STR_TR_ST7                    = "Adat összegzés ellenőrzése"
 STR_TR_ST8                    = "Fájlok áthelyezése"
 

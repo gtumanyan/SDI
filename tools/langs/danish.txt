@@ -351,7 +351,6 @@ STR_TR_ST2                    = "henter metadata"
 STR_TR_ST3                    = "henter filer"
 STR_TR_ST4                    = "færdig"
 STR_TR_ST5                    = "seeder"
-STR_TR_ST6                    = "tildeler plads"
 STR_TR_ST7                    = "kontrollerer dataintegritet"
 STR_TR_ST8                    = "flytter filer"
 

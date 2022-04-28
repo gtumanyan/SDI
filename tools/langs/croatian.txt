@@ -351,7 +351,6 @@ STR_TR_ST2                    = "preuzimanje metapodataka"
 STR_TR_ST3                    = "preuzimanje datoteka"
 STR_TR_ST4                    = "završeno"
 STR_TR_ST5                    = "dijeljenje"
-STR_TR_ST6                    = "dodjeljivanje prostora"
 STR_TR_ST7                    = "Provjeravanje podataka za nastavak"
 STR_TR_ST8                    = "premještanje datoteka"
 

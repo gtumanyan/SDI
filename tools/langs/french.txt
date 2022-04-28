@@ -351,7 +351,6 @@ STR_TR_ST2                    = "Téléchargement des metadonnées"
 STR_TR_ST3                    = "Téléchargement des fichiers"
 STR_TR_ST4                    = "Terminé"
 STR_TR_ST5                    = "Partage en cours"
-STR_TR_ST6                    = "Attribution de l'espace"
 STR_TR_ST7                    = "Vérification des données"
 STR_TR_ST8                    = "déplacement de fichiers"
 

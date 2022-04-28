@@ -360,7 +360,6 @@ STR_TR_ST2                    = "metaməlumatın yüklənməsi"
 STR_TR_ST3                    = "faylların yüklənməsi"
 STR_TR_ST4                    = "qurtarıb"
 STR_TR_ST5                    = "paylanır"
-STR_TR_ST6                    = "yer rezervasiya olunur"
 STR_TR_ST7                    = "bərpa"
 STR_TR_ST8                    = "faylları hərəkət etdirir"
 

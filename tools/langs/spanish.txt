@@ -351,7 +351,6 @@ STR_TR_ST2                    = "descargando metadatos"
 STR_TR_ST3                    = "descargando archivos"
 STR_TR_ST4                    = "terminado"
 STR_TR_ST5                    = "seeding"
-STR_TR_ST6                    = "asignando espacio"
 STR_TR_ST7                    = "comprobando reanudar datos"
 STR_TR_ST8                    = "moviendo archivos"
 

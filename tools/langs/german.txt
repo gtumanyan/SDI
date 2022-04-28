@@ -351,7 +351,6 @@ STR_TR_ST2                    = "Metadaten werden heruntergeladen"
 STR_TR_ST3                    = "Dateien werden heruntergeladen"
 STR_TR_ST4                    = "Abgeschlossen"
 STR_TR_ST5                    = "Seeding"
-STR_TR_ST6                    = "Speicherplatz wird zugewiesen"
 STR_TR_ST7                    = "Fortsetzungsdaten werden geprüft"
 STR_TR_ST8                    = "Daten werden übertragen"
 

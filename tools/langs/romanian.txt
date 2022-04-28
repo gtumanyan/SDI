@@ -352,7 +352,6 @@ STR_TR_ST2                    = "descarcă metadate"
 STR_TR_ST3                    = "descarcă fișiere"
 STR_TR_ST4                    = "terminat"
 STR_TR_ST5                    = "însămânțare"
-STR_TR_ST6                    = "alocă spațiu"
 STR_TR_ST7                    = "verifică date reluare"
 STR_TR_ST8                    = "mutarea fișierelor"
 

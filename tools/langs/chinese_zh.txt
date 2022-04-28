@@ -360,7 +360,6 @@ STR_TR_ST2              = "下载元数据"
 STR_TR_ST3              = "下载文件"
 STR_TR_ST4              = "已完成"
 STR_TR_ST5              = "做种中"
-STR_TR_ST6              = "分配空间"
 STR_TR_ST7              = "检查数据"
 STR_TR_ST8              = "移动文件"
 

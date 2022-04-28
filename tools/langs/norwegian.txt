@@ -351,7 +351,6 @@ STR_TR_ST2                    = "Laster ned metadata"
 STR_TR_ST3                    = "Laster ned filer"
 STR_TR_ST4                    = "Ferdig"
 STR_TR_ST5                    = "Såing pågår"
-STR_TR_ST6                    = "Tildeler plass"
 STR_TR_ST7                    = "Sjekker gjenopprettingsdata"
 STR_TR_ST8                    = "flytter filer"
 

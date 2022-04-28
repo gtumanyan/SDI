@@ -351,7 +351,6 @@ STR_TR_ST2                    = "A transferir Metadados"
 STR_TR_ST3                    = "A transferir Ficheiros"
 STR_TR_ST4                    = "Terminado"
 STR_TR_ST5                    = "A semear"
-STR_TR_ST6                    = "Alocando espaço"
 STR_TR_ST7                    = "Verificação dos dados de resumo"
 STR_TR_ST8                    = "Transferido Ficheiros"
 

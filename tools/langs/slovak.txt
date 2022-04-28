@@ -357,7 +357,6 @@ STR_TR_ST2              = "sťahujú sa metadáta"
 STR_TR_ST3              = "sťahujú sa súbory"
 STR_TR_ST4              = "dokončené"
 STR_TR_ST5              = "seeduje sa"
-STR_TR_ST6              = "prideľuje sa volné miesto"
 STR_TR_ST7              = "kontrolujú sa obnovené údaje"
 STR_TR_ST8              = "súbory sa premiestňujú"
 

@@ -360,7 +360,6 @@ STR_TR_ST2                    = "메타데이터 다운 중"
 STR_TR_ST3                    = "파일 다운 중"
 STR_TR_ST4                    = "완료"
 STR_TR_ST5                    = "배포 중"
-STR_TR_ST6                    = "공간 할당 중"
 STR_TR_ST7                    = "점유 데이터 확인 중"
 STR_TR_ST8                    = "파일들을 옮기는중"
 

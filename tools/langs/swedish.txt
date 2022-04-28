@@ -351,7 +351,6 @@ STR_TR_ST2                    = "nedladdning av metadata"
 STR_TR_ST3                    = "laddar ner filer"
 STR_TR_ST4                    = "färdig"
 STR_TR_ST5                    = "distribuerar"
-STR_TR_ST6                    = "allokerar utrymme"
 STR_TR_ST7                    = "kontrollerar återupptagen data"
 STR_TR_ST8                    = "flyttar filer"
 

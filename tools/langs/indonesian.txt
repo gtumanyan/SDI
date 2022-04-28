@@ -351,7 +351,6 @@ STR_TR_ST2                    = "mengunggah metadata"
 STR_TR_ST3                    = "mengunduh file"
 STR_TR_ST4                    = "selesai"
 STR_TR_ST5                    = "seeding"
-STR_TR_ST6                    = "mengalokasi space"
 STR_TR_ST7                    = "mengecek data lanjutan"
 STR_TR_ST8                    = "memindahkan file"
 

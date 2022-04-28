@@ -360,7 +360,6 @@ STR_TR_ST2                    = "後設資料下載中"
 STR_TR_ST3                    = "下載檔案中"
 STR_TR_ST4                    = "完成"
 STR_TR_ST5                    = "做種中"
-STR_TR_ST6                    = "分配空間"
 STR_TR_ST7                    = "檢查續傳資料"
 STR_TR_ST8                    = "檔案搬移中"
 

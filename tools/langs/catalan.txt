@@ -351,7 +351,6 @@ STR_TR_ST2                    = "baixant metadades"
 STR_TR_ST3                    = "baixanat fitxers"
 STR_TR_ST4                    = "Acabat"
 STR_TR_ST5                    = "Fent seeding"
-STR_TR_ST6                    = "Agafant espai"
 STR_TR_ST7                    = "Comprovant dades al continuar"
 STR_TR_ST8                    = "movent fitxers"
 
