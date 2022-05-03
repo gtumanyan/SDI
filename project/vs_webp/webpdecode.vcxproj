@@ -1,363 +1,354 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<PreferredToolArchitecture>x64</PreferredToolArchitecture>
-	</PropertyGroup>
-	<ItemGroup Label="ProjectConfigurations">
-		<ProjectConfiguration Include="Debug|Win32">
-			<Configuration>Debug</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Release|Win32">
-			<Configuration>Release</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="MinSizeRel|Win32">
-			<Configuration>MinSizeRel</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="RelWithDebInfo|Win32">
-			<Configuration>RelWithDebInfo</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Debug|x64">
-			<Configuration>Debug</Configuration>
-			<Platform>x64</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Release|x64">
-			<Configuration>Release</Configuration>
-			<Platform>x64</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="MinSizeRel|x64">
-			<Configuration>MinSizeRel</Configuration>
-			<Platform>x64</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="RelWithDebInfo|x64">
-			<Configuration>RelWithDebInfo</Configuration>
-			<Platform>x64</Platform>
-		</ProjectConfiguration>
-	</ItemGroup>
-	<PropertyGroup Label="Globals">
-		<ProjectGuid>{D0F4533E-88D9-3424-B671-C142DBFB73FA}</ProjectGuid>
-		<WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-		<Keyword>Win32Proj</Keyword>
-		<ProjectName>webpdecode</ProjectName>
-		<VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
-	</PropertyGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-		<ConfigurationType>StaticLibrary</ConfigurationType>
-		<CharacterSet>Unicode</CharacterSet>
-		<PlatformToolset>v143</PlatformToolset>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-		<ConfigurationType>StaticLibrary</ConfigurationType>
-		<CharacterSet>Unicode</CharacterSet>
-		<PlatformToolset>v143</PlatformToolset>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
-		<ConfigurationType>StaticLibrary</ConfigurationType>
-		<CharacterSet>Unicode</CharacterSet>
-		<PlatformToolset>v143</PlatformToolset>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
-		<ConfigurationType>StaticLibrary</ConfigurationType>
-		<CharacterSet>Unicode</CharacterSet>
-		<PlatformToolset>v143</PlatformToolset>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-		<ConfigurationType>StaticLibrary</ConfigurationType>
-		<CharacterSet>Unicode</CharacterSet>
-		<PlatformToolset>v143</PlatformToolset>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-		<ConfigurationType>StaticLibrary</ConfigurationType>
-		<CharacterSet>Unicode</CharacterSet>
-		<PlatformToolset>v143</PlatformToolset>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
-		<ConfigurationType>StaticLibrary</ConfigurationType>
-		<CharacterSet>Unicode</CharacterSet>
-		<PlatformToolset>v143</PlatformToolset>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
-		<ConfigurationType>StaticLibrary</ConfigurationType>
-		<CharacterSet>Unicode</CharacterSet>
-		<PlatformToolset>v143</PlatformToolset>
-	</PropertyGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-	<ImportGroup Label="ExtensionSettings">
-	</ImportGroup>
-	<ImportGroup Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-	</ImportGroup>
-	<PropertyGroup Label="UserMacros" />
-	<PropertyGroup>
-		<IntDir>..\..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
-		<OutDir>..\..\lib\$(Configuration)_$(Platform)\</OutDir>
-	</PropertyGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-		<ClCompile>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
-			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-			<DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-			<ExceptionHandling>
-			</ExceptionHandling>
-			<InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-			<Optimization>Disabled</Optimization>
-			<PrecompiledHeader>NotUsing</PrecompiledHeader>
-			<RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-			<UseFullPaths>false</UseFullPaths>
-			<WarningLevel>Level3</WarningLevel>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
-			<ObjectFileName>$(IntDir)</ObjectFileName>
-			<CallingConvention>FastCall</CallingConvention>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Midl>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
-			<HeaderFileName>%(Filename).h</HeaderFileName>
-			<TypeLibraryName>%(Filename).tlb</TypeLibraryName>
-			<InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
-			<ProxyFileName>%(Filename)_p.c</ProxyFileName>
-		</Midl>
-		<Lib>
-			<AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
-		</Lib>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-		<ClCompile>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
-			<ExceptionHandling>
-			</ExceptionHandling>
-			<InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-			<Optimization>MaxSpeed</Optimization>
-			<PrecompiledHeader>NotUsing</PrecompiledHeader>
-			<RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-			<UseFullPaths>false</UseFullPaths>
-			<WarningLevel>Level3</WarningLevel>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
-			<ObjectFileName>$(IntDir)</ObjectFileName>
-			<DebugInformationFormat>
-			</DebugInformationFormat>
-			<CallingConvention>FastCall</CallingConvention>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Midl>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
-			<HeaderFileName>%(Filename).h</HeaderFileName>
-			<TypeLibraryName>%(Filename).tlb</TypeLibraryName>
-			<InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
-			<ProxyFileName>%(Filename)_p.c</ProxyFileName>
-		</Midl>
-		<Lib>
-			<AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
-		</Lib>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
-		<ClCompile>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
-			<ExceptionHandling>
-			</ExceptionHandling>
-			<InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-			<Optimization>MinSpace</Optimization>
-			<PrecompiledHeader>NotUsing</PrecompiledHeader>
-			<RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-			<UseFullPaths>false</UseFullPaths>
-			<WarningLevel>Level3</WarningLevel>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
-			<ObjectFileName>$(IntDir)</ObjectFileName>
-			<DebugInformationFormat>
-			</DebugInformationFormat>
-			<CallingConvention>FastCall</CallingConvention>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Midl>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
-			<HeaderFileName>%(Filename).h</HeaderFileName>
-			<TypeLibraryName>%(Filename).tlb</TypeLibraryName>
-			<InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
-			<ProxyFileName>%(Filename)_p.c</ProxyFileName>
-		</Midl>
-		<Lib>
-			<AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
-		</Lib>
-	</ItemDefinitionGroup>
-
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-		<ClCompile>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
-			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-			<DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-			<ExceptionHandling>
-			</ExceptionHandling>
-			<InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-			<Optimization>Disabled</Optimization>
-			<PrecompiledHeader>NotUsing</PrecompiledHeader>
-			<RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-			<UseFullPaths>false</UseFullPaths>
-			<WarningLevel>Level3</WarningLevel>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
-			<ObjectFileName>$(IntDir)</ObjectFileName>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Midl>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
-			<HeaderFileName>%(Filename).h</HeaderFileName>
-			<TypeLibraryName>%(Filename).tlb</TypeLibraryName>
-			<InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
-			<ProxyFileName>%(Filename)_p.c</ProxyFileName>
-		</Midl>
-		<Lib>
-			<AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-		</Lib>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-		<ClCompile>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
-			<ExceptionHandling>
-			</ExceptionHandling>
-			<InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-			<Optimization>MaxSpeed</Optimization>
-			<PrecompiledHeader>NotUsing</PrecompiledHeader>
-			<RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-			<UseFullPaths>false</UseFullPaths>
-			<WarningLevel>Level3</WarningLevel>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
-			<ObjectFileName>$(IntDir)</ObjectFileName>
-			<DebugInformationFormat>
-			</DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Midl>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
-			<HeaderFileName>%(Filename).h</HeaderFileName>
-			<TypeLibraryName>%(Filename).tlb</TypeLibraryName>
-			<InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
-			<ProxyFileName>%(Filename)_p.c</ProxyFileName>
-		</Midl>
-		<Lib>
-			<AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-		</Lib>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
-		<ClCompile>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
-			<ExceptionHandling>
-			</ExceptionHandling>
-			<InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-			<Optimization>MinSpace</Optimization>
-			<PrecompiledHeader>NotUsing</PrecompiledHeader>
-			<RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-			<UseFullPaths>false</UseFullPaths>
-			<WarningLevel>Level3</WarningLevel>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
-			<ObjectFileName>$(IntDir)</ObjectFileName>
-			<CallingConvention>FastCall</CallingConvention>
-			<DebugInformationFormat>
-			</DebugInformationFormat>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Midl>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
-			<HeaderFileName>%(Filename).h</HeaderFileName>
-			<TypeLibraryName>%(Filename).tlb</TypeLibraryName>
-			<InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
-			<ProxyFileName>%(Filename)_p.c</ProxyFileName>
-		</Midl>
-		<Lib>
-			<AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-		</Lib>
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
-		<ClCompile>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
-			<DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-			<ExceptionHandling>
-			</ExceptionHandling>
-			<InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-			<Optimization>MaxSpeed</Optimization>
-			<PrecompiledHeader>NotUsing</PrecompiledHeader>
-			<RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-			<UseFullPaths>false</UseFullPaths>
-			<WarningLevel>Level3</WarningLevel>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
-			<ObjectFileName>$(IntDir)</ObjectFileName>
-		</ClCompile>
-		<ResourceCompile>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ResourceCompile>
-		<Midl>
-			<AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
-			<HeaderFileName>%(Filename).h</HeaderFileName>
-			<TypeLibraryName>%(Filename).tlb</TypeLibraryName>
-			<InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
-			<ProxyFileName>%(Filename)_p.c</ProxyFileName>
-		</Midl>
-		<Lib>
-			<AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-		</Lib>
-	</ItemDefinitionGroup>
-	<ItemGroup>
-		<ClCompile Include="..\..\ext\libwebp\src\dec\alpha_dec.c" />
-		<ClInclude Include="..\..\ext\libwebp\src\dec\alphai_dec.h" />
-		<ClCompile Include="..\..\ext\libwebp\src\dec\buffer_dec.c" />
-		<ClInclude Include="..\..\ext\libwebp\src\dec\common_dec.h" />
-		<ClInclude Include="..\..\ext\libwebp\src\dec\vp8_dec.h" />
-		<ClCompile Include="..\..\ext\libwebp\src\dec\frame_dec.c" />
-		<ClCompile Include="..\..\ext\libwebp\src\dec\idec_dec.c" />
-		<ClCompile Include="..\..\ext\libwebp\src\dec\io_dec.c" />
-		<ClCompile Include="..\..\ext\libwebp\src\dec\quant_dec.c" />
-		<ClCompile Include="..\..\ext\libwebp\src\dec\tree_dec.c" />
-		<ClCompile Include="..\..\ext\libwebp\src\dec\vp8_dec.c" />
-		<ClInclude Include="..\..\ext\libwebp\src\dec\vp8i_dec.h" />
-		<ClCompile Include="..\..\ext\libwebp\src\dec\vp8l_dec.c" />
-		<ClInclude Include="..\..\ext\libwebp\src\dec\vp8li_dec.h" />
-		<ClCompile Include="..\..\ext\libwebp\src\dec\webp_dec.c" />
-		<ClInclude Include="..\..\ext\libwebp\src\dec\webpi_dec.h" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="ZERO_CHECK.vcxproj">
-			<Project>{4C0C10FA-5535-359C-BF9C-4D9A06D544BE}</Project>
-			<Name>ZERO_CHECK</Name>
-			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</ProjectReference>
-	</ItemGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-	<ImportGroup Label="ExtensionTargets">
-	</ImportGroup>
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D0F4533E-88D9-3424-B671-C142DBFB73FA}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>webpdecode</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IntDir>..\..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <OutDir>..\..\lib\$(Configuration)_$(Platform)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <CallingConvention>FastCall</CallingConvention>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <CallingConvention>FastCall</CallingConvention>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <CallingConvention>FastCall</CallingConvention>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <CallingConvention>FastCall</CallingConvention>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>.;..\..\ext\libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ext\libwebp\src\dec\alpha_dec.c" />
+    <ClInclude Include="..\..\ext\libwebp\src\dec\alphai_dec.h" />
+    <ClCompile Include="..\..\ext\libwebp\src\dec\buffer_dec.c" />
+    <ClInclude Include="..\..\ext\libwebp\src\dec\common_dec.h" />
+    <ClInclude Include="..\..\ext\libwebp\src\dec\vp8_dec.h" />
+    <ClCompile Include="..\..\ext\libwebp\src\dec\frame_dec.c" />
+    <ClCompile Include="..\..\ext\libwebp\src\dec\idec_dec.c" />
+    <ClCompile Include="..\..\ext\libwebp\src\dec\io_dec.c" />
+    <ClCompile Include="..\..\ext\libwebp\src\dec\quant_dec.c" />
+    <ClCompile Include="..\..\ext\libwebp\src\dec\tree_dec.c" />
+    <ClCompile Include="..\..\ext\libwebp\src\dec\vp8_dec.c" />
+    <ClInclude Include="..\..\ext\libwebp\src\dec\vp8i_dec.h" />
+    <ClCompile Include="..\..\ext\libwebp\src\dec\vp8l_dec.c" />
+    <ClInclude Include="..\..\ext\libwebp\src\dec\vp8li_dec.h" />
+    <ClCompile Include="..\..\ext\libwebp\src\dec\webp_dec.c" />
+    <ClInclude Include="..\..\ext\libwebp\src\dec\webpi_dec.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
 </Project>
