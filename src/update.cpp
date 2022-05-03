@@ -1414,6 +1414,8 @@ int UpdaterImp::downloadTorrent()
 		//p.flags |= add_torrent_params::flag_auto_managed;
 
 		Log.print_con("Adding URL: %s\n", url);
+				// Launch downloader
+				Net::DownloadManager::instance()->download(Net::DownloadRequest(url)										 , this, &Session::handleDownloadFinished);
 
 		h = ses.add_torrent(p, ec);
 		if (ec)Log.print_err("ERROR: failed to add torrent: %s\n", ec.message().c_str());
