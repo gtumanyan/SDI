@@ -1078,7 +1078,7 @@ const char *Hwidmatch::getdrp_drvcat(int n)const
     size_t desc_index=drp->HWID_list[HWID_index].desc_index;
     size_t manufacturer_index=drp->desc_list[desc_index].manufacturer_index;
     size_t inffile_index=drp->manufacturer_list[manufacturer_index].inffile_index;
-    Log.print_debug(drp->text_ind.get(drp->inffile[inffile_index].cats[n]));
+    //Log.print_debug(drp->text_ind.get(drp->inffile[inffile_index].cats[n]));
     if(!drp->inffile[inffile_index].cats[n])return "";
     return drp->text_ind.get(drp->inffile[inffile_index].cats[n]);
 }

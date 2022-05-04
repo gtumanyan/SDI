@@ -260,7 +260,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 								if(!Updater->isTorrentReady())break;
 								Log.print_con("\n");
 						}
-						Updater->SetFilePriority(itembar->hwidmatch->getdrp_packname(),1);
+						Updater->SetFilePriority(itembar->hwidmatch->getdrp_packname(),libtorrent::low_priority);
 						downdrivers++;
 				}
 				// if any DRIVERPACK_TYPE_UPDATE items are selected in the torrent

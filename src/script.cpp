@@ -148,7 +148,7 @@ bool Script::runscript()
     bool NeedReboot=false;
     Log.set_verbose(0);
     Updater=CreateUpdater();
-    int torrentport=Updater->torrentport;
+    int torrentport=Updater->port;
 
     // get the system drive
     wchar_t systemDrive[BUFLEN]={0};

@@ -16,6 +16,8 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef UPDATE_H
 #define UPDATE_H
 
+#include "libtorrent/download_priority.hpp"
+
 // Declarations
 class Updater_t;
 class Canvas;
@@ -37,9 +39,9 @@ struct type_item {
 class Updater_t
 {
 public:
-	int numfiles=0;
+	  int numfiles=0;
     static bool seed_mode;
-    static int torrentport,downlimit,uplimit,connections,activetorrent;
+    static int port,downlimit,uplimit,connections,activetorrent;
     static const std::wstring torrent_url;
     static const std::wstring torrent2_url;
     static const std::wstring torrent_save_path;
@@ -60,7 +62,7 @@ public:
     virtual bool isSeedingDrivers()=0;
 
     virtual int  Populate(int flags)=0;
-    virtual void SetFilePriority(const wchar_t *name,int pri)=0;
+    virtual void SetFilePriority(const wchar_t *name,lt::download_priority_t pri)=0;
     virtual void set_torrent_params()=0;
     virtual void OpenDialog()=0;
     virtual void DownloadAll()=0;

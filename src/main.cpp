@@ -843,7 +843,7 @@ static BOOL CALLBACK DialogProc1(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 								str.sprintf(L"%d",Settings.hintdelay);
 								SetWindowText(GetDlgItem(data.pages[0],IDD_P1_HINTE),str.Get());
 
-								str.sprintf(L"%d",Updater->torrentport);
+								str.sprintf(L"%d",Updater->port);
 								SetWindowText(GetDlgItem(data.pages[1],IDD_P2_PORTE),str.Get());
 								str.sprintf(L"%d",Updater->connections);
 								SetWindowText(GetDlgItem(data.pages[1],IDD_P2_CONE),str.Get());
@@ -922,7 +922,7 @@ static BOOL CALLBACK DialogProc1(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 										Settings.hintdelay=_wtoi_my(num);
 
 										GetWindowText(GetDlgItem(data.pages[1],IDD_P2_PORTE),num,32);
-										Updater->torrentport=_wtoi_my(num);
+										Updater->port=_wtoi_my(num);
 										GetWindowText(GetDlgItem(data.pages[1],IDD_P2_CONE),num,32);
 										Updater->connections=_wtoi_my(num);
 										GetWindowText(GetDlgItem(data.pages[1],IDD_P2_DOWNE),num,32);

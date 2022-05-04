@@ -130,7 +130,7 @@ void Settings_t::parse(const wchar_t *str,size_t ind)
         if(argint(pr,L"-wndsc:",         &wndsc))continue;
         if(argint(pr,L"-filters:",       &filters))continue;
 
-        if(argint(pr,L"-port:",          &Updater->torrentport))continue;
+        if(argint(pr,L"-port:",          &Updater->port))continue;
         if(argint(pr,L"-downlimit:",     &Updater->downlimit))continue;
         if(argint(pr,L"-uplimit:",       &Updater->uplimit))continue;
         if(argint(pr,L"-connections:",   &Updater->connections))continue;
@@ -260,7 +260,7 @@ void Settings_t::save()
             data_dir,logO_dir,
             finish,finish_rb,finish_upd,
             STR(STR_LANG_ID),curtheme,hintdelay,license?1:0,wndwx,wndwy,wndsc,autosized?savedscale:scale,filters,
-            Updater->torrentport,Updater->downlimit,Updater->uplimit,Updater->connections);
+            Updater->port,Updater->downlimit,Updater->uplimit,Updater->connections);
 
     if(expertmode)fwprintf(f,L"-expertmode ");
     if(flags&FLAG_SHOWCONSOLE)fwprintf(f,L"-showconsole ");

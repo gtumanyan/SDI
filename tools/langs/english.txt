@@ -322,9 +322,9 @@ STR_UPD_UPDATEHINT2     = "You must update base first in order to use this featu
 
 // Update hint
 STR_UPD_CHECKING        = "Checking for updates"
-STR_UPD_AVAIL1          = "Updates are available: SDI R%d"
+STR_UPD_AVAIL1          = "Updates are available: SDI %d"
 STR_UPD_AVAIL2          = "Updates are available: %d DriverPacks"
-STR_UPD_AVAIL3          = "Updates are available: SDI R%d and %d DriverPacks"
+STR_UPD_AVAIL3          = "Updates are available: SDI %d and %d DriverPacks"
 STR_UPD_START           = "(Click here to start the download)"
 STR_UPD_PROGRES         = "Downloaded %s out of %s (%d%%)"
 STR_UPD_MODIFY          = "(Click here to select updates)"

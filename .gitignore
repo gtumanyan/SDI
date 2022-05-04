@@ -58,3 +58,4 @@ update/
 # Other stuff
 
 cmake*
+/project/vs_libtorrent/torrent-rasterbar.vcxproj.orig
