@@ -242,7 +242,7 @@ void Bundle::bundle_lowpriority()
 
     if(Settings.flags&COLLECTION_PRINT_INDEX)
     {
-        Log.print_con("Saving humanreadable indexes...");
+        Log.print_con("Saving humanreadable indexes...\n");
         collection.print_index_hr();
         Settings.flags&=~COLLECTION_PRINT_INDEX;
         Log.print_con("DONE\n");

@@ -171,7 +171,7 @@ void Log_t::print_err(char const *format,...)
 
 void Log_t::print_con(char const *format,...)
 {
-    char buffer[1024*16];
+    char buffer[1024*8];
 
     if((log_verbose&(LOG_VERBOSE_LOG_CON|LOG_VERBOSE_DEBUG))==0)return;
     va_list args;

@@ -459,6 +459,7 @@ int Driver::isvalidcat(const State *state)const
 
     int major,minor;
     state->getWinVer(&major,&minor);
+    if (major == 11) major = 10;    //For the 2022 there is no windows 11 cats
     wsprintfA(bufa,"2:%d.%d",major,minor);
     if(!*s)return 0;
     return strstr(s,bufa)?1:0;

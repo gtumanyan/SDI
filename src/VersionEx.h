@@ -6,10 +6,10 @@
 // //////////////////////////////////////////////////////////
 #define APPNAME SDI
 #define SAPPNAME "SDI"
-#define VERSION_MAJOR 2
-#define VERSION_MINOR 22
-#define VERSION_REV 502
-#define VERSION_BUILD 1
+#define VERSION_MAJOR 22
+#define VERSION_MINOR 4
+#define VERSION_REV 23
+#define VERSION_BUILD 4
 #define WEBP_VER 1.2.2
 #define TORRENT_VER 1.2.16
 #define BOOST_VER 1.80.0

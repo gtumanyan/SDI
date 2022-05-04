@@ -34,9 +34,9 @@ function DebugOutput($msg)
 try 
 {
   $AppName = "SDI"
-	$Major = 2
-	$Minor = [int]$(Get-Date -format yy)
-	$Revis = [int]$(Get-Date -format Mdd)
+	$Major = [int]$(Get-Date -format yy)
+	$Minor = [int]$(Get-Date -format MM)
+	$Revis = [int]$(Get-Date -format dd)
 	$Build = [int](Get-Content "Versions\build.txt")
 	if (!$Build) { $Build = 0 }
 	$LastBuildDay = [string](Get-Content "Versions\day.txt")
@@ -75,7 +75,7 @@ try
 	if (!$CommitID) { $CommitID = "---" }
 	$Build | Set-Content "Versions\build.txt"
 
-	$CompleteVer = "$Major.$Minor.$Revis.$Build"
+	$CompleteVer = "$Major.$Minor.$Revis"
 	DebugOutput("SDI version number: 'v$CompleteVer $VerPatch'")
 	
 	if ($AppVeyorEnv) {
@@ -131,7 +131,7 @@ catch
 finally
 {
 	[Environment]::SetEnvironmentVariable("LASTEXITCODE", $LastExitCode, "User")
-	$host.SetShouldExit($LastExitCode)
+	Exit $LastExitCode
 	Write-Host ""
 	Write-Host "VersionPatching: Done! Elapsed time: $($stopwatch.Elapsed)."
 	Exit $LastExitCode

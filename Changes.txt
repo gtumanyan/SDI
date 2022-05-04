@@ -1,12 +1,41 @@
 ========================================================
-Current ALPHA Version 2.22.113.(build_#) (2022-01-13)
+Current BETA/RC Version 2.22.422.(build_#) (2022-04-22)
 ========================================================
 
 --------------------------------------------------------
+NEW:
+--------------------------------------------------------
+[.###.#]- .
+Add Windows 11 support
+Add preliminary arm64 support (testers needed)
+LZMA decode optimization
+
+--------------------------------------------------------
+CHANGES Versions in Tools or Libraries:
+--------------------------------------------------------
+Update Boost Library version 1.80 (2022-04-16).
+Update Libtorent Library version 1.2.16 (2022-04-18).
+Update LibWebP version 1.2.2 (2022-01-11).
+
+--------------------------------------------------------
+FIXES:
+--------------------------------------------------------
+Spelling in Russian translation
+Revamped all languages to fit in dialog boxes
+Floating hints
+Tighten boxes in default (metallic) theme
+Dark theme images recoded with cwebp 1.2 to reduce footprint
+Theme load refactored in C++17
+
+--------------------------------------------------------
+REMOVED:
+--------------------------------------------------------
+Itanium support
+Deprecated backtrace library
+Submit translation menu. For the new tranlations send requests to https://t.me/Snappy_Driver_Installer
 CHANGES:
 --------------------------------------------------------
 [0113.2]- Changed program name
-[0112.1]- Libtorrent assertion disabled for debug builds.
 
 --------------------------------------------------------
 CHANGES Versions in Tools or Libraries:
