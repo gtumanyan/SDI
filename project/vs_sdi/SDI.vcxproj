@@ -31,8 +31,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D836A720-0876-4B3A-BA09-1F6727EEE5D4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <XPDeprecationWarning>false</XPDeprecationWarning>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -126,7 +125,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>USE_TORRENT;WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;USE_TORRENT;_WIN32_WINNT=0x0600;TORRENT_USE_ASSERTS;BOOST_ASIO_ENABLE_CANCELIO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
@@ -138,11 +137,13 @@
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>dbghelp.lib;vcruntimed.lib;7zip.lib;comctl32.lib;torrent-rasterbar.lib;webpdecode.lib;webpdspdecode.lib;webputilsdecode.lib;newdev.lib;setupapi.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>torrent-rasterbar.lib;7zip.lib;comctl32.lib;webpdecode.lib;webpdspdecode.lib;webputilsdecode.lib;newdev.lib;setupapi.lib;shlwapi.lib;dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -210,7 +211,7 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);USE_TORRENT;WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0600</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);USE_TORRENT;WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0600</PreprocessorDefinitions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <StringPooling>true</StringPooling>
       <SmallerTypeCheck>false</SmallerTypeCheck>
