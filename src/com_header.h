@@ -53,7 +53,7 @@ typedef unsigned ofst;
 #define BOOST_ASIO_ENABLE_CANCELIO
 #endif
 //#define BOOST_ASIO_HASH_MAP_BUCKETS 1021  // Can be set to auto since Asio 1.4.3 / Boost 1.40
-//#define BOOST_ASIO_SEPARATE_COMPILATION   // BOOST_ASIO_SEPARATE_COMPILATION - is evil. Fixed in 2015, where boost asio is used headers only
+//#define BOOST_ASIO_SEPARATE_COMPILATION   // BOOST_ASIO_SEPARATE_COMPILATION - is evil. Fixed in 2015, boost asio is headers only now
 //#define BOOST_MULTI_INDEX_DISABLE_SERIALIZATION
 #define BOOST_NO_DEPRECATED
 #define BOOST_SYSTEM_NO_DEPRECATED
@@ -62,11 +62,11 @@ typedef unsigned ofst;
 
 // Torrent
 //#define TORRENT_DISABLE_GEO_IP            // deprecated and gone in 2016
-#define TORRENT_NO_DEPRECATE              // todo: comply with torrent 2.0
+//#define TORRENT_NO_DEPRECATE              // todo: comply with torrent 2.0
 //#define TORRENT_PRODUCTION_ASSERTS 1      // Enables assert logging in release builds
 //#define TORRENT_RELEASE_ASSERTS 1         // Deprecated and gone in RC_1_2
 #define TORRENT_USE_I2P 0
-#define TORRENT_USE_ICONV 0                 // Already disabled for windows in config.hpp
+//#define TORRENT_USE_ICONV 0               // Already disabled for windows in config.hpp
 //#define TORRENT_USE_IPV6 1                // Outdated: TORRENT_USE_IPV6 is used in libtorrent to simply disable any mention of IPv6 specific types and functions.
 																						// The purpose is to be able to build on systems that do not support IPv6.
 //#define TORRENT_USE_TOMMATH               // Switched to boost.multiprecision instead in RC 1.1
