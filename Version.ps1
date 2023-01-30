@@ -23,7 +23,7 @@ function DebugOutput($msg)
 {
 	#~return ## disabled debug output
 	if ($msg -ne $null) { 
-      	Write-Host ""
+		Write-Host ""
 		Write-Host "$msg"
 	}
 }
@@ -33,49 +33,57 @@ function DebugOutput($msg)
 
 try 
 {
-  $AppName = "SDI"
+	$AppName = "SDI 2023"
 	$Major = [int]$(Get-Date -format yy)
 	$Minor = [int]$(Get-Date -format MM)
 	$Revis = [int]$(Get-Date -format dd)
-	$Build = [int](Get-Content "Versions\build.txt")
-	if (!$Build) { $Build = 0 }
-	$LastBuildDay = [string](Get-Content "Versions\day.txt")
+	$BuildPath = "Versions\build.txt"
+	if (!(Test-Path $BuildPath)) {
+		New-Item -Path $BuildPath -ItemType "file" -Value "0"
+	}
+	$Build = [int](Get-Content $BuildPath)
+	if (!$Build) { $Build = -1 }
+	
+	$DayPath = "Versions\day.txt"
+	if (!(Test-Path $DayPath)) {
+		New-Item -Path $DayPath -ItemType "file" -Value "0"
+	}
+	$LastBuildDay = [string](Get-Content $DayPath)
+	if (!$LastBuildDay) { $LastBuildDay = 0 }
 
 	$AppVeyorBuild = [int]($env:appveyor_build_number) # AppVeyor internal
 
 	if ($AppVeyorEnv) {
 		if ($LastBuildDay -ne "$Revis") {
-			$Revis | Set-Content "Versions\day.txt"
+			$Revis | Set-Content -Path $DayPath
 			$Build = 1  # reset (AppVeyor)
 		}
 		$CommitID = ([string]($env:appveyor_repo_commit)).substring(0,8)
 	}
 	else {
 		if ($LastBuildDay -ne "$Revis") {
-			$Revis | Set-Content "Versions\day.txt"
+			$Revis | Set-Content -Path $DayPath
 			$Build = 0  # reset (local build)
 		}
-		# locally: increase build number and persit it
+		# locally: increase build number and persist it
 		$Build = $Build + 1
-		# locally: we have no commit ID, create an arificial one
-		$CommitID = [string](Get-Content "Versions\commit_id.txt")
-		if (!$CommitID) { $CommitID = "---" }
-		if ($CommitID -eq "computername") {
-            $length = ([string]($env:computername)).length
+		# locally: read commit ID from .git\refs\heads\<first file>
+		$HeadDir = ".git\refs\heads"
+		$HeadMaster = Get-ChildItem -Path $HeadDir -Force -Recurse -File | Select-Object -First 1
+		$CommitID = [string](Get-Content "$HeadDir\$HeadMaster" -TotalCount 8)
+		if (!$CommitID) {
+						$length = ([string]($env:computername)).length
 			$CommitID = ([string]($env:computername)).substring(0,[math]::min($length,8)).ToLower()
 		}
-		else {
-			if (!$CommitID) { $CommitID = "---" }
-			$CommitID = $CommitID -replace '"', ''
-			$CommitID = $CommitID -replace "'", ''
-		    $length = $CommitID.length
-			$CommitID = $CommitID.substring(0,[math]::min($length,8))
-		}
+		$CommitID = $CommitID -replace '"', ''
+		$CommitID = $CommitID -replace "'", ''
+		$length = $CommitID.length
+		$CommitID = $CommitID.substring(0,[math]::min($length,8))
 	}
 	if (!$CommitID) { $CommitID = "---" }
-	$Build | Set-Content "Versions\build.txt"
+	$Build | Set-Content -Path $BuildPath
 
-	$CompleteVer = "$Major.$Minor.$Revis"
+	$CompleteVer = "$Major.$Minor.$Revis.$Build"
 	DebugOutput("SDI version number: 'v$CompleteVer $VerPatch'")
 	
 	if ($AppVeyorEnv) {
@@ -104,22 +112,23 @@ try
 #~if ($VerPatch) { $VerPatch = " $VerPatch" }  # ensure space in front of string
 
 	Copy-Item -LiteralPath "Versions\VersionEx.h.tpl" -Destination "src\VersionEx.h" -Force
-	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$APPNAME\$', "$AppName" } | Set-Content "src\VersionEx.h"
-	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$MAJOR\$', "$Major" } | Set-Content "src\VersionEx.h"
-	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$MINOR\$', "$Minor" } | Set-Content "src\VersionEx.h"
-	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$MAINT\$', "$Revis" } | Set-Content "src\VersionEx.h"
-	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$BUILD\$', "$Build" } | Set-Content "src\VersionEx.h"
-	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$7ZVER\$', "$7zVer" } | Set-Content "src\VersionEx.h"
-	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$WEBPVER\$', "$WebPVer" } | Set-Content "src\VersionEx.h"
-	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$BOOSTVER\$', "$BoostVer" } | Set-Content "src\VersionEx.h"
-	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$TORRENTVER\$', "$TorrentVer" } | Set-Content "src\VersionEx.h"
-	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$VERPATCH\$', "$VerPatch" } | Set-Content "src\VersionEx.h"
-	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$COMMITID\$', "$CommitID" } | Set-Content "src\VersionEx.h"
+	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$APPNAME\$', "$AppName" } | Set-Content -Path "src\VersionEx.h"
+	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$MAJOR\$', "$Major" } | Set-Content -Path "src\VersionEx.h"
+	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$MINOR\$', "$Minor" } | Set-Content -Path "src\VersionEx.h"
+	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$MAINT\$', "$Revis" } | Set-Content -Path "src\VersionEx.h"
+	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$BUILD\$', "$Build" } | Set-Content -Path "src\VersionEx.h"
+	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$7ZVER\$', "$7zVer" } | Set-Content -Path "src\VersionEx.h"
+	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$WEBPVER\$', "$WebPVer" } | Set-Content -Path "src\VersionEx.h"
+	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$BOOSTVER\$', "$BoostVer" } | Set-Content -Path "src\VersionEx.h"
+	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$TORRENTVER\$', "$TorrentVer" } | Set-Content -Path "src\VersionEx.h"
+	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$VERPATCH\$', "$VerPatch" } | Set-Content -Path "src\VersionEx.h"
+	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$COMMITID\$', "$CommitID" } | Set-Content -Path "src\VersionEx.h"
 	
-	Copy-Item -LiteralPath "Versions\SDI.exe.manifest.tpl" -Destination "res\SDI.exe.manifest.conf" -Force
-	(Get-Content "res\SDI.exe.manifest.conf") | ForEach-Object { $_ -replace '\$APPNAME\$', "$AppName" } | Set-Content "res\SDI.exe.manifest.conf"
-	(Get-Content "res\SDI.exe.manifest.conf") | ForEach-Object { $_ -replace '\$VERPATCH\$', "$VerPatch" } | Set-Content "res\SDI.exe.manifest.conf"
-	(Get-Content "res\SDI.exe.manifest.conf") | ForEach-Object { $_ -replace '\$VERSION\$', "$CompleteVer" } | Set-Content "res\SDI.exe.manifest.conf"
+	$confManifest = "res\SDI.exe.conf.manifest"
+	Copy-Item -LiteralPath "Versions\SDI.exe.manifest.tpl" -Destination $ConfManifest -Force
+	(Get-Content $ConfManifest) | ForEach-Object { $_ -replace '\$APPNAME\$', "$AppName" } | Set-Content -Path $ConfManifest
+	(Get-Content $ConfManifest) | ForEach-Object { $_ -replace '\$VERPATCH\$', "$VerPatch" } | Set-Content -Path $ConfManifest
+	(Get-Content $ConfManifest) | ForEach-Object { $_ -replace '\$VERSION\$', "$CompleteVer" } | Set-Content -Path $ConfManifest
 }
 catch 
 {
@@ -131,9 +140,8 @@ catch
 finally
 {
 	[Environment]::SetEnvironmentVariable("LASTEXITCODE", $LastExitCode, "User")
-	Exit $LastExitCode
+	$host.SetShouldExit($LastExitCode)
 	Write-Host ""
 	Write-Host "VersionPatching: Done! Elapsed time: $($stopwatch.Elapsed)."
 	Exit $LastExitCode
 }
-
