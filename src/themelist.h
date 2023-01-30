@@ -7,7 +7,7 @@ the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 Snappy Driver Installer is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied waÕ‡ÔËÏÂrranty of
+but WITHOUT ANY WARRANTY; without even the implied wa–ù–∞–ø—Ä–∏–º–µ—Ärranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
