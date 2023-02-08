@@ -63,7 +63,7 @@ try
 	else {
 		if ($LastBuildDay -ne "$Revis") {
 			$Revis | Set-Content -Path $DayPath
-			$Build = 0  # reset (local build)
+			$Build = -1  # reset (local build)
 		}
 		# locally: increase build number and persist it
 		$Build = $Build + 1
@@ -72,7 +72,7 @@ try
 		$HeadMaster = Get-ChildItem -Path $HeadDir -Force -Recurse -File | Select-Object -First 1
 		$CommitID = [string](Get-Content "$HeadDir\$HeadMaster" -TotalCount 8)
 		if (!$CommitID) {
-						$length = ([string]($env:computername)).length
+            $length = ([string]($env:computername)).length
 			$CommitID = ([string]($env:computername)).substring(0,[math]::min($length,8)).ToLower()
 		}
 		$CommitID = $CommitID -replace '"', ''
