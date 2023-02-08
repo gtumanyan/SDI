@@ -11,10 +11,10 @@
 
 # C++ Junk           #
 ######################
-.vs/
 ipch/
 *.aps
 *.ilk
+*.lib
 *.obj
 *.opendb
 *.pdb
@@ -38,18 +38,18 @@ ExportedObj/
 *.user
 *.userprefs
 *.VC.db*
+.vs
 *.vcxproj.filters
 *.bsc
 drivers/
 indexes/
 update/
 
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+### changes by Version.ps1 script ###
+/Versions/build.txt
+/Versions/day.txt
+/res/SDI.exe.conf.manifest
+/src/VersionEx.h
 
 # Executables and archives
 *.exe
@@ -58,4 +58,3 @@ update/
 # Other stuff
 
 cmake*
-/project/vs_solution/enc_temp_folder/2e6ebbdd5925e426709bc5405a2a24b9
