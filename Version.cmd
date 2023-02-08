@@ -5,12 +5,20 @@
 setlocal enableextensions
 set SCRIPTNAME=%~dpn0.ps1
 set ARGS=%*
-if ["%~1"] neq [""] call :ESCAPE_ARGS
+if ["%ARGS%"] NEQ [""] (
+  call :ESCAPE_ARGS
+  echo."_%ARGS%">.\_buildname.txt
+) else (
+  echo."%ARGS%">.\_buildname.txt
+)
+if ["%ARGS%"] NEQ [""] (
+  set ARGS=-VerPatch "%ARGS%"
+)
 
 :POWERSHELL
 PowerShell.exe -NoProfile -NonInteractive -NoLogo -ExecutionPolicy Unrestricted -Command "& { $ErrorActionPreference = 'Stop'; & '%SCRIPTNAME%' @args; Exit $LastExitCode }" %ARGS%
 set EXITCODE=%ERRORLEVEL%
-::ECHO ERRORLEVEL=%EXITCODE%
+ECHO ERRORLEVEL=%EXITCODE%
 
 :: Pause of 4 seconds to verify the "Notepad3 version number:" before exiting
 :: ============================================================================
