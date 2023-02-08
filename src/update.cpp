@@ -14,6 +14,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "com_header.h"
+#include "libtorrent/config.hpp"
 
 #ifdef USE_TORRENT
 #include "common.h"
@@ -27,7 +28,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "gui.h"
 #include "draw.h"
 #include "install.h"
-#include <direct.h>     // _wgetcwd
+#include <direct.h> // for _mkdir and _getcwd
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -35,17 +36,15 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #pragma warning(disable:4245)
 #pragma warning(disable:4267)
 #pragma warning(disable:4512)
-#pragma warning(disable : 4996)
+#pragma warning(disable:4996)
 #endif
 
-#include "libtorrent/config.hpp"
+#include "libtorrent/torrent_info.hpp"
 #include "libtorrent/entry.hpp"
-#include "libtorrent/alert_types.hpp"
 #include "libtorrent/bencode.hpp"
 #include "libtorrent/session.hpp"
-#include <libtorrent/add_torrent_params.hpp>
-#include <libtorrent/torrent_handle.hpp>
-#include "libtorrent/torrent_info.hpp"
+#include "libtorrent/alert_types.hpp"
+#include "libtorrent/add_torrent_params.hpp"
 
 #ifdef _MSC_VER
 #pragma comment(lib, "IPHLPAPI.lib")
@@ -60,6 +59,8 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 // Depend on Win32API
 #include "main.h"
+// for std:cout 
+#include <iostream>
 
 #define SMOOTHING_FACTOR 0.005
 
@@ -179,8 +180,9 @@ public:
 Updater_t *CreateUpdater(){return new UpdaterImp;}
 
 //{ Global variables
-lt::session ses;
+std::shared_ptr<libtorrent::session> ses;
 lt::add_torrent_params atp;
+
 torrent_handle h;
 lt::storage_mode_t allocation_mode = lt::storage_mode_sparse;
 
@@ -209,8 +211,8 @@ WNDPROC UpdateDialog_t::wpOrigButtonProc;
 int UpdateDialog_t::bMouseInWindow=0;
 
 // Updater (static)
-const std::wstring Updater_t::torrent_url =L"http://www.driveroff.net/SDI_Update.torrent";
-const std::wstring Updater_t::torrent2_url =L"http://www.driveroff.net/Drivers.torrent";
+const std::wstring Updater_t::torrent_url =L"http://driveroff.net/SDI_Update.torrent";
+const std::wstring Updater_t::torrent2_url =L"http://driveroff.net/Drivers.torrent";
 const std::wstring Updater_t::torrent_save_path=L"update";
 const std::wstring Updater_t::torrent2_save_path=L"update\\SDI_RUS";
 int Updater_t::activetorrent=1;
@@ -267,7 +269,7 @@ public:
 		{
 				// the first two parameters are the ItemData structures to be compared
 				// use the third parameter to control which column is used and
-				// whether it'ses ascending or descending
+				//  is it sorted ascending or descending
 				// -1 -2 -3 sort descending,  1 2 3 sort ascending
 
 				bool isAsc = (lParamSort > 0);
@@ -517,9 +519,10 @@ void UpdateDialog_t::setCheckboxes()
 				int val=0;
 				type_item *ItemData=(type_item*)item.lParam;
 
-				if(ItemData->DefaultSort==-2)val=baseChecked;
+                if(ItemData->DefaultSort==-2)val=baseChecked;
 				if(ItemData->DefaultSort==-1)val=indexesChecked;
-				if(ItemData->DefaultSort>=0)val=true;
+                // Set file mark in list according to file download priority
+				if (ItemData->DefaultSort >= 0) val = h.file_priority((int)ItemData->DefaultSort);
 
 				ListView.SetCheckState(static_cast<int>(i),val);
 		}
@@ -530,9 +533,10 @@ void UpdateDialog_t::setPriorities()
 		// set the torrent priorities based on the list items checkboxes
 
 		// Clear priorities for driverpacks
-			for(file_index_t i(0); static_cast<int>(i) < Updater->numfiles; i++)
+		for(file_index_t i(0); static_cast<int>(i) < Updater->numfiles; i++)
 		if(StrStrIA(h.torrent_file()->files().file_path(i).c_str(),"drivers\\"))
 				h.file_priority(i,dont_download);
+
 
 		// Set priorities for driverpacks
 		download_priority_t base_pri=dont_download, indexes_pri=dont_download;
@@ -552,10 +556,11 @@ void UpdateDialog_t::setPriorities()
 				// index priority will be 2 if checked
 				if(ItemData->DefaultSort==-1)indexes_pri=val? default_priority : dont_download;
 				// driver priority will be 1 if checked
-				if(ItemData->DefaultSort >= 0) h.file_priority(static_cast<file_index_t>(ItemData->DefaultSort),low_priority);
+				if(ItemData->DefaultSort >= 0) 
+                    h.file_priority(static_cast<file_index_t>(ItemData->DefaultSort),low_priority);
 		}
 
-		// Set priorities for any torrent file that'ses not a driver
+		// Set priorities for any torrent file that's not a driver
 		for(lt::file_index_t i(0); static_cast<int>(i) <Updater->numfiles; ++i)
 		if(!StrStrIA(h.torrent_file()->files().file_path(i).c_str(),"drivers\\"))
 				h.file_priority(i,StrStrIA(h.torrent_file()->files().file_path(i).c_str(),"indexes\\")?indexes_pri:base_pri);
@@ -670,7 +675,7 @@ BOOL CALLBACK UpdateDialog_t::UpdateProcedure(HWND hwnd,UINT Message,WPARAM wPar
 						break;
 
 				case WM_TIMER:
-						if(ses.is_valid() && ses.is_paused() == 0)UpdateDialog.populate(1);
+						if(ses && ses->is_paused() == 0)UpdateDialog.populate(1);
 						Log.print_con(".");
 						break;
 
@@ -796,7 +801,9 @@ int UpdateDialog_t::populate(int update,bool clearlist)
 					int const idx = static_cast<int>(i);
 
 				// the file name minus the parent directory 'SDI_Update'
-				const char *filenamefull=strchr(fs.file_path(i).c_str(),'\\')+1;
+				    auto const fullpath=fs.file_path(i);
+                    auto const filenamefull = strchr(fullpath.c_str(), '\\')+1;
+                    OutputDebugStringA(filenamefull);
 
 				// looking for missing "_" online indexes
 				if(StrStrIA(filenamefull,"indexes\\"))
@@ -813,7 +820,8 @@ int UpdateDialog_t::populate(int update,bool clearlist)
 								intptr_t hFile;
 								// Find old index file
 								if ((hFile = _wfindfirst(buf, &index_file)) == -1L)
-										printf("No old index\n");
+										//printf("No old index\n")
+                                ;
 
 						}
 				}
@@ -899,8 +907,10 @@ int UpdateDialog_t::populate(int update,bool clearlist)
 		{
 				int const idx = static_cast<int>(i);
 
-				auto filenamefull=strchr(fs.file_path(i).c_str(),'\\')+1;
-				auto filename=fs.file_name(i).to_string().c_str();
+				auto const fullpath=fs.file_path(i);
+                auto const filenamefull = strchr(fullpath.c_str(), '\\') + 1;
+                auto const fe = fs.file_name(i).to_string();
+				auto const filename=fe.c_str();
 
 				if(StrStrIA(filenamefull,".7z"))
 				{
@@ -914,7 +924,7 @@ int UpdateDialog_t::populate(int update,bool clearlist)
 						newver=getnewver(filenamefull);
 						oldver=getcurver(filename);
 
-						// if this flag is set, only get new versions of packs that we already have
+						// if this flag is set, only get new versions of packs we already have 
 						if(Settings.flags&FLAG_ONLYUPDATES)
 								{if(newver>oldver&&oldver)ret++;else continue;}
 						else
@@ -1000,7 +1010,7 @@ void UpdaterImp::updateTorrentStatus()
 		//    wcscpy(t->error,STR(STR_DWN_ERRSES));
 		//    return;
 		//}
-		//ses.get_torrent_status(&temp, &yes1, 0);
+		//ses->get_torrent_status(&temp, &yes1, 0);
 
 		//if(temp.empty())
 		//{
@@ -1040,7 +1050,7 @@ void UpdaterImp::updateTorrentStatus()
 		//  or files have been set to priority 0, i.e. are not downloaded."
 
 		// if the session is shut down then clear the stats
-		if(ses.is_paused())
+		if(ses->is_paused())
 		{
 				*t={};
 				t->status_strid=STR_TR_ST4;
@@ -1069,7 +1079,7 @@ void UpdaterImp::updateTorrentStatus()
 		else if(st.state==lt::torrent_status::checking_resume_data)
 				t->status_strid=STR_TR_ST7;
 
-		t->sessionpaused=ses.is_paused();
+		t->sessionpaused=ses->is_valid();
 
 		if(TorrentStatus.downloadsize)
 				manager_g->itembar_settext(SLOT_DOWNLOAD,1,nullptr,-1,-1,TorrentStatus.downloaded*1000/TorrentStatus.downloadsize);
@@ -1221,7 +1231,7 @@ void UpdaterImp::ShowProgress(wchar_t *buf)
 		using namespace libtorrent;
 		namespace lt = libtorrent;
 
-		if(ses.is_valid())
+		if(ses)
 		{
 				wchar_t num1[BUFLEN],num2[BUFLEN],num3[BUFLEN],num4[BUFLEN];
 				format_size(num1,TorrentStatus.downloaded,0);
@@ -1230,7 +1240,7 @@ void UpdaterImp::ShowProgress(wchar_t *buf)
 				format_size(num4,TorrentStatus.uploaded,0);
 
 				//std::vector<torrent_status> temp;
-				//ses.get_torrent_status(&temp,&yes1,0);
+				//ses->get_torrent_status(&temp,&yes1,0);
 				//if(temp.empty())return;
 				torrent_status st=h.status();
 				if (st.errc) return;
@@ -1356,73 +1366,87 @@ UpdaterImp::~UpdaterImp()
 		}
 }
 
-int UpdaterImp::downloadTorrent()
+int UpdaterImp::downloadTorrent() try
 {
 	// checking for updates
 		manager_g->itembar_settext(SLOT_DOWNLOAD,1,STR(STR_UPD_CHECKING),0,0,0);
 
-
-
-
-
-
-		//std::this_thread::sleep_for(lt::milliseconds(2000));
-		//h.resume();
-		//std::this_thread::sleep_for(lt::milliseconds(1000));
-
 		Timers.start(time_chkupdate);
 
+		// Connecting
+   		lt::error_code ec;
+        //ses->listen_on(std::make_pair(port,port),ec);
+        lt::settings_pack mSettingsPack;
+		//mSettingsPack.set_str(lt::settings_pack::listen_interfaces, "0.0.0.0:port,[::]:port)");
 
+  //      if(ec)Log.print_err("ERROR: failed to open listen socket: %s\n",ec.message().c_str());
+		//Log.print_con("Listen port: %d (%s)\nDownload limit: %dKb\nUpload limit: %dKb\n",
+		//			ses->listen_port(),ses->is_listening()?"connected":"disconnected",
+		//			downlimit,uplimit);
 		// Settings
-		lt::session_params params;
-		auto& settings = params.settings;
-		settings.set_int(settings_pack::choking_algorithm, settings_pack::rate_based_choker);
+		mSettingsPack.set_int(settings_pack::choking_algorithm, settings_pack::rate_based_choker);
 
-		settings.set_str(lt::settings_pack::user_agent,VERSION_FILEVERSION_LONG);
-		settings.set_int(settings_pack::alert_mask
+		mSettingsPack.set_str(lt::settings_pack::user_agent, _STRG(VERSION_FILEVERSION_LONG));
+		mSettingsPack.set_int(settings_pack::alert_mask
 		, lt::alert_category::error
-		| lt::alert_category::peer
-		| lt::alert_category::port_mapping
+		//| lt::alert_category::peer
+		//| lt::alert_category::port_mapping
 		| lt::alert_category::storage
 		| lt::alert_category::tracker
 		| lt::alert_category::connect
 		| lt::alert_category::status
-		| lt::alert_category::ip_block
+		/*| lt::alert_category::ip_block
 		| lt::alert_category::performance_warning
 		| lt::alert_category::dht
 		| lt::alert_category::incoming_request
-		| lt::alert_category::dht_operation
-		| lt::alert_category::port_mapping_log
-		| lt::alert_category::file_progress);
+		*///| lt::alert_category::dht_operation
+		/*| lt::alert_category::port_mapping_log
+		*/| lt::alert_category::file_progress);
+        ses = std::make_shared<libtorrent::session>(mSettingsPack);
 
-		lt::error_code ec;
-		//ses.apply_settings(std::move(params));
-
-		// Connecting
-		settings.set_str(lt::settings_pack::listen_interfaces, "0.0.0.0:torrentport,[::]:torrentport)");
-		if(ec)Log.print_err("ERROR: failed to open listen socket: %s\n",ec.message().c_str());
-		Log.print_con("Listen port: %d (%s)\nDownload limit: %dKb\nUpload limit: %dKb\n",
-						ses.listen_port(),ses.is_listening()?"connected":"disconnected",
-						downlimit,uplimit);
-
-		// Setup path and URL
+        // Setup path and URL
 		char url[BUFSIZ];
 		wcstombs(url, active_torrent_url->c_str(), BUFSIZ);
 		wcstombs(save_path, active_torrent_save_path->c_str(), BUFSIZ);
-		atp.flags |= torrent_flags::paused;
+		atp.url = url;
+		Log.print_con("Adding URL: %s\n", url);
 		atp.save_path = save_path;
 		atp.storage_mode = allocation_mode;
-		atp.url = url;
-		//atp.flags |= add_torrent_params::flag_auto_managed;
+        atp.flags |= torrent_flags::paused;
+        // make sure all file priorities are set to 0, except the ones
+        // we specify in the file_priorities
+        atp.flags |= torrent_flags::default_dont_download;
+        //atp.flags &= ~torrent_flags::auto_managed;
 		set_torrent_params();
 
-		Log.print_con("Adding URL: %s\n", url);
 
-		h = ses.add_torrent(atp);
-		if (ec)Log.print_err("ERROR: failed to add torrent: %s\n", ec.message().c_str());
+        h = ses->add_torrent(atp);
 
+        for (;;) {
+            std::vector<lt::alert*> alerts;
+            ses->pop_alerts(&alerts);
+
+            for (lt::alert const* a : alerts) {
+                std::cout << a->message() << std::endl;
+                // if we receive the finished alert or an error, we're done
+                if (auto at = lt::alert_cast<lt::add_torrent_alert>(a)) {
+                    goto done;
+                }
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        }
+    done:
+        std::cout << "done, pausing torrent" << std::endl;
+        ses->pause();
+
+        if (ec)Log.print_err("ERROR: failed to add torrent: %s\n", ec.message().c_str());
+        
+//set_torrent_params();
+//h.resume();
+
+        
 		// Download torrent
-		Log.print_con("Waiting for torrent");
+		Log.print_con("Waiting for torrent handle");
 
 		for(int i=0;i<200;i++)
 		{
@@ -1469,21 +1493,27 @@ int UpdaterImp::downloadTorrent()
 		Log.print_con("Updated driver packs available: %d\n",i&0xFF);
 
 		// clear the torrent priorities
-		for(file_index_t j(0); static_cast<int>(j)<numfiles; j++) h.file_priority(j,dont_download);
+        for (file_index_t j(0); static_cast<int>(j) < numfiles; j++) {
+            h.file_priority(j, lt::dont_download);
+            h.file_priority(j);}
 
 		Timers.stop(time_chkupdate);
 		return i;
 }
+catch (std::exception& e)
+{
+    std::cerr << "Error: " << e.what() << std::endl;
+}
 
 void UpdaterImp::resumeDownloading()
 {
-		if(!ses.is_valid() || !h.torrent_file())
+		if(!ses || !h.torrent_file())
 		{
 				finisheddownloading=1;
 				finishedupdating=1;
 				return;
 		}
-		if(ses.is_paused())
+		if(ses->is_paused())
 		{
 				h.force_recheck();
 				Log.print_con("torrent_resume\n");
@@ -1491,7 +1521,7 @@ void UpdaterImp::resumeDownloading()
 				downloadmangar_event->raise();
 		}
 
-		ses.resume();
+		ses->resume();
 		// sometimes the torrent stays paused
 		h.resume();
 		finisheddownloading=0;
@@ -1755,10 +1785,10 @@ void UpdaterImp::DownloadIndexes()
 
 void UpdaterImp::StartSeedingDrivers()
 {
-		if(!ses.is_valid())return;
+		if(!ses)return;
 
 		// don't interrupt the current session
-		if(!ses.is_paused())
+		if(!ses->is_paused())
 				return;
 
 		// i'm going to point the torrent files back to
@@ -1768,7 +1798,7 @@ void UpdaterImp::StartSeedingDrivers()
 
 		wchar_t buf[BUFLEN];
 		buf[0]=0;
-		ses.pause();
+		ses->pause();
 		std::shared_ptr<lt::torrent_info const> ti;
 		ti=h.torrent_file();
 		if(!ti)return;
@@ -1875,7 +1905,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 
 				// Downloading loop
 				Log.print_con("{torrent_starting\n");
-				while(downloadmangar_exitflag==DOWNLOAD_STATUS_DOWLOADING_DATA&&ses.is_valid())
+				while(downloadmangar_exitflag==DOWNLOAD_STATUS_DOWLOADING_DATA&&ses)
 				{
 						Sleep(500);
 
@@ -1889,7 +1919,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 
 						// Send libtorrent messages to log
 						std::vector<lt::alert*> alerts;
-						ses.pop_alerts(&alerts);
+						ses->pop_alerts(&alerts);
 						for (auto a : alerts)
 						{
 								if (Log.isAllowed(LOG_VERBOSE_TORRENT)) continue;
@@ -1900,7 +1930,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 						if((TorrentStatus.status_strid==STR_TR_ST0+libtorrent::torrent_status::finished)&&!seed_mode)
 						{
 								Log.print_con("Torrent: finished\n");
-								ses.pause();
+								ses->pause();
 
 								// Flush cache
 								Log.print_con("Torrent: flushing cache...");
@@ -1909,7 +1939,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 								using namespace lt;
 								while(1)
 								{
-										auto const* a=ses.wait_for_alert(seconds(60*2));
+										auto const* a=ses->wait_for_alert(seconds(60*2));
 										if(!a)
 										{
 												Log.print_con("time out\n");
@@ -1971,19 +2001,19 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 				}
 				// Download is completed
 				finishedupdating=1;
-				ses.pause();
+				ses->pause();
 				Updater1->updateTorrentStatus();
 				monitor_pause=0;
 				Log.print_con("}torrent_stop\n");
 				downloadmangar_event->reset();
 		} // !=DOWNLOAD_STATUS_STOPPING
 
-		if(ses.is_valid())
+		if(ses)
 		{
 				Log.print_con("Closing torrent session...");
-				ses.remove_torrent(h);
-				ses.pause();
-				ses.abort();
+				ses->remove_torrent(h);
+				ses->pause();
+				ses->abort();
 				Log.print_con("DONE\n");
 		}
 		Log.print_con("}thread_download\n");
