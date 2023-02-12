@@ -600,59 +600,59 @@ struct CEventSetEnd
 
 static const char * const k_IncorrectMapCommand = "Incorrect Map command";
 
-static const char *ParseMapWithPaths(
-    NWildcard::CCensor &censor,
-    const UString &s2,
-    const CNameOption &nop)
-{
-  UString s (s2);
-  int pos = s.Find(L':');
-  if (pos < 0)
-    return k_IncorrectMapCommand;
-  int pos2 = s.Find(L':', (unsigned)(pos + 1));
-  if (pos2 < 0)
-    return k_IncorrectMapCommand;
-
-  CEventSetEnd eventSetEnd((const wchar_t *)s + (unsigned)(pos2 + 1));
-  s.DeleteFrom((unsigned)pos2);
-  UInt32 size;
-  if (!StringToUInt32(s.Ptr((unsigned)(pos + 1)), size)
-      || size < sizeof(wchar_t)
-      || size > ((UInt32)1 << 31)
-      || size % sizeof(wchar_t) != 0)
-    return "Unsupported Map data size";
-
-  s.DeleteFrom((unsigned)pos);
-  CFileMapping map;
-  if (map.Open(FILE_MAP_READ, GetSystemString(s)) != 0)
-    return "Cannot open mapping";
-  LPVOID data = map.Map(FILE_MAP_READ, 0, size);
-  if (!data)
-    return "MapViewOfFile error";
-  CFileUnmapper unmapper(data);
-
-  UString name;
-  const wchar_t *p = (const wchar_t *)data;
-  if (*p != 0) // data format marker
-    return "Unsupported Map data";
-  UInt32 numChars = size / sizeof(wchar_t);
-  for (UInt32 i = 1; i < numChars; i++)
-  {
-    wchar_t c = p[i];
-    if (c == 0)
-    {
-      // MessageBoxW(0, name, L"7-Zip", 0);
-      AddNameToCensor(censor, nop, name);
-      name.Empty();
-    }
-    else
-      name += c;
-  }
-  if (!name.IsEmpty())
-    return "Map data error";
-
-  return NULL;
-}
+//static const char *ParseMapWithPaths(
+//    NWildcard::CCensor &censor,
+//    const UString &s2,
+//    const CNameOption &nop)
+//{
+//  UString s (s2);
+//  int pos = s.Find(L':');
+//  if (pos < 0)
+//    return k_IncorrectMapCommand;
+//  int pos2 = s.Find(L':', (unsigned)(pos + 1));
+//  if (pos2 < 0)
+//    return k_IncorrectMapCommand;
+//
+//  CEventSetEnd eventSetEnd((const wchar_t *)s + (unsigned)(pos2 + 1));
+//  s.DeleteFrom((unsigned)pos2);
+//  UInt32 size;
+//  if (!StringToUInt32(s.Ptr((unsigned)(pos + 1)), size)
+//      || size < sizeof(wchar_t)
+//      || size > ((UInt32)1 << 31)
+//      || size % sizeof(wchar_t) != 0)
+//    return "Unsupported Map data size";
+//
+//  s.DeleteFrom((unsigned)pos);
+//  CFileMapping map;
+//  if (map.Open(FILE_MAP_READ, GetSystemString(s)) != 0)
+//    return "Cannot open mapping";
+//  LPVOID data = map.Map(FILE_MAP_READ, 0, size);
+//  if (!data)
+//    return "MapViewOfFile error";
+//  CFileUnmapper unmapper(data);
+//
+//  UString name;
+//  const wchar_t *p = (const wchar_t *)data;
+//  if (*p != 0) // data format marker
+//    return "Unsupported Map data";
+//  UInt32 numChars = size / sizeof(wchar_t);
+//  for (UInt32 i = 1; i < numChars; i++)
+//  {
+//    wchar_t c = p[i];
+//    if (c == 0)
+//    {
+//      // MessageBoxW(0, name, L"7-Zip", 0);
+//      AddNameToCensor(censor, nop, name);
+//      name.Empty();
+//    }
+//    else
+//      name += c;
+//  }
+//  if (!name.IsEmpty())
+//    return "Map data error";
+//
+//  return NULL;
+//}
 
 #endif
 
