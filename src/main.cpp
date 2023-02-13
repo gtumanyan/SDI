@@ -27,6 +27,8 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "draw.h"   // non-portable
 #include "theme.h"
 #include "usbwizard.h"
+#include "VersionEx.h"
+
 
 #include <winuser.h>
 #include <setupapi.h>       // for CommandLineToArgvW
@@ -135,17 +137,20 @@ public:
 		}
 };
 
-//{  Main
-int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hinst,LPSTR pStr,int nCmd)
+//=============================================================================
+//
+//  WinMain()
+//
+int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nShowCmd)
 {
-		UNREFERENCED_PARAMETER(hinst);
-		UNREFERENCED_PARAMETER(pStr);
-		ghInst=hInst;
+		UNREFERENCED_PARAMETER(hPrevInstance);
+		UNREFERENCED_PARAMETER(lpCmdLine);
+		ghInst=hInstance;
 
 		Timers.start(time_total);
 
-		std::cout << VERSION_FILEVERSION_LONG << "\n";
-		std::cout << VERSION_COMMIT_ID << "\n\n";
+		std::cout << _STRG(VERSION_FILEVERSION_LONG) << "\n";
+		//std::cout << VERSION_COMMIT_ID << "\n\n";
 
 		// Determine number of CPU cores ("Logical Processors")
 		SYSTEM_INFO siSysInfo;
@@ -251,7 +256,7 @@ int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hinst,LPSTR pStr,int nCmd)
 		//viruscheck(L"",0,0);
 
 		// MAIN GUI LOOP
-		MainWindow.MainLoop(nCmd);
+		MainWindow.MainLoop(nShowCmd);
 
 		// Wait till the device scan thread is finished
 		if(MainWindow.hMain)deviceupdate_exitflag=1;
@@ -421,9 +426,9 @@ void MainWindow_t::MainLoop(int nCmd)
 		}
 
 		// Main windows
-		hMain=CreateWindowEx(WS_EX_LAYERED,
+		hMain = CreateWindowExW(WS_EX_LAYERED,
 												classMain,
-												_W(APPTITLE),
+												_W(SAPPNAME),
 												WS_OVERLAPPEDWINDOW|WS_CLIPCHILDREN,
 												CW_USEDEFAULT,CW_USEDEFAULT,D(MAINWND_WX),D(MAINWND_WY),
 												nullptr,nullptr,ghInst,nullptr);
@@ -1359,7 +1364,7 @@ void MainWindow_t::DownloadedTorrent(int TorrentResults)
 						TorrentSelectionMode=TSM_NONE;
 						DialogBox(ghInst,MAKEINTRESOURCE(IDD_WELCOME), MainWindow.hMain,(DLGPROC)WelcomeProcedure);
 				}
-				// otherwise if there are updates on the current torrent then stop switching
+				// otherwise if there are updates of the current torrent then stop switching
 				else if((NewVersion>LatestExeVersion)||(DriverPacksAvailable>0))
 						TorrentSelectionMode=TSM_NONE;
 				// no updates on this torrent so try the next one then stop
