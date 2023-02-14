@@ -97,8 +97,7 @@ try
 	$WebPVer = $Matches.0
 	DebugOutput("WebP $WebPVer")
 	if (!$WebPVer) { $WebPVer = 0 }
-	[string](Get-Content "ext\libtorrent\build_dist.sh"-TotalCount 19)[-1] -match '[\d.]+$'
-	$TorrentVer = $Matches.0
+	$TorrentVer = ((Get-Content "ext\libtorrent\Makefile"-TotalCount 1) -split '=')[1]
 	DebugOutput("Libtorrent $TorrentVer")
 	if (!$TorrentVer) { $TorrentVer = "0.0.0" }
 	$BoostVer = [string](Get-Content "ext\boost\tools\boost_install\test\BoostVersion.cmake"-TotalCount 1).Substring(18,6)
