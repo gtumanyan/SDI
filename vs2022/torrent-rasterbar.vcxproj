@@ -102,7 +102,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /external:I "../../ext/boost" /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -139,8 +139,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
+      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -179,8 +179,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
+      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -219,8 +219,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
+      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
@@ -258,8 +258,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
+      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -295,8 +295,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
+      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -332,8 +332,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
+      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -372,8 +372,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
+      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
