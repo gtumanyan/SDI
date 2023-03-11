@@ -288,6 +288,9 @@
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
       <PrecompiledHeader />
     </ClCompile>
+    <ClCompile Include="..\ext\SevenZ\C\LzFindOpt.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\ext\SevenZ\C\Lzma2Dec.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -649,6 +652,8 @@
     <MASM Include="..\ext\SevenZ\Asm\x86\7zCrcOpt.asm">
     </MASM>
     <MASM Include="..\ext\SevenZ\Asm\x86\LzFindOpt.asm">
+      <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">x64</PreprocessorDefinitions>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </MASM>
     <MASM Include="..\ext\SevenZ\Asm\x86\LzmaDecOpt.asm">
       <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">x64</PreprocessorDefinitions>
