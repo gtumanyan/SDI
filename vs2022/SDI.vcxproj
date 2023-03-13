@@ -21,13 +21,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\res\install64.exe" />
-    <None Include="..\src\SDI.rc2" />
-    <None Include="..\Versions\VersionEx.h.tpl" />
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D836A720-0876-4B3A-BA09-1F6727EEE5D4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -79,21 +72,23 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
     <IntDir>..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath>..\lib\$(Configuration)_$(Platform)\;$(LibraryPath)</LibraryPath>
     <OutDir>..\</OutDir>
     <TargetName>SDI_D</TargetName>
     <TargetExt>.exe</TargetExt>
-    <GenerateManifest>false</GenerateManifest>
+    <GenerateManifest>true</GenerateManifest>
+    <LinkIncremental>true</LinkIncremental>
+    <EmbedManifest>true</EmbedManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
     <IntDir>..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
     <TargetName>SDI64_D</TargetName>
-    <GenerateManifest>false</GenerateManifest>
+    <GenerateManifest>true</GenerateManifest>
     <LibraryPath>..\lib\$(Configuration)_$(Platform)\;$(LibraryPath)</LibraryPath>
     <OutDir>..\</OutDir>
+    <LinkIncremental>true</LinkIncremental>
+    <EmbedManifest>true</EmbedManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -101,7 +96,8 @@
     <LibraryPath>..\lib\$(Configuration)_$(Platform)\;$(LibraryPath)</LibraryPath>
     <OutDir>..\</OutDir>
     <TargetName>SDI</TargetName>
-    <GenerateManifest>false</GenerateManifest>
+    <GenerateManifest>true</GenerateManifest>
+    <EmbedManifest>true</EmbedManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -109,7 +105,8 @@
     <TargetName>SDI64</TargetName>
     <LibraryPath>..\lib\$(Configuration)_$(Platform)\;$(LibraryPath)</LibraryPath>
     <OutDir>..\</OutDir>
-    <GenerateManifest>false</GenerateManifest>
+    <GenerateManifest>true</GenerateManifest>
+    <EmbedManifest>true</EmbedManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -137,11 +134,13 @@
       <SubSystem>Windows</SubSystem>
       <FullProgramDatabaseFile>true</FullProgramDatabaseFile>
       <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
-      <AdditionalDependencies>torrent-rasterbar.lib;7zip.lib;comctl32.lib;webpdecode.lib;webpdspdecode.lib;webputilsdecode.lib;newdev.lib;setupapi.lib;shlwapi.lib;dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>torrent-rasterbar.lib;7zip.lib;comctl32.lib;comdlg32.lib;libwebp.lib;newdev.lib;setupapi.lib;shlwapi.lib;dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;wininet.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
       <GenerateMapFile>true</GenerateMapFile>
       <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalOptions>/VERBOSE:LIB %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>wininet.lib;%(AdditionalDependencies)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -161,7 +160,7 @@
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <AdditionalOptions>/wd5040 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>USE_TORRENT;WIN64;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_TORRENT;WIN64;_CRT_SECURE_NO_WARNINGS;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
@@ -173,9 +172,11 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>dbghelp.lib;vcruntimed.lib;7zip.lib;comctl32.lib;torrent-rasterbar.lib;webpdecode.lib;webpdspdecode.lib;webputilsdecode.lib;newdev.lib;setupapi.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>torrent-rasterbar.lib;7zip.lib;comctl32.lib;comdlg32.lib;libwebp.lib;newdev.lib;setupapi.lib;shlwapi.lib;dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;wininet.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
       <PerUserRedirection>true</PerUserRedirection>
+      <AdditionalOptions>/VERBOSE:LIB %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>wininet.lib;%(AdditionalDependencies)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -229,6 +230,8 @@
       <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>
       <PerUserRedirection>true</PerUserRedirection>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalOptions>/VERBOSE:LIB %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>wininet.lib;%(AdditionalDependencies)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -268,9 +271,11 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>7zip.lib;comctl32.lib;torrent-rasterbar.lib;webpdecode.lib;webpdspdecode.lib;webputilsdecode.lib;newdev.lib;setupapi.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>7zip.lib;comctl32.lib;torrent-rasterbar.lib;libwebp.lib;newdev.lib;setupapi.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>true</Profile>
       <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
+      <AdditionalOptions>/VERBOSE:LIB %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>wininet.lib;%(AdditionalDependencies)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -345,11 +350,30 @@
     <ClInclude Include="..\src\VersionEx.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\res\install64.exe" />
+    <None Include="..\src\SDI.rc2" />
+    <None Include="..\Versions\VersionEx.h.tpl" />
+    <None Include="..\src\SDI.ver" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\src\SDI.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="..\res\SDI.exe.manifest">
+      <SubType>Designer</SubType>
+    </Manifest>
+  </ItemGroup>
+  <ItemGroup>
     <Text Include="..\res\cli.txt" />
     <Text Include="..\res\gpl-3.0.txt" />
     <Text Include="..\tools\langs\english.txt" />
     <Text Include="..\tools\themes\metallic.txt" />
-    <Text Include="..\Versions\build.txt" />
+    <Text Include="..\Versions\build.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\down.webp" />
@@ -362,11 +386,5 @@
     <Image Include="..\res\logo128.bmp" />
     <Image Include="..\res\watermark.bmp" />
     <Image Include="sdi.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\src\SDI.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Manifest Include="..\res\SDI.exe.manifest" />
   </ItemGroup>
 </Project>
