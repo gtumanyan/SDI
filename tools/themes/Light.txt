@@ -1,0 +1,244 @@
+// Made by WindR
+// github.com/gtumanyan
+
+THEME_NAME              = "Light"
+
+
+// Main window
+MAINWND_WX               = 1070
+MAINWND_WY               = 800
+MAINWND_MINX             = 480
+MAINWND_MINY             = 720
+MAINWND_INSIDE_COLOR     = 11888640
+
+// Font
+FONT_NAME                = "Microsoft Sans Serif"
+FONT_SIZE                = 14
+
+// Popup
+POPUP_FONT_SIZE          = 11
+POPUP_WX                 = 450
+POPUP_WY                 = 13
+;POPUP_INSIDE_COLOR       = 0xFFFFFF
+
+// Popup, driver comparsion
+POPUP_HWID_COLOR         = 0xFF9090
+POPUP_CMP_BETTER_COLOR   = 0x00A000
+POPUP_CMP_INVALID_COLOR  = 0x0000FF
+
+// Popup, driver list
+POPUP_LST_BETTER_COLOR   = 0x00A000
+POPUP_LST_WORSE_COLOR    = 0x0000FF
+POPUP_LST_INVALID_COLOR  = 0xC3C3C3
+POPUP_LST_SELECTED_COLOR = 0xFFFFFF
+
+// Progress bar (active)
+PROGR_OUTLINE_COLOR      = 0x777777
+PROGR_OUTLINE_ROUND      = 0
+
+// Checkbox (selected via the keyboard)
+KBHLT_INSIDE_COLOR       = 0x009999
+
+// Panel, generic
+PANEL_OFSX               = 12
+PANEL_OFSY               = 10
+PANEL_WY                 = 21
+PANEL_INSIDE_COLOR       = 0xFF000000 // set 0xFF000000 to expose the background
+PANEL_OUTLINE_COLOR      = MAINWND_INSIDE_COLOR
+PANEL_OUTLINE_WIDTH      = -1        // set 0 to remove the borders
+
+// Panel, sysinfo
+PANEL1_OFSX              = 13
+PANEL1_OFSY              = 0
+
+// Panel, install
+
+
+PANEL2_WY                = 0
+
+// Panel, lang_theme
+PANEL3_OFSX              = PANEL_OFSX
+PANEL3_OFSY              = 60
+
+// Panel, actions
+PANEL4_OFSY              = 340
+PANEL4_WX                = PANEL9_WX
+PANEL4_WY                = 22
+
+
+
+// Panel, filters (found)
+PANEL5_OFSY             = 435
+PANEL5_WY                = 22
+
+// Panel, filters (not found)
+PANEL6_OFSY             = 590
+
+// Panel, filters (special)
+
+
+// Panel, revision
+
+// Panel, install button
+PANEL9_OFSX              = PANEL12_OFSX
+PANEL9_OFSY              = 175
+PANEL9_WX                = 192
+PANEL9_WY                = 45
+PANEL9_OUTLINE_WIDTH     = PANEL_OUTLINE_WIDTH
+PANEL9_OUTLINE_ROUND	= PANEL_OUTLINE_ROUND
+PANEL9_INSIDE_COLOR_H	= 12879411
+PANEL9_BITMAP_FILENAME   = "light\main2.webp"
+PANEL9_BITMAP_FILL	 = hstr_vstr
+PANEL9_BITMAP_FILENAME_H = "light\optiona1.webp"
+PANEL9_BITMAP_FILL_H	= hstr_vstr
+
+// Panel, selectall button
+PANEL10_WY               = 26
+PANEL10_OFSY             = 220
+PANEL10_BITMAP_FILENAME  = PANEL_BITMAP_FILENAME
+
+
+PANEL10_BITMAP_FILENAME_H= "light\optiona1.webp"
+
+// Panel, selectnone button
+PANEL11_WY               = PANEL10_WY
+PANEL11_BITMAP_FILENAME  = PANEL_BITMAP_FILENAME
+PANEL11_OFSY             = 250
+
+// Items on left panel
+
+
+// Checkboxes on left panel
+CHKBOX_TEXT_OFSX            = 20
+CHKBOX_TEXT_COLOR           = 0xFFFFFF
+CHKBOX_TEXT_COLOR_H         = 0xFFEA00
+CHKBOX_SIZE                 = 18
+ITEM_CHECKBOX_SIZE          = 25
+BUTTON_BITMAP_CHECKED       = "lite\c16.webp"
+BUTTON_BITMAP_CHECKED_H     = "lite\c16.webp"
+BUTTON_BITMAP_UNCHECKED     = "lite\unc16.webp"
+BUTTON_BITMAP_UNCHECKED_H   = "lite\unc16.webp"
+ITEM_BITMAP_CHECKED         = "lite\c23.webp"
+ITEM_BITMAP_CHECKED_H       = "lite\c23.webp"
+ITEM_BITMAP_UNCHECKED       = "lite\unc23.webp"
+ITEM_BITMAP_UNCHECKED_H     = "lite\unc23.webp"
+
+// Buttons on left panel
+BUTTON_INSIDE_COLOR      = MAINWND_INSIDE_COLOR
+BUTTON_OUTLINE_COLOR     = 0xFFFFFF
+BUTTON_OUTLINE_ROUND     = 0
+BUTTON_INSIDE_COLOR_H    = 12879411
+
+// Extra options
+// Panel, options
+PANEL12_OFSX             = PANEL6_OFSX
+PANEL12_OFSY             = 270
+PANEL12_WX               = PANEL_WX
+PANEL12_WY               = 20
+PANEL12_OUTLINE_WIDTH	= 0
+
+// Logo
+PANEL13_WX=0
+
+// Driver list
+DRVLIST_OFSX             = 213
+DRVLIST_OFSY             = 1
+DRVLIST_INSIDE_COLOR     = 0xFFFFFF
+DRVLIST_OUTLINE_ROUND    = 0
+
+// Driver items
+DRVITEM_WX               = -20
+DRVITEM_WY               = 40
+DRVITEM_OFSX             = 15
+DRVITEM_OFSY             = 15
+DRVITEM_LINE_INTEND      = 25
+DRVITEM_LINE_COLOR       = 0xA4A4A4
+DRVITEM_DIST_Y0          = 39
+DRVITEM_DIST_Y1          = DRVITEM_DIST_Y0
+DRVITEM_DIST_Y2          = 10
+DRVITEM_OUTLINE_WIDTH	= 0
+
+// Driver item content
+ITEM_CHECKBOX_SIZE       = 23
+ITEM_EXPAND_UP           = "lite\downup.webp"
+ITEM_EXPAND_UP_H         = "lite\downup.webp"
+ITEM_EXPAND_DOWN         = "lite\downup.webp"
+ITEM_EXPAND_DOWN_H       = "lite\downup.webp"
+
+// Driver item (generic style)
+DRVITEM_INSIDE_COLOR     = 0xFFFFFF
+DRVITEM_OUTLINE_COLOR    = 0xC4C4C4
+DRVITEM_OUTLINE_ROUND    = 0
+DRVITEM_INSIDE_COLOR_H   = 0xfff7e9
+DRVITEM_OUTLINE_COLOR_H  = 0xC4C4C4
+;DRVITEM_TEXT2_COLOR	= 0xCC8500
+
+// BETTER_NEW
+DRVITEM_INSIDE_COLOR_BN     = 0xFFFFFF
+DRVITEM_INSIDE_COLOR_BN_H   = 0xFFF9EF
+DRVITEM_TEXT2_COLOR_BN      = 0xCC8500
+
+// SAME_NEW
+DRVITEM_INSIDE_COLOR_SN     = DRVITEM_INSIDE_COLOR_BN
+DRVITEM_TEXT2_COLOR_SN      = DRVITEM_TEXT2_COLOR_BN
+
+// BETTER_CUR
+DRVITEM_INSIDE_COLOR_BC     = DRVITEM_INSIDE_COLOR_BN
+DRVITEM_TEXT2_COLOR_BC      = DRVITEM_TEXT2_COLOR_BN
+
+// BETTER_OLD
+DRVITEM_INSIDE_COLOR_BO     = DRVITEM_INSIDE_COLOR_BN
+DRVITEM_TEXT2_COLOR_BO      = DRVITEM_TEXT2_COLOR_BN
+
+// MISSING
+DRVITEM_INSIDE_COLOR_MS     = 0xE1FECE
+DRVITEM_INSIDE_COLOR_MS_H   = 0xEBFFDE
+DRVITEM_TEXT2_COLOR_MS      = 0x3A9000
+
+// NOT-FOUND,INSTALLED_UNKNOWN
+DRVITEM_INSIDE_COLOR_NU     = 0x99FFFF
+
+// NOT-FOUND,INSTALLED_STANDARD
+DRVITEM_INSIDE_COLOR_NS     = 0xEEEEEE
+
+// Driver installed
+DRVITEM_INSIDE_COLOR_D1     = PROGR_INSIDE_COLOR
+DRVITEM_INSIDE_COLOR_D1_H   = 0x91E658
+DRVITEM_OUTLINE_WIDTH_D1    = 0
+DRVITEM_OUTLINE_WIDTH_D1_H  = 0
+
+// Driver installing
+DRVITEM_INSIDE_COLOR_D0     = DRVITEM_INSIDE_COLOR_MS
+DRVITEM_OUTLINE_COLOR_D0    = DRVITEM_INSIDE_COLOR_MS
+DRVITEM_INSIDE_COLOR_D0_H   = DRVITEM_INSIDE_COLOR_MS
+DRVITEM_OUTLINE_COLOR_D0_H  = DRVITEM_INSIDE_COLOR_MS
+
+// Driver installed (reboot required)
+DRVITEM_INSIDE_COLOR_D2_H   = 0x55CDFF
+DRVITEM_INSIDE_COLOR_D2     = 0x2AC0FF
+DRVITEM_OUTLINE_WIDTH_D2    = 0
+DRVITEM_OUTLINE_WIDTH_D2_H  = 0
+
+// Driver installation error
+DRVITEM_INSIDE_COLOR_DE     = 0x0033D9
+DRVITEM_INSIDE_COLOR_DE_H   = 0x1748E9
+DRVITEM_OUTLINE_WIDTH_DE    = 0
+DRVITEM_OUTLINE_WIDTH_DE_H  = 0
+
+// No updates
+;DRVITEM_INSIDE_COLOR_IU     = BUTTON_INSIDE_COLOR
+;DRVITEM_INSIDE_COLOR_IU_H   = BUTTON_INSIDE_COLOR_H
+DRVITEM_TEXT2_COLOR_IU      = 0xFFFFFF
+
+// Info (indexing,snapshot,installation)
+DRVITEM_INSIDE_COLOR_IF     = 0xB54B8C
+DRVITEM_INSIDE_COLOR_IF_H   = 0xBB5995
+DRVITEM_TEXT2_COLOR_IF      = 0xFFFFFF
+DRVITEM_OUTLINE_COLOR_IF    = 0xB54B8C
+DRVITEM_OUTLINE_COLOR_IF_H  = 0xBB5995
+
+// Patreon
+DRVITEM_INSIDE_COLOR_PT     = 0x484848
+DRVITEM_INSIDE_COLOR_PT_H   = 0x555555
+DRVITEM_TEXT1_COLOR_PT      = 0xFFFFFF
+DRVITEM_TEXT2_COLOR_PT      = 0xFFFFFF
