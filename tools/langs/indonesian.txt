@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Tampilkan duplikat driver \n\nBeberapa driver t
 STR_SHOW_INVALID              = "Tampilkan yang tidak valid"
 STR_SHOW_INVALID_H            = "Tampilkan driver yang tidak kompatibel dengan sistem saat ini.\n\nKami menyarankan Anda untuk TIDAK memasang driver ini karena tidak kompatibel dengan versi Windows."
 
-STR_OPTIONS                   = "Opsi"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Opsi"
 STR_REBOOT                    = "Restart PC setelah Penginstalan"
 STR_REBOOT_H                  = "Boot ulang PC(jika diperlukan) setelah instalasi(Ctrl+R)\n\nINFO: Anda dapat membatalkan boot ulang PC setiap waktu dengan cara menghapus tanda ceklist di kotak pilihan."

@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Parādīt dublējošos vadītājus vadītāju p
 STR_SHOW_INVALID              = "Nesaderīgi"
 STR_SHOW_INVALID_H            = "Parādīt nesaderīgus vadītājus.\n\nŠie vadītāji domāti citā Windows versijām un uzstādīšanai nerekomendējas."
 
-STR_OPTIONS                   = "Opcijas"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Opcijas"
 STR_REBOOT                    = "Pārstartēt datoru pēc uzstādīšanas"
 STR_REBOOT_H                  = "Pārstartēt datoru (ja nepieciešams) pēc vadītāju uzstādīšanas (Ctrl+R).\n\nPADOMS: JŪs varat attekties no pārstartēšanas jebkurā momentā, noņemot šo marķieri."

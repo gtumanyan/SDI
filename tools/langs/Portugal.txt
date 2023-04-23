@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Exibir drivers duplicados.\nAlguns drivers são
 STR_SHOW_INVALID              = "Exibe inválidos"
 STR_SHOW_INVALID_H            = "Exibe drivers que são imcompatíveis com o sistema atual.\n\nRecomendamos NÃO instalar esses drivers porque são imcompatíveis com essa versão de Windows."
 
-STR_OPTIONS                   = "Opções"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Opções"
 STR_REBOOT                    = "Reinicia o PC após instalação"
 STR_REBOOT_H                  = "Reinicia o PC(se requisitado) após instalação(Ctrl+R).\n\nHINT: Você pode cancelar a reinicialização a qualquer hora desmarcando a caixa."

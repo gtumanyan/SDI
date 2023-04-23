@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "重複したドライバーを表示"
 STR_SHOW_INVALID              = "無効を表示"
 STR_SHOW_INVALID_H            = "現在のシステムと互換性のないドライバーを表示\n\nこれらは現在の Windows バージョンと互換性がないので、インストールしないことを推奨"
 
-STR_OPTIONS                   = "設定"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "設定"
 STR_REBOOT                    = "インストール後に PC を再起動"
 STR_REBOOT_H                  = "インストール後に(必要な場合) PC を再起動 (Ctrl+R).\n\nヒント: チェックボックスをクリアすることで再起動をキャンセル"

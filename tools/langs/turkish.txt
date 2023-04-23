@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Çift sürücüleri göster.\n\nBazı sürücü
 STR_SHOW_INVALID              = "Geçersizleri göster"
 STR_SHOW_INVALID_H            = "Mevcut sistemle uyumsuz sürücüleri göster.\n\nWindows sürümünüzle uyumsuz olduğu için bu sürücüleri yüklemenizi tavsiye etmiyoruz."
 
-STR_OPTIONS                   = "Seçenekler"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Seçenekler"
 STR_REBOOT                    = "Kur sonrası PC'yi yeniden başlat"
 STR_REBOOT_H                  = "Kurulumdan sonra (eğer gerekirse) bilgisayar yeniden başlatılır (Ctrl+R).\n\nİPUCU:İstediğiniz zaman onay kutusunun işaretini kaldırıp yeniden başlatmayı iptal edebilirsiniz."

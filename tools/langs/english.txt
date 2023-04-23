@@ -1,5 +1,5 @@
 ﻿// send updates to https://t.me/Snappy_Driver_Installer
-STR_TRANSLATORS         = "BadPointer, Glenn Delahoy"
+STR_TRANSLATORS         = "BadPointer, Glenn Delahoy, WindR"
 
 STR_LANG_NAME           = "English"
 STR_LANG_ID             = "English"
@@ -8,14 +8,14 @@ STR_LANG_CODE           = 0x09
 STR_RTL                 = 0
 
 // left panel
-STR_SHOW_SYSINFO        = "System information"
-STR_SHOW_SYSINFO_H      = "System information"
+STR_SHOW_SYSINFO        = ""
+STR_SHOW_SYSINFO_H      = "System Information"
 
 STR_INSTALL             = "Install"
-STR_INSTALL_H           = "Install selected drivers(Ctrl+I).\n\nHINT: Hold the Shift key while clicking on a driver to start installing immediately."
-STR_SELECT_ALL          = "Select all"
+STR_INSTALL_H           = "Install selected drivers(Ctrl+I).\n\nHINT: Hold the Shift key while clicking on a driver to start the installation immediately."
+STR_SELECT_ALL          = "Select All"
 STR_SELECT_ALL_H        = "Ctrl+A"
-STR_SELECT_NONE         = "Select none"
+STR_SELECT_NONE         = "Select None"
 STR_SELECT_NONE_H       = "Ctrl+N"
 
 STR_LANG                = "Language"
@@ -37,18 +37,18 @@ STR_TOOLS               = "Tools"
 STR_TOOLS_H             = "Shortcuts to Windows tools"
 STR_OPENLOGS            = "Open logs"
 STR_OPENLOGS_H          = "Open the folder containing logs and snapshots.\n\nSnapshots can be used to remotely help users pick correct drivers."
-STR_SNAPSHOT            = "Load snapshot..."
+STR_SNAPSHOT            = "Load Snapshot..."
 STR_SNAPSHOT_H          = "Load snapshot of another system.\n\nSnapshots are created automatically in the log folder. They contain information about devices, drivers, Windows version, battery and monitors.\n\nSnapshots do not contain information about DriverPacks on the remote system.\n\nTherefore, loading snapshot allows emulation of the remote system but drivers are being searched in local DriverPacks."
 STR_EXTRACT             = "Extract to..."
 STR_EXTRACT_H           = "Extract selected drivers\n\nYou can use it to create backup drivers. Make sure that recently installed drivers are working properly, enable the 'Show current drivers' checkbox and click 'Extract to...'"
 STR_DRVDIR              = "Select driver dir..."
 STR_DRVDIR_H            = "Choose another folder with DriverPacks or unpacked drivers.\n\nYou can use it to search drivers on a driver CD/DVD."
-STR_OPTIONS_BTN         = "Options..."
+STR_OPTIONS_BTN         = "Settings..."
 STR_OPTIONS_BTN_H       = "Open dialog box with settings."
 
 STR_SHOW_FOUND          = "Found in DriverPacks"
 STR_SHOW_FOUND_H        = "Drivers are found in DriverPacks and can be installed.\n\nWe advise you to install drivers from the following categories: not installed, newer, better match."
-STR_SHOW_MISSING        = "Not installed"
+STR_SHOW_MISSING        = "Not Installed"
 STR_SHOW_MISSING_H      = "Display drivers from DriverPacks for devices which require drivers.\n\nWe advise you to install these drivers."
 STR_SHOW_NEWER          = "Newer"
 STR_SHOW_NEWER_H        = "Display drivers from DriverPacks which are newer than currently installed drivers.\n\nWe advise you to install these drivers."
@@ -56,9 +56,9 @@ STR_SHOW_CURRENT        = "Current"
 STR_SHOW_CURRENT_H      = "Display drivers from DriverPacks which match the currently installed drivers.\n\nWe advise you NOT to install these drivers unless they are corrupted."
 STR_SHOW_OLD            = "Older"
 STR_SHOW_OLD_H          = "Display drivers from DriverPacks which are older than currently installed drivers.\n\nWe advise you NOT to install these drivers unless you're having problems with newer drivers."
-STR_SHOW_BETTER         = "Better match"
+STR_SHOW_BETTER         = "Better Match"
 STR_SHOW_BETTER_H       = "Display drivers from DriverPacks which match better than currently installed drivers.\n\nWe advise you to install these drivers."
-STR_SHOW_WORSE_RANK     = "Worse match"
+STR_SHOW_WORSE_RANK     = "Worse Match"
 STR_SHOW_WORSE_RANK_H   = "Display drivers from DriverPacks which match worse than currently installed drivers.\n\nWe advise you NOT to install these drivers unless you have a good reason for doing so."
 
 STR_SHOW_NOTFOUND       = "Absent in DriverPacks"
@@ -79,9 +79,9 @@ STR_SHOW_DUP_H          = "Show duplicate drivers.\n\nSome drivers are duplicate
 STR_SHOW_INVALID        = "Show invalid"
 STR_SHOW_INVALID_H      = "Show drivers which are incompatible with the current system.\n\nWe advise you NOT to install these drivers because they are incompatible with your version of Windows."
 
-STR_OPTIONS             = "Options"
+STR_OPTIONS             = ""
 STR_OPTIONS_H           = "Options"
-STR_REBOOT              = "Reboot PC after installation"
+STR_REBOOT              = "Reboot After Installation"
 STR_REBOOT_H            = "Reboot PC(if required) after installation(Ctrl+R).\n\nHINT: You can cancel rebooting PC any time by clearing the checkbox."
 
 // Sysinfo
@@ -158,7 +158,7 @@ STR_HINT_SCORE          = "Score: "
 STR_HINT_SCROLL         = "HINT: Scroll page horizontally with mouse wheel"
 
 // System menu
-STR_SYST_LICENSE        = "License information"
+STR_SYST_LICENSE        = "License Information"
 STR_SYST_ABOUT          = "About"
 STR_SYST_START_SEED     = "Start seeding DriverPacks"
 STR_SYST_STOP_SEED      = "Stop seeding"
@@ -250,7 +250,7 @@ STR_INDEXING            = "Indexing..."
 STR_INDEXLZMA           = "Compressing indexes..."
 STR_OF                  = " of "
 
-STR_RESTOREPOINT        = "Create a restore point"
+STR_RESTOREPOINT        = "Create Restore Point"
 STR_RESTOREPOINT_H      = "Create a restore point in order to be able to roll back the system to an earlier state in case something goes wrong (Ctrl+P).\n\nHINT: Right click on this button to open context menu."
 STR_REST_SCHEDULE       = "Schedule creating a restore point"
 STR_REST_ROLLBACK       = "Roll back to an existing restore point..."

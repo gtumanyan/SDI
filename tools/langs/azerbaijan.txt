@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Drayverpaklarda dublyaj olmuş drayverləri gö
 STR_SHOW_INVALID              = "Münasib olmayan"
 STR_SHOW_INVALID_H            = "Uyğun olmayan drayverləri göstərmək.\n\nBu drayverlər Windows-un başqa versiyaları üçün nəzərdə tutulub və quraşdırılması tövsiyyə olunmur."
 
-STR_OPTIONS                   = "Opsiyalar"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Opsiyalar"
 STR_REBOOT                    = "Qurtarandan sonra restart vermək"
 STR_REBOOT_H                  = "Drayverlərin quraşdırılmasının sonunda kompüterə restart vermək (əgər lazımdırsa)(Ctrl+R).\n\nMƏSLƏHƏT: Bu quşu götürərək siz istənilən vaxt restart-ı təxirə sala bilərsiz."

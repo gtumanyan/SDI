@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Zobrazí shodné ovladače.\n\nNěkteré ovlada
 STR_SHOW_INVALID              = "Zobrazit neplatné"
 STR_SHOW_INVALID_H            = "Zobrazí nekompatibilní ovladače se stávajícím systémem.\n\nTyto ovladače vám NEdoporučujeme nainstalovat, protože jsou nekompatibilní s Vaší verzí Windows."
 
-STR_OPTIONS                   = "Možnosti"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Možnosti"
 STR_REBOOT                    = "Restartovat PC po instalaci"
 STR_REBOOT_H                  = "Restartuje PC (pokud je vyžadováno) po instalaci (Ctrl+R).\n\nTIP: kdykoliv můžeme restart zrušit odznačením zaškrtávacího pole."

@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Pokaż duplikaty sterowników.\n\nZ przyczyn te
 STR_SHOW_INVALID              = "Pokaż nieprawidłowe"
 STR_SHOW_INVALID_H            = "Pokaż sterowniki, które są niezgodne z bieżącym systemem.\n\nNIE zalecamy instalacji tych sterowników, ponieważ są niezgodne z twoją wersją systemu Windows."
 
-STR_OPTIONS                   = "Opcje"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Opcje"
 STR_REBOOT                    = "Zrestartuj PC po instalacji"
 STR_REBOOT_H                  = "Restart PC (jeśli wymagany) po instalacji (Ctrl+R).\n\nWSKAZÓWKA: Możesz anulować restart PC odznaczając pole wyboru."

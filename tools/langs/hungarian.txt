@@ -79,7 +79,7 @@ STR_SHOW_DUP_H                = "Dupla Driver-ek jelenjenek meg."
 STR_SHOW_INVALID              = "Érvényteleneket mutassa"
 STR_SHOW_INVALID_H            = "A rendszerrel nem kompatibilis Driver-ek is jelenjenek meg."
 
-STR_OPTIONS                   = "Beállítások"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Beállítások"
 STR_REBOOT                    = "Számítógép újraindítása telepítés után"
 STR_REBOOT_H                  = "A számítógép újraindítása a telepítés után, (Ctrl+R)- ha szükséges.\n\nTIPP: A PC újraindítását bármikor visszavonhatja a jelölőnégyzetben lévő pipa törlésével."

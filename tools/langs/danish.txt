@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Vis drivere der er mere end en af.\n\nNogle dri
 STR_SHOW_INVALID              = "Vis ugyldige"
 STR_SHOW_INVALID_H            = "Vis drivere der er inkompatible med det nuværende system.\n\nVi anbefaler IKKE at du installere disse drivere, da de er inkompatible med din version af Windows."
 
-STR_OPTIONS                   = "Indstillinger"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Indstillinger"
 STR_REBOOT                    = "Genstart PCen efter installationen"
 STR_REBOOT_H                  = "Genstart computer (hvis nødvendigt) efter installationen. (Ctrl+R).\n\nTIP: Du kan annullere denne genstart ved at afkrydse boksen."
