@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Afficher les pilotes dupliqués.\n\nCertains pi
 STR_SHOW_INVALID              = "Afficher les invalides"
 STR_SHOW_INVALID_H            = "Afficher les pilotes qui sont incompatibles avec le système actuel.\n\nNous vous recommandons de ne PAS installer ces pilotes car ils sont incompatibles avec votre version de Windows."
 
-STR_OPTIONS                   = "Options"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Options"
 STR_REBOOT                    = "Redémarrer le PC après installation"
 STR_REBOOT_H                  = "Redémarrer le PC(si nécessaire) après installation(Ctrl+R).\n\nASTUCE: Vous pouvez annuler le redémarrage à n'importe quel moment en décochant la case."

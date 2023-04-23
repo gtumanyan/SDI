@@ -80,7 +80,7 @@ STR_SHOW_DUP_H          = "显示重复的驱动程序。\n\n出于技术原因�
 STR_SHOW_INVALID        = "显示无效"
 STR_SHOW_INVALID_H      = "显示与当前系统不兼容的驱动程序。\n\n我们建议您不要安装这些驱动程序，因为它们与您的Windows版本不兼容。"
 
-STR_OPTIONS             = "选项"
+STR_OPTIONS             = ""
 STR_OPTIONS_H           = "选项"
 STR_REBOOT              = "安装后重新启动计算机"
 STR_REBOOT_H            = "安装后重新启动计算机，如果需要的话(Ctrl+R)。\n\n提示：您可以通过清除复选框来取消重新启动计算机。"

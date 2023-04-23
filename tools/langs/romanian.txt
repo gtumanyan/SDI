@@ -81,7 +81,7 @@ STR_SHOW_DUP_H                = "Afișează driverele duplicat."
 STR_SHOW_INVALID              = "Afișează invalid"
 STR_SHOW_INVALID_H            = "Afișează driverele ce nu sunt compatibile cu sistemul curent.\n\nVă recomandăm să NU instalați driverele, acestea nefiind compatibile cu sistemul dumneavoastră."
 
-STR_OPTIONS                   = "Opțiuni"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Opțiuni"
 STR_REBOOT                    = "Repornire PC după instalare"
 STR_REBOOT_H                  = "Repornește PC-ul(dacă este necesar) după instalare (Ctrl+R).\n\nPONT: Puteți anula repornirea PC-ului oricând debifând căsuța."

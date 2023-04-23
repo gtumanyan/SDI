@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Doppelte Treiber anzeigen.\n\nAus technischen G
 STR_SHOW_INVALID              = "Ungültige anzeigen"
 STR_SHOW_INVALID_H            = "Zeigt die mit dem aktuellen System inkompatiblen Treiber an.\n\nWeil diese Treiber mit Ihrer Windows-Version inkompatibel sind, sollten sie NICHT installiert werden."
 
-STR_OPTIONS                   = "Optionen"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Optionen wählen"
 STR_REBOOT                    = "PC neustarten"
 STR_REBOOT_H                  = "Falls erforderlich, wird der PC nach der Treiberinstallation neu gestartet (Strg+R).\n\nHinweis: Der Neustart kann jederzeit durch Entfernen des Hakens unterbunden werden."

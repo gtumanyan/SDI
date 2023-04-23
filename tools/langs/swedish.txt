@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Visar dubblettdrivrutiner.\n\nVissa drivrutiner
 STR_SHOW_INVALID              = "Visa ogiltig"
 STR_SHOW_INVALID_H            = "Visa drivrutin som är oförenliga med det nuvarande systemet.\n\nVi råder dig att INTE installerar dessa drivrutiner på grund av att de är oförenliga med din version av Windows."
 
-STR_OPTIONS                   = "Alternativ"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Alternativ"
 STR_REBOOT                    = "Starta om datorn efter installationen"
 STR_REBOOT_H                  = "Starta om datorn (vid behov) efter installation (Ctrl+R)\n\nTips: Du kan avbryta omstart av datorn när som helst genom att avmarkera kryssrutan."

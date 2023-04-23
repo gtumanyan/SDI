@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Vis duplikate drivere.\n\nNoen drivere er dupli
 STR_SHOW_INVALID              = "Vis ugyldig"
 STR_SHOW_INVALID_H            = "Vis drivere som er inkompatible med nåværende system.\n\nVi anbefaler at du IKKE installerer disse drivere da de er inkompatible med din versjon av Windows."
 
-STR_OPTIONS                   = "Innstillinger"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Innstillinger"
 STR_REBOOT                    = "Kjør omstart etter installasjon"
 STR_REBOOT_H                  = "Start maskinen på nytt(hvis nødvendig) etter installasjon(Ctrl+R).\n\nHINT: Du kan kansellere omstart av maskinen når som helst ved å fjerne haken i sjekkboksen."

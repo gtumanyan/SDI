@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "顯示重複的驅動程式.\n\n一些驅動程
 STR_SHOW_INVALID              = "顯示無效的"
 STR_SHOW_INVALID_H            = "顯示與現存系統不相容的驅動程式.\n\n我們建議你不要安裝這些驅動程式因為它們與你的Windows版本不相容."
 
-STR_OPTIONS                   = "選項"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "選項"
 STR_REBOOT                    = "安裝後重新開機"
 STR_REBOOT_H                  = "安裝後重開機(如果需要) (Ctrl+R).\n\n提示: 你可以隨時取消選取方塊來避免重開機."

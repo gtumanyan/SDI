@@ -80,7 +80,7 @@ STR_SHOW_DUP_H          = "Rodyti dubliuotas tvarkykles.\n\nKai kurios tvarkykl�
 STR_SHOW_INVALID              = "Rodyti klaidingas"
 STR_SHOW_INVALID_H            = "Rodyti tvarkykles, kurios nesuderinamos su esama sistema.\n\nNe patariame įdiegti šias tvarkykles, nes jos yra nesuderinamos su jūsų Windows versija."
 
-STR_OPTIONS                   = "Pasirinktys"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Pasirinktys"
 STR_REBOOT                    = "Perkrauti kompiuterį po diegimo"
 STR_REBOOT_H                  = "Paleisti išnaujo kompiuterį(jei reikia) po diegimo(Ctrl+R).\n\nPATARIMAS: bet kada galite atšaukti pakartotiną paleidimą išvalydami žymės langelį."

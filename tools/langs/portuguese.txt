@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Exibe controladores duplicados.\n\nAlguns contr
 STR_SHOW_INVALID              = "Exibe inválidos"
 STR_SHOW_INVALID_H            = "Exibe controladores que são incompatíveis com o sistema atual.\n\nNÃO Recomendamos instalar esses controladores porque são incompatíveis com e a sua versão do Windows."
 
-STR_OPTIONS                   = "Opções"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Opções"
 STR_REBOOT                    = "Reiniciar o PC após instalação"
 STR_REBOOT_H                  = "Reiniciar o PC(se solicitado) após instalação(Ctrl+R).\n\nHINT: Pode cancelar a reinicialização a qualquer hora desmarcando a caixa."

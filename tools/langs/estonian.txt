@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Näita duplikaat draivereid.\n\nMõned draiveri
 STR_SHOW_INVALID              = "Näita mittesobivaid"
 STR_SHOW_INVALID_H            = "Kuva draiverid mis operatsioonisüsteemiga ei sobitu.\n\nSoovitame need jätta paigaldamata, kuna pole ühilduvad teie Windowsi versiooniga."
 
-STR_OPTIONS                   = "Sätted"
+STR_OPTIONS                   = 
 STR_OPTIONS_H                 = "Sätted"
 STR_REBOOT                    = "Taaskäivita peale paigaldamist"
 STR_REBOOT_H                  = "Arvuti taaskäivitus (kui vajalik) peale paigaldamist(Ctrl+R).\n\nVihje: Taaskäivitamise saab tühistada eemaldades linnukese"

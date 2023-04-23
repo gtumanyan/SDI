@@ -80,7 +80,7 @@ STR_SHOW_DUP_H          = "Toon dubbele drivers.\n\nSommige drivers  worden gedu
 STR_SHOW_INVALID              = "Toon ongeldige"
 STR_SHOW_INVALID_H            = "Toon drivers die onverenigbaar zijn met het huidige systeem.\nWij adviseren u deze niet te installeren omdat ze incompatibel is met uw versie van Windows."
 
-STR_OPTIONS                   = "Opties"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Opties"
 STR_REBOOT                    = "PC opnieuw opstarten na installatie"
 STR_REBOOT_H                  = "PC opnieuw opstarten (indien nodig) na installatie (Ctrl+R).\n\nTIP: u kunthet opnieuw opstarten van pc altijd annuleren door het selectievakje in te schakelen."

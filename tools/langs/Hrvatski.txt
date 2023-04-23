@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Prikaži duplikate upravljačkih programa.\n\nN
 STR_SHOW_INVALID              = "Prikaži nevažeće"
 STR_SHOW_INVALID_H            = "Prikaži upravljačke programe koji nisu u skladu s trenutnim sustavom.\n\nSavjetujemo da ne instaliraš ove upravljačke programe jer oni nisu u skladu s tvojom verzijom Windowsa."
 
-STR_OPTIONS                   = "Mogućnosti"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Mogućnosti"
 STR_REBOOT                    = "Ponovno pokreni računalo nakon instalacije"
 STR_REBOOT_H                  = "Ponovno pokreni računalo (ako je potrebno) nakon instalacije (Ctrl+R).\n\nSAVJET: Ponovo pokretanje računala možeš spriječiti micanjem kvačice."

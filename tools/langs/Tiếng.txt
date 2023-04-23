@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Hiện driver lặp"
 STR_SHOW_INVALID              = "Hiện lỗi"
 STR_SHOW_INVALID_H            = "Hiện driver không tương thích"
 
-STR_OPTIONS                   = "Tùy chọn"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Tùy chọn"
 STR_REBOOT                    = "Khởi động lại sau khi cài"
 STR_REBOOT_H                  = "Khởi động lại PC (cần thiết) sau khi cài(Ctrl+R)"

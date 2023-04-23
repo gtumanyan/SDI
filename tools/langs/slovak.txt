@@ -78,7 +78,7 @@ STR_SHOW_DUP_H          = "Zobraziť duplikované ovládače.\n\nNiektoré ovlá
 STR_SHOW_INVALID        = "Zobraziť nekompatibilné"
 STR_SHOW_INVALID_H      = "Zobrazia sa ovládače, ktoré sú nekompatibilné s aktuálnym systémom.\n\nOdporúčame Vám NEinštalovať tieto ovládače, pretože sú NEkompatibilné s vašou verziou  Windows."
 
-STR_OPTIONS             = "Predvoľby"
+STR_OPTIONS             = ""
 STR_OPTIONS_H           = ""
 STR_REBOOT              = "Po inštalácii reštartovať PC"
 STR_REBOOT_H            = "Po inštalácii reštartovať PC (ak je to nutné) (Ctrl+R).\n\nTIP: Reštartovanie PC môžete kedykoľvek zrušiť odškrtnutím políčka. "

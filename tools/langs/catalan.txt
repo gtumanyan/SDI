@@ -80,7 +80,7 @@ STR_SHOW_DUP_H                = "Alguns controladors estàn duplicats varies veg
 STR_SHOW_INVALID              = "Mostrar invàlid"
 STR_SHOW_INVALID_H            = "Mostrar controladors que son incompatibles amb el sistems actual.\n\nAvisem que NO s'ha d'instal.lar aquests controladors perquè no son compatibles amb la versió de Windows actual"
 
-STR_OPTIONS                   = "Opcions"
+STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Opcions"
 STR_REBOOT                    = "Reiniciar després de l'instal.lació"
 STR_REBOOT_H                  = "Reiniciar l'ordinador (si cal) després de l'instal.lació(Ctrl+R)\n\nPISTA: Es pot cancel.lar el reinici de l'ordinador en qualsevol moment desmarcant la casella."
