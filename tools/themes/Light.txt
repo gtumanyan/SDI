@@ -49,7 +49,7 @@ PANEL_OUTLINE_WIDTH      = -1        // set 0 to remove the borders
 
 // Panel, sysinfo
 PANEL1_OFSX              = 13
-PANEL1_OFSY              = 0
+PANEL1_OFSY              = -
 
 // Panel, install
 
@@ -114,14 +114,14 @@ CHKBOX_TEXT_COLOR           = 0xFFFFFF
 CHKBOX_TEXT_COLOR_H         = 0xFFEA00
 CHKBOX_SIZE                 = 18
 ITEM_CHECKBOX_SIZE          = 25
-BUTTON_BITMAP_CHECKED       = "lite\c16.webp"
-BUTTON_BITMAP_CHECKED_H     = "lite\c16.webp"
-BUTTON_BITMAP_UNCHECKED     = "lite\unc16.webp"
-BUTTON_BITMAP_UNCHECKED_H   = "lite\unc16.webp"
-ITEM_BITMAP_CHECKED         = "lite\c23.webp"
-ITEM_BITMAP_CHECKED_H       = "lite\c23.webp"
-ITEM_BITMAP_UNCHECKED       = "lite\unc23.webp"
-ITEM_BITMAP_UNCHECKED_H     = "lite\unc23.webp"
+BUTTON_BITMAP_CHECKED       = "light\c16.webp"
+BUTTON_BITMAP_CHECKED_H     = "light\c16.webp"
+BUTTON_BITMAP_UNCHECKED     = "light\unc16.webp"
+BUTTON_BITMAP_UNCHECKED_H   = "light\unc16.webp"
+ITEM_BITMAP_CHECKED         = "light\c23.webp"
+ITEM_BITMAP_CHECKED_H       = "light\c23.webp"
+ITEM_BITMAP_UNCHECKED       = "light\unc23.webp"
+ITEM_BITMAP_UNCHECKED_H     = "light\unc23.webp"
 
 // Buttons on left panel
 BUTTON_INSIDE_COLOR      = MAINWND_INSIDE_COLOR
@@ -160,10 +160,10 @@ DRVITEM_OUTLINE_WIDTH	= 0
 
 // Driver item content
 ITEM_CHECKBOX_SIZE       = 23
-ITEM_EXPAND_UP           = "lite\downup.webp"
-ITEM_EXPAND_UP_H         = "lite\downup.webp"
-ITEM_EXPAND_DOWN         = "lite\downup.webp"
-ITEM_EXPAND_DOWN_H       = "lite\downup.webp"
+ITEM_EXPAND_UP           = "light\downup.webp"
+ITEM_EXPAND_UP_H         = "light\downup.webp"
+ITEM_EXPAND_DOWN         = "light\downup.webp"
+ITEM_EXPAND_DOWN_H       = "light\downup.webp"
 
 // Driver item (generic style)
 DRVITEM_INSIDE_COLOR     = 0xFFFFFF
