@@ -1,7 +1,7 @@
 -------------
 Task-oriented
 -------------
--?                Show this help window.
+-?		Display this help message.
 
 -7z               Run in 7z archiver mode.
                   Example: SDI.exe -7z x DP_TV_Beholder_14020.7z
@@ -25,14 +25,14 @@ Task-oriented
 -save-installed-id[:<file>]
                   Saves HardwareIDs of installed driver in <file>.
                   If <file> is not specified, saves at
-                  %temp%\SDI2\InstalledID.txt
+                  %temp%\SDI\InstalledID.txt
 
 -PATH <pathToDrivers>
                   Runs as a replacement of DPInst.
                   For exit codes refer to the documentation of DPInst.
 
 -delextrainfs     Deletes unused infs after extracting.
--verbose:<flags>  Sets log detail level. See reference manual.
+-verbose:<flags>  Set log detail level. See reference manual.
 -ls:<file>        Loads snapshot.
 -nogui            Runs without GUI interface.
 -nologfile        Suppress creating logs.
@@ -52,12 +52,12 @@ sdi.cfg
 -log_dir:<dir>    Path to logs and snapshots.
 -lang:<name>      Current interface language.
 -theme:<name>     Current theme.
--hintdelay:<time> Sets hint delay.
--scale:<size>     Sets scaling for GUI(normal size: 256).
--wndwx:<num>      Sets window width.
--wndwy:<num>      Sets window height.
--wndsc:<num>      Sets window show command (1=show normal,2=minimized,3=maximized).
--filters:<flags>  Sets filters.
+-hintdelay:<time> Set hint delay.
+-scale:<size>     Set scaling for GUI(normal size: 256).
+-wndwx:<num>      Set window width.
+-wndwy:<num>      Set window height.
+-wndsc:<num>      Set window show command (0=no GUI,1=show normal,2=minimized,3=maximized).
+-filters:<flags>  Set filters.
 -expertmode       Enable the expert mode.
 -norestorepnt     Suppress creating of restore point.
 -nostop           Don't stop if restore point fails.
@@ -76,9 +76,9 @@ Torrent
 -onlyupdates      Disables notification of missing driverpacks.
 -autoupdate       Starts downloading automatically.
 -port:<num>       Port for torrent client.
--downlimit:<num>  Sets download speed limit (in KBs).
--uplimit:<num>    Sets upload speed limit (in KBs).
--connections:<num>Sets the maximum number of connections.
+-downlimit:<num>  Set download speed limit (in KBs).
+-uplimit:<num>    Set upload speed limit (in KBs).
+-connections:<num>Set the maximum number of connections.
 -finish_upd_cmd:<cmd> Specifies a command executed upon completion of download.
 -autoclose        Close the application after downloading.
 -activetorrent:<num> Selects the update torrent. A value of 1 selects
