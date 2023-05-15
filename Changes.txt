@@ -1,14 +1,18 @@
 ========================================================
-Current BETA/RC Version 2.22.422.(build_#) (2022-04-22)
+Current BETA/RC Version 23.515.(build_#) (2023-05-1x)
 ========================================================
 
 --------------------------------------------------------
 NEW:
 --------------------------------------------------------
 [.###.#]- .
-Add Windows 11 support
-Add preliminary arm64 support (testers needed)
-LZMA decode optimization
+
+Update Chinese, Croatian and Italian languages.
+New dark and light themes, other themes removed as obsolete.
+Some minor corrections on languages.
+Add Windows 11 support.
+Add preliminary arm64 support (testers needed).
+LZMA decode optimization.
 
 --------------------------------------------------------
 CHANGES Versions in Tools or Libraries:
