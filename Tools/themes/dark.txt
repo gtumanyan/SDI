@@ -51,8 +51,9 @@ PANEL_OUTLINE_ROUND      = 0
 PANEL_BITMAP_FILL        = hstr_vstr
 
 // Panel, sysinfo
-PANEL1_OFSX              = 13
+PANEL1_OFSX              = 25
 PANEL1_OFSY              = 0
+PANEL1_WX		 = 240
 
 // Panel, install
 

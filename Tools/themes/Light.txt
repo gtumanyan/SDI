@@ -12,8 +12,8 @@ MAINWND_MINY             = 720
 MAINWND_INSIDE_COLOR     = 11888640
 
 // Font
-FONT_NAME                = "Microsoft Sans Serif"
-FONT_SIZE                = 14
+;FONT_NAME                = "Microsoft Sans Serif"
+FONT_SIZE                = 15
 
 // Popup
 POPUP_FONT_SIZE          = 11
@@ -48,8 +48,9 @@ PANEL_OUTLINE_COLOR      = MAINWND_INSIDE_COLOR
 PANEL_OUTLINE_WIDTH      = -1        // set 0 to remove the borders
 
 // Panel, sysinfo
-PANEL1_OFSX              = 13
-PANEL1_OFSY              = -
+PANEL1_OFSX              = 25
+PANEL1_OFSY              = 0
+PANEL1_WX		= 240
 
 // Panel, install
 
