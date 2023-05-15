@@ -43,6 +43,7 @@ ExportedObj/
 *.bsc
 drivers/
 indexes/
+/make_portable_*
 update/
 
 ### changes by Version.ps1 script ###
@@ -51,10 +52,7 @@ update/
 /res/SDI.exe.conf.manifest
 /src/VersionEx.h
 
-# Executables and archives
+_buildname.txt
 *.exe
 *.zip
 
-# Other stuff
-
-cmake*
