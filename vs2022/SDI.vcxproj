@@ -72,7 +72,6 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IntDir>..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath>..\lib\$(Configuration)_$(Platform)\;$(LibraryPath)</LibraryPath>
     <OutDir>..\</OutDir>
     <TargetName>SDI_D</TargetName>
@@ -80,11 +79,12 @@
     <GenerateManifest>true</GenerateManifest>
     <LinkIncremental>true</LinkIncremental>
     <EmbedManifest>true</EmbedManifest>
+    <IntDir>..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IntDir>..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
     <TargetName>SDI64_D</TargetName>
     <GenerateManifest>true</GenerateManifest>
+    <IntDir>..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath>..\lib\$(Configuration)_$(Platform)\;$(LibraryPath)</LibraryPath>
     <OutDir>..\</OutDir>
     <LinkIncremental>true</LinkIncremental>
@@ -110,7 +110,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\EXT\SevenZ\C;..\ext\boost;..\ext\libwebp\src;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\SevenZ\C;..\ext\boost;..\ext\libwebp\src</AdditionalIncludeDirectories>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <DisableSpecificWarnings>4127;4189;4251;4268;4275;4302;4311;4324;4373;4458;4503;4522;4611;4702;4706;4800;4838;6319%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -145,7 +145,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\EXT\SevenZ\C;..\ext\boost;..\ext\libwebp\src;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\SevenZ\C;..\ext\boost;..\ext\libwebp\src</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus /bigobj</AdditionalOptions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -165,33 +165,37 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
       <OpenMPSupport>true</OpenMPSupport>
-      <SDLCheck>false</SDLCheck>
       <CallingConvention>FastCall</CallingConvention>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
     </ClCompile>
     <Link>
+      <AdditionalDependencies>torrent-rasterbar.lib;7zip.lib;comctl32.lib;comdlg32.lib;libwebp.lib;newdev.lib;setupapi.lib;shlwapi.lib;dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;wininet.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>torrent-rasterbar.lib;7zip.lib;comctl32.lib;comdlg32.lib;libwebp.lib;newdev.lib;setupapi.lib;shlwapi.lib;dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;wininet.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
       <PerUserRedirection>true</PerUserRedirection>
       <AdditionalOptions>/VERBOSE:LIB %(AdditionalOptions)</AdditionalOptions>
       <AdditionalLibraryDirectories>wininet.lib;%(AdditionalDependencies)</AdditionalLibraryDirectories>
     </Link>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
-    <Bscmake>
-      <PreserveSbr>true</PreserveSbr>
-    </Bscmake>
     <Manifest>
-      <AdditionalManifestFiles>..\res\SDI.exe.manifest %(AdditionalManifestFiles)</AdditionalManifestFiles>
+      <InputResourceManifests>
+      </InputResourceManifests>
     </Manifest>
-    <PreBuildEvent>
-      <Command>
-      </Command>
-      <Message>Generation of rc VERSIONINFO &amp; StringFileInfo ..</Message>
-    </PreBuildEvent>
+    <Manifest>
+      <AdditionalManifestFiles>$(ProjDir)..\res\$(TargetName)$(TargetExt).conf.manifest</AdditionalManifestFiles>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
+    <ManifestResourceCompile>
+      <ResourceOutputFileName>
+      </ResourceOutputFileName>
+    </ManifestResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -214,7 +218,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <CallingConvention>FastCall</CallingConvention>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\EXT\SevenZ\C;..\ext\boost;..\ext\libwebp\src;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\SevenZ\C;..\ext\boost;..\ext\libwebp\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -264,7 +268,7 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\EXT\SevenZ\C;..\ext\boost;..\ext\libwebp\src;..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\SevenZ\C;..\ext\boost;..\ext\libwebp\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -322,7 +326,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\res\gitrev.h" />
-    <ClInclude Include="..\res\wizards.h" />
+    <ClInclude Include="..\src\wizards.h" />
     <ClInclude Include="..\src\7zip.h" />
     <ClInclude Include="..\src\cli.h" />
     <ClInclude Include="..\src\common.h" />
@@ -383,7 +387,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\res\icon.ico" />
-    <Image Include="..\res\logo128.bmp" />
     <Image Include="..\res\watermark.bmp" />
     <Image Include="sdi.ico" />
   </ItemGroup>
