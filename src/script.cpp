@@ -230,7 +230,7 @@ bool Script::runscript()
                 {
                     std::wstring s(args[i]);
                     // trim spaces
-                    s.erase(std::remove_if(s.begin(), s.end(), &std::isspace), s.end());  // not1 deprecated in C++17 (removed in C++20)
+                    s.erase(std::remove_if(s.begin(), s.end(), [](unsigned char x) { return std::isspace(x); }), s.end());  // not1 deprecated in C++17 (removed in C++20)
                     if(_wcsicmp(s.c_str(),L"missing")==0)filter|=2;
                     else if(_wcsicmp(s.c_str(),L"newer")==0)filter|=4;
                     else if(_wcsicmp(s.c_str(),L"current")==0)filter|=8;
