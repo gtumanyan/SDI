@@ -37,6 +37,7 @@ try
 	$Major = [int]$(Get-Date -format yy)
 	$Minor = [int]$(Get-Date -format MM)
 	$Revis = [int]$(Get-Date -format dd)
+	
 	$BuildPath = "Versions\build.txt"
 	if (!(Test-Path $BuildPath)) {
 		New-Item -Path $BuildPath -ItemType "file" -Value "0"
@@ -83,7 +84,7 @@ try
 	if (!$CommitID) { $CommitID = "---" }
 	$Build | Set-Content -Path $BuildPath
 
-	$CompleteVer = "$Major.$Minor.$Revis.$Build"
+	$CompleteVer = "$Major.$Minor.$Revis"
 	DebugOutput("SDI version number: 'v$CompleteVer $VerPatch'")
 	
 	if ($AppVeyorEnv) {
