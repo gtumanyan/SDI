@@ -73,7 +73,7 @@ try
 		$HeadMaster = Get-ChildItem -Path $HeadDir -Force -Recurse -File | Select-Object -First 1
 		$CommitID = [string](Get-Content "$HeadDir\$HeadMaster" -TotalCount 8)
 		if (!$CommitID) {
-            $length = ([string]($env:computername)).length
+						$length = ([string]($env:computername)).length
 			$CommitID = ([string]($env:computername)).substring(0,[math]::min($length,8)).ToLower()
 		}
 		$CommitID = $CommitID -replace '"', ''
@@ -123,12 +123,6 @@ try
 	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$TORRENTVER\$', "$TorrentVer" } | Set-Content -Path "src\VersionEx.h"
 	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$VERPATCH\$', "$VerPatch" } | Set-Content -Path "src\VersionEx.h"
 	(Get-Content "src\VersionEx.h") | ForEach-Object { $_ -replace '\$COMMITID\$', "$CommitID" } | Set-Content -Path "src\VersionEx.h"
-	
-	$confManifest = "res\SDI.exe.conf.manifest"
-	Copy-Item -LiteralPath "Versions\SDI.exe.manifest.tpl" -Destination $ConfManifest -Force
-	(Get-Content $ConfManifest) | ForEach-Object { $_ -replace '\$APPNAME\$', "$AppName" } | Set-Content -Path $ConfManifest
-	(Get-Content $ConfManifest) | ForEach-Object { $_ -replace '\$VERPATCH\$', "$VerPatch" } | Set-Content -Path $ConfManifest
-	(Get-Content $ConfManifest) | ForEach-Object { $_ -replace '\$VERSION\$', "$CompleteVer" } | Set-Content -Path $ConfManifest
 }
 catch 
 {
