@@ -76,19 +76,17 @@
     <OutDir>..\</OutDir>
     <TargetName>SDI_D</TargetName>
     <TargetExt>.exe</TargetExt>
-    <GenerateManifest>true</GenerateManifest>
+    <GenerateManifest>false</GenerateManifest>
     <LinkIncremental>true</LinkIncremental>
-    <EmbedManifest>true</EmbedManifest>
     <IntDir>..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>SDI64_D</TargetName>
-    <GenerateManifest>true</GenerateManifest>
+    <GenerateManifest>false</GenerateManifest>
     <IntDir>..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath>..\lib\$(Configuration)_$(Platform)\;$(LibraryPath)</LibraryPath>
-    <OutDir>..\</OutDir>
     <LinkIncremental>true</LinkIncremental>
-    <EmbedManifest>true</EmbedManifest>
+    <OutDir>..\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -96,8 +94,7 @@
     <LibraryPath>..\lib\$(Configuration)_$(Platform)\;$(LibraryPath)</LibraryPath>
     <OutDir>..\</OutDir>
     <TargetName>SDI</TargetName>
-    <GenerateManifest>true</GenerateManifest>
-    <EmbedManifest>true</EmbedManifest>
+    <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -105,9 +102,9 @@
     <TargetName>SDI64</TargetName>
     <LibraryPath>..\lib\$(Configuration)_$(Platform)\;$(LibraryPath)</LibraryPath>
     <OutDir>..\</OutDir>
-    <GenerateManifest>true</GenerateManifest>
-    <EmbedManifest>true</EmbedManifest>
+    <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
+
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\SevenZ\C;..\ext\boost;..\ext\libwebp\src</AdditionalIncludeDirectories>
@@ -183,18 +180,6 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
-    <Manifest>
-      <InputResourceManifests>
-      </InputResourceManifests>
-    </Manifest>
-    <Manifest>
-      <AdditionalManifestFiles>$(ProjDir)..\res\$(TargetName)$(TargetExt).conf.manifest</AdditionalManifestFiles>
-      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
-    </Manifest>
-    <ManifestResourceCompile>
-      <ResourceOutputFileName>
-      </ResourceOutputFileName>
-    </ManifestResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -202,8 +187,8 @@
       <DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <UseFullPaths>false</UseFullPaths>
@@ -238,14 +223,6 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
-    <Manifest>
-      <AdditionalManifestFiles>..\res\SDI.exe.manifest %(AdditionalManifestFiles)</AdditionalManifestFiles>
-    </Manifest>
-    <PreBuildEvent>
-      <Command>
-      </Command>
-      <Message>Generation of rc VERSIONINFO &amp; StringFileInfo ..</Message>
-    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -282,14 +259,6 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
-    <Manifest>
-      <AdditionalManifestFiles>..\res\SDI.exe.manifest %(AdditionalManifestFiles)</AdditionalManifestFiles>
-    </Manifest>
-    <PreBuildEvent>
-      <Command>
-      </Command>
-      <Message>Generation of rc VERSIONINFO &amp; StringFileInfo ..</Message>
-    </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
@@ -359,11 +328,6 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\src\SDI.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Manifest Include="..\res\SDI.exe.manifest">
-      <SubType>Designer</SubType>
-    </Manifest>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\res\cli.txt" />
