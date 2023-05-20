@@ -23,6 +23,7 @@
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>libwebp</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -69,7 +70,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IntDir>..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
-    <OutDir>..\lib\Release_$(Platform)\</OutDir>
+    <OutDir>..\lib\$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -204,9 +205,13 @@
     <ClCompile Include="..\ext\libwebp\src\dsp\filters.c" />
     <ClCompile Include="..\ext\libwebp\src\dsp\filters_sse2.c" />
     <ClCompile Include="..\ext\libwebp\src\dsp\lossless.c" />
+
     <ClCompile Include="..\ext\libwebp\src\dsp\lossless_sse2.c" />
+    <ClCompile Include="..\ext\libwebp\src\dsp\lossless_sse41.c" />
     <ClCompile Include="..\ext\libwebp\src\dsp\rescaler.c" />
     <ClCompile Include="..\ext\libwebp\src\dsp\rescaler_sse2.c" />
+    <ClCompile Include="..\ext\libwebp\src\dsp\ssim.c" />
+    <ClCompile Include="..\ext\libwebp\src\dsp\ssim_sse2.c" />
     <ClCompile Include="..\ext\libwebp\src\dsp\upsampling.c" />
     <ClCompile Include="..\ext\libwebp\src\dsp\upsampling_sse2.c" />
     <ClCompile Include="..\ext\libwebp\src\dsp\upsampling_sse41.c" />
