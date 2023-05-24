@@ -353,10 +353,9 @@ void ImageStorangeImp::LoadAll()
 		for(size_t i=0;i<num;i++)
 		{
 				wchar_t *str=D_STR(index[i]+add);
-				if (!wcscmp(str, L"")) continue;
 				size_t j;
 				for(j=0;j<i;j++)
-						//Log.print_con("%d Copying %S %d\n",i,str,j);
+						Log.print_con("%d Copying %S %d\n",i,str,j);
 						if(!wcscmp(str,D_STR(index[j]+add)))
 				{
 						a[i].MakeCopy(a[j]);
