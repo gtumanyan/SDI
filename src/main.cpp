@@ -749,10 +749,10 @@ static BOOL CALLBACK DialogProc1(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 						Settings.wndwx=rect.right-rect.left;
 						Settings.wndwy=rect.bottom-rect.top;
 
-						data.pages[0]=CreateDialog(ghInst,MAKEINTRESOURCE(IDD_Page1),hwnd,(DLGPROC)DialogPage);
-						data.pages[1]=CreateDialog(ghInst,MAKEINTRESOURCE(IDD_Page2),hwnd,(DLGPROC)DialogPage);
-						data.pages[2]=CreateDialog(ghInst,MAKEINTRESOURCE(IDD_Page3),hwnd,(DLGPROC)DialogPage);
-						data.pages[3]=CreateDialog(ghInst,MAKEINTRESOURCE(IDD_Page4),hwnd,(DLGPROC)DialogPage);
+						data.pages[0]=CreateDialog(ghInst,MAKEINTRESOURCE(IDD_VIEWSETTINGS),hwnd,(DLGPROC)DialogPage);
+						data.pages[1]=CreateDialog(ghInst,MAKEINTRESOURCE(IDD_UPDATESSETTINGS),hwnd,(DLGPROC)DialogPage);
+						data.pages[2]=CreateDialog(ghInst,MAKEINTRESOURCE(IDD_PATHSETTINGS),hwnd,(DLGPROC)DialogPage);
+						data.pages[3]=CreateDialog(ghInst,MAKEINTRESOURCE(IDD_ADVANCEDSETTINGS),hwnd,(DLGPROC)DialogPage);
 
 						data.tab=GetDlgItem(hwnd,IDC_TAB1);
 						if(data.tab)
@@ -1049,9 +1049,9 @@ static BOOL CALLBACK AboutBoxProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam
 						case IDCANCEL:
 			EndDialog(hwnd, IDOK);
 						case IDC_WEBPAGE_LINK:
-								System.run_command(L"open", VERSION_WEBPAGE_DISPLAY,SW_SHOWNORMAL,0);
-						case IDC_PATREON_LINK:
-								System.run_command(L"open",WEB_PATREONPAGE,SW_SHOWNORMAL,0);
+                            ShellExecute(hwnd, L"open", _W(VERSION_WEBPAGEDISPLAY), NULL, NULL, SW_SHOWNORMAL);
+                        case IDC_PATREON_LINK:
+                            ShellExecute(hwnd, L"open", _W(WEB_PATREONPAGE),NULL, NULL, SW_SHOWNORMAL);
 			break;
 		}
 		return TRUE;
@@ -2771,11 +2771,11 @@ BOOL CALLBACK WelcomeProcedure(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 								Updater->DownloadIndexes();
 								return TRUE;
 						case IDD_WELC_LINK1:
-								System.run_command(L"open", VERSION_WEBPAGE_DISPLAY,SW_SHOWNORMAL,0);
-								break;
+                            ShellExecute(hwnd, L"open", _W(VERSION_WEBPAGEDISPLAY), NULL, NULL, SW_SHOWNORMAL);
+                            break;
 						case IDD_WELC_LINK2:
-								System.run_command(L"open",WEB_PATREONPAGE,SW_SHOWNORMAL,0);
-								break;
+                            ShellExecute(hwnd, L"open", _W(WEB_PATREONPAGE), NULL, NULL, SW_SHOWNORMAL);
+                            break;
 						default:
 								break;
 				}

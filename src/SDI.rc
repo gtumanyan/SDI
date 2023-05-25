@@ -7,54 +7,17 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#define APSTUDIO_HIDDEN_SYMBOLS
-#include <winres.h>
-#undef APSTUDIO_HIDDEN_SYMBOLS
-#ifndef APSTUDIO_INVOKED
-#include "SDI.rc2"
-#endif
-
-
+#include <windows.h>
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Neutral resources
+// English (United States) resources
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
-LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
-#pragma code_page(1252)
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(65001)
 
-#ifdef APSTUDIO_INVOKED
-/////////////////////////////////////////////////////////////////////////////
-//
-// TEXTINCLUDE
-//
-
-1 TEXTINCLUDE 
-BEGIN
-    "resource.h\0"
-END
-
-2 TEXTINCLUDE 
-BEGIN
-    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
-    "#include ""windows.h""\r\n"
-    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
-    "#ifndef APSTUDIO_INVOKED\r\n"
-    "#include ""SDI.rc2""\r\n"
-    "#endif\r\n"
-    "\r\n"
-    "\0"
-END
-
-3 TEXTINCLUDE 
-BEGIN
-    "\r\n"
-    "\0"
-END
-
-#endif    // APSTUDIO_INVOKED
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -76,9 +39,9 @@ IDR_PATREON             100                     "..\\res\\patreon.webp"
 
 IDR_LICENSE             100                     "..\\res\\gpl-3.0.txt"
 
-IDR_THEME               100                     "..\\tools\\themes\\metallic.txt"
+IDR_THEME               100                     "..\\Tools\\Themes\\Light.txt"
 
-IDR_LANG                100                     "..\\tools\\langs\\english.txt"
+IDR_LANG                100                     "..\\Tools\\langs\\english.txt"
 
 IDR_INSTALL64           100                     "..\\res\\install64.exe"
 
@@ -90,7 +53,7 @@ IDR_CLI_HELP            100                     "..\\res\\CLI.txt"
 // Bitmap
 //
 
-IDB_LOGO                BITMAP                  "..\\res\\logo128.bmp"
+IDB_LOGO                BITMAP                  "..\\res\\logo256.bmp"
 
 IDB_WATERMARK           BITMAP                  "..\\res\\watermark.bmp"
 
@@ -168,8 +131,9 @@ BEGIN
     CONTROL         "",IDC_TAB1,"SysTabControl32",WS_TABSTOP,5,5,253,220
 END
 
-IDD_Page1 DIALOGEX 0, 0, 0, 0
+IDD_VIEWSETTINGS DIALOGEX 0, 0, 0, 0
 STYLE DS_SETFONT | DS_CONTROL | WS_CHILD
+CAPTION "View Settings"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "DriverPack Names",IDD_P1_DRV,5,5,236,73
@@ -181,53 +145,56 @@ BEGIN
     CONTROL         "",IDD_P1_ZOOMI,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,10,115,225,15
     LTEXT           "Small",IDD_P1_ZOOMS,15,132,218,14
     RTEXT           "Big",IDD_P1_ZOOMB,130,132,100,14
-    PUSHBUTTON      "Reset",IDD_P1_ZOOMR,180,96,50,14
     GROUPBOX        "Hint",IDD_P1_HINTG,5,155,236,35
     LTEXT           "Popup window delay (in ms)",IDD_P1_HINTL,15,170,218,14
     EDITTEXT        IDD_P1_HINTE,180,167,50,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Reset",IDD_P1_ZOOMR,180,96,50,14
 END
 
-IDD_Page2 DIALOGEX 0, 0, 0, 0
+IDD_UPDATESSETTINGS DIALOGEX 0, 0, 0, 0
 STYLE DS_SETFONT | DS_CONTROL | WS_CHILD
+CAPTION "Updates Settings"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Torrent",IDD_P2_TOR,5,5,236,157
     LTEXT           "Port",IDD_P2_PORT,15,20,218,14
-    LTEXT           "Max connections (0 - unlimited)",IDD_P2_CON,15,48,218,14
-    LTEXT           "Max download speed in KB/s (0 - unlimited)",IDD_P2_DOWN,15,76,218,14
-    LTEXT           "Max upload speed in KB/s (0 - unlimited)",IDD_P2_UP,15,104,218,14
     EDITTEXT        IDD_P2_PORTE,15,30,50,14,ES_AUTOHSCROLL
+    LTEXT           "Max connections (0 - unlimited)",IDD_P2_CON,15,48,218,14
     EDITTEXT        IDD_P2_CONE,15,58,50,14,ES_AUTOHSCROLL
+    LTEXT           "Max download speed in KB/s (0 - unlimited)",IDD_P2_DOWN,15,76,218,14
     EDITTEXT        IDD_P2_DOWNE,15,86,50,14,ES_AUTOHSCROLL
+    LTEXT           "Max upload speed in KB/s (0 - unlimited)",IDD_P2_UP,15,104,218,14
     EDITTEXT        IDD_P2_UPE,15,114,50,14,ES_AUTOHSCROLL
     CONTROL         "Do not check for updates",IDD_P2_UPD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,164,236,14
     CONTROL         "Do not notify about missing DriverPacks",IDONLYUPDATE,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,175,236,14
 END
 
-IDD_Page3 DIALOGEX 0, 0, 0, 0
-STYLE DS_SETFONT | DS_CONTROL | WS_CHILD
+IDD_PATHSETTINGS DIALOGEX 0, 0, 0, 0
+STYLE DS_SETFONT | DS_FIXEDSYS | DS_CONTROL | WS_CHILD
+CAPTION "Path Settings"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "",0,5,5,236,190
     LTEXT           "Drivers",IDD_P3_DIR1,15,20,218,14
-    LTEXT           "Indexes",IDD_P3_DIR2,15,56,218,14
-    LTEXT           "Indexes (human-readable)",IDD_P3_DIR3,15,92,218,14
-    LTEXT           "Data",IDD_P3_DIR4,15,128,218,14
-    LTEXT           "Logs",IDD_P3_DIR5,15,182,218,14
     EDITTEXT        IDD_P3_DIR1E,15,30,210,14,ES_AUTOHSCROLL
+    LTEXT           "Indexes",IDD_P3_DIR2,15,56,218,14
     EDITTEXT        IDD_P3_DIR2E,15,66,210,14,ES_AUTOHSCROLL
+    LTEXT           "Indexes (human-readable)",IDD_P3_DIR3,15,92,218,14
     EDITTEXT        IDD_P3_DIR3E,15,102,210,14,ES_AUTOHSCROLL
+    LTEXT           "Data",IDD_P3_DIR4,15,128,218,14
     EDITTEXT        IDD_P3_DIR4E,15,138,210,14,ES_AUTOHSCROLL
+    LTEXT           "Logs",IDD_P3_DIR5,15,164,218,14
     EDITTEXT        IDD_P3_DIR5E,15,174,210,14,ES_AUTOHSCROLL
 END
 
-IDD_Page4 DIALOGEX 0, 0, 0, 0
+IDD_ADVANCEDSETTINGS DIALOGEX 0, 0, 0, 0
 STYLE DS_SETFONT | DS_CONTROL | WS_CHILD
+CAPTION "Advanced Settings"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Commands",IDD_P4_CMDG,5,5,236,157
-    LTEXT           "You can define commands that will be excecuted after specifed action is complited",IDD_P4_CMDL,15,24,200,14
+    LTEXT           "You can define commands that will be excecuted after specifed action is complited",IDD_P4_CMDL,15,20,200,28
     LTEXT           "After installation",IDD_P4_CMD1,15,56,218,14
     EDITTEXT        IDD_P4_CMD1E,15,66,210,14,ES_AUTOHSCROLL
     LTEXT           "After installation(reboot)",IDD_P4_CMD2,15,92,218,14
@@ -255,13 +222,13 @@ BEGIN
     LTEXT           "Before you can begin, you'll need to download DriverPacks or indexes. Select one of ",IDD_WELC_INTRO,40,105,320,40
     LTEXT           "the following options to start downloading. The Updates bar will keep you apprised of",IDC_STATIC,40,115,320,40
     LTEXT           "the download status.",IDC_STATIC,40,125,320,40
-    LTEXT           "Note: Look for additional tools on the System Menu at the top left of the main application window.",IDD_WELC_INTRO2,40,126,320,40
+    LTEXT           "Note: Look for additional Tools on the System Menu at the top left of the main application window.",IDD_WELC_INTRO2,40,126,320,40
     DEFPUSHBUTTON   "Download All DriverPacks",IDD_WELC_BUTTON1,40,148,75,35,BS_MULTILINE
     LTEXT           "Get the entire DriverPacks collection.",IDD_WELC_BUTTON1_DESC,130,148,240,35
     LTEXT           "This is a big download and will take anywhere from an hour to a day depending on availability and internet speed.",IDC_STATIC,130,168,240,35
     LTEXT           "When complete, you'll have everything required to work offline. If you're a technician, this is the option you want.",IDC_STATIC,130,188,240,35
     PUSHBUTTON      "Download Network Drivers Only",IDD_WELC_BUTTON2,40,188,75,35,BS_MULTILINE
-    LTEXT           "Get the latest LAN, WLAN, and Wifi drivers. This allows you to get any PC online quickly and is a relatively small download.",IDD_WELC_BUTTON2_DESC,130,196,240,35
+    LTEXT           "Get the latest LAN, WLAN, and WIFI drivers. This allows you to get any PC online quickly and is a relatively small download.",IDD_WELC_BUTTON2_DESC,130,196,240,35
     PUSHBUTTON      "Download Indexes Only",IDD_WELC_BUTTON3,40,228,75,35,BS_MULTILINE
     LTEXT           "This allows you to scan your PC to see which drivers need to be installed or updated.",IDD_WELC_BUTTON3_DESC,130,228,240,35
     LTEXT           "The download will only take a few minutes but you'll need an internet connection when the required DriverPacks need to be downloaded.",IDC_STATIC,130,248,240,35
@@ -347,27 +314,30 @@ END
 #endif    // APSTUDIO_INVOKED
 
 
+#ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
-// AFX_DIALOG_LAYOUT
+// TEXTINCLUDE
 //
 
-IDD_ABOUT AFX_DIALOG_LAYOUT
+1 TEXTINCLUDE
 BEGIN
-    0
+    "resource.h\0"
 END
 
-IDD_ABOUTBOX AFX_DIALOG_LAYOUT
+2 TEXTINCLUDE
 BEGIN
-    0
+    "#include <windows.h>\0"
 END
 
-IDD_UPDATE AFX_DIALOG_LAYOUT
+3 TEXTINCLUDE
 BEGIN
-    0
+    "#include ""SDI.ver""\0"
 END
 
-#endif    // Neutral resources
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -377,8 +347,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-
-
+#include "SDI.ver"
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 

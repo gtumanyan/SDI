@@ -219,7 +219,6 @@
 #define SORT_HUNGARIAN_TECHNICAL        0x1
 #define SORT_GEORGIAN_MODERN            0x1
 #define __drv_typeCond                  1
-#define VS_VERSION_INFO                 1
 #define VFFF_ISSHAREDFILE               0x0001
 #define VFF_CURNEDEST                   0x0001
 #define VIFF_FORCEINSTALL               0x0001
@@ -1157,7 +1156,7 @@
 #define IDOPTIONS                       315
 #define IDCHECKNETWORK                  316
 #define IDSELECTION                     317
-#define IDD_Page1                       400
+#define IDD_VIEWSETTINGS                       400
 #define IDD_P1_DRV                      401
 #define IDD_P1_DRV1                     402
 #define IDD_P1_DRV2                     403
@@ -1172,7 +1171,7 @@
 #define IDD_P1_HINTL                    412
 #define IDD_P1_HINTE                    413
 #define MN_GETHMENU                     0x01E1
-#define IDD_Page2                       500
+#define IDD_UPDATESSETTINGS                       500
 #define IDD_P2_TOR                      501
 #define IDD_P2_PORT                     502
 #define IDD_P2_CON                      503
@@ -1258,7 +1257,7 @@
 #define WM_POINTERROUTEDTO              0x0251
 #define WM_POINTERROUTEDAWAY            0x0252
 #define WM_POINTERROUTEDRELEASED        0x0253
-#define IDD_Page3                       600
+#define IDD_PATHSETTINGS                       600
 #define IDD_P3_DIR1                     601
 #define IDD_P3_DIR2                     602
 #define IDD_P3_DIR3                     603
@@ -1283,7 +1282,7 @@
 #define WM_NCMOUSELEAVE                 0x02A2
 #define WM_MOUSELEAVE                   0x02A3
 #define WM_WTSSESSION_CHANGE            0x02B1
-#define IDD_Page4                       700
+#define IDD_ADVANCEDSETTINGS                       700
 #define IDD_P4_CMDG                     701
 #define IDD_P4_CMDL                     702
 #define IDD_P4_CMD1                     703
