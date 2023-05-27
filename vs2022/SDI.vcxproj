@@ -71,6 +71,7 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectName)</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectName)64</TargetName>
     <TargetExt>.exe</TargetExt>
+    <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.EndsWith('Release'))">
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -140,6 +141,7 @@
     <ResourceCompile>
       <PreprocessorDefinitions>_WIN64;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
+
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -158,7 +160,6 @@
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <AdditionalOptions>/GA /wd5040 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
-  
     <ResourceCompile>
       <PreprocessorDefinitions>_WIN64;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
@@ -221,17 +222,24 @@
     <ClInclude Include="..\src\VersionEx.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\res\boosty.webp" />
     <None Include="..\res\install64.exe" />
     <None Include="..\res\up.webp" />
-    <None Include="..\src\SDI.rc2" />
     <None Include="..\Versions\VersionEx.h.tpl" />
     <None Include="..\src\SDI.ver" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\res\icon.ico" />
+    <Image Include="..\res\logo128.bmp" />
     <Image Include="..\res\logo256.bmp" />
     <Image Include="..\res\watermark.bmp" />
     <Image Include="sdi.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\down.webp" />
+    <None Include="..\res\logo.webp" />
+    <None Include="..\res\patreon.webp" />
+    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\res\cli.txt" />
@@ -246,10 +254,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\down.webp" />
-    <None Include="..\res\logo.webp" />
-    <None Include="..\res\patreon.webp" />
-    <None Include="cpp.hint" />
+    <Manifest Include="..\res\SDI.exe.manifest" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\src\SDI.rc" />

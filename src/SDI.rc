@@ -16,9 +16,7 @@
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(65001)
-
-
+#pragma code_page(1252)
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -35,7 +33,7 @@ IDR_DOWN_H              100                     "..\\res\\down.webp"
 
 IDR_LOGO                100                     "..\\res\\logo.webp"
 
-IDR_PATREON             100                     "..\\res\\patreon.webp"
+IDR_BOOSTY              100                     "..\\res\\boosty.webp"
 
 IDR_LICENSE             100                     "..\\res\\gpl-3.0.txt"
 
@@ -53,7 +51,7 @@ IDR_CLI_HELP            100                     "..\\res\\CLI.txt"
 // Bitmap
 //
 
-IDB_LOGO                BITMAP                  "..\\res\\logo256.bmp"
+IDB_LOGO                BITMAP                  "..\\res\\logo128.bmp"
 
 IDB_WATERMARK           BITMAP                  "..\\res\\watermark.bmp"
 
@@ -63,15 +61,16 @@ IDB_WATERMARK           BITMAP                  "..\\res\\watermark.bmp"
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOGEX 0, 0, 271, 240
-STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_ABOUT DIALOGEX 0, 0, 271, 240
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION |WS_VISIBLE
 CAPTION "Snappy Driver Installer"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     CONTROL         VK_GAMEPAD_LEFT_THUMBSTICK_LEFT,IDC_STATIC,"Static",SS_BITMAP,10,7,32,32
-    LTEXT           "",IDC_VERSION,45,7,200,8
-    LTEXT           "BUILD INFO",IDC_BUILD_INFO,115,24,200,16
-    LTEXT           "COPYRIGHT_DATE",IDC_COPYRIGHT,115,57,200,8
+    LTEXT   "Snappy Driver Installer",IDD_ABOUT_T1,115,4,250,90,SS_LEFT
+    LTEXT           "",IDC_VERSION,115,7,200,8
+    LTEXT           "",IDC_BUILD_INFO,115,24,200,16
+    LTEXT           "",IDC_COPYRIGHT,115,57,200,8
     LTEXT           "Developers:",IDC_STATIC,115,65,40,8
     LTEXT           "BadPointer, Glenn Delahoy, Greg Tumanyan",IDC_AUTHORNAME,156,65,143,8
     LTEXT           "Home Page:",IDC_WEBPAGE_TEXT,115,48,200,8,NOT WS_VISIBLE | WS_DISABLED
@@ -84,7 +83,7 @@ BEGIN
     LTEXT           "??????",IDC_TELEGRAM_TEXT,45,128,140,8,NOT WS_VISIBLE | WS_DISABLED
     CONTROL         "https://t.me/Snappy_Driver_Installer",IDC_TELEGRAM_LINK,
                     "SysLink",WS_TABSTOP,45,128,140,10
-    LTEXT           "Support: www.patreon.com/SamLab",IDC_PATREON_LINK,45,138,200,10,SS_NOTIFY
+    LTEXT           "",IDC_BOOSTY_LINK,45,138,200,10,SS_NOTIFY
 END
 
 IDD_LICENSE DIALOGEX 0, 0, 335, 295
@@ -132,7 +131,7 @@ BEGIN
 END
 
 IDD_VIEWSETTINGS DIALOGEX 0, 0, 0, 0
-STYLE DS_SETFONT | DS_CONTROL | WS_CHILD
+STYLE DS_SETFONT | DS_CONTROL | WS_CHILD | WS_CAPTION
 CAPTION "View Settings"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
@@ -152,7 +151,7 @@ BEGIN
 END
 
 IDD_UPDATESSETTINGS DIALOGEX 0, 0, 0, 0
-STYLE DS_SETFONT | DS_CONTROL | WS_CHILD
+STYLE DS_SETFONT | DS_CONTROL | WS_CHILD | WS_CAPTION
 CAPTION "Updates Settings"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
@@ -171,7 +170,7 @@ BEGIN
 END
 
 IDD_PATHSETTINGS DIALOGEX 0, 0, 0, 0
-STYLE DS_SETFONT | DS_FIXEDSYS | DS_CONTROL | WS_CHILD
+STYLE DS_SETFONT | DS_FIXEDSYS | DS_CONTROL | WS_CHILD | WS_CAPTION
 CAPTION "Path Settings"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
@@ -189,7 +188,7 @@ BEGIN
 END
 
 IDD_ADVANCEDSETTINGS DIALOGEX 0, 0, 0, 0
-STYLE DS_SETFONT | DS_CONTROL | WS_CHILD
+STYLE DS_SETFONT | DS_CONTROL | WS_CHILD | WS_CAPTION
 CAPTION "Advanced Settings"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
@@ -204,36 +203,28 @@ BEGIN
     CONTROL         "Show console window",IDD_P4_CONSL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,167,236,14
 END
 
-IDD_WELCOME DIALOGEX 0, 0, 400, 300
-STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION
+IDD_WELCOME DIALOGEX 0, 0, 333, 280
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Welcome"
-FONT 9, "MS Sans Serif", 0, 0, 0x1
+FONT 9, "Segoe UI", 400, 0, 0x1
 BEGIN
-    CONTROL         VK_GAMEPAD_LEFT_THUMBSTICK_LEFT,IDC_STATIC,"Static",SS_BITMAP,5,5,32,32
-    LTEXT           "Snappy Driver Installer",IDD_WELC_TITLE,115,4,300,90
-    LTEXT           "(C) Copyright 2021",IDD_WELC_TEXT,115,24,250,90
-    LTEXT           "VER_VERSION_STR",IDC_STATIC,115,44,250,90
-    LTEXT           "Revision: R791",IDC_STATIC,115,64,250,90
-    LTEXT           "Build Date: 15 Jul 2021",IDC_STATIC,115,84,250,90
-    LTEXT           "TEST BUILD - NOT FOR DISTRIBUTION",IDC_STATIC,115,104,250,90
-    LTEXT           "Home Page: www.sdi-tool.org",IDD_WELC_LINK1,115,124,200,10,SS_NOTIFY
-    LTEXT           "Support: www.patreon.com/SamLab",IDD_WELC_LINK2,115,144,200,10,SS_NOTIFY
-    LTEXT           "Welcome To Snappy Driver Installer",IDD_WELC_SUBTITLE,40,95,380,40
-    LTEXT           "Before you can begin, you'll need to download DriverPacks or indexes. Select one of ",IDD_WELC_INTRO,40,105,320,40
-    LTEXT           "the following options to start downloading. The Updates bar will keep you apprised of",IDC_STATIC,40,115,320,40
-    LTEXT           "the download status.",IDC_STATIC,40,125,320,40
-    LTEXT           "Note: Look for additional Tools on the System Menu at the top left of the main application window.",IDD_WELC_INTRO2,40,126,320,40
-    DEFPUSHBUTTON   "Download All DriverPacks",IDD_WELC_BUTTON1,40,148,75,35,BS_MULTILINE
-    LTEXT           "Get the entire DriverPacks collection.",IDD_WELC_BUTTON1_DESC,130,148,240,35
-    LTEXT           "This is a big download and will take anywhere from an hour to a day depending on availability and internet speed.",IDC_STATIC,130,168,240,35
-    LTEXT           "When complete, you'll have everything required to work offline. If you're a technician, this is the option you want.",IDC_STATIC,130,188,240,35
-    PUSHBUTTON      "Download Network Drivers Only",IDD_WELC_BUTTON2,40,188,75,35,BS_MULTILINE
-    LTEXT           "Get the latest LAN, WLAN, and WIFI drivers. This allows you to get any PC online quickly and is a relatively small download.",IDD_WELC_BUTTON2_DESC,130,196,240,35
-    PUSHBUTTON      "Download Indexes Only",IDD_WELC_BUTTON3,40,228,75,35,BS_MULTILINE
-    LTEXT           "This allows you to scan your PC to see which drivers need to be installed or updated.",IDD_WELC_BUTTON3_DESC,130,228,240,35
-    LTEXT           "The download will only take a few minutes but you'll need an internet connection when the required DriverPacks need to be downloaded.",IDC_STATIC,130,248,240,35
-    LTEXT           "If you're a casual user, this is the option you want.",IDC_STATIC,130,268,240,35
-    PUSHBUTTON      "&Close",IDD_WELC_CLOSE,339,266,51,28
+    CONTROL         VK_GAMEPAD_LEFT_THUMBSTICK_LEFT,IDC_STATIC,"Static",SS_BITMAP,13,5,32,32
+    LTEXT           "",IDD_WELC_TITLE,99,4,237,90
+    LTEXT           "",IDC_VERSION,100,24,250,43
+    LTEXT           "",IDC_BUILD_INFO,100,34,200,90
+    LTEXT           "",IDC_COPYRIGHT,100,54,200,8
+    LTEXT           "",IDC_WEBLINK,200,54,200,8,SS_NOTIFY
+    LTEXT           "",IDC_SUPPORTLINK,100,66,312,8,SS_NOTIFY
+    LTEXT           "",IDD_WELC_SUBTITLE,13,80,380,40
+    LTEXT           "",IDD_WELC_INTRO,13,90,310,40
+    LTEXT           "",IDD_WELC_INTRO2,13,115,312,40
+    DEFPUSHBUTTON   "",IDD_WELC_BUTTON1,13,143,75,35,BS_MULTILINE | BS_FLAT
+    LTEXT           "",IDD_WELC_BUTTON1_DESC,100,143,220,35
+    PUSHBUTTON      "",IDD_WELC_BUTTON2,13,183,75,35,BS_MULTILINE | BS_FLAT
+    LTEXT           "",IDD_WELC_BUTTON2_DESC,100,185,220,35
+    PUSHBUTTON      "",IDD_WELC_BUTTON3,13,223,75,35,BS_MULTILINE | BS_FLAT
+    LTEXT           "",IDD_WELC_BUTTON3_DESC,100,223,220,35
+    PUSHBUTTON      "&Close",IDD_WELC_CLOSE,266,261,50,14,BS_FLAT
 END
 
 IDD_TRANSL_EDITDIALOG DIALOGEX 0, 0, 350, 200
@@ -265,16 +256,20 @@ IDR_MAINWND             ICON                    "..\\res\\icon.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// RT_MANIFEST
+//
+
+1                       RT_MANIFEST             "..\\res\\SDI.exe.manifest"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // DESIGNINFO
 //
 
 #ifdef APSTUDIO_INVOKED
 GUIDELINES DESIGNINFO
 BEGIN
-    "IDD_ABOUTBOX", DIALOG
-    BEGIN
-    END
-
     IDD_LICENSE, DIALOG
     BEGIN
     END
@@ -284,22 +279,6 @@ BEGIN
     END
 
     IDD_DIALOG3, DIALOG
-    BEGIN
-    END
-
-    IDD_Page1, DIALOG
-    BEGIN
-    END
-
-    IDD_Page2, DIALOG
-    BEGIN
-    END
-
-    IDD_Page3, DIALOG
-    BEGIN
-    END
-
-    IDD_Page4, DIALOG
     BEGIN
     END
 
@@ -320,22 +299,33 @@ END
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE
+2 TEXTINCLUDE 
 BEGIN
     "#include <windows.h>\0"
 END
 
-3 TEXTINCLUDE
+3 TEXTINCLUDE 
 BEGIN
     "#include ""SDI.ver""\0"
 END
 
 #endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_WELCOME AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
