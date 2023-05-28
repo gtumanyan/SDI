@@ -4,8 +4,29 @@
 //
 
 #ifndef IDC_STATIC
-#define IDC_STATIC    -1
+#define IDC_STATIC                     (-1)
 #endif
+
+// About
+#define IDD_ABOUT                       100
+#define IDD_ABOUT_T1  									801
+#define IDC_VERSION                     100
+#define IDC_AUTHORNAME                  804
+#define IDC_WEBPAGE_TEXT                103
+#define IDC_WEBPAGE_LINK                104
+#define IDC_TELEGRAM_TEXT               107
+#define IDC_TELEGRAM_LINK               108
+#define IDC_SDI_PAGE_TEXT               109
+#define IDC_BOOSTY_LINK                	110
+#define IDC_SDI_PAGE_LINK               112
+#define IDC_DEVELOPERS 									806
+#define IDC_TECHNOLOGIES								106
+#define IDC_WEBP_VERSION                811
+#define IDC_TORR_VERSION                812
+#define IDC_7ZIP_VERSION								813	
+
+
+#define IDC_BUILD_INFO                  113
 
 #define SW_HIDE                         0
 #define HIDE_WINDOW                     0
@@ -1329,30 +1350,18 @@
 #define WM_DWMCOMPOSITIONCHANGED        0x031E
 #define WM_DWMNCRENDERINGCHANGED        0x031F
 #define WM_DWMCOLORIZATIONCOLORCHANGED  0x0320
-#define IDD_ABOUT                       800
-#define IDC_VERSION                     801
 #define WM_DWMWINDOWMAXIMIZEDCHANGE     0x0321
 #define IDC_COPYRIGHT                   802
-#define IDC_AUTHORS                     803
 #define WM_DWMSENDICONICTHUMBNAIL       0x0323
-#define IDC_AUTHORNAME                  804
-#define IDC_WEBPAGE_TEXT                805
-#define IDC_WEBPAGE_LINK                806
 #define WM_DWMSENDICONICLIVEPREVIEWBITMAP 0x0326
-#define IDC_TELEGRAM_TEXT               807
-#define IDC_TELEGRAM_LINK               808
-#define IDC_SDI_PAGE_TEXT               809
-#define IDC_SDI_PAGE_LINK               810
-#define IDC_WEBP_VERSION                811
-#define IDC_TORR_VERSION                812
-#define IDC_PATREON_LINK                813
-#define IDC_BUILD_INFO                  814
 #define WM_GETTITLEBARINFOEX            0x033F
 #define WM_HANDHELDFIRST                0x0358
 #define WM_HANDHELDLAST                 0x035F
 #define WM_AFXFIRST                     0x0360
 #define WM_AFXLAST                      0x037F
 #define WM_PENWINFIRST                  0x0380
+
+// welcome box
 #define IDD_WELCOME                     900
 #define IDD_WELC_TITLE                  901
 #define IDD_WELC_SUBTITLE               902
@@ -1366,8 +1375,8 @@
 #define IDD_WELC_BUTTON3_DESC           910
 #define WM_PENWINLAST                   0x038F
 #define IDD_WELC_CLOSE                  911
-#define IDD_WELC_LINK1                  912
-#define IDD_WELC_LINK2                  913
+#define IDC_WEBLINK      		            912
+#define IDC_SUPPORTLINK                913
 #define IDD_WELC_TEXT                   920
 #define WM_DDE_FIRST                    0x03E0
 #define IDD_TRANSL_EDITDIALOG           1000

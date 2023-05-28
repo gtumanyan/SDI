@@ -61,29 +61,27 @@ IDB_WATERMARK           BITMAP                  "..\\res\\watermark.bmp"
 // Dialog
 //
 
-IDD_ABOUT DIALOGEX 0, 0, 271, 240
+IDD_ABOUT DIALOGEX 0, 0, 382, 170
 STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION |WS_VISIBLE
 CAPTION "Snappy Driver Installer"
-FONT 8, "MS Shell Dlg", 0, 0, 0x1
+FONT 9, "MS Sans Serif"
 BEGIN
-    CONTROL         VK_GAMEPAD_LEFT_THUMBSTICK_LEFT,IDC_STATIC,"Static",SS_BITMAP,10,7,32,32
-    LTEXT   "Snappy Driver Installer",IDD_ABOUT_T1,115,4,250,90,SS_LEFT
-    LTEXT           "",IDC_VERSION,115,7,200,8
-    LTEXT           "",IDC_BUILD_INFO,115,24,200,16
-    LTEXT           "",IDC_COPYRIGHT,115,57,200,8
-    LTEXT           "Developers:",IDC_STATIC,115,65,40,8
-    LTEXT           "BadPointer, Glenn Delahoy, Greg Tumanyan",IDC_AUTHORNAME,156,65,143,8
-    LTEXT           "Home Page:",IDC_WEBPAGE_TEXT,115,48,200,8,NOT WS_VISIBLE | WS_DISABLED
-    CONTROL         "www.snappy-driver-installer.org",IDC_WEBPAGE_LINK,
-                    "SysLink",WS_TABSTOP,115,48,200,10
-    LTEXT           "WebP",IDC_WEBP_VERSION,45,100,140,8
-    LTEXT           "LibTorrent:",IDC_TORR_VERSION,45,108,140,8
-    LTEXT           "Contact Gregory Tumanyan:",IDC_STATIC,45,120,140,8
-    DEFPUSHBUTTON   "&OK",IDOK,322,256,51,28
-    LTEXT           "??????",IDC_TELEGRAM_TEXT,45,128,140,8,NOT WS_VISIBLE | WS_DISABLED
-    CONTROL         "https://t.me/Snappy_Driver_Installer",IDC_TELEGRAM_LINK,
-                    "SysLink",WS_TABSTOP,45,128,140,10
-    LTEXT           "",IDC_BOOSTY_LINK,45,138,200,10,SS_NOTIFY
+    CONTROL         IDB_LOGO,IDC_STATIC,"Static",SS_BITMAP,10,7,32,32
+    LTEXT           "",IDC_VERSION,105,7,200,24,ES_CENTER | ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP
+    LTEXT           "based on Snappy Driver Installer (https://sdi-tool.org/)",IDC_STATIC,105,24,255,8
+    LTEXT           "",IDC_BUILD_INFO,105,39,200,8
+    LTEXT           "",IDC_COPYRIGHT,105,54,200,8
+    LTEXT           "",IDC_WEBLINK,210,54,200,8,SS_NOTIFY
+    LTEXT           "",IDC_SUPPORTLINK,105,75,275,20,SS_NOTIFY
+    LTEXT           "Developers:",IDC_DEVELOPERS,10,97,360,30
+    LTEXT   "Gregory Tumanyan <https://t.me/gtumanyan> (Current Maintainer), Glenn Delahoy, BadPointer (Founder).",0,58,97,290,30
+    LTEXT   "Snappy Driver Installer uses the following technologies:"
+            ,IDC_TECHNOLOGIES,10,116,360,12,SS_LEFT
+    LTEXT           "",IDC_WEBP_VERSION,10,126,140,8
+    LTEXT           "",IDC_TORR_VERSION,10,136,140,8
+    LTEXT           "",IDC_7ZIP_VERSION,10,146,140,8
+    LTEXT	    "Driver Packs by SamLab",IDC_STATIC,10,156,360,8,SS_LEFT
+    DEFPUSHBUTTON   "&OK",IDOK,322,150,50,14
 END
 
 IDD_LICENSE DIALOGEX 0, 0, 335, 295
@@ -208,7 +206,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Welcome"
 FONT 9, "Segoe UI", 400, 0, 0x1
 BEGIN
-    CONTROL         VK_GAMEPAD_LEFT_THUMBSTICK_LEFT,IDC_STATIC,"Static",SS_BITMAP,13,5,32,32
+    CONTROL         IDB_LOGO,IDC_STATIC,"Static",SS_BITMAP,13,5,32,32
     LTEXT           "",IDD_WELC_TITLE,99,4,237,90
     LTEXT           "",IDC_VERSION,100,24,250,43
     LTEXT           "",IDC_BUILD_INFO,100,34,200,90

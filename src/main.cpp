@@ -149,9 +149,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 		Timers.start(time_total);
 
-		std::cout << _STRG(VERSION_FILEVERSION_LONG) << "\n";
-		//std::cout << VERSION_COMMIT_ID << "\n\n";
-
 		// Determine number of CPU cores ("Logical Processors")
 		SYSTEM_INFO siSysInfo;
 		GetSystemInfo(&siSysInfo);
@@ -986,97 +983,82 @@ static BOOL CALLBACK DialogProc1(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 
 //=============================================================================
 //
-// AboutBoxProc()
+// AboutDlgProc()
 //
-static BOOL CALLBACK AboutBoxProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
-{
-		switch (msg) {
-		case WM_INITDIALOG: {
-		SetWindowText(GetDlgItem(hwnd,IDC_AUTHORS),STR(STR_ABOUT_DEV_TITLE));
-		//SetDlgItemText(hwnd, IDC_VERSION, TEXT(VERSION_FILEVERSION_LONG));
-		//SetDlgItemText(hwnd, IDC_BUILD_INFO, wch);
-		//SetDlgItemText(hwnd, IDC_COPYRIGHT, VERSION_LEGALCOPYRIGHT);
-	//  SetDlgItemText(hwnd, IDC_WEBP_VERSION, VERSION_WEBP);
-	//  SetDlgItemText(hwnd, IDC_TORR_VERSION, VERSION_LIBTORRENT);
-
-		//HFONT hFontTitle = (HFONT)SendDlgItemMessage(hwnd, IDC_VERSION, WM_GETFONT, 0, 0);
-		//if (hFontTitle == NULL) {
-		//	hFontTitle = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
-		//}
-
-		//LOGFONT lf;
-		//GetObject(hFontTitle, sizeof(LOGFONT), &lf);
-		//lf.lfWeight = FW_BOLD;
-		//hFontTitle = CreateFontIndirect(&lf);
-		//SendDlgItemMessage(hwnd, IDC_VERSION, WM_SETFONT, (WPARAM)hFontTitle, TRUE);
-		//SetWindowLongPtr(hwnd, DWLP_USER, (LONG_PTR)(hFontTitle));
-
-		//if (GetDlgItem(hwnd, IDC_WEBPAGE_LINK) == NULL) {
-		//	SetDlgItemText(hwnd, IDC_WEBPAGE_TEXT, VERSION_WEBPAGE_DISPLAY);
-		//	ShowWindow(GetDlgItem(hwnd, IDC_WEBPAGE_TEXT), SW_SHOWNORMAL);
-		//} else {
-		//	wsprintf(wch, L"<A>%s</A>", VERSION_WEBPAGE_DISPLAY);
-		//	SetDlgItemText(hwnd, IDC_WEBPAGE_LINK, wch);
-		//}
-
-		//if (GetDlgItem(hwnd, IDC_TELEGRAM_LINK) == NULL) {
-		//	SetDlgItemText(hwnd, IDC_TELEGRAM_TEXT, VERSION_TELEGRAM_DISPLAY);
-		//	ShowWindow(GetDlgItem(hwnd, IDC_TELEGRAM_TEXT), SW_SHOWNORMAL);
-		//} else {
-		//	wsprintf(wch, L"<A>%s</A>", VERSION_TELEGRAM_DISPLAY);
-		//	SetDlgItemText(hwnd, IDC_TELEGRAM_LINK, wch);
-		//}
+INT_PTR CALLBACK AboutDlgProc(HWND hwnd, UINT umsg, WPARAM wParam, LPARAM lParam) {
+	switch (umsg) {
+	case WM_INITDIALOG: {
+        WCHAR wch[128];
+#if defined(VERSION_BUILD_TOOL_BUILD)
+        wsprintf(wch, VERSION_BUILD_INFO_FORMAT, VERSION_BUILD_TOOL_NAME,
+            VERSION_BUILD_TOOL_MAJOR, VERSION_BUILD_TOOL_MINOR, VERSION_BUILD_TOOL_PATCH, VERSION_BUILD_TOOL_BUILD);
+#else
+        wsprintf(wch, VERSION_BUILD_INFO_FORMAT, VERSION_BUILD_TOOL_NAME,
+            VERSION_BUILD_TOOL_MAJOR, VERSION_BUILD_TOOL_MINOR, VERSION_BUILD_TOOL_PATCH);
+#endif
+        SetDlgItemText(hwnd, IDC_VERSION, _W(_STRG(VERSION_FILEVERSION_LONG)));
+		SetDlgItemText(hwnd, IDC_BUILD_INFO, wch);
+		SetDlgItemText(hwnd, IDC_COPYRIGHT, _W(VERSION_LEGALCOPYRIGHT));
+        SetDlgItemText(hwnd, IDC_WEBLINK, _W(VERSION_WEBPAGEDISPLAY));
+        SetDlgItemText(hwnd, IDC_SUPPORTLINK, STR(STR_BOOSTY1));
+        SetDlgItemText(hwnd, IDC_WEBP_VERSION, VERSION_WEBP);
+	    SetDlgItemText(hwnd, IDC_TORR_VERSION, VERSION_LIBTORRENT);
+	    SetDlgItemText(hwnd, IDC_7ZIP_VERSION, VERSION_7ZIP);
 
 		//CenterDlgInParent(hwnd);
 		}
 		return TRUE;
 
-		case WM_SETCURSOR:
+    case WM_SETCURSOR: 
 				// 2 hyperlinks
 				if ((LOWORD(lParam)==HTCLIENT) &&
-						((GetDlgCtrlID((HWND)wParam) == IDC_WEBPAGE_LINK)||
-						 (GetDlgCtrlID((HWND)wParam) == IDC_TELEGRAM_LINK)))
+						((GetDlgCtrlID((HWND)wParam) == IDC_WEBLINK)||
+						 (GetDlgCtrlID((HWND)wParam) == IDC_SUPPORTLINK)))
 				{
-						SetCursor(LoadCursor(nullptr, IDC_HAND));
-						SetWindowLongPtr(hwnd, DWLP_MSGRESULT, TRUE);
-						return true;
-				}
-				break;
+            SetCursor(LoadCursor(NULL, IDC_HAND));
+            SetWindowLongPtr(hwnd, DWLP_MSGRESULT, (LONG_PTR)true);
+            return TRUE;
+        }
+    break;
 
 		case WM_COMMAND:
 		switch (LOWORD(wParam)) {
 						case IDOK:
+                EndDialog(hwnd,wParam);
+                return TRUE;
 						case IDCANCEL:
-			EndDialog(hwnd, IDOK);
-						case IDC_WEBPAGE_LINK:
+                EndDialog(hwnd,wParam);
+                break;
+						case IDC_WEBLINK:
                             ShellExecute(hwnd, L"open", _W(VERSION_WEBPAGEDISPLAY), NULL, NULL, SW_SHOWNORMAL);
-                        case IDC_PATREON_LINK:
-                            ShellExecute(hwnd, L"open", _W(WEB_PATREONPAGE),NULL, NULL, SW_SHOWNORMAL);
+                        case IDC_SUPPORTLINK:
+                            ShellExecute(hwnd, L"open", _W(WEB_BOOSTYPAGE),NULL, NULL, SW_SHOWNORMAL);
 			break;
 		}
 		return TRUE;
 		case WM_CTLCOLORSTATIC:
 		{
 				// modify the fonts for colours and bold and size etc
-				//HWND Ctl1=GetDlgItem(hwnd,IDD_ABOUT_T1);
-				HWND Ctl3=GetDlgItem(hwnd, IDC_AUTHORS);
-				//HWND Ctl4=GetDlgItem(hwnd,IDD_MAINTAINERS);
-			 /* HWND Ctl6=GetDlgItem(hwnd,IDD_ABOUT_T6);
-				HWND Ctl8=GetDlgItem(hwnd,IDD_ABOUT_T8);
-				HWND Ctl9=GetDlgItem(hwnd,IDD_ABOUT_T9);*/
+				HWND Ctl1=GetDlgItem(hwnd,IDD_ABOUT_T1);
+				//HWND Ctl3=GetDlgItem(hwnd, IDC_STATIC_AUTHORS);
+				HWND Ctl4=GetDlgItem(hwnd, IDC_VERSION);
+                HWND Ctl5 = GetDlgItem(hwnd, IDC_TECHNOLOGIES);
+			    HWND Ctl6=GetDlgItem(hwnd,IDC_DEVELOPERS);
+				HWND Ctl8=GetDlgItem(hwnd,IDC_WEBLINK);
+				HWND Ctl9=GetDlgItem(hwnd, IDC_SUPPORTLINK);
 				HDC hdcStatic=(HDC)wParam;
 
-				//if((HWND)lParam==Ctl1)
-				//{
-				//    HFONT hTitleFont = CreateFont(28,12,0,0,620,
-				//                                 FALSE,FALSE,FALSE,
-				//                                 ANSI_CHARSET,OUT_DEVICE_PRECIS,CLIP_MASK,
-				//                                 ANTIALIASED_QUALITY,DEFAULT_PITCH,
-				//                                 L"Tahoma");
-				//    SelectObject(hdcStatic,hTitleFont);
-				//    SetTextColor(hdcStatic, RGB(248,171,3));
-				//}
-				if((HWND)lParam==Ctl3)//||((HWND)lParam==Ctl4)||(HWND)lParam==Ctl6)
+				if((HWND)lParam==Ctl1||(HWND)lParam==Ctl4)
+				{
+				    HFONT hTitleFont = CreateFont(20,9,0,0,600,
+				                                 FALSE,FALSE,FALSE,
+				                                 ANSI_CHARSET,OUT_DEVICE_PRECIS,CLIP_MASK,
+                                                 ANTIALIASED_QUALITY,DEFAULT_PITCH,
+				                                 L"Anklepants");
+				    SelectObject(hdcStatic,hTitleFont);
+				    SetTextColor(hdcStatic, RGB(0,0,0));
+				}
+				if((HWND)lParam==Ctl5 || (HWND)lParam==Ctl6)
 				{
 						HFONT hFont = CreateFont(9,0,0,0,700,
 																				 FALSE,FALSE,FALSE,
@@ -1085,7 +1067,7 @@ static BOOL CALLBACK AboutBoxProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam
 																				 L"MS Sans Serif");
 						SelectObject(hdcStatic,hFont);
 				}
-			/*  if(((HWND)lParam==Ctl8)||(HWND)lParam==Ctl9)
+			  if(((HWND)lParam==Ctl8)||(HWND)lParam==Ctl9)
 				{
 						HFONT hFont = CreateFont(10,0,0,0,550,
 																				 FALSE,FALSE,FALSE,
@@ -1094,7 +1076,7 @@ static BOOL CALLBACK AboutBoxProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam
 																				 L"MS Sans Serif");
 						SelectObject(hdcStatic,hFont);
 						SetTextColor(hdcStatic, RGB(0,0,255));
-				}*/
+				}
 				SetBkMode(hdcStatic,TRANSPARENT);
 				return (INT_PTR)g_hbrDlgBackground;
 		}
@@ -1848,7 +1830,7 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 								wPanels->Accept(cv);
 						}
 						if(wParam==VK_F1)
-								DialogBox(ghInst, MAKEINTRESOURCE(IDD_ABOUT), MainWindow.hMain, (DLGPROC)AboutBoxProc);
+								DialogBox(ghInst, MAKEINTRESOURCE(IDD_ABOUT), hwnd, AboutDlgProc);
 						if(wParam==VK_F5&&ctrl_down)
 								invalidate(INVALIDATE_DEVICES);else
 						if(wParam==VK_F5)
@@ -1949,7 +1931,7 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 								{
 										case IDM_ABOUT:
 										{
-												DialogBox( ghInst,MAKEINTRESOURCE(IDD_ABOUT), MainWindow.hMain,(DLGPROC)AboutBoxProc);
+												DialogBox( ghInst,MAKEINTRESOURCE(IDD_ABOUT), MainWindow.hMain,AboutDlgProc);
 												return 0;
 										}
 										case IDM_SEED:
@@ -2383,12 +2365,12 @@ LRESULT MainWindow_t::WndProcField(HWND hwnd,UINT message,WPARAM wParam,LPARAM l
 								#endif
 								break;
 						}
-						if(Popup->floating_itembar==SLOT_PATREON)
+						if(Popup->floating_itembar==SLOT_BOOSTY)
 						{
 								if(StrStrIW(STR(STR_LANG_ID),L"Russian"))
 										System.run_command(L"open",L"http://vk.com/snappydriverinstaller?w=page-71369181_50543112",SW_SHOWNORMAL,0);
 								else
-										System.run_command(L"open",L"https://www.patreon.com/SamLab",SW_SHOWNORMAL,0);
+										System.run_command(L"open",L"https://boosty.to/snappydriverinstaller/donate",SW_SHOWNORMAL,0);
 								break;
 						}
 
@@ -2468,8 +2450,8 @@ LRESULT MainWindow_t::WndProcField(HWND hwnd,UINT message,WPARAM wParam,LPARAM l
 										Popup->drawpopup(itembar_i,STR_RESTOREPOINT_H,FLOATING_TOOLTIP,x,y,hField);
 								else if(itembar_i==SLOT_DOWNLOAD)
 										Popup->drawpopup(itembar_i,0,FLOATING_DOWNLOAD,x,y,hField);
-								else if(itembar_i==SLOT_PATREON)
-										Popup->drawpopup(itembar_i,STR_PATREON_H,FLOATING_TOOLTIP,x,y,hField);
+								else if(itembar_i==SLOT_BOOSTY)
+										Popup->drawpopup(itembar_i,STR_BOOSTY_H,FLOATING_TOOLTIP,x,y,hField);
 								else if(i==0&&itembar_i>=RES_SLOTS)
 										Popup->drawpopup(itembar_i,STR_HINT_DRIVER,FLOATING_TOOLTIP,x,y,hField);
 								else
@@ -2711,14 +2693,27 @@ BOOL CALLBACK WelcomeProcedure(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		HWND Ctl2;
 		HWND Ctl3;
 		HWND Ctl4;
+        HWND Ctl5;
 
 		switch (msg)
 		{
 		case WM_INITDIALOG:
-				// languages
-				SetWindowText(GetDlgItem(hwnd,IDD_WELC_TITLE),STR(STR_WELCOME_TITLE));
-				SetWindowText(GetDlgItem(hwnd,IDD_WELC_SUBTITLE),STR(STR_WELCOME_SUBTITLE));
-				SetWindowText(GetDlgItem(hwnd,IDD_WELC_INTRO),STR(STR_WELCOME_INTRO));
+            WCHAR wch[128];
+#if defined(VERSION_BUILD_TOOL_BUILD)
+            wsprintf(wch, VERSION_BUILD_INFO_FORMAT, VERSION_BUILD_TOOL_NAME,
+                VERSION_BUILD_TOOL_MAJOR, VERSION_BUILD_TOOL_MINOR, VERSION_BUILD_TOOL_PATCH, VERSION_BUILD_TOOL_BUILD);
+#else
+            wsprintf(wch, VERSION_BUILD_INFO_FORMAT, VERSION_BUILD_TOOL_NAME,
+                VERSION_BUILD_TOOL_MAJOR, VERSION_BUILD_TOOL_MINOR, VERSION_BUILD_TOOL_PATCH);
+#endif
+                SetWindowText(GetDlgItem(hwnd,IDD_WELC_TITLE),STR(STR_WELCOME_TITLE));
+                SetWindowText(GetDlgItem(hwnd, IDC_VERSION), _W(_STRG(VERSION_FILEVERSION_LONG)));
+                SetWindowText(GetDlgItem(hwnd, IDC_BUILD_INFO), wch);
+                SetWindowText(GetDlgItem(hwnd,IDC_COPYRIGHT), _W(VERSION_LEGALCOPYRIGHT));
+                SetWindowText(GetDlgItem(hwnd, IDC_WEBLINK), _W(VERSION_WEBPAGEDISPLAY));
+                SetWindowText(GetDlgItem(hwnd, IDC_SUPPORTLINK), STR(STR_BOOSTY1));
+                SetWindowText(GetDlgItem(hwnd,IDD_WELC_SUBTITLE),STR(STR_WELCOME_SUBTITLE));
+                SetWindowText(GetDlgItem(hwnd,IDD_WELC_INTRO),STR(STR_WELCOME_INTRO));
 				SetWindowText(GetDlgItem(hwnd,IDD_WELC_INTRO2),STR(STR_WELCOME_INTRO2));
 				SetWindowText(GetDlgItem(hwnd,IDD_WELC_BUTTON1),STR(STR_WELCOME_BUTTON1));
 				SetWindowText(GetDlgItem(hwnd,IDD_WELC_BUTTON1_DESC),STR(STR_WELCOME_BUTTON1_DESC));
@@ -2734,8 +2729,8 @@ BOOL CALLBACK WelcomeProcedure(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		case WM_SETCURSOR:
 				// 2 hyperlinks
 				if ((LOWORD(lParam)==HTCLIENT) &&
-						((GetDlgCtrlID((HWND)wParam) == IDD_WELC_LINK1)||
-						 (GetDlgCtrlID((HWND)wParam) == IDD_WELC_LINK2)))
+						((GetDlgCtrlID((HWND)wParam) == IDC_WEBLINK)||
+						 (GetDlgCtrlID((HWND)wParam) == IDC_SUPPORTLINK)))
 				{
 						SetCursor(LoadCursor(nullptr, IDC_HAND));
 						SetWindowLongPtr(hwnd, DWLP_MSGRESULT, TRUE);
@@ -2744,7 +2739,7 @@ BOOL CALLBACK WelcomeProcedure(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 				break;
 
 		case WM_COMMAND:
-				switch(wParam)
+				switch(LOWORD(wParam))
 				{
 						case IDD_WELC_CLOSE:
 								EndDialog(hwnd,wParam);
@@ -2770,11 +2765,11 @@ BOOL CALLBACK WelcomeProcedure(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 								Settings.flags&=~FLAG_AUTOUPDATE;
 								Updater->DownloadIndexes();
 								return TRUE;
-						case IDD_WELC_LINK1:
+						case IDC_WEBLINK:
                             ShellExecute(hwnd, L"open", _W(VERSION_WEBPAGEDISPLAY), NULL, NULL, SW_SHOWNORMAL);
                             break;
-						case IDD_WELC_LINK2:
-                            ShellExecute(hwnd, L"open", _W(WEB_PATREONPAGE), NULL, NULL, SW_SHOWNORMAL);
+						case IDC_SUPPORTLINK:
+                            ShellExecute(hwnd, L"open", _W(WEB_BOOSTYPAGE), NULL, NULL, SW_SHOWNORMAL);
                             break;
 						default:
 								break;
@@ -2785,9 +2780,10 @@ BOOL CALLBACK WelcomeProcedure(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 				{
 						// modify the fonts for colours and bold and size etc
 						Ctl1=GetDlgItem(hwnd,IDD_WELC_TITLE);
-						Ctl2=GetDlgItem(hwnd,IDD_WELC_LINK1);
-						Ctl3=GetDlgItem(hwnd,IDD_WELC_LINK2);
+						Ctl2=GetDlgItem(hwnd, IDC_VERSION);
+						Ctl3=GetDlgItem(hwnd,IDC_WEBLINK);
 						Ctl4=GetDlgItem(hwnd,IDD_WELC_SUBTITLE);
+                        Ctl5=GetDlgItem(hwnd, IDC_SUPPORTLINK);
 						HDC hdcStatic=(HDC)wParam;
 
 						if((HWND)lParam==Ctl1)
@@ -2797,10 +2793,10 @@ BOOL CALLBACK WelcomeProcedure(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 																						 ANSI_CHARSET,OUT_DEVICE_PRECIS,CLIP_MASK,
 																						 ANTIALIASED_QUALITY,DEFAULT_PITCH,
 																						 L"Tahoma");
-								SetTextColor(hdcStatic, RGB(248,171,3));
+								SetTextColor(hdcStatic, RGB(0,0,0));
 								SelectObject(hdcStatic,hTitleFont);
 						}
-						else if((HWND)lParam==Ctl4)
+						else if(((HWND)lParam == Ctl2) || (HWND)lParam==Ctl4)
 						{
 								HFONT hFont = CreateFont(9,0,0,0,700,
 																						 FALSE,FALSE,FALSE,
@@ -2809,15 +2805,15 @@ BOOL CALLBACK WelcomeProcedure(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 																						 L"MS Sans Serif");
 								SelectObject(hdcStatic,hFont);
 						}
-						else if(((HWND)lParam==Ctl2)||(HWND)lParam==Ctl3)
+						else if(((HWND)lParam==Ctl3) || (HWND)lParam==Ctl5)
 						{
-								HFONT hFont = CreateFont(10,0,0,0,550,
-																						 FALSE,FALSE,FALSE,
-																						 ANSI_CHARSET,OUT_DEVICE_PRECIS,CLIP_MASK,
-																						 ANTIALIASED_QUALITY,DEFAULT_PITCH,
-																						 L"MS Sans Serif");
+								//HFONT hFont = CreateFont(10,0,0,0,550,
+								//														 FALSE,FALSE,FALSE,
+								//														 ANSI_CHARSET,OUT_DEVICE_PRECIS,CLIP_MASK,
+								//														 ANTIALIASED_QUALITY,DEFAULT_PITCH,
+								//														 L"Segoe UI");
 								SetTextColor(hdcStatic, RGB(0,0,255));
-								SelectObject(hdcStatic,hFont);
+								//SelectObject(hdcStatic,hFont);
 						}
 
 						SetBkMode(hdcStatic,TRANSPARENT);
