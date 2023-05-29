@@ -170,8 +170,8 @@ int itembar_t::box_status()
         case SLOT_NOUPDATES:
             return BOX_NOUPDATES;
 
-        case SLOT_PATREON:
-            return BOX_PATREON;
+        case SLOT_BOOSTY:
+            return BOX_BOOSTY;
 
         //case SLOT_TRANSLATION:
         //    return BOX_TRANSLATION;
@@ -813,9 +813,10 @@ void Manager::filter(int options,std::vector<std::wstring> *drpfilter)
         items_list.size()==RES_SLOTS||
         (i==0&&Settings.statemode==0&&matcher->getCol()->size()>1)?1:0;
 
-    items_list[SLOT_RESTORE_POINT].isactive=Settings.statemode==
-        STATEMODE_EMUL||i==0||(Settings.flags&FLAG_NORESTOREPOINT)?0:1;
-    //set_rstpnt(0);
+    // Uncomment to enable restore point panel
+    /*items_list[SLOT_RESTORE_POINT].isactive=
+        Settings.statemode==STATEMODE_EMUL||i==0||(Settings.flags&FLAG_NORESTOREPOINT)?0:1;
+    *///set_rstpnt(0);
 
     setRestorePointStatus(false);
 }
@@ -1016,7 +1017,7 @@ void Manager::updateoverall()
     {
         __int64 d=items_list[itembar_act].percent/_totalitems;
         if(items_list[itembar_act].checked==0)d=0;
-        if(itembar_act==SLOT_RESTORE_POINT)d=0;
+        if(itembar_act==SLOT_RESTORE_POINT) d=0;
         items_list[SLOT_EXTRACTING].percent=_processeditems*1000/_totalitems+d;
         items_list[SLOT_EXTRACTING].val1=_processeditems;
         items_list[SLOT_EXTRACTING].val2=_totalitems;
@@ -1405,7 +1406,7 @@ int Manager::drawitem(Canvas &canvas,size_t index,int ofsy,int zone,int cutoff)
     int oldstyle=Settings.flags&FLAG_SHOWDRPNAMES1||Settings.flags&FLAG_OLDSTYLE;
 
     int pos=(itembar->curpos>>16)-D_X(DRVITEM_DIST_Y0);
-    if(index>=SLOT_RESTORE_POINT)pos-=ofsy;
+    if(index>=SLOT_RESTORE_POINT) pos-=ofsy;
 
     if(!(itembar->first&1))
     {
@@ -1525,12 +1526,12 @@ int Manager::drawitem(Canvas &canvas,size_t index,int ofsy,int zone,int cutoff)
             canvas.DrawTextXY(x+D_X(ITEM_TEXT_OFS_X),pos+D_X(ITEM_TEXT_DIST_Y)/2,bufw);
             break;
 
-        case SLOT_PATREON:
+        case SLOT_BOOSTY:
             pos+=D_X(ITEM_TEXT_OFS_Y);
             canvas.SetTextColor(D_C(boxindex[itembar->box_status()]+14));
-            canvas.DrawTextXY(x+D_X(ITEM_TEXT_OFS_X),pos,STR(STR_PATREON1));
+            canvas.DrawTextXY(x+D_X(ITEM_TEXT_OFS_X),pos,STR(STR_BOOSTY1));
             canvas.SetTextColor(D_C(boxindex[itembar->box_status()]+15));
-            canvas.DrawTextXY(x+D_X(ITEM_TEXT_OFS_X),pos+D_X(ITEM_TEXT_DIST_Y),STR(STR_PATREON2));
+            canvas.DrawTextXY(x+D_X(ITEM_TEXT_OFS_X),pos+D_X(ITEM_TEXT_DIST_Y),STR(STR_BOOSTY2));
             break;
 
         case SLOT_DOWNLOAD:
