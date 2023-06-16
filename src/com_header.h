@@ -68,7 +68,11 @@ typedef unsigned ofst;
 #define TORRENT_USE_I2P 0
 //#define TORRENT_USE_ICONV 0               // Already disabled for windows in config.hpp
 //#define TORRENT_USE_IPV6 1                // Outdated: TORRENT_USE_IPV6 is used in libtorrent to simply disable any mention of IPv6 specific types and functions.
-																						// The purpose is to be able to build on systems that do not support IPv6.
+											// The purpose is to be able to build on systems that do not support IPv6.
+                                            
+// We build without webtorrent support
+#define TORRENT_USE_RTC 0
+
 //#define TORRENT_USE_TOMMATH               // Switched to boost.multiprecision instead in RC 1.1
 
 #ifdef _MSC_VER
