@@ -84,7 +84,7 @@ IF EXIST "%TEMP_NAME%"     RD /S /Q "%TEMP_NAME%"
 IF NOT EXIST "%TEMP_NAME%" MD "%TEMP_NAME%"
 
 
-FOR %%A IN ("SDI64.exe" ^
+FOR %%A IN ("SDI_x86.exe" ^
     "SDI.exe" SDI2.cfg) DO COPY /Y /V "%%A" "%TEMP_NAME%\"
 
 SET "LNG=%TEMP_NAME%\Tools\Langs"
@@ -99,7 +99,7 @@ XCOPY /E /Y /V "Docs" "%DOCS%"
 COPY /Y /V "Changes.txt" "%DOCS%"
 
 PUSHD "%TEMP_NAME%"
-"%SEVENZIP%" a -tzip -mm=deflate64 -mfb=257 -mpass=15^
+"%SEVENZIP%" a -tzip -mm=deflate64 -mx -mfb=256 -mpass=15^
  "%ZIP_NAME%.zip" "SDI*.exe" "sdi2.cfg" "SDI_auto.bat"^
  "Tools" "Docs"
 IF %ERRORLEVEL% NEQ 0 CALL :SUBMSG "ERROR" "Compilation failed!"

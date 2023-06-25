@@ -10,11 +10,11 @@ IF %PROCESSOR_ARCHITECTURE% == x86 (IF NOT DEFINED PROCESSOR_ARCHITEW6432 goto b
 goto bit64
 :bit32
 echo 32-bit
-set xOS="R"
+set xOS="_x86"
 goto cont
 :bit64
 echo 64-bit
-set xOS="x64_R"
+set xOS=""
 :cont
 
 for /f "tokens=*" %%a in ('dir /b /od "%~dp0SDI_%xOS%*.exe"') do set "SDIEXE=%%a"

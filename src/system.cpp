@@ -13,9 +13,11 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "VersionEx.h"
 #include "com_header.h"
 #include "common.h"
-#include "logging.h"
+#include "utils/BaseUtil.h"
+#include "utils/Log.h"
 #include "settings.h"
 #include "system.h"
 #include "manager.h"
@@ -24,7 +26,6 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "shellapi.h"
 #include "tchar.h"
 
-#include <windows.h>
 #include <process.h>
 #ifdef _MSC_VER
 #include <errno.h>
@@ -89,6 +90,8 @@ bool SystemImp::IsLangInstalled(int group)
 		return lLang==0;
 }
 
+#pragma warning(disable : 28159) // silence /analyze: Consider using 'GetTickCount64' instead of 'GetTickCount'
+
 unsigned SystemImp::GetTickCountWr()
 {
 		return GetTickCount();
@@ -144,7 +147,7 @@ void get_resource(int id,void **data,size_t *size)
 		HRSRC myResource=FindResource(nullptr,MAKEINTRESOURCE(id),(wchar_t *)RESFILE);
 		if(!myResource)
 		{
-				Log.print_err("ERROR in get_resource(): failed FindResource(%d)\n",id);
+				logf("ERROR in get_resource(): failed FindResource(%d)\n",id);
 				*size=0;
 				*data=nullptr;
 				return;
@@ -188,7 +191,7 @@ void mkdir_r(const wchar_t *path)
 				*p=0;
 				if(_wmkdir(buf)<0&&errno!=EEXIST&&wcslen(buf)>2)
 				{
-						Log.print_err("ERROR in mkdir_r(): failed _wmkdir(%S,%d). Write protected?\n",buf,errno);
+						logf("ERROR in mkdir_r(): failed _wmkdir(%S,%d). Write protected?\n",buf,errno);
 						return;
 				}
 				*p=L'\\';
@@ -196,13 +199,13 @@ void mkdir_r(const wchar_t *path)
 		}
 		// final directory component
 		if(_wmkdir(buf)<0&&errno!=EEXIST&&wcslen(buf)>2)
-				Log.print_err("ERROR in mkdir_r(): failed _wmkdir(%S,%d). Write protected?\n",buf,errno);
+				logf("ERROR in mkdir_r(): failed _wmkdir(%S,%d). Write protected?\n",buf,errno);
 }
 
 void SystemImp::UnregisterClass_log(const wchar_t *lpClassName,const wchar_t *func,const wchar_t *obj)
 {
 		if(!UnregisterClass(lpClassName,ghInst))
-				Log.print_err("ERROR in %S(): failed UnregisterClass(%S)\n",func,obj);
+				logf("ERROR in %S(): failed UnregisterClass(%S)\n",func,obj);
 }
 
 bool SystemImp::FileAvailable(const wchar_t *path, int numRetries, int waitTime)
@@ -217,7 +220,7 @@ bool SystemImp::FileAvailable(const wchar_t *path, int numRetries, int waitTime)
 		{
 				retries++;
 				if(retries>numRetries)break;
-				Log.print_con("Waiting: %S\n", path);
+				log("Waiting: %S\n", path);
 				Sleep(waitTime*1000);
 				FileOk=System.FileExists(path);
 		}
@@ -363,16 +366,16 @@ int SystemImp::canWrite(const wchar_t *path)
 				if(!GetVolumeInformation(drive,nullptr,0,nullptr,nullptr,&flagsv,nullptr,0))
 				{
 						lasterror=GetLastError();
-						Log.print_err("Error: canWrite : GetVolumeInformation(1) failed with error %d\n",lasterror);
-						if(lasterror==3)Log.print_err("Error: Path not found: %S\n",path);
+						logf("Error: canWrite : GetVolumeInformation(1) failed with error %d\n",lasterror);
+						if(lasterror==3)logf("Error: Path not found: %S\n",path);
 				}
 		}
 		else
 				if(!GetVolumeInformation(nullptr,nullptr,0,nullptr,nullptr,&flagsv,nullptr,0))
 				{
 						lasterror=GetLastError();
-						Log.print_err("Error: canWrite : GetVolumeInformation(2) failed with error %d\n",lasterror);
-						if(lasterror==3)Log.print_err("Error: Path not found: %S\n",path);
+						logf("Error: canWrite : GetVolumeInformation(2) failed with error %d\n",lasterror);
+						if(lasterror==3)logf("Error: Path not found: %S\n",path);
 				}
 
 		return (flagsv&FILE_READ_ONLY_VOLUME)?0:1;
@@ -396,8 +399,8 @@ bool SystemImp::canWriteFile(const wchar_t *path,const wchar_t *mode)
 				if(!GetVolumeInformation(drive,nullptr,0,nullptr,nullptr,&flagsv,nullptr,0))
 				{
 						lasterror=GetLastError();
-						Log.print_err("Error: canWriteFile : GetVolumeInformation(1) failed with error %d\n",lasterror);
-						if(lasterror==3)Log.print_err("Error: Path not found: %S\n",path);
+						logf("Error: canWriteFile : GetVolumeInformation(1) failed with error %d\n",lasterror);
+						if(lasterror==3)logf("Error: Path not found: %S\n",path);
 				}
 		}
 		// test if the file can be opened for the required mode
@@ -406,7 +409,7 @@ bool SystemImp::canWriteFile(const wchar_t *path,const wchar_t *mode)
 				err = _wfopen_s(&stream, path, mode);
 				if (err)
 				{
-						Log.print_err("Error %d The file %S was not opened\n",err,path);
+						logf("Error %d The file %S was not opened\n",err,path);
 						return(false);
 				}
 				// Close stream if it isn't NULL
@@ -415,7 +418,7 @@ bool SystemImp::canWriteFile(const wchar_t *path,const wchar_t *mode)
 						err = fclose(stream);
 						if (err)
 						{
-								Log.print_err("The file %S was not closed\n,path");
+								logf("The file %S was not closed\n,path");
 						}
 						return(true);
 				}
@@ -442,8 +445,8 @@ int SystemImp::canWriteDirectory(const wchar_t *path)
 				if(!GetVolumeInformation(drive,nullptr,0,nullptr,nullptr,&flagsv,nullptr,0))
 				{
 						lasterror=GetLastError();
-						Log.print_err("Error: canWriteDirectory : GetVolumeInformation(1) failed with error %d\n",lasterror);
-						if(lasterror==3)Log.print_err("Error: Path not found: %S\n",path);
+						logf("Error: canWriteDirectory : GetVolumeInformation(1) failed with error %d\n",lasterror);
+						if(lasterror==3)logf("Error: Path not found: %S\n",path);
 				}
 		}
 		// test if i can create a temporary file in the given directory
@@ -487,7 +490,7 @@ int SystemImp::run_command(const wchar_t* file,const wchar_t* cmd,int show,int w
 		ShExecInfo.lpParameters=cmd;
 		ShExecInfo.nShow=show;
 
-		Log.print_con("Run(%S%S,%d,%d)\n",file,cmd,show,wait);
+		logf("Run(%S%S,%d,%d)\n",file,cmd,show,wait);
 		// is file "open"
 		if(!wcscmp(file,L"open"))
 				ShellExecute(nullptr,L"open",cmd,nullptr,nullptr,SW_SHOWNORMAL);
@@ -572,12 +575,13 @@ std::string SystemImp::AppPathS()
 		return wtoa(path);
 }
 
+// ToDo: Replace with UpdateSelfTo
 int SystemImp::FindLatestExeVersion(int bit)
 {
 		int ver=VERSION_REV;
 		std::wstring spec;
-		if(bit==32)spec=AppPathW()+L"\\SDI*.exe";
-		else if(bit==64)spec=AppPathW()+L"\\SDI_x64*.exe";
+		if(bit==32)spec=AppPathW()+L"\\SDI_x86*.exe";
+		else if(bit==64)spec=AppPathW()+L"\\SDI*.exe";
 		else return 0;
 
 		WIN32_FIND_DATA fd;
@@ -666,7 +670,7 @@ bool SystemImp::SystemProtectionEnabled(State *state)
 						err=RegQueryValueEx(hkey,L"DisableSR",nullptr,&dwType,(LPBYTE)&dwData,&cbData);
 						if(err==ERROR_SUCCESS)ret=dwData==0;
 						else if(err==ERROR_FILE_NOT_FOUND)ret=false;
-						else Log.print_err("ERROR in SystemProtectionEnabled(): error in RegQueryValueEx %d\n",err);
+						else logf("ERROR in SystemProtectionEnabled(): error in RegQueryValueEx %d\n",err);
 				}
 				// every other version
 				else
@@ -674,12 +678,12 @@ bool SystemImp::SystemProtectionEnabled(State *state)
 						err=RegQueryValueEx(hkey,L"RPSessionInterval",nullptr,&dwType,(LPBYTE)&dwData,&cbData);
 						if(err==ERROR_SUCCESS)ret=dwData==1;
 						else if(err==ERROR_FILE_NOT_FOUND)ret=false;
-						else Log.print_err("ERROR in SystemProtectionEnabled(): error in RegQueryValueEx %d\n",err);
+						else logf("ERROR in SystemProtectionEnabled(): error in RegQueryValueEx %d\n",err);
 				}
 
 				RegCloseKey(hkey);
 		}
-		else Log.print_err("ERROR in SystemProtectionEnabled(): error in RegOpenKeyEx %d\n",err);
+		else logf("ERROR in SystemProtectionEnabled(): error in RegOpenKeyEx %d\n",err);
 		return ret;
 }
 
@@ -701,7 +705,7 @@ int SystemImp::GetRestorePointCreationFrequency()
 				else ret=-1;
 				RegCloseKey(hkey);
 		}
-		else Log.print_err("ERROR in GetRestorePointCreationFrequency(): error in RegOpenKeyEx %d\n",err);
+		else logf("ERROR in GetRestorePointCreationFrequency(): error in RegOpenKeyEx %d\n",err);
 		return ret;
 }
 
@@ -724,7 +728,7 @@ void SystemImp::SetRestorePointCreationFrequency(int freq)
 						RegSetValueEx(hkey,L"SystemRestorePointCreationFrequency",0,dwType,(LPBYTE)&dwData,cbData);
 				RegCloseKey(hkey);
 		}
-		else Log.print_err("ERROR in SetRestorePointCreationFrequency(): error in RegOpenKeyEx %d\n",err);
+		else logf("ERROR in SetRestorePointCreationFrequency(): error in RegOpenKeyEx %d\n",err);
 }
 
 bool SystemImp::CreateRestorePoint(std::wstring desc)
@@ -756,7 +760,7 @@ bool SystemImp::CreateRestorePoint(std::wstring desc)
 						else
 						{
 								restorePointSucceeded=WIN5f_SRSetRestorePointW(&pRestorePtSpec,&pSMgrStatus);
-								Log.print_debug("Restore Point: %d (%d)\n",(int)restorePointSucceeded,pSMgrStatus.nStatus);
+								logf("Restore Point: %d (%d)\n",(int)restorePointSucceeded,pSMgrStatus.nStatus);
 						}
 						// return it to the state we found it in
 						System.SetRestorePointCreationFrequency(restorePointFrequency);
@@ -764,13 +768,13 @@ bool SystemImp::CreateRestorePoint(std::wstring desc)
 						if(!restorePointSucceeded)
 						{
 								if(pSMgrStatus.nStatus==ERROR_SERVICE_DISABLED)
-										Log.print_err("ERROR: CreateRestorePoint : Failed to create restore point. Restore points disabled.\n");
+										logf("ERROR: CreateRestorePoint : Failed to create restore point. Restore points disabled.\n");
 								else
-										Log.print_err("ERROR: CreateRestorePoint : Failed to create restore point.\n");
+										logf("ERROR: CreateRestorePoint : Failed to create restore point.\n");
 						}
 				}
 				else
-						Log.print_err("ERROR: CreateRestorePoint : Failed to create restore point %d\n",hinstLib);
+						logf("ERROR: CreateRestorePoint : Failed to create restore point %d\n",hinstLib);
 
 				if(hinstLib)FreeLibrary(hinstLib);
 		return restorePointSucceeded;
@@ -848,7 +852,7 @@ void CALLBACK FilemonImp::monitor_callback(DWORD dwErrorCode,DWORD dwNumberOfByt
 
 								errno=0;
 								wsprintf(buf,L"%ws\\%ws",pMonitor->dir,szFile);
-								Log.print_con("{\n  changed'%S'\n",buf);
+								log("{\n  changed'%S'\n",buf);
 								f=_wfsopen(buf,L"rb",0x10); //deny read/write mode
 								if(f)m=2;
 								if(!f)
@@ -893,10 +897,10 @@ void CALLBACK FilemonImp::monitor_callback(DWORD dwErrorCode,DWORD dwNumberOfByt
 												flag=0;
 								}
 
-								Log.print_con("  %c a(%d),m(%d),err(%02d),size(%9d)\n",flag?'+':'-',pNotify->Action,m,errno,sz);
+								logf("  %c a(%d),m(%d),err(%02d),size(%9d)\n",flag?'+':'-',pNotify->Action,m,errno,sz);
 
 								if(flag)pMonitor->callback(szFile,pNotify->Action,(int)pMonitor->lParam);
-								Log.print_con("}\n\n");
+								log("}\n\n");
 			}
 		}while(pNotify->NextEntryOffset!=0);
 	}
@@ -1075,7 +1079,7 @@ void viruscheck(const wchar_t *szFile,int action,int lParam)
 										manager_g->itembar_setactive(SLOT_VIRUS_AUTORUN,update=1);
 						}
 						else
-								Log.print_con("NOTE: cannot open autorun.inf [error: %d]\n",errno);
+								log("NOTE: cannot open autorun.inf [error: %d]\n",errno);
 				}
 		}
 
@@ -1100,7 +1104,7 @@ void viruscheck(const wchar_t *szFile,int action,int lParam)
 								WStringShort bufw;
 								bufw.sprintf(L"\\%ws\\not_a_virus.txt",FindFileData.cFileName);
 								if(System.FileExists(bufw.Get()))continue;
-								Log.print_con("VIRUS_WARNING: hidden folder '%S'\n",FindFileData.cFileName);
+								log("VIRUS_WARNING: hidden folder '%S'\n",FindFileData.cFileName);
 								manager_g->itembar_setactive(SLOT_VIRUS_HIDDEN,update=1);
 						}
 				}
