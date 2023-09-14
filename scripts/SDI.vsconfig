@@ -13,7 +13,6 @@
     "Microsoft.VisualStudio.Component.Windows11SDK.22621",
     "Microsoft.VisualStudio.Component.VC.Redist.14.Latest",
     "Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core",
-    "Microsoft.VisualStudio.Component.Windows11Sdk.WindowsPerformanceToolkit",
     "Microsoft.VisualStudio.Component.CppBuildInsights",
     "Microsoft.VisualStudio.Workload.NativeDesktop"
   ]
