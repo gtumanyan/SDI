@@ -45,13 +45,8 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 
-#if (defined(_DEBUG) || defined(DEBUG)) && !defined(NDEBUG)
-#pragma message("Debug Build: " _STRG(VERSION_FILEVERSION_LONG))
-#else
-#pragma message("Release Build: " _STRG(VERSION_FILEVERSION_LONG))
-#endif
 
-#define VERSION_LEGALCOPYRIGHT      "Copyright © 2022-2023 WindR"
+#define VERSION_LEGALCOPYRIGHT      "Copyright © 2014-2023 all authors (GPLv3)"
 #define MY_APPNAME_DESCRIPTION		"Snappy Driver Installer"
 #define VERSION_AUTHORNAME			"Gregory Tumanyan <https://t.me/gtumanyan> (Current Maintainer), Glenn Delahoy, BadPointer (Founder)."
 #define VERSION_WEBPAGEDISPLAY		"https://t.me/Snappy_Driver_Installer"
