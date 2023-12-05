@@ -1,19 +1,22 @@
 {
   "version": "1.0",
   "components": [
-    "Microsoft.VisualStudio.Component.CoreEditor",
-    "Microsoft.VisualStudio.Workload.CoreEditor",
-    "Microsoft.VisualStudio.Component.Roslyn.Compiler",
     "Microsoft.Component.MSBuild",
+    "Microsoft.VisualStudio.Workload.CoreEditor",
+    "Microsoft.VisualStudio.Component.CoreEditor",
+    "Microsoft.VisualStudio.Component.Roslyn.Compiler",
     "Microsoft.VisualStudio.Component.TextTemplating",
     "Microsoft.VisualStudio.Component.Debugger.JustInTime",
     "Microsoft.VisualStudio.Component.IntelliCode",
     "Microsoft.VisualStudio.Component.VC.CoreIde",
+    "Microsoft.VisualStudio.Workload.NativeDesktop",
+    "Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core",
     "Microsoft.VisualStudio.Component.VC.Tools.x86.x64",
     "Microsoft.VisualStudio.Component.Windows11SDK.22621",
     "Microsoft.VisualStudio.Component.VC.Redist.14.Latest",
-    "Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core",
-    "Microsoft.VisualStudio.Component.CppBuildInsights",
-    "Microsoft.VisualStudio.Workload.NativeDesktop"
+    "Microsoft.VisualStudio.Component.CppBuildInsights"
+  ], 
+  "extensions": [
+    "https://marketplace.visualstudio.com/items?itemName=MikeWard-AnnArbor.VSColorOutput64"
   ]
 }
