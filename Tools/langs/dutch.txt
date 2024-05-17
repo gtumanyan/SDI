@@ -351,7 +351,6 @@ STR_TR_ST2                    = "downloaden metadata"
 STR_TR_ST3                    = "downloaden van bestanden"
 STR_TR_ST4                    = "voltooid"
 STR_TR_ST5                    = "aan het delen"
-STR_TR_ST6                    = "ruimte toewijzen"
 STR_TR_ST7                    = "controleren hervatten data"
 STR_TR_ST8                    = "verplaatsen bestanden"
 

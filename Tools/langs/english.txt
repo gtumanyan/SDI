@@ -1,4 +1,4 @@
-﻿// send updates to https://t.me/Snappy_Driver_Installer
+﻿// Please send updates to https://t.me/Snappy_Driver_Installer
 STR_TRANSLATORS         = "BadPointer, Glenn Delahoy, WindR"
 
 STR_LANG_NAME           = "English"
@@ -408,10 +408,10 @@ STR_OPTION_CMD_FINISHRB = "After installation (need reboot)"
 STR_OPTION_CMD_FINISHDN = "After downloading"
 STR_OPTION_CONSOLE      = "Show console window"
 
-// Patreon
-STR_PATREON1             = "SDI is developed by volunteers in their spare time. If you like this software, please support us on Patreon."
-STR_PATREON2             = "(Click here to open the Patreon page)"
-STR_PATREON_H            = "Click here to open the Patreon page"
+// BOOSTY
+STR_BOOSTY1             = "SDI is developed by volunteers in their spare time. If you like this software, please support us on BOOSTY."
+STR_BOOSTY2             = "(Click here to open the BOOSTY page)"
+STR_BOOSTY_H            = "Click here to open the BOOSTY page"
 
 // Welcome
 STR_WELCOME_TITLE        = "Snappy Driver Installer"

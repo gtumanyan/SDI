@@ -359,7 +359,6 @@ STR_TR_ST2                    = "正在下载元数据"
 STR_TR_ST3                    = "正在下载文件"
 STR_TR_ST4                    = "已完成"
 STR_TR_ST5                    = "正在做种"
-STR_TR_ST6                    = "正在分配空间"
 STR_TR_ST7                    = "正在检查恢复数据"
 STR_TR_ST8                    = "正在移动文件"
 
