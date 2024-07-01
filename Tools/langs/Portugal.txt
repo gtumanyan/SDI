@@ -6,7 +6,7 @@ STR_LANG_NAME                 = "Português Brasileiro"
 STR_LANG_ID                   = "Brazilian"
 STR_LANG_GROUP                = 0x0001 // LGRPID_WESTERN_EUROPE
 STR_LANG_CODE                 = 0x416
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO              = "Informação do sistema"

@@ -6,7 +6,7 @@ STR_LANG_NAME                 = "ภาษาไทย"
 STR_LANG_ID                   = "Thai"
 STR_LANG_GROUP                = 0x000B // LGRPID_THAI
 STR_LANG_CODE                 = 0x1E
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO              = "ข้อมูลระบบ"

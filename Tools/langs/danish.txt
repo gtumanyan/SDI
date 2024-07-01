@@ -6,7 +6,7 @@ STR_LANG_NAME                 = "Dansk"
 STR_LANG_ID                   = "Danish"
 STR_LANG_GROUP                = 0x0001 // LGRPID_WESTERN_EUROPE
 STR_LANG_CODE                 = 0x06
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO              = "Systeminformation"

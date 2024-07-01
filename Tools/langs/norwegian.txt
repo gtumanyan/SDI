@@ -6,7 +6,7 @@ STR_LANG_NAME                 = "Norsk"
 STR_LANG_ID                   = "Norwegian"
 STR_LANG_GROUP                = 0x03 // LGRPID_BALTIC
 STR_LANG_CODE                 = 0x14
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO              = "Systeminformasjon"

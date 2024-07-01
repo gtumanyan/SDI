@@ -6,7 +6,7 @@ STR_LANG_NAME                 = "Türkçe"
 STR_LANG_ID                   = "Turkish"
 STR_LANG_GROUP                = 0x06 // LGRPID_TURKIC
 STR_LANG_CODE                 = 0x1F
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO              = "Sistem Bilgisi"

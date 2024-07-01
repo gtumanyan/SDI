@@ -6,7 +6,7 @@ STR_LANG_NAME                 = "正體中文"
 STR_LANG_ID                   = "Chinese (Taiwan)"
 STR_LANG_GROUP                = 0x000A
 STR_LANG_CODE                 = 0x04
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO              = "系統資訊"

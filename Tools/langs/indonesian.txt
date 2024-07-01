@@ -6,7 +6,7 @@ STR_LANG_NAME                 = "Bahasa Indonesia"
 STR_LANG_ID                   = "Indonesian"
 STR_LANG_GROUP                = 0x000e
 STR_LANG_CODE                 = 0x21
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO              = "Informasi Sistem"

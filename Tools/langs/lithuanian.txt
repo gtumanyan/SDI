@@ -6,7 +6,7 @@ STR_LANG_NAME                 = "Lietuvių"
 STR_LANG_ID                   = "Lithuanian"
 STR_LANG_GROUP                = 0x03 // LGRPID_BALTIC
 STR_LANG_CODE                 = 0x27
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO              = "Sistemos informacija"

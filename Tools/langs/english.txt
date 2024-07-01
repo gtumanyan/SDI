@@ -1,11 +1,10 @@
-﻿// Please send updates to https://t.me/Snappy_Driver_Installer
+// Please send updates to https://t.me/Snappy_Driver_Installer
 STR_TRANSLATORS         = "BadPointer, Glenn Delahoy, WindR"
 
 STR_LANG_NAME           = "English"
 STR_LANG_ID             = "English"
 STR_LANG_GROUP          = 0x01 // LGRPID_WESTERN_EUROPE
 STR_LANG_CODE           = 0x09
-STR_RTL                 = 0
 
 // left panel
 STR_SHOW_SYSINFO        = ""

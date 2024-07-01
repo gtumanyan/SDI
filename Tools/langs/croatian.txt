@@ -6,7 +6,7 @@ STR_LANG_NAME                 = "Hrvatski"
 STR_LANG_ID                   = "Croatian"
 STR_LANG_GROUP                = 0x0003
 STR_LANG_CODE                 = 0x1A
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO       		= ""

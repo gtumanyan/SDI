@@ -6,7 +6,7 @@ STR_LANG_NAME                 = "Български"
 STR_LANG_ID                   = "Bulgarian"
 STR_LANG_GROUP                = 0x0005 //LGRPID_CYRILLIC
 STR_LANG_CODE                 = 0x02
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO              = "Системна информация"

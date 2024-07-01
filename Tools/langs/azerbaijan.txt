@@ -6,7 +6,7 @@ STR_LANG_NAME                 = "Azərbaycanca"
 STR_LANG_ID                   = "Azerbaijani"
 STR_LANG_GROUP                = 0x01 // LGRPID_WESTERN_EUROPE
 STR_LANG_CODE                 = 0x2C
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO              = "Sistem barədə məlumat"
