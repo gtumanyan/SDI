@@ -20,7 +20,7 @@ Open Project with **Visual Studio 2022** and Clone a repository. You may use [In
 
 ## Build the project
 
-Go to ***BuildPath*\\tdesktop\\Telegram** and run
+Go to ***BuildPath*** and run
 
     Version.cmd
 
