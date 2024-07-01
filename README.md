@@ -8,12 +8,12 @@ Check out [Documentation](https://github.com/gtumanyan/SDI/blob/dev/Docs/refmanu
 
 ## Download
 
-You can download the prebuilt binary from the [Telegram topic](https://t.me/Snappy_Driver_Installer).
+You can download the prebuilt binary from the [Telegram topic](https://t.me/Snappy_Driver_Installer)
 
 #### Self-built
 
 Follow [guide](https://github.com/gtumanyan/SDI/blob/dev/Docs/building-win-x64.md) if you want to
-build by yourself.
+build by yourself
 
 ## Donation
 
