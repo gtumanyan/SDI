@@ -1,12 +1,16 @@
-To build, install latest Visual Studio using [Initial setup script](scripts/setup.ps1) and open vs2022\SDI.sln solution.
-Clone and update submodules with git submodule update --init --recursive
-Bootstrap Boost with external/boost/bootstrap.bat
-Build Boost using b2 --build-type=complete --with-thread --with-chrono --with-date_time address-model=64
-
 # SDI
 
 ![SDI Logo](.github/logo128.jpg)
 
 ## Features
 
-Check out [Documentation](Docs/SDI 2023 Manual.pdf).
+Check out ![Documentation]('Docs/SDI 2023 Manual.pdf').
+
+## Download
+
+You can download prebuilt binary from the [Telegram topic](https://t.me/Snappy_Driver_Installer).
+
+#### Self-built
+
+Follow [guide](https://github.com/gtumanyan/SDI/blob/dev/Docs/building-win-x64.md) if you want to
+build by yourself.
