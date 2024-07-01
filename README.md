@@ -4,11 +4,11 @@
 
 ## Features
 
-Check out ![Documentation](https://github.com/gtumanyan/SDI/blob/dev/Docs/refmanual.pdf)
+Check out [Documentation](https://github.com/gtumanyan/SDI/blob/dev/Docs/refmanual.pdf)
 
 ## Download
 
-You can download prebuilt binary from the [Telegram topic](https://t.me/Snappy_Driver_Installer).
+You can download the prebuilt binary from the [Telegram topic](https://t.me/Snappy_Driver_Installer).
 
 #### Self-built
 
