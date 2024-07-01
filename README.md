@@ -5,4 +5,4 @@ Build Boost using b2 --build-type=complete --with-thread --with-chrono --with-da
 
 # SDI
 
-![SDI Logo](.github/SDI.png)
+![SDI Logo](.github/logo128.jpg)
