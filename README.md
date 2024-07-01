@@ -1,4 +1,4 @@
-# SDI
+# SDI is a Snappy Driver Installer
 
 ![SDI Logo](.github/logo128.jpg)
 
