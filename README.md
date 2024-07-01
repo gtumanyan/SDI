@@ -4,7 +4,7 @@
 
 ## Features
 
-Check out ![Documentation]('Docs/SDI 2023 Manual.pdf').
+Check out ![Documentation](https://github.com/gtumanyan/SDI/blob/dev/Docs/refmanual.pdf)
 
 ## Download
 
