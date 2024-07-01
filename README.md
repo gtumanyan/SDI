@@ -17,7 +17,7 @@ build by yourself
 
 ## Donation
 
-Enjoy using **SDI**? Consider sending me a [tip](https://boosty.to/snappydriverinstaller)!
+Enjoy using **SDI**? Consider sending me a [tip](https://boosty.to/snappydriverinstaller/donate)!
 
 ## Libraries used
 
