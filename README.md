@@ -6,3 +6,7 @@ Build Boost using b2 --build-type=complete --with-thread --with-chrono --with-da
 # SDI
 
 ![SDI Logo](.github/logo128.jpg)
+
+## Features
+
+Check out [Documentation](Docs/SDI 2023 Manual.pdf).
