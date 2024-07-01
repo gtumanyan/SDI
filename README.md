@@ -14,3 +14,13 @@ You can download prebuilt binary from the [Telegram topic](https://t.me/Snappy_D
 
 Follow [guide](https://github.com/gtumanyan/SDI/blob/dev/Docs/building-win-x64.md) if you want to
 build by yourself.
+
+## Donation
+
+Enjoy using **SDI**? Consider sending me a [tip](https://boosty.to/snappydriverinstaller)!
+
+## Libraries used
+
+- [7-Zip](https://sourceforge.net/projects/sevenzip)
+- [Libtorrent](https://github.com/arvidn/libtorrent)
+- [libwebp](https://github.com/webmproject/libwebp)
