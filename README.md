@@ -1,23 +1,23 @@
-# SDI
+# SDI is a Snappy Driver Installer
 
 ![SDI Logo](.github/logo128.jpg)
 
 ## Features
 
-Check out ![Documentation]('Docs/SDI 2023 Manual.pdf').
+Check out [Documentation](https://github.com/gtumanyan/SDI/blob/dev/Docs/refmanual.pdf)
 
 ## Download
 
-You can download prebuilt binary from the [Telegram topic](https://t.me/Snappy_Driver_Installer).
+You can download the prebuilt binary from the [Telegram topic](https://t.me/Snappy_Driver_Installer)
 
 #### Self-built
 
 Follow [guide](https://github.com/gtumanyan/SDI/blob/dev/Docs/building-win-x64.md) if you want to
-build by yourself.
+build by yourself
 
 ## Donation
 
-Enjoy using **SDI**? Consider sending me a [tip](https://boosty.to/snappydriverinstaller)!
+Enjoy using **SDI**? Consider sending me a [tip](https://boosty.to/snappydriverinstaller/donate)!
 
 ## Libraries used
 
