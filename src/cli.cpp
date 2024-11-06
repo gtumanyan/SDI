@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -13,25 +13,25 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "com_header.h"
-#include "common.h"
-#include "logging.h"
+#include "utils/BaseUtil.h"
+#include "utils/Log.h"
+#include "SDI.h"
 #include "system.h"
-#include "settings.h"
+#include "Settings.h"
 #include "cli.h"
 
 #include <cstring>
 
-#define INSTALLEDVENFILENAMEDEFPATH L"%temp%\\SDI2\\InstalledID.txt"
+#define INSTALLEDVENFILENAMEDEFPATH L"%temp%\\SDI\\InstalledID.txt"
 
 // Structures
 struct CommandLineParam_t
 {
     bool ShowHelp;
     bool SaveInstalledHWD;
-    wchar_t SaveInstalledFileName[BUFLEN];
+    wchar_t SaveInstalledFileName[MAX_PATH];
     bool HWIDInstalled;
-    wchar_t HWIDSTR[BUFLEN];
+    wchar_t HWIDSTR[86];
 };
 CommandLineParam_t CLIParam;
 
@@ -46,10 +46,10 @@ void SaveHWID(wchar_t *hwid)
 {
     if(CLIParam.SaveInstalledHWD)
     {
-        FILE *f=_wfopen(CLIParam.SaveInstalledFileName,L"a+");
+        FILE* f=_wfopen(CLIParam.SaveInstalledFileName,L"a+");
         if(!f)
         {
-            Log.print_err("Failed to create '%S'\n",CLIParam.SaveInstalledFileName);
+            logf("Failed to create '%S'\n", CLIParam.SaveInstalledFileName);
             return;
         }
         fwprintf(f,L"%s",hwid);
@@ -81,7 +81,7 @@ void Parse_HWID_installed_swith(const wchar_t *ParamStr)
     size_t tmpLen=wcslen(HWIDINSTALLED_DEF);
     if(wcslen(ParamStr)<(tmpLen+17)) //-HWIDInstalled:VEN_xxxx&DEV_xxxx
     {
-        Log.print_err("invalid parameter %S\n",ParamStr);
+        logf("invalid parameter %S\n",ParamStr);
         ret_global=24;//ERROR_BAD_LENGTH;
         Settings.statemode=STATEMODE_EXIT;
         return;
@@ -128,10 +128,10 @@ void RUN_CLI()
             ExpandPath(CLIParam.SaveInstalledFileName);
             FILE *f;
             f=_wfopen(CLIParam.SaveInstalledFileName,L"rt");
-            if(!f)Log.print_err("Failed to open '%S'\n",CLIParam.SaveInstalledFileName);
+            if(!f)logf("Failed to open '%S'\n",CLIParam.SaveInstalledFileName);
             else
             {
-                wchar_t buf[BUFLEN];
+                wchar_t buf[86];
                 while(fgetws(buf,sizeof(buf)/2,f))
                 {
                     //Log.print_con("'%S'\n", buf);
