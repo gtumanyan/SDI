@@ -2,21 +2,6 @@
 SETLOCAL ENABLEEXTENSIONS
 :: encoding: UTF-8
 CHCP 65001 >NUL 2>&1
-
-rem ******************************************************************************
-rem *                                                                            *
-rem * SDI                                                                   *
-rem *                                                                            *
-rem * make_portable(.zip).cmd                                                    *
-rem *   Batch file for creating "Portable (*.zip)" packages                      *
-rem *                                                                            *
-rem * See License.txt for details about distribution and modification.           *
-rem *                                                                            *
-rem *                                                 (c) Rizonesoft 2008-2023   *
-rem *                                                   https://rizonesoft.com   *
-rem *                                                                            *
-rem ******************************************************************************
-
 CD /D %~dp0
 
 rem Check for the help switches
@@ -68,9 +53,9 @@ POPD
 TITLE Finished!
 ECHO.
 
-:: Pause of 4 seconds to verify the logfile before exiting 
+:: Pause of 8 seconds to verify the logfile before exiting 
 :: ===========================================================================================
-ping -n 5 127.0.0.1>nul
+ping -n 9 127.0.0.1>nul
 
 ENDLOCAL
 EXIT /B
@@ -109,8 +94,7 @@ CALL :SUBMSG "INFO" "%ZIP_NAME%.zip created successfully!"
 MOVE /Y "%ZIP_NAME%.zip" "..\"
 POPD
 IF EXIST "%TEMP_NAME%" RD /S /Q "%TEMP_NAME%"
-EXIT 
-
+EXIT
 
 :SubDetectSevenzipPath
 FOR %%G IN (%commander_path%\Plugins\WCX\Total7zip\64\7z.exe) DO (SET "SEVENZIP_PATH=%%~$PATH:G")
