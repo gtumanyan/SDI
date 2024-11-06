@@ -1,5 +1,5 @@
 #
-# Snappy Driver Installer Origin
+# Snappy Driver Installer
 #
 # Title: Simple Install
 # Author: Glenn Delahoy
@@ -8,7 +8,7 @@
 #
 
 echo ==============================
-echo Snappy Driver Installer Origin
+echo Snappy Driver Installer
 echo       Simple Install
 echo ==============================
 echo
