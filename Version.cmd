@@ -18,11 +18,11 @@ if ["%ARGS%"] NEQ [""] (
 :POWERSHELL
 PowerShell.exe -NoProfile -NonInteractive -NoLogo -ExecutionPolicy Unrestricted -Command "& { $ErrorActionPreference = 'Stop'; & '%SCRIPTNAME%' @args; Exit $LastExitCode }" %ARGS%
 set EXITCODE=%ERRORLEVEL%
-ECHO ERRORLEVEL=%EXITCODE%
+::ECHO ERRORLEVEL=%EXITCODE%
 
-:: Pause of 4 seconds to verify the "Notepad3 version number:" before exiting
+:: Pause of 8 seconds to verify the "Notepad3 version number:" before exiting
 :: ============================================================================
-ping -n 5 127.0.0.1>nul
+ping -n 9 127.0.0.1>nul
 
 goto :END
 

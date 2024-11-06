@@ -33,7 +33,7 @@ function DebugOutput($msg)
 
 try 
 {
-	$AppName = "SDI 2023"
+	$AppName = "SDI 2024"
 	$Major = [int]$(Get-Date -format yy)
 	$Minor = [int]$(Get-Date -format MM)
 	$Revis = [int]$(Get-Date -format dd)
@@ -73,7 +73,7 @@ try
 		$HeadMaster = Get-ChildItem -Path $HeadDir -Force -Recurse -File | Select-Object -First 1
 		$CommitID = [string](Get-Content "$HeadDir\$HeadMaster" -TotalCount 8)
 		if (!$CommitID) {
-						$length = ([string]($env:computername)).length
+            $length = ([string]($env:computername)).length
 			$CommitID = ([string]($env:computername)).substring(0,[math]::min($length,8)).ToLower()
 		}
 		$CommitID = $CommitID -replace '"', ''
@@ -104,7 +104,7 @@ try
 	$BoostVer = [string](Get-Content "ext\boost\tools\boost_install\test\BoostVersion.cmake"-TotalCount 1).Substring(18,6)
 	if (!$BoostVer) { $BoostVer = "0.0.0" }
 	DebugOutput("$BoostVer")
-	[string](Get-Content "ext\SevenZ\C\7zVersion.h"-TotalCount 4)[-1]-match '[\d.]+'
+	[string](Get-Content "ext\7Z\C\7zVersion.h"-TotalCount 4)[-1]-match '[\d.]+'
 	$7zVer=$Matches.0
 	DebugOutput("7zip version number: 'v$7zVer'")
 	if (!$7zVer) { $7zVer = 0 }
