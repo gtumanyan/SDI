@@ -1,12 +1,12 @@
 ﻿// send updates to https://t.me/Snappy_Driver_Installer
 
-STR_TRANSLATORS               = "Alberto"
+STR_TRANSLATORS               = "Alberto, Ame"
 
 STR_LANG_NAME                 = "Italiano"
 STR_LANG_ID                   = "Italian"
 STR_LANG_GROUP                = 0x0001 // LGRPID_WESTERN_EUROPE
 STR_LANG_CODE                 = 0x10
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO              = ""
@@ -33,7 +33,7 @@ STR_UPDATES_H                 = "Seleziona l'origine degli aggiornamenti"
 STR_UPDATES_SDI               = "Seleziona Aggiornamenti SDI"
 STR_UPDATES_SDI_H             = "Selezionare gli aggiornamenti SDI standard"
 STR_UPDATES_DRIVERS           = "Seleziona Aggiornamenti Driver-Packs"
-STR_UPDATES_DRIVERS_H         = "Selezionare gli ultimi aggiornamenti dei driver"
+STR_UPDATES_DRIVERS_H         = "Selezionare gli ultimi aggiornamenti dei driver packs"
 STR_TOOLS                     = "Strumenti"
 STR_TOOLS_H                   = "Scorciatoie per gli strumenti di Windows"
 STR_OPENLOGS                  = "Apri logs"
@@ -54,7 +54,7 @@ STR_SHOW_MISSING_H            = "Visualizza i driver contenuti nei driver-packs 
 STR_SHOW_NEWER                = "Più recenti"
 STR_SHOW_NEWER_H              = "Visualizza i driver contenuti nei driver-packs che sono più recenti di quelli attualmente installati.\n\nVi consigliamo di installare questi driver."
 STR_SHOW_CURRENT              = "Correnti (Già installati)"
-STR_SHOW_CURRENT_H            = "Visualizza i driver contenuti nei driver-packs che corrispondono a quelli attualmente installati.\n\nVi consigliamo di NON installare questi driver a meno che quelli installati non siano danneggiati."
+STR_SHOW_CURRENT_H            = "Visualizza i driver contenuti nei driver-packs che corrispondono a quelli attualmente installati.\n\nVi consigliamo di NON installare questi driver a meno che quelli installati siano danneggiati."
 STR_SHOW_OLD                  = "Più vecchi"
 STR_SHOW_OLD_H                = "Visualizza i driver contenuti nei driver-packs che sono più vecchi rispetto a quelli attualmente installati.\n\nVi consigliamo di NON installare questi driver a meno che non ci siano problemi con i nuovi driver."
 STR_SHOW_BETTER               = "Miglior corrispondenza"
@@ -67,9 +67,9 @@ STR_SHOW_NOTFOUND_H           = "I driver non sono stati trovati nei driver-pack
 STR_SHOW_NF_MISSING           = "Non trovato"
 STR_SHOW_NF_MISSING_H         = "Visualizza i dispositivi che richiedono driver ma i cui driver non sono stati trovati nei driver-packs.\n\nPuoi cercare questi driver su internet o sul CD/DVD. Per copiare l'hardwareID puoi cliccare con il tasto destro del mouse sul dispositivo.\n\nNotificaci i driver mancanti, così possiamo aggiungerli ai driver pack."
 STR_SHOW_NF_UNKNOWN           = "Sconosciuto"
-STR_SHOW_NF_UNKNOWN_H         = "Visualizza i driver standard che sono installati nel sistema ma che non sono stati trovati nei driver pack.\n\nNotificaci che hai dei driver che possono essere aggiunti ai driver packs."
+STR_SHOW_NF_UNKNOWN_H         = "Visualizza i driver sconosciuti che sono installati nel sistema ma che non sono stati trovati nei driver pack.\n\nNotificaci che hai dei driver che possono essere aggiunti ai driver packs."
 STR_SHOW_NF_STANDARD          = "Standard"
-STR_SHOW_NF_STANDARD_H        = "Visualizza i dispositivi sconosciuti installati nel sistema che non sono stati trovati nei driver-packs.\n\nQuesti driver solitamente sono già presenti in Windows e non necessitano di aggiornamenti."
+STR_SHOW_NF_STANDARD_H        = "Visualizza i dispositivi standard installati nel sistema che non sono stati trovati nei driver-packs.\n\nQuesti driver solitamente sono già presenti in Windows e non necessitano di aggiornamenti."
 
 STR_SHOW_DISPLAY              = "Mostra"
 STR_SHOW_DISPLAY_H            = "Filtri di visualizzazione"
@@ -78,7 +78,7 @@ STR_SHOW_ONE_H                = "Mostra solo i migliori driver per dispositivo.\
 STR_SHOW_DUP                  = "Mostra duplicati"
 STR_SHOW_DUP_H                = "Mostra i drivers duplicati.\n\nAlcuni drivers sono duplicati diverse volte, per motivi tecnici, all'interno dei driver packs."
 STR_SHOW_INVALID              = "Mostra non validi"
-STR_SHOW_INVALID_H            = "Mostra i driver che sono incompatibili con il sistema corrente.\n\nVi consigliamo di NON INSTALLARE questi driver perchè sono INCOMPATIBILI con questa versione di Windows."
+STR_SHOW_INVALID_H            = "Mostra i drivers che sono incompatibili con il sistema corrente.\n\nVi consigliamo di NON INSTALLARE questi driver perchè sono INCOMPATIBILI con questa versione di Windows."
 
 STR_OPTIONS                   = ""
 STR_OPTIONS_H                 = "Opzioni"
@@ -138,9 +138,9 @@ STR_HINT_HARDWAREID           = "HardwareID"
 STR_HINT_COMPID               = "CompatibleID"
 STR_HINT_INSTDRV              = "Driver installato"
 STR_HINT_AVAILDRV             = "Driver disponibile"
-STR_HINT_AVAILDRVS            = "Driver disponibili"
+STR_HINT_AVAILDRVS            = "Drivers disponibili"
 STR_HINT_MANUF                = "Produttore:"
-STR_HINT_PROVIDER             = "Provider:"
+STR_HINT_PROVIDER             = "Fornitore:"
 STR_HINT_DATE                 = "Data:"
 STR_HINT_VERSION              = "Versione:"
 STR_HINT_ID                   = "ID:"
@@ -180,7 +180,7 @@ STR_STATUS_DISABLED           = "Il dispositivo è disabilitato"
 STR_STATUS_DEVPROBLEM         = "Il dispositivo ha il seguente problema: %d"
 STR_STATUS_DRVPROBLEM         = "Il driver ha segnalato un problema con il dispositivo"
 STR_STATUS_RUNNING            = "Il driver è in uso"
-STR_STATUS_STOPPED            = "Il dispositivo è attulmente bloccato"
+STR_STATUS_STOPPED            = "Il dispositivo non è in uso"
 
 // Driver status
 STR_STATUS_INVALID            = "Driver incompatibile"
@@ -188,7 +188,7 @@ STR_STATUS_MISSING            = "Driver disponibile (driver non ancora installat
 STR_STATUS_NOTSIGNED          = "(Non Firmato)"
 
 STR_STATUS_BETTER_NEW         = "Driver più recente disponibile e anche migliore"
-STR_STATUS_SAME_NEW           = "Driver uguale disponibile"
+STR_STATUS_SAME_NEW           = "Driver aggiornato disponibile"
 STR_STATUS_WORSE_NEW          = "Driver più recente ma NON OTTIMALE"
 
 STR_STATUS_BETTER_CUR         = "Driver migliore disponibile"
@@ -218,7 +218,7 @@ STR_VIRUS_HIDDEN_H            = "La cartella principale contiene cartelle nascos
 STR_CLOSE_SNAPSHOT            = "(Clicca qui per fermare emulazione)"
 STR_EMPTYDRP                  = "Collegarsi alla rete Internet per scaricare i driver packs oppure mettere i drivers nella seguente cartella"
 STR_CLOSE_DRPEXT              = "(Clicca qui per ritornare alla cartella predefinita)"
-STR_NOUPDATES                 = "I driver sono aggiornati"
+STR_NOUPDATES                 = "I drivers sono aggiornati"
 STR_INITIALIZING              = "Inizializzazione..."
 
 // Progressbar
@@ -297,7 +297,7 @@ STR_UPD_YES                   = "Si"
 STR_UPD_NO                    = "No"
 STR_UPD_UNKNOWN               = "Sconosciuto"
 STR_UPD_MISSING               = "Mancante"
-STR_UPD_BYTES                 = "byte"
+STR_UPD_BYTES                 = "bytes"
 STR_UPD_KB                    = "KB"
 STR_UPD_MB                    = "MB"
 STR_UPD_GB                    = "GB"
@@ -421,13 +421,13 @@ STR_WELCOME_CLOSE             = "Salta per ora"
 STR_USBWIZ_TITLE              = "Creare un'unità USB"
 STR_USBWIZ_SPACEREQ           = "Spazio richiesto:"
 STR_USBWIZ_SPACEAVAIL         = "Spazio disponibile:"
-STR_USBWIZ_PAGE1_DESC         = "Questa procedura guidata ti aiuterà a creare un'unità USB portatile contenente Snappy Driver Installer e file selezionati.\n\nIl file verrà copiato nella directory principale del dispositivo selezionato. È necessario assicurarsi che il dispositivo disponga di capacità sufficiente per memorizzare i file richiesti. Ti verrà data l'opzione di cancellare prima il dispositivo."
+STR_USBWIZ_PAGE1_DESC         = "Questa procedura guidata ti aiuterà a creare un'unità USB portatile contenente Snappy Driver Installer e file selezionati.\n\nI fils verranno copiati nella directory principale del dispositivo selezionato. È necessario assicurarsi che il dispositivo disponga di capacità sufficiente per memorizzare i file richiesti. Ti verrà data l'opzione di cancellare prima il dispositivo."
 
 // USB Wizard - page 2
-STR_USBWIZ_PAGE2_TITLE        = "Target Drive"
+STR_USBWIZ_PAGE2_TITLE        = "Unità disco di destinazione"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Seleziona un'unità rimovibile."
 STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer sarà installato nella directory principale dell'unità rimovibile selezionata. Inserisci ora l'unità USB."
-STR_USBWIZ_PAGE2_DRIVE        = "Punta l'unità rimovibile:"
+STR_USBWIZ_PAGE2_DRIVE        = "Unità rimovibile di destinazione:"
 STR_USBWIZ_PAGE2_MORE         = "Mostra più unità"
 STR_USBWIZ_PAGE2_CLEAR        = "Cancellare l'unità selezionata"
 STR_USBWIZ_PAGE2_DELETE       = "Cancella file"
@@ -452,7 +452,7 @@ STR_USBWIZ_PAGE3_INDEXES      = "Includi indici online"
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Ambiente"
 STR_USBWIZ_PAGE4_SUBTITLE     = "Seleziona altri elementi da includere."
-STR_USBWIZ_PAGE4_LANGS        = "Linguaggi"
+STR_USBWIZ_PAGE4_LANGS        = "Lingue"
 STR_USBWIZ_PAGE4_ALLLANG      = "Includi tutte le lingue"
 STR_USBWIZ_PAGE4_CURLANG      = "Lingua corrente"
 STR_USBWIZ_PAGE4_THEMES       = "Temi"
