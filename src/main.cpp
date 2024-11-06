@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -13,11 +13,11 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "com_header.h"
-#include "common.h"
-#include "logging.h"
+#include "utils/BaseUtil.h"
+#include "SDI.h"
+#include "utils/Log.h"
 #include "system.h"     // non-portable
-#include "settings.h"
+#include "Settings.h"
 #include "cli.h"
 #include "indexing.h"
 #include "manager.h"
@@ -47,6 +47,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "script.h"
 
 #include "wizards.h"
+#include "utils/WinUtil.h"
 
 //{ Global variables
 Manager manager_v[2];
@@ -74,7 +75,7 @@ TORRENT_SELECTION_MODE TorrentSelectionMode=TSM_NONE;
 // http://www.winprog.org/tutorial/dlgfaq.html
 HBRUSH g_hbrDlgBackground = CreateSolidBrush(GetSysColor(COLOR_BTNFACE));
 
-// drag/drop in elevated processess
+// drag/drop in elevated processes
 // https://helgeklein.com/blog/2010/03/how-to-enable-drag-and-drop-for-an-elevated-mfc-application-on-vistawindows-7/
 typedef BOOL (WINAPI *PFN_CHANGEWINDOWMESSAGEFILTER)(UINT,DWORD);
 HMODULE hModuleUser32=GetModuleHandle(TEXT("user32.dll"));
@@ -147,7 +148,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		UNREFERENCED_PARAMETER(lpCmdLine);
 		ghInst=hInstance;
 
-		Timers.start(time_total);
+		//Timers.start(time_total);
 
 		// Determine number of CPU cores ("Logical Processors")
 		SYSTEM_INFO siSysInfo;
@@ -188,7 +189,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		// Load settings
 		init_CLIParam();
 		if(!Settings.load_cfg_switch(GetCommandLineW()))
-				Settings.load(L"sdi2.cfg");
+				Settings.load(L"SDI2.cfg");
 
 		Settings.parse(GetCommandLineW(),1);
 		RUN_CLI();
@@ -201,18 +202,28 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 				return ret_global;
 		}
 
-		// Bring back the console window
-		if(Settings.flags&FLAG_SHOWCONSOLE)
+        if (!IsDebuggerPresent()) {
+            // VSCode shows both debugger output and console out which doubles the logging
+            // TODO: only if AttachConsole() succeeds?
+            gLogToConsole = true;
+        }
+
+        // Bring back the console window
+		if(Settings.flags&FLAG_SHOWCONSOLE&&gLogToConsole)
 				Console->Show();
 		else
 				Console->Hide();
 
 		// Start logging
-		ExpandEnvironmentStrings(Settings.logO_dir,Settings.log_dir,BUFLEN);
-		Log.start(Settings.log_dir);
-		Settings.loginfo();
+    if (!(Settings.flags && FLAG_NOLOGFILE)) {
+        ExpandEnvironmentStrings(Settings.logO_dir, Settings.log_dir, BUFLEN);
+        if (Settings.log_dir) {
+            StartLogToFile(Settings.log_dir, true);
+            Settings.loginfo();
+        }
+    }
 		#ifndef NDEBUG
-		Log.print_con("Debug info present\n");
+		log("Debug info present\n");
 		//if(backtrace)Log.print_con("Backtrace is loaded\n");
 		#endif
 
@@ -289,8 +300,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 		// Stop logging
 		//time_total=System.GetTickCountWr()-time_total;
-		Timers.print();
-		Log.stop();
+		//Timers.print();
+        DestroyLogging();
 		delete Console;
 
 		// Exit
@@ -396,7 +407,7 @@ void MainWindow_t::MainLoop(int nCmd)
 		wcx.hbrBackground=  (HBRUSH)(COLOR_WINDOW+1);
 		if(!RegisterClassEx(&wcx))
 		{
-				Log.print_err("ERROR in gui(): failed to register '%S' class\n",wcx.lpszClassName);
+				logf("ERROR in gui(): failed to register '%S' class\n",wcx.lpszClassName);
 				return;
 		}
 
@@ -406,7 +417,7 @@ void MainWindow_t::MainLoop(int nCmd)
 		wcx.hIcon=nullptr;
 		if(!RegisterClassEx(&wcx))
 		{
-				Log.print_err("ERROR in gui(): failed to register '%S' class\n",wcx.lpszClassName);
+				logf("ERROR in gui(): failed to register '%S' class\n",wcx.lpszClassName);
 				System.UnregisterClass_log(classMain,L"gui",L"classMain");
 				return;
 		}
@@ -416,7 +427,7 @@ void MainWindow_t::MainLoop(int nCmd)
 		wcx.lpszClassName=classField;
 		if(!RegisterClassEx(&wcx))
 		{
-				Log.print_err("ERROR in gui(): failed to register '%S' class\n",wcx.lpszClassName);
+				logf("ERROR in gui(): failed to register '%S' class\n",wcx.lpszClassName);
 				System.UnregisterClass_log(classMain,L"gui",L"classMain");
 				System.UnregisterClass_log(classPopup,L"gui",L"classPopup");
 				return;
@@ -431,7 +442,7 @@ void MainWindow_t::MainLoop(int nCmd)
 												nullptr,nullptr,ghInst,nullptr);
 		if(!hMain)
 		{
-				Log.print_err("ERROR in gui(): failed to create '%S' window\n",classMain);
+				logf("ERROR in gui(): failed to create '%S' window\n",classMain);
 				return;
 		}
 
@@ -593,7 +604,7 @@ void MainWindow_t::lang_refresh()
 {
 		if(!hMain||!hField)
 		{
-				Log.print_err("ERROR in lang_refresh(): hMain is %d, hField is %d\n",hMain,hField);
+				logf("ERROR in lang_refresh(): hMain is %d, hField is %d\n",hMain,hField);
 				return;
 		}
 
@@ -627,7 +638,7 @@ void MainWindow_t::theme_refresh()
 
 		if(!hMain||!hField)
 		{
-				Log.print_err("ERROR in theme_refresh(): hMain is %d, hField is %d\n",hMain,hField);
+				logf("ERROR in theme_refresh(): hMain is %d, hField is %d\n",hMain,hField);
 				return;
 		}
 
@@ -757,13 +768,13 @@ static BOOL CALLBACK DialogProc1(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 								TCITEM tci;
 								tci.mask = TCIF_TEXT;
 								tci.pszText = const_cast<wchar_t *>(STR(STR_OPTION_VIEW_TAB));
-								if(TabCtrl_InsertItem(data.tab, 0, &tci)==-1)Log.print_err("ERROR in winMain(): failed to insert page in tab control.\n");
+								if(TabCtrl_InsertItem(data.tab, 0, &tci)==-1)log("ERROR in winMain(): failed to insert page in tab control.\n");
 								tci.pszText = const_cast<wchar_t *>(STR(STR_OPTION_UPDATES_TAB));
-								if(TabCtrl_InsertItem(data.tab, 1, &tci)==-1)Log.print_err("ERROR in winMain(): failed to insert page in tab control.\n");
+								if(TabCtrl_InsertItem(data.tab, 1, &tci)==-1)log("ERROR in winMain(): failed to insert page in tab control.\n");
 								tci.pszText = const_cast<wchar_t *>(STR(STR_OPTION_PATH_TAB));
-								if(TabCtrl_InsertItem(data.tab, 2, &tci)==-1)Log.print_err("ERROR in winMain(): failed to insert page in tab control.\n");
+								if(TabCtrl_InsertItem(data.tab, 2, &tci)==-1)log("ERROR in winMain(): failed to insert page in tab control.\n");
 								tci.pszText = const_cast<wchar_t *>(STR(STR_OPTION_ADVANCED_TAB));
-								if(TabCtrl_InsertItem(data.tab, 3, &tci)==-1)Log.print_err("ERROR in winMain(): failed to insert page in tab control.\n");
+								if(TabCtrl_InsertItem(data.tab, 3, &tci)==-1)log("ERROR in winMain(): failed to insert page in tab control.\n");
 
 								RECT rc;
 								GetWindowRect(data.tab,&rc);
@@ -840,7 +851,7 @@ static BOOL CALLBACK DialogProc1(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 								SetFocus(GetDlgItem(data.pages[0],r));
 
 								SendMessage(GetDlgItem(data.pages[0],IDD_P1_ZOOMI),TBM_SETRANGE,1,MAKELONG(-350,-150));
-//                SendMessage(GetDlgItem(data.pages[0],IDD_P1_ZOOMI),TBM_SETRANGE,1,MAKELONG(150,350));
+                                //                SendMessage(GetDlgItem(data.pages[0],IDD_P1_ZOOMI),TBM_SETRANGE,1,MAKELONG(150,350));
 								SendMessage(GetDlgItem(data.pages[0],IDD_P1_ZOOMI),TBM_SETPOS,1,-Settings.scale);
 								str.sprintf(L"%d",Settings.hintdelay);
 								SetWindowText(GetDlgItem(data.pages[0],IDD_P1_HINTE),str.Get());
@@ -898,7 +909,7 @@ static BOOL CALLBACK DialogProc1(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 						break;
 
 				case WM_HSCROLL:
-						Log.print_con("asd");
+						log("asd");
 						break;
 
 				case WM_COMMAND:
@@ -997,19 +1008,19 @@ INT_PTR CALLBACK AboutDlgProc(HWND hwnd, UINT umsg, WPARAM wParam, LPARAM lParam
             VERSION_BUILD_TOOL_MAJOR, VERSION_BUILD_TOOL_MINOR, VERSION_BUILD_TOOL_PATCH);
 #endif
         SetDlgItemText(hwnd, IDC_VERSION, _W(_STRG(VERSION_FILEVERSION_LONG)));
-		SetDlgItemText(hwnd, IDC_BUILD_INFO, wch);
-		SetDlgItemText(hwnd, IDC_COPYRIGHT, _W(VERSION_LEGALCOPYRIGHT));
+				SetDlgItemText(hwnd, IDC_BUILD_INFO, wch);
+				SetDlgItemText(hwnd, IDC_COPYRIGHT, _W(VERSION_LEGALCOPYRIGHT));
         SetDlgItemText(hwnd, IDC_WEBLINK, _W(VERSION_WEBPAGEDISPLAY));
         SetDlgItemText(hwnd, IDC_SUPPORTLINK, STR(STR_BOOSTY1));
-        SetDlgItemText(hwnd, IDC_WEBP_VERSION, VERSION_WEBP);
-	    SetDlgItemText(hwnd, IDC_TORR_VERSION, VERSION_LIBTORRENT);
-	    SetDlgItemText(hwnd, IDC_7ZIP_VERSION, VERSION_7ZIP);
+				SetDlgItemText(hwnd, IDC_WEBP_VERSION, VERSION_WEBP);
+				SetDlgItemText(hwnd, IDC_TORR_VERSION, VERSION_LIBTORRENT);
+				SetDlgItemText(hwnd, IDC_7ZIP_VERSION, VERSION_7ZIP);
 
 		//CenterDlgInParent(hwnd);
 		}
 		return TRUE;
 
-    case WM_SETCURSOR: 
+    case WM_SETCURSOR:
 				// 2 hyperlinks
 				if ((LOWORD(lParam)==HTCLIENT) &&
 						((GetDlgCtrlID((HWND)wParam) == IDC_WEBLINK)||
@@ -1101,7 +1112,7 @@ void MainWindow_t::snapshot()
 void MainWindow_t::extractto()
 {
 		wchar_t dir[BUFLEN];
-		std::wstring path=System.AppPathW();
+		std::wstring path= GetSelfExePathWTemp();
 		wcscpy(dir,path.c_str());
 
 		if(System.ChooseDir(dir,STR(STR_EXTRACTFOLDER)))
@@ -1111,7 +1122,7 @@ void MainWindow_t::extractto()
 				WStringShort buf;
 				buf.sprintf(L"%s\\drv.exe",dir);
 				if(!CopyFile(argv[0],buf.Get(),0))
-						Log.print_err("ERROR in extractto(): failed CopyFile(%S,%S)\n",argv[0],buf.Get());
+						logf("ERROR in extractto(): failed CopyFile(%S,%S)\n",argv[0],buf.Get());
 				LocalFree(argv);
 
 				wcscat(dir,L"\\drivers");
@@ -1140,7 +1151,7 @@ void MainWindow_t::setscrollrange(int y)
 {
 		if(!hField)
 		{
-				Log.print_err("ERROR in setscrollrange(): hField is 0\n");
+				log("ERROR in setscrollrange(): hField is 0\n");
 				return;
 		}
 
@@ -1161,7 +1172,7 @@ int MainWindow_t::getscrollpos()
 {
 		if(!hField)
 		{
-				Log.print_err("ERROR in getscrollpos(): hField is 0\n");
+				log("ERROR in getscrollpos(): hField is 0\n");
 				return 0;
 		}
 
@@ -1177,7 +1188,7 @@ void MainWindow_t::setscrollpos(int pos)
 {
 		if(!hField)
 		{
-				Log.print_err("ERROR in setscrollpos(): hField is 0\n");
+				log("ERROR in setscrollpos(): hField is 0\n");
 				return;
 		}
 
@@ -1268,8 +1279,8 @@ void setMirroringEdit(HWND hwnd)
 
 void checktimer(const wchar_t *str,long long t,int uMsg)
 {
-		if(System.GetTickCountWr()-t>20&&Log.isAllowed(LOG_VERBOSE_LAGCOUNTER))
-				Log.print_con("GUI lag in %S[%X]: %ld\n",str,uMsg,System.GetTickCountWr()-t);
+		if(System.GetTickCountWr()-t>20&& !gReducedLogging)
+				logf("GUI lag in %S[%X]: %ld\n",str,uMsg,System.GetTickCountWr()-t);
 }
 
 void MainWindow_t::redrawfield()
@@ -1277,7 +1288,7 @@ void MainWindow_t::redrawfield()
 		if(Settings.flags&FLAG_NOGUI)return;
 		if(!hField)
 		{
-				Log.print_err("ERROR in redrawfield(): hField is 0\n");
+				log("ERROR in redrawfield(): hField is 0\n");
 				return;
 		}
 		InvalidateRect(hField,nullptr,0);
@@ -1288,7 +1299,7 @@ void MainWindow_t::redrawmainwnd()
 		if(Settings.flags&FLAG_NOGUI)return;
 		if(!hMain)
 		{
-				Log.print_err("ERROR in redrawmainwnd(): hMain is 0\n");
+				log("ERROR in redrawmainwnd(): hMain is 0\n");
 				return;
 		}
 		InvalidateRect(hMain,nullptr,0);
@@ -1324,7 +1335,7 @@ void MainWindow_t::DownloadedTorrent(int TorrentResults)
 		UpdateTorrentItems(Updater->activetorrent);
 
 	// get driver count, index count, command line count
-		wchar_t spec1[BUFLEN];
+		wchar_t spec1[MAX_PATH+1];
 		wchar_t spec2[BUFLEN];
 		wcscpy(spec1,Settings.drp_dir);wcscat(spec1,L"\\*.*");
 		wcscpy(spec2,Settings.index_dir);wcscat(spec2,L"\\*.*");
@@ -1332,14 +1343,14 @@ void MainWindow_t::DownloadedTorrent(int TorrentResults)
 		CommandLineToArgvW(GetCommandLineW(),&argc);
 
 		// torrent results
-		int NewVersion=TorrentResults>>8;
-		int LatestExeVersion=System.FindLatestExeVersion();
+		//int NewVersion=TorrentResults>>8;
+		//int LatestExeVersion=System.FindLatestExeVersion();
 		int DriverPacksAvailable=TorrentResults&0xFF;
 
 		if(TorrentSelectionMode==TSM_AUTO)
 	{
 				// just finished downloading the first torrent after startup
-				// if there are no drivers and no indexes
+				// if there are no drivers and no indices
 				// and no command line then show the welcome screen
 				if(!System.FileExists2(spec1)&&!System.FileExists2(spec2)&&(argc<2))
 				{
@@ -1347,7 +1358,9 @@ void MainWindow_t::DownloadedTorrent(int TorrentResults)
 						DialogBox(ghInst,MAKEINTRESOURCE(IDD_WELCOME), MainWindow.hMain,(DLGPROC)WelcomeProcedure);
 				}
 				// otherwise if there are updates of the current torrent then stop switching
-				else if((NewVersion>LatestExeVersion)||(DriverPacksAvailable>0))
+				// ToDo UpdateCheck.cpp
+				//else if((NewVersion>LatestExeVersion)||(DriverPacksAvailable>0))
+				else if (DriverPacksAvailable > 0)
 						TorrentSelectionMode=TSM_NONE;
 				// no updates on this torrent so try the next one then stop
 				else if(Updater->activetorrent==1)
@@ -1626,7 +1639,7 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 
 				case WM_UPDATETHEME:
 						hTheme->Clear();
-						vTheme->EnumFiles(hTheme,L"themes");
+						vTheme->EnumFiles(hTheme,L"Themes");
 						f=hTheme->FindItem(Settings.curtheme);
 						if(f==CB_ERR)f=vTheme->AutoPick();
 			vTheme->SwitchData((int)f);
@@ -1666,9 +1679,9 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 						{
 								Bundle *bb=reinterpret_cast<Bundle *>(wParam);
 								Manager *manager_prev=manager_g;
-								Log.print_con("{Sync");
+								log("{Sync");
 								if(CRITICAL_SECTION_ACTIVE)EnterCriticalSection(&sync);
-								Log.print_con("...\n");
+								log("...\n");
 								manager_active++;
 								manager_active&=1;
 								manager_g=&manager_v[manager_active];
@@ -1815,7 +1828,7 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 								Settings.savedscale=Settings.scale;
 								PostMessage(hwnd,WM_UPDATETHEME,0,0);
 						}
-						if(ctrl_down&&wParam==L'Z'){Log.print_con("\n*************\n");}
+						if(ctrl_down&&wParam==L'Z'){log("\n*************\n");}
 						if(ctrl_down&&wParam==L'A'){SelectAllCommand c;c.LeftClick();}
 						if(ctrl_down&&wParam==L'N'){SelectNoneCommand c;c.LeftClick();}
 						if(ctrl_down&&wParam==L'I'){InstallCommand c;c.LeftClick();}
@@ -1883,7 +1896,7 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 
 				case WM_DEVICECHANGE:
 						if(installmode==MODE_INSTALLING)break;
-						Log.print_con("WM_DEVICECHANGE(%x,%x)\n",wParam,lParam);
+						logf("WM_DEVICECHANGE(%x,%x)\n",wParam,lParam);
 						invalidate(INVALIDATE_DEVICES);
 						break;
 
@@ -2698,9 +2711,9 @@ BOOL CALLBACK WelcomeProcedure(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		switch (msg)
 		{
 		case WM_INITDIALOG:
-            WCHAR wch[128];
+            WCHAR wch[1024];
 #if defined(VERSION_BUILD_TOOL_BUILD)
-            wsprintf(wch, VERSION_BUILD_INFO_FORMAT, VERSION_BUILD_TOOL_NAME,
+						wsprintf(wch, L"Compiled on " "Oct 19 2024" L" with %s %d.%02d.%05d.%d" L"WebP " L"v1.3.2" L", " L"LibTorrent " L"v2.0.11" L", " L"7zip " L"v23.01", VERSION_BUILD_TOOL_NAME,
                 VERSION_BUILD_TOOL_MAJOR, VERSION_BUILD_TOOL_MINOR, VERSION_BUILD_TOOL_PATCH, VERSION_BUILD_TOOL_BUILD);
 #else
             wsprintf(wch, VERSION_BUILD_INFO_FORMAT, VERSION_BUILD_TOOL_NAME,
@@ -2760,7 +2773,7 @@ BOOL CALLBACK WelcomeProcedure(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 								Updater->DownloadNetwork();
 								return TRUE;
 						case IDD_WELC_BUTTON3:
-								// download indexes only
+								// download indices only
 								EndDialog(hwnd,wParam);
 								Settings.flags&=~FLAG_AUTOUPDATE;
 								Updater->DownloadIndexes();
