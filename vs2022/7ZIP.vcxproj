@@ -19,112 +19,84 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
+    <ProjectName>7z</ProjectName>
     <ProjectGuid>{9FE9A4F2-4E31-41EF-8189-167465A02FFD}</ProjectGuid>
-    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>7zip</RootNamespace>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <OutDir>..\lib\$(Configuration)_$(Platform)\</OutDir>
+    <IntDir>..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <IntDir>..\obj\Debug_$(Platform)\$(ProjectName)\</IntDir>
-    <OutDir>..\lib\Debug_$(Platform)\</OutDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <IntDir>..\obj\Debug_$(Platform)\$(ProjectName)\</IntDir>
-    <OutDir>..\lib\Debug_$(Platform)\</OutDir>
-    <TargetName>7zip</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <IntDir>..\obj\Release_$(Platform)\$(ProjectName)\</IntDir>
-    <OutDir>..\lib\Release_$(Platform)\</OutDir>
-    <TargetName>7zip</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <IntDir>..\obj\Release_$(Platform)\$(ProjectName)\</IntDir>
-    <OutDir>..\lib\Release_$(Platform)\</OutDir>
-    <TargetName>7zip</TargetName>
+  <PropertyGroup>
+    <LinkIncremental Condition="$(Configuration.EndsWith('Debug'))">true</LinkIncremental>
+    <LinkIncremental Condition="$(Configuration.EndsWith('Release'))">false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <FunctionLevelLinking>false</FunctionLevelLinking>
-      <Optimization>Disabled</Optimization>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <WarningLevel>Level4</WarningLevel>
-      <DisableSpecificWarnings>4127;4189;4324;4458;4522;4611;4702;4800;6319;4100;4244;4267;4456;4457;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <ObjectFileName>$(IntDir)</ObjectFileName>
-      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;EXTRACT_ONLY;_NO_CRYPTO;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <CallingConvention>FastCall</CallingConvention>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
-      <WarningVersion>18</WarningVersion>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <PreprocessorDefinitions>WIN32;DEBUG;Z7_NO_CRYPTO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions> /ignore:4033</AdditionalOptions>
-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <Optimization>MaxSpeed</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;Z7_EXTRACT_ONLY;Z7_NO_CRYPTO;Z7_LZMA_PROB32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <WarningVersion>18</WarningVersion>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <OmitFramePointers>true</OmitFramePointers>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
+    <MASM>
+      <UseSafeExceptionHandlers>true</UseSafeExceptionHandlers>
+    </MASM>
+    <MASM />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -132,65 +104,22 @@
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level4</WarningLevel>
-      <TreatWarningAsError>true</TreatWarningAsError>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <PreprocessorDefinitions>_DEBUG;WIN32;_WIN32;EXTRACT_ONLY;_NO_CRYPTO;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>WIN32;DEBUG;Z7_NO_CRYPTO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CallingConvention>FastCall</CallingConvention>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4127;4189;4324;4458;4522;4611;4702;4800;6319;4100;4244;4267;4456;4457;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WarningVersion>18</WarningVersion>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <GenerateMapFile>true</GenerateMapFile>
     </Link>
     <Lib>
       <TargetMachine>MachineX64</TargetMachine>
-    </Lib>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <Optimization>MaxSpeed</Optimization>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <CallingConvention>FastCall</CallingConvention>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level4</WarningLevel>
-      <DisableSpecificWarnings>4127;4189;4324;4458;4522;4611;4702;4800;6319;4100;4244;4267;4456;4457;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
-      <TreatWarningAsError>true</TreatWarningAsError>
-      <PreprocessorDefinitions>WIN32;_WIN32;WINVER=0x0605;_WIN32_WINNT=0x0603;_HAS_ITERATOR_DEBUGGING=0;NDEBUG;_CONSOLE;EXTRACT_ONLY;_NO_CRYPTO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
-      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
-      <WarningVersion>18</WarningVersion>
-      <DebugInformationFormat>None</DebugInformationFormat>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <OmitFramePointers>true</OmitFramePointers>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateMapFile>true</GenerateMapFile>
-    </Link>
-    <Lib>
-      <TargetMachine>MachineX86</TargetMachine>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -201,466 +130,309 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <Optimization>MaxSpeed</Optimization>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <WarningLevel>Level4</WarningLevel>
-      <TreatWarningAsError>true</TreatWarningAsError>
-      <PreprocessorDefinitions>NDEBUG;WIN32;_WIN32;_CONSOLE;EXTRACT_ONLY;_NO_CRYPTO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;Z7_EXTRACT_ONLY;Z7_NO_CRYPTO;Z7_LZMA_PROB32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerOutput>NoListing</AssemblerOutput>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CallingConvention>FastCall</CallingConvention>
       <WarningVersion>18</WarningVersion>
-      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>None</DebugInformationFormat>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Lib>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\ext\SevenZ\C\7zAlloc.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader />
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\7zArcIn.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader />
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\7zBuf.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader />
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\7zCrc.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\7zDec.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader />
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\7zFile.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader />
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\7zStream.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\Alloc.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\Bcj2.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\Bra86.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\CpuArch.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\Delta.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\LzFind.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader />
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\LzFindMt.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader />
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\LzFindOpt.c">
-      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\Lzma2Dec.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\Lzma2DecMt.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\Lzma2Enc.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\Lzma86Dec.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader />
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\Lzma86Enc.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader />
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\LzmaDec.c">
-      <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">_LZMA_DEC_OPT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\LzmaEnc.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\MtCoder.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release'">MaxSpeed</Optimization>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\MtDec.c">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\Sort.c">
-      <PrecompiledHeader />
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\C\Threads.c" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Console\List.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Common\DynLimBuf.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Common\CommandLineParser.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Common\CRC.cpp" />
-    <!-- <ClCompile Include="..\ext\SevenZ\CPP\Common\CrcReg.cpp" /> -->
-    <ClCompile Include="..\ext\SevenZ\CPP\Common\IntToString.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Common\ListFileUtils.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Common\MyString.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Common\MyVector.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Common\NewHandler.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Common\StdInStream.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Common\StdOutStream.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Common\StringConvert.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Common\StringToInt.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Common\UTFConvert.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Common\Wildcard.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\DLL.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\ErrorMsg.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\FileDir.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\FileFind.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\FileIO.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\FileLink.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\FileName.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\FileSystem.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\MemoryLock.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\PropVariant.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\PropVariantConv.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\SecurityUtils.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\Synchronization.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\System.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\Windows\TimeUtils.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zCompressionMode.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zDecode.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zEncode.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zExtract.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zFolderInStream.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zHandler.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zHeader.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zIn.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zOut.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zProperties.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zRegister.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zSpecStream.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zUpdate.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\Common\CoderMixer2.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\Common\DummyOutStream.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\Common\HandlerOut.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\Common\InStreamWithCRC.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\Common\ItemNameUtils.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\Common\MultiStream.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\Common\OutStreamWithCRC.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\Common\ParseProperties.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Archive\LzmaHandler.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\CreateCoder.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\CWrappers.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\FilePathAutoRename.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\FileStreams.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\FilterCoder.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\InBuffer.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\InOutTempBuffer.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\LimitedStreams.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\LockedStream.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\MethodId.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\MethodProps.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\OffsetStream.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\OutBuffer.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\ProgressMt.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\ProgressUtils.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\PropId.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\StreamBinder.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\StreamObjects.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\StreamUtils.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\UniqBlocks.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Common\VirtThread.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Compress\Bcj2Coder.cpp">
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\Common\CoderMixer2.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\Common\DummyOutStream.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\Common\HandlerOut.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\Common\ItemNameUtils.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\Common\OutStreamWithCRC.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\CreateCoder.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\CWrappers.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\FilePathAutoRename.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\FileStreams.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\FilterCoder.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\InOutTempBuffer.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\LimitedStreams.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\MethodProps.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\OutBuffer.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\ProgressUtils.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\StreamBinder.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\StreamObjects.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\StreamUtils.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\UniqBlocks.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Common\VirtThread.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Compress\CopyCoder.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\ArchiveExtractCallback.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\ArchiveOpenCallback.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\DefaultName.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\EnumDirItems.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\Extract.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\ExtractingFilePath.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\LoadCodecs.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\OpenArchive.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\PropIDUtils.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\SetProperties.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\SortUtils.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\Update.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\UpdateAction.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\UpdateCallback.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\UpdatePair.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Common\UpdateProduce.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Console\ConsoleClose.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Console\ExtractCallbackConsole.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Console\List.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Console\OpenCallbackConsole.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\UI\Console\PercentPrinter.h" />
+    <ClInclude Include="..\ext\7z\CPP\Common\CommandLineParser.h" />
+    <ClInclude Include="..\ext\7z\CPP\Common\DynLimBuf.h" />
+    <ClInclude Include="..\ext\7z\CPP\Common\IntToString.h" />
+    <ClInclude Include="..\ext\7z\CPP\Common\ListFileUtils.h" />
+    <ClInclude Include="..\ext\7z\CPP\Common\MyString.h" />
+    <ClInclude Include="..\ext\7z\CPP\Common\StdInStream.h" />
+    <ClInclude Include="..\ext\7z\CPP\Common\StdOutStream.h" />
+    <ClInclude Include="..\ext\7z\CPP\Common\StringConvert.h" />
+    <ClInclude Include="..\ext\7z\CPP\Common\StringToInt.h" />
+    <ClInclude Include="..\ext\7z\CPP\Common\UTFConvert.h" />
+    <ClInclude Include="..\ext\7z\CPP\Common\Wildcard.h" />
+    <ClInclude Include="..\ext\7z\CPP\Windows\ErrorMsg.h" />
+    <ClInclude Include="..\ext\7z\CPP\Windows\FileDir.h" />
+    <ClInclude Include="..\ext\7z\CPP\Windows\FileFind.h" />
+    <ClInclude Include="..\ext\7z\CPP\Windows\FileIO.h" />
+    <ClInclude Include="..\ext\7z\CPP\Windows\FileName.h" />
+    <ClInclude Include="..\ext\7z\CPP\Windows\MemoryLock.h" />
+    <ClInclude Include="..\ext\7z\CPP\Windows\PropVariant.h" />
+    <ClInclude Include="..\ext\7z\CPP\Windows\PropVariantConv.h" />
+    <ClInclude Include="..\ext\7z\CPP\Windows\Synchronization.h" />
+    <ClInclude Include="..\ext\7z\CPP\Windows\System.h" />
+    <ClInclude Include="..\ext\7z\CPP\Windows\SystemInfo.h" />
+    <ClInclude Include="..\ext\7z\CPP\Windows\TimeUtils.h" />
+    <ClInclude Include="..\ext\7z\C\7z.h" />
+    <ClInclude Include="..\ext\7z\C\7zBuf.h" />
+    <ClInclude Include="..\ext\7z\C\7zCrc.h" />
+    <ClInclude Include="..\ext\7z\C\7zFile.h" />
+    <ClInclude Include="..\ext\7z\C\7zTypes.h" />
+    <ClInclude Include="..\ext\7z\C\7zVersion.h" />
+    <ClInclude Include="..\ext\7z\C\Alloc.h" />
+    <ClInclude Include="..\ext\7z\C\Bcj2.h" />
+    <!-- <ClInclude Include="..\ext\7z\C\Bcj2Coder.h" /> -->
+    <ClInclude Include="..\ext\7z\C\CpuArch.h" />
+    <ClInclude Include="..\ext\7z\C\DllSecur.h" />
+    <ClInclude Include="..\ext\7z\C\LzFind.h" />
+    <ClInclude Include="..\ext\7z\C\LzFindMt.h" />
+    <ClInclude Include="..\ext\7z\C\Lzma2Dec.h" />
+    <ClInclude Include="..\ext\7z\C\Lzma2DecMt.h" />
+    <ClInclude Include="..\ext\7z\C\Lzma2Enc.h" />
+    <ClInclude Include="..\ext\7z\C\Lzma86.h" />
+    <ClInclude Include="..\ext\7z\C\LzmaDec.h" />
+    <ClInclude Include="..\ext\7z\C\LzmaEnc.h" />
+    <ClInclude Include="..\ext\7z\C\MtCoder.h" />
+    <ClInclude Include="..\ext\7z\C\MtDec.h" />
+    <ClInclude Include="..\ext\7z\C\Threads.h" />
+    <ClInclude Include="..\ext\7z\framework.h" />
+    <ClInclude Include="..\ext\7z\stdafx.h" />
+    <ClCompile Include="..\..\7z2408-src\C\Lzma86Enc.c" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\7z\7zHandlerOut.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\7z\7zUpdate.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\Common\OutStreamWithCRC.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\MultiOutStream.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Compress\Lzma2Encoder.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\ArchiveCommandLine.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\Bench.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\EnumDirItems.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\HashCalc.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\SetProperties.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\TempFiles.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\Update.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\UpdateAction.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\UpdateCallback.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\UpdatePair.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\UpdateProduce.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Console\HashCon.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Console\List.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Console\UpdateCallbackConsole.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Console\UserInputUtils.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Common\CRC.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Common\DynLimBuf.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Common\CommandLineParser.cpp" />
+    <!-- <ClCompile Include="..\ext\7z\CPP\Common\CrcReg.cpp" /> -->
+    <ClCompile Include="..\ext\7z\CPP\Common\IntToString.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Common\ListFileUtils.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Common\MyString.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Common\StdInStream.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Common\StdOutStream.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Common\StringConvert.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Common\StringToInt.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Common\UTFConvert.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Common\Wildcard.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Windows\DLL.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Windows\ErrorMsg.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Windows\FileDir.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Windows\FileFind.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Windows\FileIO.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Windows\FileLink.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Windows\FileName.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Windows\MemoryLock.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Windows\PropVariant.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Windows\PropVariantConv.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Windows\Registry.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Windows\System.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Windows\SystemInfo.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\Windows\TimeUtils.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\7z\7zCompressionMode.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\7z\7zDecode.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\7z\7zEncode.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\7z\7zExtract.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\7z\7zFolderInStream.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\7z\7zHandler.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\7z\7zHeader.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\7z\7zIn.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\7z\7zOut.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\7z\7zProperties.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\7z\7zRegister.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\7z\7zSpecStream.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\Common\CoderMixer2.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\Common\DummyOutStream.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\Common\HandlerOut.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\Common\InStreamWithCRC.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\Common\ItemNameUtils.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\Common\MultiStream.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Archive\LzmaHandler.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\CreateCoder.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\CWrappers.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\FilePathAutoRename.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\FileStreams.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\FilterCoder.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\InBuffer.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\InOutTempBuffer.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\LimitedStreams.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\LockedStream.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\MethodId.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\MethodProps.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\OffsetStream.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\OutBuffer.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\ProgressMt.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\ProgressUtils.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\PropId.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\StreamBinder.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\StreamObjects.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\StreamUtils.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\UniqBlocks.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Common\VirtThread.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Compress\Bcj2Coder.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Compress\Bcj2Register.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Compress\BcjCoder.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Compress\BcjRegister.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Compress\CopyCoder.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Compress\CopyRegister.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Compress\DeltaFilter.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Compress\Lzma2Decoder.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Compress\Lzma2Register.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Compress\LzmaDecoder.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Compress\LzmaRegister.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Common\ArchiveCommandLine.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Common\ArchiveExtractCallback.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Common\ArchiveOpenCallback.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Common\DefaultName.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Common\EnumDirItems.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Common\Extract.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Common\ExtractingFilePath.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Common\HashCalc.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Common\LoadCodecs.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Common\OpenArchive.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Common\PropIDUtils.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Common\SetProperties.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Common\SortUtils.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Common\TempFiles.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Console\ConsoleClose.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Console\ExtractCallbackConsole.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Console\HashCon.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Console\Main.cpp">
+    <ClCompile Include="..\ext\7z\CPP\7zip\Compress\Bcj2Register.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Compress\BranchMisc.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Compress\BranchRegister.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Compress\CopyCoder.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Compress\DeltaFilter.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Compress\Lzma2Decoder.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Compress\Lzma2Register.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Compress\LzmaDecoder.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Compress\LzmaEncoder.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\Compress\LzmaRegister.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\ArchiveExtractCallback.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\ArchiveOpenCallback.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\DefaultName.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\Extract.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\ExtractingFilePath.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\LoadCodecs.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\OpenArchive.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\PropIDUtils.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Common\SortUtils.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Console\ConsoleClose.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Console\ExtractCallbackConsole.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Console\Main.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PROG_VARIANT_R;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PROG_VARIANT_R;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Console\MainAr.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Console\OpenCallbackConsole.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Console\PercentPrinter.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Console\UpdateCallbackConsole.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\UI\Console\UserInputUtils.cpp" />
-    <ClCompile Include="..\ext\SevenZ\CPP\7zip\Bundles\Alone7z\StdAfx.cpp">
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Console\MainAr.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Console\OpenCallbackConsole.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Console\PercentPrinter.cpp" />
+    <ClCompile Include="..\ext\7z\CPP\7zip\UI\Console\StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StdAfx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StdAfx.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StdAfx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StdAfx.h</PrecompiledHeaderFile>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <!-- <ClInclude Include="..\ext\SevenZ\C\7z.h" /> -->
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\DynLimBuf.h" />
-    <ClInclude Include="..\ext\SevenZ\C\7zAlloc.h" />
-    <ClInclude Include="..\ext\SevenZ\C\7zBuf.h" />
-    <ClInclude Include="..\ext\SevenZ\C\7zCrc.h" />
-    <ClInclude Include="..\ext\SevenZ\C\7zFile.h" />
-    <ClInclude Include="..\ext\SevenZ\C\7zTypes.h" />
-    <ClInclude Include="..\ext\SevenZ\C\7zVersion.h" />
-    <ClInclude Include="..\ext\SevenZ\C\Alloc.h" />
-    <ClInclude Include="..\ext\SevenZ\C\Bcj2.h" />
-    <!-- <ClInclude Include="..\ext\SevenZ\C\Bcj2Coder.h" /> -->
-    <ClInclude Include="..\ext\SevenZ\C\Bra.h" />
-    <ClInclude Include="..\ext\SevenZ\C\Compiler.h" />
-    <ClInclude Include="..\ext\SevenZ\C\CpuArch.h" />
-    <ClInclude Include="..\ext\SevenZ\C\Delta.h" />
-    <ClInclude Include="..\ext\SevenZ\C\LzFind.h" />
-    <ClInclude Include="..\ext\SevenZ\C\LzFindMt.h" />
-    <ClInclude Include="..\ext\SevenZ\C\LzHash.h" />
-    <ClInclude Include="..\ext\SevenZ\C\Lzma2Dec.h" />
-    <ClInclude Include="..\ext\SevenZ\C\Lzma2DecMt.h" />
-    <ClInclude Include="..\ext\SevenZ\C\Lzma2Enc.h" />
-    <ClInclude Include="..\ext\SevenZ\C\LzmaDec.h" />
-    <ClInclude Include="..\ext\SevenZ\C\LzmaEnc.h" />
-    <ClInclude Include="..\ext\SevenZ\C\MtCoder.h" />
-    <ClInclude Include="..\ext\SevenZ\C\MtDec.h" />
-    <!-- <ClInclude Include="..\ext\SevenZ\C\Precomp.h" /> -->
-    <ClInclude Include="..\ext\SevenZ\C\RotateDefs.h" />
-    <ClInclude Include="..\ext\SevenZ\C\Sha1.h" />
-    <ClInclude Include="..\ext\SevenZ\C\Sha256.h" />
-    <ClInclude Include="..\ext\SevenZ\C\Sort.h" />
-    <ClInclude Include="..\ext\SevenZ\C\Threads.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\AutoPtr.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\CommandLineParser.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\Common.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\ComTry.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\Defs.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\DynamicBuffer.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\IntToString.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\ListFileUtils.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\MyBuffer.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\MyCom.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\MyException.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\MyGuidDef.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\MyInitGuid.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\MyString.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\MyTypes.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\MyUnknown.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\MyVector.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\MyWindows.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\NewHandler.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\StdInStream.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\StdOutStream.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\StringConvert.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\StringToInt.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\UTFConvert.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Common\Wildcard.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\Defs.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\DLL.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\ErrorMsg.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\FileDir.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\FileFind.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\FileIO.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\FileMapping.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\FileName.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\FileSystem.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\Handle.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\MemoryLock.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\NtCheck.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\PropVariant.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\PropVariantConv.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\SecurityUtils.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\Synchronization.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\System.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\SystemInfo.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\Thread.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\Windows\TimeUtils.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zCompressionMode.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zDecode.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zEncode.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zFolderInStream.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zHandler.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zHeader.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zIn.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zItem.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zOut.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zProperties.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zSpecStream.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\7z\7zUpdate.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\Common\CoderMixer2.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\Common\DummyOutStream.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\Common\HandlerOut.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\Common\InStreamWithCRC.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\Common\ItemNameUtils.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\Common\MultiStream.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\Common\OutStreamWithCRC.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\Common\ParseProperties.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Archive\IArchive.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\CreateCoder.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\CWrappers.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\FilePathAutoRename.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\FileStreams.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\FilterCoder.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\InBuffer.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\InOutTempBuffer.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\LimitedStreams.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\LockedStream.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\MethodId.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\MethodProps.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\OffsetStream.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\OutBuffer.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\ProgressMt.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\ProgressUtils.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\RegisterArc.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\RegisterCodec.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\StreamBinder.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\StreamObjects.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\StreamUtils.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\UniqBlocks.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Common\VirtThread.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Compress\BcjCoder.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Compress\BranchMisc.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Compress\CopyCoder.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Compress\Lzma2Decoder.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Compress\Lzma2Encoder.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Compress\LzmaDecoder.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Compress\LzmaEncoder.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\ICoder.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\IDecl.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\IPassword.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\IProgress.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\IStream.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\MyVersion.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\PropID.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\ArchiveCommandLine.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\ArchiveExtractCallback.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\ArchiveOpenCallback.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\DefaultName.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\DirItem.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\EnumDirItems.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\ExitCode.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\Extract.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\ExtractingFilePath.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\ExtractMode.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\HashCalc.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\LoadCodecs.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\OpenArchive.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\PropIDUtils.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\SetProperties.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\SortUtils.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\TempFiles.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\Update.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\UpdateAction.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\UpdateCallback.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\UpdatePair.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Common\UpdateProduce.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Console\ConsoleClose.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Console\ExtractCallbackConsole.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Console\HashCon.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Console\List.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Console\OpenCallbackConsole.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Console\PercentPrinter.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Console\UpdateCallbackConsole.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\UI\Console\UserInputUtils.h" />
-    <ClInclude Include="..\ext\SevenZ\CPP\7zip\Bundles\Alone7z\StdAfx.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\7z\7zCompressionMode.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\7z\7zDecode.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\7z\7zEncode.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\7z\7zFolderInStream.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\7z\7zHandler.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\7z\7zHeader.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\7z\7zIn.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\7z\7zItem.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\7z\7zOut.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\7z\7zProperties.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\7z\7zSpecStream.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Archive\IArchive.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\Compress\BranchMisc.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\ICoder.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\IDecl.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\IPassword.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\IProgress.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\IStream.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\MyVersion.h" />
+    <ClInclude Include="..\ext\7z\CPP\7zip\PropID.h" />
+    <ClCompile Include="..\ext\7z\C\7zAlloc.c" />
+    <ClCompile Include="..\ext\7z\C\7zArcIn.c" />
+    <ClCompile Include="..\ext\7z\C\7zBuf.c" />
+    <ClCompile Include="..\ext\7z\C\7zCrc.c" />
+    <ClCompile Include="..\ext\7z\C\7zDec.c" />
+    <ClCompile Include="..\ext\7z\C\7zFile.c" />
+    <ClCompile Include="..\ext\7z\C\7zStream.c" />
+    <ClCompile Include="..\ext\7z\C\Alloc.c" />
+    <ClCompile Include="..\ext\7z\C\Bcj2.c" />
+    <ClCompile Include="..\ext\7z\C\Bcj2Enc.c" />
+    <ClCompile Include="..\ext\7z\C\Bra.c" />
+    <ClCompile Include="..\ext\7z\C\Bra86.c" />
+    <ClCompile Include="..\ext\7z\C\CpuArch.c" />
+    <ClCompile Include="..\ext\7z\C\Delta.c" />
+    <ClCompile Include="..\ext\7z\C\DllSecur.c" />
+    <ClCompile Include="..\ext\7z\C\LzFind.c" />
+    <ClCompile Include="..\ext\7z\C\LzFindMt.c" />
+    <ClCompile Include="..\ext\7z\C\LzFindOpt.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\ext\7z\C\Lzma2Dec.c" />
+    <ClCompile Include="..\ext\7z\C\Lzma2DecMt.c" />
+    <ClCompile Include="..\ext\7z\C\Lzma2Enc.c" />
+    <ClCompile Include="..\ext\7z\C\Lzma86Dec.c" />
+    <ClCompile Include="..\ext\7z\C\LzmaDec.c" />
+    <ClCompile Include="..\ext\7z\C\LzmaEnc.c" />
+    <ClCompile Include="..\ext\7z\C\MtCoder.c" />
+    <ClCompile Include="..\ext\7z\C\MtDec.c" />
+    <ClCompile Include="..\ext\7z\C\Threads.c" />
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="..\ext\SevenZ\Asm\x86\7zAsm.asm">
+    <MASM Include="..\ext\7z\Asm\x86\7zAsm.asm">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </MASM>
-    <MASM Include="..\ext\SevenZ\Asm\x86\7zCrcOpt.asm">
+    <MASM Include="..\ext\7z\Asm\x86\7zCrcOpt.asm">
+      <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">x64</PreprocessorDefinitions>
+      <ExcludedFromBuild Condition="'$(Platform)'=='ARM64'">true</ExcludedFromBuild>
     </MASM>
-    <MASM Include="..\ext\SevenZ\Asm\x86\LzFindOpt.asm">
+    <MASM Include="..\ext\7z\Asm\x86\LzFindOpt.asm">
       <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">x64</PreprocessorDefinitions>
       <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </MASM>
-    <MASM Include="..\ext\SevenZ\Asm\x86\LzmaDecOpt.asm">
+    <MASM Include="..\ext\7z\Asm\x86\LzmaDecOpt.asm">
       <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">x64</PreprocessorDefinitions>
       <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
     </MASM>
