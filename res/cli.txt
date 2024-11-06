@@ -4,7 +4,7 @@ Task-oriented
 -?		Display this help message.
 
 -7z               Run in 7z archiver mode.
-                  Example: SDI.exe -7z x DP_TV_Beholder_14020.7z
+                  Example: SDI.exe -7z x DP_zWindows11_24100.7z
 
 -install <hwid> <inffile>
                   Install driver with specified <hwid> from <inffile>.
@@ -43,7 +43,7 @@ Task-oriented
                   and drivers
 
 ------------
-sdi.cfg
+SDI2.cfg
 ------------
 -drp_dir:<dir>    Path to driverpacks.
 -index_dir:<dir>  Path to indexes.
@@ -65,9 +65,9 @@ sdi.cfg
 -showdrpnames1    Shows driverpack names on the right.
 -showdrpnames2    Shows driverpack names above.
 -oldstyle         Shows driver list using old style.
--preservecfg      Prevents updating of sdi.cfg.
--hidepatreon      Hides the Patreon button.
--cfg:<FileName>   Loads <file> instead of "sdi2.cfg".
+-preservecfg      Prevents updating of SDI2.cfg.
+-hideBOOSTY       Hides the BOOSTY button.
+-cfg:<FileName>   Loads <file> instead of "SDI2.cfg".
 
 -------
 Torrent
