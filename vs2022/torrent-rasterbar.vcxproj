@@ -66,30 +66,31 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /Zc:__cplusplus /utf-8 /bigobj</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /bigobj /utf-8 /Zc:__cplusplus</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild>
+      </MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode>
+      </SupportJustMyCode>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;TORRENT_USE_ASSERTS;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;BOOST_SYSTEM_USE_UTF8;_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_ABI_VERSION=100;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_USE_RTC=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0601;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;TORRENT_USE_ASSERTS;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;TORRENT_BUILDING_LIBRARY;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0A00;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <CallingConvention>FastCall</CallingConvention>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
-    <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;TORRENT_USE_ASSERTS;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;BOOST_SYSTEM_USE_UTF8;_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_ABI_VERSION=100;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_USE_RTC=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0601;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
@@ -105,28 +106,34 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /Zc:__cplusplus /utf-8 /bigobj</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /bigobj /utf-8 /Zc:__cplusplus</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
       <DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild>
+      </MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode>
+      </SupportJustMyCode>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;BOOST_SYSTEM_USE_UTF8;_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_ABI_VERSION=100;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_USE_RTC=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0601;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;TORRENT_BUILDING_LIBRARY;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0601;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
-      <CallingConvention>FastCall</CallingConvention>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;BOOST_SYSTEM_USE_UTF8;_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_ABI_VERSION=100;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_USE_RTC=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0601;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;TORRENT_BUILDING_LIBRARY;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0601;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
@@ -144,27 +151,33 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /Zc:__cplusplus /utf-8 /bigobj</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /bigobj /utf-8 /Zc:__cplusplus</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild>
+      </MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode>
+      </SupportJustMyCode>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;TORRENT_USE_ASSERTS;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;BOOST_SYSTEM_USE_UTF8;_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_ABI_VERSION=100;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_USE_RTC=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0600;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;TORRENT_USE_ASSERTS;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;TORRENT_BUILDING_LIBRARY;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0601;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <CallingConvention>FastCall</CallingConvention>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;TORRENT_USE_ASSERTS;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;BOOST_SYSTEM_USE_UTF8;_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_ABI_VERSION=100;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_USE_RTC=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;_WIN32_WINNT=0x0601;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;TORRENT_USE_ASSERTS;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;TORRENT_BUILDING_LIBRARY;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0601;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
@@ -182,27 +195,34 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /Zc:__cplusplus /utf-8 /bigobj</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /bigobj /utf-8 /Zc:__cplusplus</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
       <DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild>
+      </MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode>
+      </SupportJustMyCode>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;BOOST_SYSTEM_USE_UTF8;_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_ABI_VERSION=100;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_USE_RTC=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0601;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;TORRENT_BUILDING_LIBRARY;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0601;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <CallingConvention>FastCall</CallingConvention>
     </ClCompile>
     <Midl>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -216,33 +236,38 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /utf-8 /Zc:__cplusplus /bigobj</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "../ext/boost" /bigobj /utf-8 /Zc:__cplusplus</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
       <DisableSpecificWarnings>4251;4268;4275;4373;4503</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MinimalRebuild>
+      </MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>MinSpace</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode>
+      </SupportJustMyCode>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0600;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;TORRENT_BUILDING_LIBRARY;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0601;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <CallingConvention>FastCall</CallingConvention>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;TORRENT_BUILDING_LIBRARY;_FILE_OFFSET_BITS=64;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;_WIN32_WINNT=0x0600;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;TORRENT_BUILDING_LIBRARY;BOOST_EXCEPTION_DISABLE;BOOST_ASIO_HAS_STD_CHRONO;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_WIN32_WINNT=0x0601;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\ext\libtorrent\include;..\ext\libtorrent\deps\try_signal;..\ext\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -277,7 +302,7 @@
     <ClCompile Include="..\ext\libtorrent\src\disabled_disk_io.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\disk_buffer_holder.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\disk_buffer_pool.cpp" />
-    <ClCompile Include="..\ext\libtorrent\src\disk_completed_queue.cpp" />
+    <ClCompile Include="..\ext\libtorrent\src\disk_interface.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\disk_io_thread_pool.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\disk_job_fence.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\disk_job_pool.cpp" />
@@ -290,7 +315,7 @@
     <ClCompile Include="..\ext\libtorrent\src\file.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\file_progress.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\file_storage.cpp" />
-    <ClCompile Include="..\ext\libtorrent\src\file_pool_impl.cpp" />
+    <ClCompile Include="..\ext\libtorrent\src\file_view_pool.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\fingerprint.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\generate_peer_id.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\gzip.cpp" />
@@ -299,6 +324,7 @@
     <ClCompile Include="..\ext\libtorrent\src\hex.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\http_connection.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\http_parser.cpp" />
+    <ClCompile Include="..\ext\libtorrent\src\http_seed_connection.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\http_tracker_connection.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\i2p_stream.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\identify_client.cpp" />
@@ -315,7 +341,7 @@
     <ClCompile Include="..\ext\libtorrent\src\merkle_tree.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\mmap.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\mmap_disk_io.cpp" />
-    <ClCompile Include="..\ext\libtorrent\src\disk_job.cpp" />
+    <ClCompile Include="..\ext\libtorrent\src\mmap_disk_job.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\mmap_storage.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\natpmp.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\packet_buffer.cpp" />
@@ -332,8 +358,8 @@
     <ClCompile Include="..\ext\libtorrent\src\piece_picker.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\platform_util.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\posix_disk_io.cpp" />
-    <ClCompile Include="C:\Repos\SDI\ext\libtorrent\src\posix_part_file.cpp" />
-    <ClCompile Include="C:\Repos\SDI\ext\libtorrent\src\posix_storage.cpp" />
+    <ClCompile Include="..\ext\libtorrent\src\posix_part_file.cpp" />
+    <ClCompile Include="..\ext\libtorrent\src\posix_storage.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\proxy_base.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\proxy_settings.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\puff.cpp" />
@@ -371,7 +397,6 @@
     <ClCompile Include="..\ext\libtorrent\src\torrent_peer_allocator.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\torrent_status.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\tracker_manager.cpp" />
-    <ClCompile Include="..\ext\libtorrent\src\tracker_list.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\truncate.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\udp_socket.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\udp_tracker_connection.cpp" />
@@ -382,7 +407,6 @@
     <ClCompile Include="..\ext\libtorrent\src\version.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\web_connection_base.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\web_peer_connection.cpp" />
-    <ClCompile Include="..\ext\libtorrent\src\web_seed_entry.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\write_resume_data.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\xml_parse.cpp" />
     <ClCompile Include="..\ext\libtorrent\src\smart_ban.cpp" />
@@ -399,48 +423,84 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\bdecode.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\bencode.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\bitfield.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\bloom_filter.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\bt_peer_connection.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\choker.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\client_data.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\close_reason.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\config.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\copy_ptr.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\crc32c.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\create_torrent.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\deadline_timer.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\debug.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\disk_buffer_holder.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\disk_interface.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\disk_observer.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\download_priority.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\entry.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\enum_net.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\error.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\error_code.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\extensions.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\file.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\file_storage.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\file_layout.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\fingerprint.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\flags.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\fwd.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\gzip.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\hash_picker.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\hasher.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\hex.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\http_connection.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\http_parser.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\http_seed_connection.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\http_stream.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\http_tracker_connection.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\i2p_stream.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\identify_client.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\index_range.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\io.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\io_service.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\ip_filter.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\ip_voter.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\libtorrent.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\link.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\lsd.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\magnet_uri.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\mmap_disk_io.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\mmap_storage.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\natpmp.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\netlink.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\operations.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\optional.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\parse_url.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\part_file.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer_class.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer_class_set.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer_class_type_filter.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer_connection.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer_connection_handle.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer_connection_interface.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer_id.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer_info.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer_list.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer_request.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\performance_counters.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\pex_flags.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\piece_block.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\piece_block_progress.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\piece_picker.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\platform_util.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\portmap.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\proxy_base.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\puff.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\random.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\read_resume_data.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\request_blocks.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\resolve_links.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\session.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\session_handle.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\session_params.hpp" />
@@ -449,30 +509,47 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\session_status.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\session_types.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\settings_pack.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\sha1.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\sha1_hash.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\sha256.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\sliding_average.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\socket.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\socket_io.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\socket_type.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\socks5_stream.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\span.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\stack_allocator.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\stat.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\stat_cache.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\storage_defs.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\string_util.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\string_view.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\tailqueue.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\time.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\torrent.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\torrent_flags.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\torrent_handle.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\torrent_info.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\torrent_peer.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\torrent_peer_allocator.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\torrent_status.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\tracker_event.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\tracker_manager.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\truncate.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\udp_socket.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\udp_tracker_connection.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\union_endpoint.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\units.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\upnp.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\utf8.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\vector_utils.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\version.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\web_seed_entry.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\write_resume_data.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\xml_parse.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\extensions\smart_ban.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\extensions\ut_metadata.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\extensions\ut_pex.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\alert_manager.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\aligned_storage.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\aligned_union.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\alloca.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\allocating_handler.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\apply_pad_files.hpp" />
@@ -482,17 +559,10 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\bandwidth_queue_entry.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\bandwidth_socket.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\bind_to_device.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\bloom_filter.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\bt_peer_connection.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\buffer.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\byteswap.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\chained_buffer.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\choker.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\copy_ptr.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\cpuid.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\crc32c.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\deadline_timer.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\debug.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\deferred_handler.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\deprecated.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\deque.hpp" />
@@ -507,61 +577,37 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\disk_job_pool.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\drive_info.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\ed25519.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\enum_net.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\escape_string.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\export.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\ffs.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\file.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\file_descriptor.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\file_progress.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\file_view_pool.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\has_block.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\hash_picker.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\heterogeneous_queue.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\http_connection.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\http_parser.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\http_stream.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\http_tracker_connection.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\instantiate_connection.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\invariant_check.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\io.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\ip_helpers.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\ip_notifier.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\ip_voter.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\keepalive.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\link.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\listen_socket_handle.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\lsd.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\merkle.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\merkle_tree.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\mmap_storage.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\netlink.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\netlink_utils.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\noexcept_movable.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\numeric_cast.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\packet_buffer.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\packet_pool.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\parse_url.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\part_file.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\path.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\peer.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\peer_class_set.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\peer_connection.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\peer_list.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\piece_block_progress.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\piece_picker.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\platform_util.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\polymorphic_socket.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\pool.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\portmap.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\proxy_base.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\posix_part_file.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\proxy_settings.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\puff.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\random.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\range.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\receive_buffer.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\request_blocks.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\resolve_links.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\resolver.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\resolver_interface.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\scope_end.hpp" />
@@ -572,46 +618,24 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\session_udp_sockets.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\set_socket_buffer.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\set_traffic_class.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\sha1.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\sha256.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\sha512.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\sliding_average.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\socket_io.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\socket_type.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\ssl_stream.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\stack_allocator.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\stat.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\stat_cache.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\storage_free_list.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\storage_utils.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\string_ptr.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\string_util.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\strview_less.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\suggest_piece.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\tailqueue.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\throw.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\time.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\timestamp_history.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\torrent.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\torrent_impl.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\torrent_list.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\torrent_peer.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\torrent_peer_allocator.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\udp_socket.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\udp_tracker_connection.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\union_endpoint.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\unique_ptr.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\utf8.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\utp_socket_manager.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\utp_stream.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\vector.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\vector_utils.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\web_connection_base.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\web_peer_connection.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\win_crypto_provider.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\win_file_handle.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\win_util.hpp" />
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\xml_parse.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\kademlia\announce_flags.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\kademlia\dht_observer.hpp" />
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\kademlia\dht_settings.hpp" />

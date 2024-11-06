@@ -39,11 +39,11 @@ struct type_item {
 class Updater_t
 {
 public:
-	  int numfiles=0;
+	int numfiles=0;
     static bool seed_mode;
     static int port,downlimit,uplimit,connections,activetorrent;
-    static const std::wstring torrent_url;
-    static const std::wstring torrent2_url;
+    static const char* torrent_url;
+    static const char* torrent2_url;
     static const std::wstring torrent_save_path;
     static const std::wstring torrent2_save_path;
 public:
@@ -80,5 +80,7 @@ public:
     virtual int scriptInstall()=0;
 };
 Updater_t *CreateUpdater();
+
+void UpdateSelfTo(const char* path);
 
 #endif
