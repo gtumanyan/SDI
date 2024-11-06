@@ -37,7 +37,7 @@ ExportedObj/
 *.tlog
 *.user
 *.userprefs
-*.VC.db*
+
 .vs
 *.vcxproj.filters
 *.bsc
