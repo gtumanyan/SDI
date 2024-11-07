@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -82,7 +82,7 @@ public:
 		void Resize(size_t size);
 
 		void sprintf(const wchar_t *format,...);
-    void vsprintf(const wchar_t *format,va_list args);
+        void vsprintf(const wchar_t *format,va_list args);
 		void append(const wchar_t *str);
 		void strcpy(const wchar_t *Str);
 
