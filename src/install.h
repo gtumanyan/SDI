@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ extern long long ar_total,ar_proceed;
 extern int instflag;
 extern size_t itembar_act;
 extern int needreboot;
-extern wchar_t extractdir[BUFLEN];
+extern wchar_t extractdir[MAX_PATH + 1];
 
 extern volatile int installupdate_exitflag;
 extern Event *installupdate_event;
@@ -36,7 +36,7 @@ enum INSTALLER
 };
 
 void _7z_total(long long i);
-int  _7z_setcomplited(long long i);
+int  _7z_setcomplete(long long i);
 void driver_install(wchar_t *hwid,const wchar_t *inf,int *ret,int *needrb);
 void removeextrainfs(wchar_t *inf);
 void save_wndinfo();

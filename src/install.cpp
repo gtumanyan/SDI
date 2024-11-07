@@ -13,29 +13,31 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "com_header.h"
-#include "common.h"
-#include "logging.h"
-#include "system.h"
-#include "settings.h"
+#include "utils/BaseUtil.h"
+#include "SDI.h"
 #include "cli.h"
-#include "matcher.h"
-#include "update.h"
-#include "manager.h"
-#include "install.h"
+#include "Settings.h"
 #include "gui.h"
-#include "theme.h"
+#include "system.h"
+#include "install.h"
 #include "indexing.h"
+#include "manager.h"
+#include "matcher.h"
 #include "model.h"
 #include "shellapi.h"
+#include "theme.h"
+#include "update.h"
+#include "utils/FileUtil.h"
+#include "utils/WinUtil.h"
 
-#include <windows.h>
+#include "utils/Log.h"
+
 #ifdef _MSC_VER
 #include <process.h>
 #include <shellapi.h>
 #endif
 #include <SRRestorePtAPI.h> // for RestorePoint
-typedef int (WINAPI *WINAPI5t_SRSetRestorePointW)(PRESTOREPOINTINFOW pRestorePtSpec,PSTATEMGRSTATUS pSMgrStatus);
+typedef BOOL (WINAPI *PFN_SETRESTOREPTW)(PRESTOREPOINTINFOW pRestorePtSpec,PSTATEMGRSTATUS pSMgrStatus);
 #include "device.h"
 
 // Depend on Win32API
@@ -77,7 +79,7 @@ long long ar_total,ar_proceed;
 int instflag;
 size_t itembar_act;
 int needreboot=0;
-wchar_t extractdir[BUFLEN];
+wchar_t extractdir[MAX_PATH + 1];
 
 volatile int Autoclicker_t::clicker_flag;
 Autoclicker_t Autoclicker;
@@ -93,23 +95,23 @@ void _7z_total(long long i)
 		ar_total=i;
 }
 
-int _7z_setcomplited(long long i)
+int _7z_setcomplete(long long i)
 {
 		if(Settings.statemode==STATEMODE_EXIT)return S_OK;
 		if(installmode==MODE_STOPPING)
 		{
-				Log.print_con("MODE_STOPPING\n");
+				log("MODE_STOPPING\n");
 				return E_ABORT;
 		}
 		if(manager_g->items_list.empty())return S_OK;
 		if(!manager_g->items_list[itembar_act].checked)
 		{
-				Log.print_con("stop:itembar_act %d\n",itembar_act);
+				logf("stop:itembar_act %d\n",itembar_act);
 				return E_ABORT;
 		}
 
 		ar_proceed=i;
-		//Log.print_con("PR %d/%d\n",ar_proceed,ar_total);
+		//log("PR %d/%d\n",ar_proceed,ar_total);
 		manager_g->items_list[itembar_act].updatecur();
 		manager_g->updateoverall();
 		MainWindow.redrawfield();
@@ -130,21 +132,22 @@ void driver_install(wchar_t *hwid,const wchar_t *inf,int *ret,int *needrb)
 		if(!System.FileExists(cmd.Get()))
 		{
 				mkdir_r(extractdir);
-				Log.print_con("Dir: (%S)\n",extractdir);
+				logf("Dir: (%S)\n",extractdir);
 				f=_wfopen(cmd.Get(),L"wb");
 				if(f)
 				{
-						Log.print_con("Created '%S'\n",cmd.Get());
+						logf("Created '%S'\n",cmd.Get());
 						get_resource(IDR_INSTALL64,&install64bin,&size);
 						fwrite(install64bin,1,size,f);
 						fclose(f);
 				}
 				else
-						Log.print_con("Failed to create '%S'\n",cmd.Get());
+						logf("Failed to create '%S'\n",cmd.Get());
 		}
 
 		Autoclicker.setflag(1);
-		Log.save();
+		const char* logFilePath = ToUtf8(Settings.log_dir, CP_UTF8);
+    WriteCurrentLogToFile(logFilePath);
 		thr->start(&Autoclicker_t::thread_clicker,nullptr);
 		{
 				if(Settings.flags&FLAG_DISABLEINSTALL)
@@ -159,7 +162,7 @@ void driver_install(wchar_t *hwid,const wchar_t *inf,int *ret,int *needrb)
 		{
 				buf.sprintf(L"\"%s\" \"%s\"",hwid,inf);
 				cmd.sprintf(L"%s\\install64.exe",extractdir);
-				Log.print_con("'%S %S'\n",cmd.Get(),buf.Get());
+				logf("'%S %S'\n",cmd.Get(),buf.Get());
 				*ret=System.run_command(cmd.Get(),buf.Get(),SW_HIDE,1);
 				if((*ret&0x7FFFFFFF)==1)
 				{
@@ -176,7 +179,7 @@ void driver_install(wchar_t *hwid,const wchar_t *inf,int *ret,int *needrb)
 
 void removeextrainfs(wchar_t *inf)
 {
-		wchar_t buf[BUFLEN];
+		wchar_t buf[MAX_PATH];
 		wchar_t *s=inf;
 		HANDLE hFind;
 		WIN32_FIND_DATA FindFileData;
@@ -192,9 +195,9 @@ void removeextrainfs(wchar_t *inf)
 		{
 				wcscpy(buf+(s-inf),FindFileData.cFileName);
 				if(!StrStrIW(inf,FindFileData.cFileName))
-						Log.print_con("deleting %S (%d)\n",buf,DeleteFile(buf));
+						logf("deleting %S (%d)\n",buf,DeleteFile(buf));
 				else
-						Log.print_con("keeping  %S\n",buf);
+						logf("keeping  %S\n",buf);
 		}
 		while(FindNextFile(hFind,&FindFileData)!=0);
 }
@@ -204,21 +207,21 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 		UNREFERENCED_PARAMETER(arg);
 
 		itembar_t *itembar,*itembar1;
-		wchar_t cmd[BUFLEN];
-		wchar_t hwid[BUFLEN];
-		wchar_t inf[BUFLEN];
-		wchar_t buf[BUFLEN];
+    wchar_t cmd[MAX_PATH];
+		wchar_t hwid[86];
+		wchar_t inf[MAX_PATH];
+		wchar_t buf[MAX_PATH];
 		size_t i,j;
 		RESTOREPOINTINFOW pRestorePtSpec;
 		STATEMGRSTATUS pSMgrStatus;
 		HINSTANCE hinstLib=nullptr;
-		WINAPI5t_SRSetRestorePointW WIN5f_SRSetRestorePointW;
+		PFN_SETRESTOREPTW WIN5f_SRSetRestorePointW = NULL;
 		int failed=0,installed=0;
 
 		if(CRITICAL_SECTION_ACTIVE)EnterCriticalSection(&sync);
 
 		// Prepare extract dir
-		Log.print_con("extractdir='%S'\n",extractdir);
+		logf("extractdir='%S'\n",extractdir);
 
 		installmode=MODE_INSTALLING;
 		manager_g->items_list[SLOT_EXTRACTING].install_status=
@@ -246,19 +249,19 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 				{
 						if(!Updater->isTorrentReady())
 						{
-								Log.print_con("Waiting for torrent");
+								log("Waiting for torrent");
 								for(j=0;j<200;j++)
 								{
-										Log.print_con("*");
+										log("*");
 										if(Updater->isTorrentReady())
 										{
-												Log.print_con("DONE\n");
+												log("DONE\n");
 												break;
 										}
 										Sleep(100);
 								}
 								if(!Updater->isTorrentReady())break;
-								Log.print_con("\n");
+								log("\n");
 						}
 						Updater->SetFilePriority(itembar->hwidmatch->getdrp_packname(),libtorrent::low_priority);
 						downdrivers++;
@@ -268,12 +271,12 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 				if(downdrivers)
 				{
 						Updater->resumeDownloading();
-						Log.print_con("{{{{{{{{\n");
+						log("{{{{{{{{\n");
 						while(installmode&&!Updater->isUpdateCompleted())
 						{
 								Sleep(500);
 						}
-						Log.print_con("{}}}}}}}}}\n");
+						log("{}}}}}}}}}\n");
 				}
 				if(installmode==MODE_STOPPING)
 				{
@@ -296,7 +299,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 				// System Restore client dll
 				hinstLib=LoadLibrary(L"SrClient.dll");
 				if(hinstLib!=NULL)
-						WIN5f_SRSetRestorePointW=(WINAPI5t_SRSetRestorePointW)GetProcAddress(hinstLib,"SRSetRestorePointW");
+						WIN5f_SRSetRestorePointW=(PFN_SETRESTOREPTW)GetProcAddress(hinstLib,"SRSetRestorePointW");
 
 				if(hinstLib&&WIN5f_SRSetRestorePointW)
 				{
@@ -318,7 +321,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 						else
 						{
 								restorePointSucceeded=WIN5f_SRSetRestorePointW(&pRestorePtSpec,&pSMgrStatus);
-								Log.print_con("rt rest point{ %d(%d)\n",(int)restorePointSucceeded,pSMgrStatus.nStatus);
+								logf("rt rest point{ %d(%d)\n",(int)restorePointSucceeded,pSMgrStatus.nStatus);
 						}
 						if(CRITICAL_SECTION_ACTIVE)EnterCriticalSection(&sync);
 
@@ -329,17 +332,17 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 						}else if(pSMgrStatus.nStatus==ERROR_SERVICE_DISABLED)
 						{
 								manager_g->items_list[SLOT_RESTORE_POINT].install_status=STR_RESTOREPOINTS_DISABLED;
-								Log.print_err("ERROR in thread_install: Failed to create restore point. Restore points disabled.\n");
+								log("ERROR in thread_install: Failed to create restore point. Restore points disabled.\n");
 						}else
 						{
 								manager_g->items_list[SLOT_RESTORE_POINT].install_status=STR_REST_FAILED;
-								Log.print_err("ERROR in thread_install: Failed to create restore point\n");
+								log("ERROR in thread_install: Failed to create restore point\n");
 						}
 				}
 				else
 				{
 						manager_g->items_list[SLOT_RESTORE_POINT].install_status=STR_REST_FAILED;
-						Log.print_err("ERROR in thread_install: Failed to create restore point %d\n",hinstLib);
+						logf("ERROR in thread_install: Failed to create restore point %d\n",hinstLib);
 				}
 				MainWindow.redrawfield();
 				if(hinstLib)FreeLibrary(hinstLib);
@@ -369,9 +372,9 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 						memset(limits,0,sizeof(limits));
 						itembar_act=i;
 						ar_proceed=0;
-						Log.print_con("Installing $%04d\n",i);
+						logf("Installing $%04d\n",i);
 						hwidmatch->print_hr();
-						wsprintf(cmd,L"%s\\%S",extractdir,hwidmatch->getdrp_infpath());
+            wsprintf(cmd,L"%s\\%S",extractdir,hwidmatch->getdrp_infpath());
 
 						manager_g->animstart=System.GetTickCountWr();
 						MainWindow.offset_target=(itembar->curpos>>16);
@@ -383,27 +386,27 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 										unpacked?hwidmatch->getdrp_packpath():extractdir,
 										hwidmatch->getdrp_infpath(),
 										hwidmatch->getdrp_infname());
-						Log.print_debug("%S\n",hwidmatch->getdrp_packname());
+						logf("%S\n",hwidmatch->getdrp_packname());
 						if(System.FileExists(inf))
 						{
-								Log.print_con("Already unpacked(%S)\n",inf);
+								logf("Already unpacked(%S)\n",inf);
 								_7z_total(100);
-								_7z_setcomplited(100);
+								_7z_setcomplete(100);
 								MainWindow.redrawfield();
 						}
 						else
 						if(wcsstr(hwidmatch->getdrp_packname(),L"unpacked.7z"))
 						{
-								Log.print_con("Unpacked '%S'\n",hwidmatch->getdrp_packpath());
+								logf("'%S' Unpacked\n",hwidmatch->getdrp_packpath());
 								unpacked=1;
 								_7z_total(100);
-								_7z_setcomplited(100);
+								_7z_setcomplete(100);
 								MainWindow.redrawfield();
 						}
 						else
 						{
-								wsprintf(cmd,L"app x -y \"%s\\%s\" -o\"%s\"",hwidmatch->getdrp_packpath(),hwidmatch->getdrp_packname(),
-												extractdir);
+                wsprintf(cmd,L"app -e \"%s\\%s\" -o\"%s\"",hwidmatch->getdrp_packpath(),hwidmatch->getdrp_packname(),
+                        extractdir);
 
 								itembar1=itembar;
 								for(j=i;j<manager_g->items_list.size();j++,itembar1++)
@@ -412,23 +415,23 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 											 !wcscmp(hwidmatch->getdrp_packname(),itembar1->hwidmatch->getdrp_packname()))
 								{
 										wsprintf(buf,L" \"%S\"",itembar1->hwidmatch->getdrp_infpath());
-										if(!wcsstr(cmd,buf))wcscat(cmd,buf);
+                    if(!wcsstr(cmd,buf))wcscat(cmd,buf);
 								}
-								Log.print_con("Extracting via '%S'\n",cmd);
+								logf("Extracting '%S'\n",cmd);
 								itembar->install_status=(instflag&INSTALLDRIVERS)?STR_INST_EXTRACT:STR_EXTR_EXTRACTING;
 								MainWindow.redrawfield();
 
-								// attempt extaction
+								// attempt extraction
 								int tries=0;
-								int r=0;
+                int r=0;
 
 								// verify the file is available
-								wchar_t spec1[BUFLEN];
-								wsprintf(spec1,L"%s\\%s",hwidmatch->getdrp_packpath(),hwidmatch->getdrp_packname());
-								bool FileOk=System.FileAvailable(spec1,20,5);
+                wchar_t full_arch_name[MAX_PATH];
+                wsprintf(full_arch_name,L"%s\\%s",hwidmatch->getdrp_packpath(),hwidmatch->getdrp_packname());
+                bool FileOk=System.FileAvailable(full_arch_name,20,5);
 								if(!FileOk)
 								{
-										Log.print_con("Error: %S not found. Download failed or network or storage not available.\n", spec1);
+										logf("Error: %S not found. Download failed or network or storage are not accessible.\n", full_arch_name);
 										itembar->checked=0;
 										itembar->install_status=STR_INST_FAILED;
 										failed++;
@@ -438,27 +441,27 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 										do
 								{
 										if(!itembar->checked||installmode!=MODE_INSTALLING||tries>60)break;
-										if(CRITICAL_SECTION_ACTIVE)LeaveCriticalSection(&sync);
-										r=Extract7z(cmd);
+										if(CRITICAL_SECTION_ACTIVE) LeaveCriticalSection(&sync);
+                    r=Extract7z(cmd);
 										if(CRITICAL_SECTION_ACTIVE)EnterCriticalSection(&sync);
 										itembar=&manager_g->items_list[itembar_act];
-										if(r==2)
+										if(!FileOk)
 										{
-												Log.print_con("Error, 7Zip unknown fatal error.\n");
-												Log.print_con("Error, checking for driverpack availability...");
-												// if the 'drivers' path exists
+												log("Error, 7Zip unknown fatal error.\n");
+												log("Error, checking for driverpack availability...");
+												// if the 'Drivers' path exists
 												if(System.FileExists(hwidmatch->getdrp_packpath()))break;
-												Log.print_con("Waiting for DriverPacks to become available.");
+												log("Waiting for DriverPacks to become available.");
 												do
 												{
-														Log.print_con(".");
+														log(".");
 														Sleep(1000);
 														tries++;
 														if(!itembar->checked||installmode!=MODE_INSTALLING||tries>60)break;
 												}while(!System.FileExists(hwidmatch->getdrp_packpath())&&!hwidmatch->getdrp_packontorrent());
-												Log.print_con("OK\n");
+												log("OK\n");
 										}
-										}while(r&&!hwidmatch->getdrp_packontorrent());
+										}while(FileOk&&!hwidmatch->getdrp_packontorrent());
 								}
 
 								if(installmode==MODE_STOPPING)
@@ -470,13 +473,13 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 								//itembar->percent=manager_g->items_list[SLOT_EMPTY].percent;
 								hwidmatch=itembar->hwidmatch;
 								totalextracttime+=extracttime=System.GetTickCountWr()-extracttime;
-								Log.print_con("Ret %d, %ld secs\n",r,extracttime/1000);
-								if(r&&itembar->install_status!=STR_INST_STOPPING)
+								logf("Ret %d, %ld secs\n",FileOk,extracttime/1000);
+								if(FileOk&&itembar->install_status!=STR_INST_STOPPING)
 								{
 										itembar->install_status=STR_EXTR_FAILED;
-										itembar->val1=r;
+										itembar->val1=FileOk;
 										itembar->checked=0;
-										Log.print_err("ERROR: extraction failed\n");
+										log("ERROR: extraction failed\n");
 								}
 						}
 
@@ -492,7 +495,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 											 hwidmatch->getdrp_infpath(),
 											 hwidmatch->getdrp_infname());
 								wsprintf(hwid,L"%S",hwidmatch->getdrp_drvHWID());
-								Log.print_con("Install32 '%S','%S'\n",hwid,inf);
+								logf("Install32 '%S','%S'\n",hwid,inf);
 								itembar->install_status=STR_INST_INSTALL;
 								MainWindow.redrawfield();
 
@@ -507,7 +510,8 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 								itembar=&manager_g->items_list[itembar_act];
 
 								if(ret==1)installed++;else failed++;
-								Log.print_con("Ret %d(0x%X),%s,%ld secs\n\n",ret,ret,needrb?"rb":"norb",installtime/1000);
+                                logf("Ret %d(0x%X),", ret, ret);
+                                logf("%s,%ld secs\n\n", needrb ? "rb" : "norb", installtime / 1000);
 								if(installmode==MODE_STOPPING)
 								{
 										itembar->install_status=STR_INST_STOPPING;
@@ -523,7 +527,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 												manager_g->expand(i,EXPAND_MODE::EXPAND);
 												itembar->install_status=STR_INST_FAILED;
 												itembar->val1=ret;
-												Log.print_err("ERROR: installation failed\n");
+												log("ERROR: installation failed\n");
 										}
 
 										if(needrb)needreboot=1;
@@ -544,17 +548,17 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 
 		} // if restorePointSucceeded
 
-		// Instalation competed by this point
+		// Installation completed by this point
 		wsprintf(buf,L"%ws\\SetupAPI.dev.log",manager_g->matcher->getState()->textas.getw(manager_g->matcher->getState()->getWindir()));
-		wsprintf(cmd,L"%s\\%ssetupAPI.log",Settings.log_dir,Log.getTimestamp());
-		if(!(Settings.flags&FLAG_NOLOGFILE))CopyFile(buf,cmd,0);
+		wsprintf(cmd,L"%s\\%ssetupAPI.log",Settings.log_dir);
+		if(!(Settings.flags&FLAG_NOLOGFILE)) CopyFile(buf,cmd,0);
 
 		if(instflag&OPENFOLDER)
 		{
 				wchar_t *p=extractdir+wcslen(extractdir);
 				while(*(--p)!='\\');
 				*p=0;
-				Log.print_con("%S\n",extractdir);
+				logf("%S\n",extractdir);
 				ShellExecute(nullptr,L"explore",extractdir,nullptr,nullptr,SW_SHOW);
 				manager_g->items_list[SLOT_EXTRACTING].isactive=0;
 				manager_g->clear();
@@ -563,7 +567,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 		if(instflag&INSTALLDRIVERS&&(Settings.flags&FLAG_KEEPTEMPFILES)==0)
 		{
 				wsprintf(buf,L" /c rd /s /q \"%s\"",extractdir);
-				System.run_command(L"cmd",buf,SW_HIDE,1);
+        System.run_command(L"cmd",buf,SW_HIDE,1);
 		}
 
 		manager_g->items_list[SLOT_EXTRACTING].percent=0;
@@ -588,8 +592,8 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 				FlashWindowEx(&fi);
 		}
 		itembar_act=0;
-		Log.print_con("Extract: %ld secs\n",totalextracttime/1000);
-		Log.print_con("Install: %ld secs\n",totalinstalltime/1000);
+		logf("Extract: %ld secs\n",totalextracttime/1000);
+		logf("Install: %ld secs\n",totalinstalltime/1000);
 		ret_global=installed+(failed<<16);
 		if(needreboot)ret_global|=0x40<<24;
 		if(CRITICAL_SECTION_ACTIVE)LeaveCriticalSection(&sync);
@@ -732,12 +736,12 @@ BOOL CALLBACK Autoclicker_t::EnumWindowsProc(HWND hwnd,LPARAM lParam)
 		if(lParam&2)
 		{
 				GetWindowText(hwnd,buf,BUFLEN);
-				Log.print_file("Window %06X,%06X '%S'\n",hwnd,GetParent(hwnd),buf);
+				logf("Window %06X,%06X '%S'\n",hwnd,GetParent(hwnd),buf);
 				GetClassName(hwnd,buf,BUFLEN);
-				Log.print_file("Class: '%S'\n",buf);
+				logf("Class: '%S'\n",buf);
 				RealGetWindowClass(hwnd,buf,BUFLEN);
-				Log.print_file("RealClass: '%S'\n",buf);
-				Log.print_file("\n");
+				logf("RealClass: '%S'\n",buf);
+				log("\n");
 		}
 
 		if((lParam&1)==1)
@@ -745,9 +749,9 @@ BOOL CALLBACK Autoclicker_t::EnumWindowsProc(HWND hwnd,LPARAM lParam)
 				Autoclicker.calcwnddata(&w,hwnd);
 				if(lParam&2)
 				{
-						Log.print_file("* MainWindow (%d,%d) (%d,%d)\n",w.wnd_wx,w.wnd_wy,w.cln_wx,w.cln_wy);
-						Log.print_file("* Child (%d,%d,%d,%d)\n",w.btn_x,w.btn_y,w.btn_wx,w.btn_wy);
-						Log.print_file("\n");
+						logf("* MainWindow (%d,%d) (%d,%d)\n",w.wnd_wx,w.wnd_wy,w.cln_wx,w.cln_wy);
+						logf("* Child (%d,%d,%d,%d)\n",w.btn_x,w.btn_y,w.btn_wx,w.btn_wy);
+						log("\n");
 				}
 
 				if((lParam&2)==0)for(i=0;i<NUM_CLICKDATA;i++)
@@ -773,7 +777,7 @@ BOOL CALLBACK Autoclicker_t::EnumWindowsProc(HWND hwnd,LPARAM lParam)
 										SendMessage(GetParent(hwnd),WM_LBUTTONUP,  0,pos);
 										SetActiveWindow(hwnd);
 										SendMessage(hwnd,BM_CLICK,0,0);
-										Log.print_con("Autoclicker fired\n");
+										log("Autoclicker fired\n");
 								}
 						}
 				}
