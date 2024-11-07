@@ -37,7 +37,7 @@ IDR_BOOSTY              100                     "..\\res\\boosty.webp"
 
 IDR_LICENSE             100                     "..\\res\\gpl-3.0.txt"
 
-IDR_THEME               100                     "..\\Tools\\Themes\\Light.txt"
+IDR_THEME               100                     "..\\Tools\\Themes\\Win11Dark.txt"
 
 IDR_LANG                100                     "..\\Tools\\langs\\english.txt"
 
