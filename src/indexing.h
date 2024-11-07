@@ -35,17 +35,8 @@ class concurrent_queue;
 #include <list>
 #include <unordered_map>
 
-#ifdef __GNUC__
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wswitch-enum"
-#pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
-#pragma GCC diagnostic ignored "-Weffc++"
-#endif
 #define BOOST_SYSTEM_NO_DEPRECATED
-#include <boost/thread/condition_variable.hpp>
-#ifdef __GNUC__
-#pragma GCC diagnostic pop
-#endif
+#include <boost/thread/condition_variable.hpp>  // for boost::mutex
 
 typedef unsigned ofst;
 typedef concurrent_queue<driverpack_task> drplist_t;
@@ -270,7 +261,7 @@ class Driverpack
 
     Collection *col;
 
-    Hashtable indexes;
+    Hashtable indices;
     std::unordered_map<std::string,ofst> cat_list;
 
     loadable_vector<data_inffile_t> inffile;
@@ -297,8 +288,8 @@ public:
     int getType()const{ return type; }
     ofst getSize()const{ return static_cast<ofst>(HWID_list.size()); }
     int setType(int val){ return type=val; }
-    int find(int key,int *isFound){ return indexes.find(key,isFound); }
-    int findnext(int *isFound){ return indexes.findnext(isFound); }
+    int find(int key,int *isFound){ return indices.find(key,isFound); }
+    int findnext(int *isFound){ return indices.findnext(isFound); }
 
     Driverpack(const Driverpack&)=default;
     Driverpack &operator=(const Driverpack&)=default;
