@@ -13,23 +13,23 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "com_header.h"
-#include "common.h"
-#include "logging.h"
+#include "utils\baseutil.h"
+#include "utils\log.h"
+#include "SDI.h"
 #include "system.h"
-#include "settings.h"
+#include "Settings.h"
 #include "gui.h"
 #include "theme.h"
 #include "draw.h"
 
-#include <windows.h>
+#include <CommCtrl.h>         // for WC_COMBOBOX
 
 // Depend on Win32API
 #include "enum.h"     // todo: lots of Win32
 #include "main.h"     // todo: lots of Win32
 
-#include <setupapi.h>       // for SetupDiGetClassDescription()
-#include <webp\decode.h>
+#include <setupapi.h>       // for SetupDiLoadClassIcon()
+#include <webp/decode.h>
 #include <memory>
 
 #include "draw_imp.h"
@@ -44,18 +44,18 @@ wFont *wFont::Create(){return new wFontImp;}
 void wFontImp::SetFont(const wchar_t *name,int size,bool bold)
 {
 		if(hFont&&!DeleteObject(hFont))
-				Log.print_err("ERROR in setfont(): failed DeleteObject\n");
+				logf("ERROR in setfont(): failed DeleteObject\n");
 
 		hFont=CreateFont(-size,0,0,0,bold?FW_BOLD:FW_DONTCARE,FALSE,FALSE,FALSE,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,
 										 CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,VARIABLE_PITCH,name);
 
-		if(!hFont)Log.print_err("ERROR in setfont(): failed CreateFont\n");
+		if(!hFont)logf("ERROR in setfont(): failed CreateFont\n");
 }
 
 wFontImp::~wFontImp()
 {
 		if(hFont&&!DeleteObject(hFont))
-				Log.print_err("ERROR in manager_free(): failed DeleteObject\n");
+				logf("ERROR in manager_free(): failed DeleteObject\n");
 }
 //}
 
@@ -63,20 +63,20 @@ wFontImp::~wFontImp()
 ClipRegionImp::ClipRegionImp(int x1,int y1,int x2,int y2):
 		hrgn(CreateRectRgn(x1,y1,x2,y2))
 {
-		if(!hrgn)Log.print_err("ERROR in ClipRegion(): failed CreateRectRgn\n");
+		if(!hrgn)logf("ERROR in ClipRegion(): failed CreateRectRgn\n");
 }
 
 ClipRegionImp::ClipRegionImp(int x1,int y1,int x2,int y2,int r):
 		hrgn(CreateRoundRectRgn(x1,y1,x2,y2,r,r))
 {
-		if(!hrgn)Log.print_err("ERROR in ClipRegion(): failed CreateRoundRectRgn\n");
+		if(!hrgn)logf("ERROR in ClipRegion(): failed CreateRoundRectRgn\n");
 }
 
 void ClipRegionImp::setRegion(int x1,int y1,int x2,int y2)
 {
 		if(hrgn)DeleteObject(hrgn);
 		hrgn=CreateRectRgn(x1,y1,x2,y2);
-		if(!hrgn)Log.print_err("ERROR in ClipRegion(): failed setRegion\n");
+		if(!hrgn)logf("ERROR in ClipRegion(): failed setRegion\n");
 }
 
 ClipRegionImp::~ClipRegionImp()
@@ -154,7 +154,7 @@ void ImageImp::MakeCopy(ImageImp &t)
 
 void ImageImp::Load(int i)
 {
-		wchar_t *filename=D_STR(i);
+		const wchar_t *filename=D_STR(i);
 
 		Release();
 
@@ -172,9 +172,9 @@ void ImageImp::Release()
 		{
 				SelectObject(ldc,oldbitmap);
 				int r=DeleteDC(ldc);
-				if(!r)Log.print_err("ERROR in box_init(): failed DeleteDC\n");
+				if(!r)logf("ERROR in box_init(): failed DeleteDC\n");
 				r=DeleteObject(bitmap);
-				if(!r)Log.print_err("ERROR in box_init(): failed DeleteObject\n");
+				if(!r)logf("ERROR in box_init(): failed DeleteObject\n");
 		}
 		bitmap=nullptr;
 		ldc=nullptr;
@@ -186,26 +186,32 @@ void ImageImp::LoadFromFile(const wchar_t *filename)
 		if(!filename||!*filename)return;
 
 		WStringShort name;
-		name.sprintf(L"%s\\themes\\%s",Settings.data_dir,filename);
-		FILE *f=_wfopen(name.Get(),L"rb");
-		if(!f)
+		name.sprintf(L"%s\\Themes\\%s",Settings.data_dir,filename);
+		FILE *fp=_wfopen(name.Get(),L"rb");
+		if(!fp)
 		{
-				Log.print_err("ERROR in image_loadFile(): file '%S' not found\n",name.Get());
+				logf("ERROR in image_loadFile(): file '%S' not found\n",name.Get());
 				return;
 		}
-		_fseeki64(f,0,SEEK_END);
-		size_t sz=static_cast<size_t>(_ftelli64(f));
-		_fseeki64(f,0,SEEK_SET);
-		std::unique_ptr<BYTE[]> imgbuf(new BYTE[sz]);
+		_fseeki64(fp,0,SEEK_END);
+		size_t size=static_cast<size_t>(_ftelli64(fp));
+        size_t nRead = 0;
+		_fseeki64(fp,0,SEEK_SET);
+		std::unique_ptr<BYTE[]> imgbuf(new BYTE[size]);
 
-		sz=fread(imgbuf.get(),1,sz,f);
-		if(!sz)
-		{
-				Log.print_err("ERROR in image_loadFile(): cannnot read from file '%S'\n",name.Get());
-				return;
+		nRead=fread(imgbuf.get(),1,size,fp);
+		if(!size) {
+            int err = ferror(fp);
+            int isEof = feof(fp);
+            logf("ImageImp::LoadFromFile: fread() failed, path: '%s', size: %d, nRead: %d, err: %d, isEof: %d\n", name.Get(),
+                (int)size, (int)nRead, err, isEof);
+            // we should either get eof or err
+            // either way shouldn't happen because we're reading the exact size of file
+            ReportIf(!(isEof || (err != 0)));
+			return;
 		}
-		fclose(f);
-		CreateMyBitmap(imgbuf.get(),sz);
+		fclose(fp);
+		CreateMyBitmap(imgbuf.get(),size);
 }
 
 void ImageImp::LoadFromRes(int id)
@@ -216,7 +222,7 @@ void ImageImp::LoadFromRes(int id)
 		get_resource(id,&myResourceData,&sz);
 		if(!sz)
 		{
-				Log.print_err("ERROR in image_loadRes(): failed get_resource\n");
+				logf("ERROR in image_loadRes(): failed get_resource\n");
 				return;
 		}
 		CreateMyBitmap(static_cast<BYTE *>(myResourceData),sz);
@@ -231,13 +237,13 @@ void ImageImp::CreateMyBitmap(BYTE *data,size_t sz)
 		int ret= WebPGetInfo(data,sz,&sx,&sy);
 		if(!ret)
 		{
-				Log.print_err("ERROR in image_load(): failed WebPGetInfo(%d)\n",ret);
+				logf("ERROR in image_load(): failed WebPGetInfo(%d)\n",ret);
 				return;
 		}
 		big=WebPDecodeBGRA(data,sz,&sx,&sy);
 		if(!big)
 		{
-				Log.print_err("ERROR in image_load(): failed WebPDecodeBGRA\n");
+				logf("ERROR in image_load(): failed WebPDecodeBGRA\n");
 				return;
 		}
 
@@ -256,7 +262,7 @@ void ImageImp::CreateMyBitmap(BYTE *data,size_t sz)
 		bitmap=CreateDIBSection(ldc,&bmi,DIB_RGB_COLORS,reinterpret_cast<void **>(&bits),nullptr,0);
 		if(!bitmap)
 		{
-				Log.print_err("ERROR in CreateMyBitmap(): failed CreateDIBSection\n");
+				logf("ERROR in CreateMyBitmap(): failed CreateDIBSection\n");
 				free(big);
 				return;
 		}
@@ -352,10 +358,10 @@ void ImageStorangeImp::LoadAll()
 {
 		for(size_t i=0;i<num;i++)
 		{
-				wchar_t *str=D_STR(index[i]+add);
+				const wchar_t *str= D_STR(index[i] + add);
 				size_t j;
 				for(j=0;j<i;j++)
-						Log.print_con("%d Copying %S %d\n",i,str,j);
+						//OutputDebugStringA("%d copying %S %d\n",i,str,j);
 						if(!wcscmp(str,D_STR(index[j]+add)))
 				{
 						a[i].MakeCopy(a[j]);
@@ -364,7 +370,7 @@ void ImageStorangeImp::LoadAll()
 				}
 				if(i==j)
 				{
-						Log.print_con("Load %S for %S\n",str, theme[index[i]+add].name);
+                        logf("Load %S for %S\n",str, theme[index[i]+add].name);
 						a[i].Load(index[i]+add);
 				}
 		}
@@ -399,11 +405,11 @@ CanvasImp::CanvasImp():
 		clipping(nullptr)
 {
 		if(!hdcMem)
-				Log.print_err("ERROR in canvas_init(): failed CreateCompatibleDC\n");
+				logf("ERROR in canvas_init(): failed CreateCompatibleDC\n");
 		else
 		{
 				int r=SetBkMode(hdcMem,TRANSPARENT);
-				if(!r)Log.print_err("ERROR in canvas_init(): failed SetBkMode\n");
+				if(!r)logf("ERROR in canvas_init(): failed SetBkMode\n");
 		}
 }
 
@@ -412,7 +418,7 @@ CanvasImp::~CanvasImp()
 		if(hdcMem)
 		{
 				int r=DeleteDC(hdcMem);
-				if(!r)Log.print_err("ERROR in canvas_free(): failed DeleteDC\n");
+				if(!r)logf("ERROR in canvas_free(): failed DeleteDC\n");
 				hdcMem=nullptr;
 		}
 
@@ -421,7 +427,7 @@ CanvasImp::~CanvasImp()
 				//r=(int)SelectObject(hdcMem,oldbitmap);
 				//if(!r)Log.log_err("ERROR in canvas_free(): failed SelectObject\n");
 				int r=DeleteObject(bitmap);
-				if(!r)Log.print_err("ERROR in canvas_free(): failed DeleteObject\n");
+				if(!r)logf("ERROR in canvas_free(): failed DeleteObject\n");
 				bitmap=nullptr;
 		}
 }
@@ -432,7 +438,7 @@ void CanvasImp::begin(p_wnd_handle_type nhwnd,int nx,int ny,bool mirror)
 
 		hwnd=*reinterpret_cast<HWND *>(nhwnd);
 		localDC=BeginPaint(hwnd,&ps);
-		if(!localDC)Log.print_err("ERROR in canvas_begin(): failed BeginPaint\n");
+		if(!localDC)logf("ERROR in canvas_begin(): failed BeginPaint\n");
 
 		if(x!=nx||y!=ny)
 		{
@@ -441,24 +447,24 @@ void CanvasImp::begin(p_wnd_handle_type nhwnd,int nx,int ny,bool mirror)
 				if(bitmap)
 				{
 						HGDIOBJ r=SelectObject(hdcMem,oldbitmap);
-						if(!r)Log.print_err("ERROR in canvas_begin(): failed SelectObject(oldbitmap)\n");
+						if(!r)logf("ERROR in canvas_begin(): failed SelectObject(oldbitmap)\n");
 						r32=DeleteObject(bitmap);
-						if(!r32)Log.print_err("ERROR in canvas_begin(): failed DeleteObject\n");
+						if(!r32)logf("ERROR in canvas_begin(): failed DeleteObject\n");
 				}
 				bitmap=CreateCompatibleBitmap(localDC,x,y);
 				if(!bitmap)
-						Log.print_err("ERROR in canvas_begin(): failed CreateCompatibleBitmap\n");
+						logf("ERROR in canvas_begin(): failed CreateCompatibleBitmap\n");
 				else
 				{
 						oldbitmap=static_cast<HBITMAP>(SelectObject(hdcMem,bitmap));
-						if(!oldbitmap)Log.print_err("ERROR in canvas_begin(): failed SelectObject(bitmap)\n");
+						if(!oldbitmap)logf("ERROR in canvas_begin(): failed SelectObject(bitmap)\n");
 				}
 		}
 		clipping=CreateRectRgnIndirect(&ps.rcPaint);
-		if(!clipping)Log.print_err("ERROR in canvas_begin(): failed BeginPaint\n");
+		if(!clipping)logf("ERROR in canvas_begin(): failed BeginPaint\n");
 		SetStretchBltMode(hdcMem,HALFTONE);
 		r32=SelectClipRgn(hdcMem,clipping);
-		if(!r32)Log.print_err("ERROR in canvas_begin(): failed SelectClipRgn\n");
+		if(!r32)logf("ERROR in canvas_begin(): failed SelectClipRgn\n");
 		if(mirror)
 				SetLayout(hdcMem,rtl?LAYOUT_RTL:0);
 		else
@@ -475,9 +481,9 @@ void CanvasImp::end()
 						 ps.rcPaint.left,ps.rcPaint.top,
 						 SRCCOPY);
 		SelectClipRgn(hdcMem,nullptr);
-		if(!r)Log.print_err("ERROR in canvas_end(): failed BitBlt\n");
+		if(!r)logf("ERROR in canvas_end(): failed BitBlt\n");
 		r=DeleteObject(clipping);
-		if(!r)Log.print_err("ERROR in canvas_end(): failed DeleteObject\n");
+		if(!r)logf("ERROR in canvas_end(): failed DeleteObject\n");
 		EndPaint(hwnd,&ps);
 }
 //}
@@ -610,18 +616,18 @@ void CanvasImp::DrawFilledRect(int x1,int y1,int x2,int y2,int color1,int color2
 		//oldbrush=(HBRUSH)SelectObject(hdcMem,newbrush);
 		if(color1&0xFF000000)(HBRUSH)SelectObject(hdcMem,GetStockObject(NULL_BRUSH));
 
-		if(!oldbrush)Log.print_err("ERROR in drawrect(): failed SelectObject(GetStockObject)\n");
+		if(!oldbrush)logf("ERROR in drawrect(): failed SelectObject(GetStockObject)\n");
 		r32=SetDCBrushColor(hdcMem,color1);
-		if(r32==CLR_INVALID)Log.print_err("ERROR in drawrect(): failed SetDCBrushColor\n");
+		if(r32==CLR_INVALID)logf("ERROR in drawrect(): failed SetDCBrushColor\n");
 
 		newpen=CreatePen(w?PS_SOLID:PS_NULL,w,color2);
 		if(newpen)
 		{
 				oldpen=static_cast<HPEN>(SelectObject(hdcMem,newpen));
-				if(!oldpen)Log.print_err("ERROR in drawrect(): failed SelectObject(newpen)\n");
+				if(!oldpen)logf("ERROR in drawrect(): failed SelectObject(newpen)\n");
 		}
 		else
-				Log.print_err("ERROR in drawrect(): failed CreatePen\n");
+				logf("ERROR in drawrect(): failed CreatePen\n");
 
 		if(rn)
 				RoundRect(hdcMem,x1,y1,x2,y2,rn,rn);
@@ -631,17 +637,17 @@ void CanvasImp::DrawFilledRect(int x1,int y1,int x2,int y2,int color1,int color2
 		if(oldpen)
 		{
 				r=SelectObject(hdcMem,oldpen);
-				if(!r)Log.print_err("ERROR in drawrect(): failed SelectObject(oldpen)\n");
+				if(!r)logf("ERROR in drawrect(): failed SelectObject(oldpen)\n");
 		}
 		if(oldbrush)
 		{
 				r=SelectObject(hdcMem,oldbrush);
-				if(!r)Log.print_err("ERROR in drawrect(): failed SelectObject(oldbrush)\n");
+				if(!r)logf("ERROR in drawrect(): failed SelectObject(oldbrush)\n");
 		}
 		if(newpen)
 		{
 				r32=DeleteObject(newpen);
-				if(!r32)Log.print_err("ERROR in drawrect(): failed DeleteObject(newpen)\n");
+				if(!r32)logf("ERROR in drawrect(): failed DeleteObject(newpen)\n");
 		}
 }
 
@@ -649,13 +655,13 @@ void CanvasImp::DrawWidget(int x1,int y1,int x2,int y2,int id)
 {
 		if(id<0||id>=BOX_NUM)
 		{
-				Log.print_err("ERROR in box_draw(): invalid id=%d\n",id);
+				logf("ERROR in box_draw(): invalid id=%d\n",id);
 				return;
 		}
 		int i=boxindex[id];
 		if(i<0||i>=THEME_NM)
 		{
-				Log.print_err("ERROR in box_draw(): invalid index=%d\n",i);
+				logf("ERROR in box_draw(): invalid index=%d\n",i);
 				return;
 		}
 		DrawFilledRect(x1,y1,x2,y2,D_C(i),D_C(i+1),D_1(i+2),D_X(i+3));
@@ -764,7 +770,7 @@ void Popup_t::drawpopup(size_t itembar,int str_id,int type,int x,int y,HWND hwnd
 
 		if((type==FLOATING_CMPDRIVER||type==FLOATING_DRIVERLST)&&itembar==0)type=FLOATING_NONE;
 		auto floating_string = *STR(str_id);
-		//Log.print_debug("%S\n", floating_string);
+		//logf("%S\n", floating_string);
 		if(type==FLOATING_TOOLTIP && (str_id<=1 || !floating_string)) type=FLOATING_NONE;
 
 		if(rtl)p.x+=floating_x;

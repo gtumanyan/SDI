@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -13,17 +13,20 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "com_header.h"
-#include "common.h"
-#include "logging.h"
+#include "utils/BaseUtil.h"
+#include "utils/WinUtil.h"
+#include "utils/Log.h"
+#include "SDI.h"
 #include "system.h"
-#include "settings.h"
+#include "Settings.h"
 #include "indexing.h"
 #include "theme.h"
 #include "gui.h"
 #include "draw.h" // for rtl
+#include "VersionEx.h"
 
-#include "7zip.h"
+
+#include "Lzma86.h"
 #include "device.h"
 #include <windows.h>
 
@@ -78,15 +81,15 @@ void Device::print_guid(const GUID *g)
 
     if(!SetupDiGetClassDescription(g,buffer.GetV(),static_cast<DWORD>(buffer.Length()),nullptr))
     {
-        Log.print_file("%08lX-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X",g->Data1,g->Data2,g->Data3,
+        logf("%08lX-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X",g->Data1,g->Data2,g->Data3,
             g->Data4[0],g->Data4[1],
             g->Data4[2],g->Data4[3],g->Data4[4],
             g->Data4[5],g->Data4[6],g->Data4[7]);
 
-        unsigned lr=GetLastError();
-        if(lr!=0xE0000206)Log.print_syserr(lr,L"print_guid()");
+        DWORD err =GetLastError();
+        if(err!=0xE0000206)LogLastError(err);
     }
-    Log.print_file("%S\n",buffer.Get());
+    logf("%S\n",buffer.Get());
 }
 
 void Device::read_device_property(HDEVINFO hDevInfo,State *state,int id,ofst *val)
@@ -103,8 +106,9 @@ void Device::read_device_property(HDEVINFO hDevInfo,State *state,int id,ofst *va
         if(ret_er==ERROR_INVALID_DATA)return;
         if(ret_er!=ERROR_INSUFFICIENT_BUFFER)
         {
-            Log.print_file("Property %d\n",id);
-            Log.print_syserr(ret_er,L"read_device_property()");
+            logf("Property %d\n",id);
+            LogLastError();
+            log("read_device_property()");
             return;
         }
     }
@@ -121,9 +125,9 @@ void Device::read_device_property(HDEVINFO hDevInfo,State *state,int id,ofst *va
     }
     if(!SetupDiGetDeviceRegistryProperty(hDevInfo,DeviceInfoDataloc,id,&DataT,p,buffersize,&buffersize))
     {
-        int ret_er=GetLastError();
-        Log.print_file("Property %d\n",id);
-        Log.print_syserr(ret_er,L"read_device_property()");
+        logf("Property %d\n",id);
+        LogLastError();
+        log("read_device_property()");
         return;
     }
 }
@@ -170,16 +174,16 @@ void Device::print(const State *state)
     };
 
     const Txt *txt=&state->textas;
-    Log.print_file("DeviceInfo\n");
-    Log.print_file("  Name:         %S\n",txt->get(Devicedesc));
-    Log.print_file("  Status:       ");
-    Log.print_file(deviceststus_str[print_status()],problem);
-    Log.print_file("\n  Manufacturer: %S\n",txt->getw(Mfg));
-    Log.print_file("  HWID_reg      %S\n",txt->getw(Driver));
-    Log.print_file("  Class:        ");print_guid(&DeviceInfoData.ClassGuid);
-    Log.print_file("  Location:     \n");
-    Log.print_file("  ConfigFlags:  %d\n",ConfigFlags);
-    Log.print_file("  Capabilities: %d\n",Capabilities);
+    log("DeviceInfo\n");
+    logf("  Name:         %S\n",txt->get(Devicedesc));
+    log("  Status:       ");
+    logf(deviceststus_str[print_status()],problem);
+    logf("\n  Manufacturer: %S\n",txt->getw(Mfg));
+    logf("  HWID_reg      %S\n",txt->getw(Driver));
+    log("  Class:        ");print_guid(&DeviceInfoData.ClassGuid);
+    log("  Location:     \n");
+    logf("  ConfigFlags:  %d\n",ConfigFlags);
+    logf("  Capabilities: %d\n",Capabilities);
 }
 
 void Device::printHWIDS(const State *state)
@@ -187,25 +191,25 @@ void Device::printHWIDS(const State *state)
     if(HardwareID)
     {
         const wchar_t *p=state->textas.getw(HardwareID);
-        Log.print_file("HardwareID\n");
+        log("HardwareID\n");
         while(*p)
         {
-            Log.print_file("  %S\n",p);
+            logf("  %S\n",p);
             p+=wcslen(p)+1;
         }
     }
     else
     {
-        Log.print_file("NoID\n");
+        log("NoID\n");
     }
 
     if(CompatibleIDs)
     {
         const wchar_t *p=state->textas.getw(CompatibleIDs);
-        Log.print_file("CompatibleID\n");
+        log("CompatibleID\n");
         while(*p)
         {
-            Log.print_file("  %S\n",p);
+            logf("  %S\n",p);
             p+=wcslen(p)+1;
         }
     }
@@ -248,7 +252,7 @@ driver_index(-1),Devicedesc(0),HardwareID(0),CompatibleIDs(0),Driver(0),
         Mfg(0),FriendlyName(0),Capabilities(0),ConfigFlags(0),
         InstanceId(0),status(0),problem(0),ret(0)
 {
-    wchar_t buf[BUFLEN];
+    wchar_t buf[86];
 
     //wsprintf(buf,L"%S",ex.GetHWID());
     //Log.print_con("Fake '%S'\n",buf);
@@ -289,7 +293,7 @@ Device::Device(HDEVINFO hDevInfo,State *state,int i)
     ret=CM_Get_DevNode_Status(&status,&problem,DeviceInfoDataloc->DevInst,0);
     if(ret!=CR_SUCCESS)
     {
-        Log.print_err("ERROR %d with CM_Get_DevNode_Status()\n",ret);
+        logf("ERROR %d with CM_Get_DevNode_Status()\n",ret);
     }
 }
 //}
@@ -302,20 +306,24 @@ void Driver::read_reg_val(HKEY hkey,State *state,const wchar_t *key,ofst *val)
 
     *val=0;
     lr=RegQueryValueEx(hkey,key,nullptr,nullptr,nullptr,&dwSize);
-    if(lr==ERROR_FILE_NOT_FOUND)return;
-    if(lr!=ERROR_SUCCESS)
+    if(lr!=ERROR_FILE_NOT_FOUND)
     {
-        Log.print_err("Key %S\n",key);
-        Log.print_syserr(lr,L"RegQueryValueEx()");
-        return;
-    }
+            if(lr!=ERROR_SUCCESS)
+        {
+        	logf("Key %S\n",key);
+        	LogLastError(lr);
+        	log("RegQueryValueEx()");
+        	return;
+    	}
 
-    *val=static_cast<ofst>(state->textas.alloc(dwSize));
-    lr=RegQueryValueEx(hkey,key,nullptr,&dwType,(unsigned char*)state->textas.get(*val),&dwSize);
-    if(lr!=ERROR_SUCCESS)
-    {
-        Log.print_err("Key %S\n",key);
-        Log.print_syserr(lr,L"read_reg_val()");
+        *val=static_cast<ofst>(state->textas.alloc(dwSize));
+        lr=RegQueryValueEx(hkey,key,nullptr,&dwType,(unsigned char*)state->textas.get(*val),&dwSize);
+        if(lr!=ERROR_SUCCESS)
+        {
+        	logf("Key %S\n",key);
+        	LogLastError(lr);
+        	log("read_reg_val()");
+        }
     }
 }
 
@@ -339,7 +347,7 @@ void Driver::scaninf(State *state,Driverpack *unpacked_drp,int &inf_pos)
     if(got!=inf_list->end())
     {
         infdata_t *infdata=&got->second;
-        //log_file("Match_hwid '%S' %d,%d,%d,%d\n",fnm_hwid.Get(),infdata->feature,infdata->catalogfile,infdata->cat,infdata->inf_pos);
+        logf("Match_hwid '%S' %d,%d,%d,%d\n",fnm_hwid.Get(),infdata->feature,infdata->catalogfile,infdata->cat,infdata->inf_pos);
         feature=infdata->feature;
         catalogfile=infdata->catalogfile;
         cat=infdata->cat;
@@ -347,25 +355,25 @@ void Driver::scaninf(State *state,Driverpack *unpacked_drp,int &inf_pos)
         return;
     }
 
-    got=inf_list->find(std::wstring(filename.Get()));
+    got = inf_list->find(std::wstring(filename.Get()));
     if(got!=inf_list->end())
     {
         infdata_t *infdata=&got->second;
         cat=infdata->cat;
         catalogfile=infdata->catalogfile;
         start_index=infdata->start_index;
-        //log_file("Match_inf  '%S',%d,%d\n",filename.Get(),cat,catalogfile);
+        logf("Match_inf  '%S',%d,%d\n",filename.Get(),cat,catalogfile);
     }
     else
     {
         FILE *f;
         size_t len;
 
-        //log_file("Reading '%S' for (%S)\n",filename.Get(),state->textas.get(MatchingDeviceId));
+        logf("Reading '%S' for (%S)\n",filename.Get(),state->textas.get(MatchingDeviceId));
         f=_wfopen(filename.Get(),L"rb");
         if(!f)
         {
-            Log.print_err("ERROR: file not found '%S'\n",filename.Get());
+            logf("ERROR: file not found '%S'\n",filename.Get());
             return;
         }
         _fseeki64(f,0,SEEK_END);
@@ -473,17 +481,16 @@ void Driver::print(const State *state)const
 
     version.str_date(date);
     version.str_version(vers);
-    Log.print_file("  Name:     %S\n",txt->getw(DriverDesc));
-    Log.print_file("  Provider: %S\n",txt->getw(ProviderName));
-    Log.print_file("  Date:     %S\n",date.Get());
-    Log.print_file("  Version:  %S\n",vers.Get());
-    Log.print_file("  HWID:     %S\n",txt->getw(MatchingDeviceId));
-    Log.print_file("  inf:      %S%S,%S%S\n",txt->getw(state->getWindir()),txt->getw(InfPath),txt->getw(InfSection),txt->getw(InfSectionExt));
-    Log.print_file("  Score:    %08X %04x\n",calc_score_h(state),identifierscore);
-    //Log.print_file("  Sign:     '%s'(%d)\n",txt->get(cat),catalogfile);
+    logf("  Name:     %S\n",txt->getw(DriverDesc));
+    logf("  Provider: %S\n",txt->getw(ProviderName));
+    logf("  Date:     %S\n",date.Get());
+    logf("  Version:  %S\n",vers.Get());
+    logf("  HWID:     %S\n",txt->getw(MatchingDeviceId));
+    logf("  inf:      %S%S,%S%S\n",txt->getw(state->getWindir()),txt->getw(InfPath),txt->getw(InfSection),txt->getw(InfSectionExt));
+    logf("  Score:    %08X %04x\n",calc_score_h(state),identifierscore);
+    //logf("  Sign:     '%s'(%d)\n",txt->get(cat),catalogfile);
 
-    if(Log.isAllowed(LOG_VERBOSE_BATCH))
-        Log.print_file("  Filter:   \"%S\"=a,%S\n",txt->getw(DriverDesc),txt->getw(MatchingDeviceId));
+    logf("  Filter:   \"%S\"=a,%S\n",txt->getw(DriverDesc),txt->getw(MatchingDeviceId));
 }
 
 int calc_identifierscore(int dev_pos,int dev_ishw,int inf_pos)
@@ -625,94 +632,94 @@ void State::print()
     wchar_t *buf;
     SYSTEM_POWER_STATUS *batteryloc;
 
-    if(Log.isAllowed(LOG_VERBOSE_SYSINFO|LOG_VERBOSE_BATCH))
+   /* if(Log.isAllowed(LOG_VERBOSE_SYSINFO|LOG_VERBOSE_BATCH))
     {
-        Log.print_file("%S (%d.%d.%d), ",get_winverstr(),platform.dwMajorVersion,platform.dwMinorVersion,platform.dwBuildNumber);
-        Log.print_file("%s\n",architecture?"64-bit":"32-bit");
-        Log.print_file("%s, ",isLaptop?"Laptop":"Desktop");
-        Log.print_file("Product='%S', ",textas.getw(product));
-        Log.print_file("Model='%S', ",textas.get(model));
-        Log.print_file("Manuf='%S'\n",textas.get(manuf));
-    }else
-    if(Log.isAllowed(LOG_VERBOSE_SYSINFO))
+   */  logf("%S (%d.%d.%d), ",get_winverstr(),platform.dwMajorVersion,platform.dwMinorVersion,platform.dwBuildNumber);
+       logf("%s\n",architecture?"64-bit":"32-bit");
+       logf("%s, ",isLaptop?"Laptop":"Desktop");
+       logf("Product='%S', ",textas.getw(product));
+       logf("Model='%S', ",textas.get(model));
+       logf("Manuf='%S'\n",textas.get(manuf));
+    //}else
+    /*if(Log.isAllowed(LOG_VERBOSE_SYSINFO))
     {
-        Log.print_file("Windows\n");
-        Log.print_file("  Version:     %S (%d.%d.%d)\n",get_winverstr(),platform.dwMajorVersion,platform.dwMinorVersion,platform.dwBuildNumber);
-        Log.print_file("  PlatformId:  %d\n",platform.dwPlatformId);
-        Log.print_file("  Update:      %S\n",platform.szCSDVersion);
+    */ log("Windows\n");
+       logf("  Version:     %S (%d.%d.%d)\n",get_winverstr(),platform.dwMajorVersion,platform.dwMinorVersion,platform.dwBuildNumber);
+       logf("  PlatformId:  %d\n",platform.dwPlatformId);
+       logf("  Update:      %S\n",platform.szCSDVersion);
         if(platform.dwOSVersionInfoSize == sizeof(OSVERSIONINFOEX))
         {
-            Log.print_file("  ServicePack: %d.%d\n",platform.wServicePackMajor,platform.wServicePackMinor);
-            Log.print_file("  SuiteMask:   %d\n",platform.wSuiteMask);
-            Log.print_file("  ProductType: %d\n",platform.wProductType);
+           logf("  ServicePack: %d.%d\n",platform.wServicePackMajor,platform.wServicePackMinor);
+           logf("  SuiteMask:   %d\n",platform.wSuiteMask);
+           logf("  ProductType: %d\n",platform.wProductType);
         }
-        Log.print_file("\nEnvironment\n");
-        Log.print_file("  windir:      %S\n",textas.get(windir));
-        Log.print_file("  temp:        %S\n",textas.get(temp));
+       log("\nEnvironment\n");
+       logf("  windir:      %S\n",textas.get(windir));
+       logf("  temp:        %S\n",textas.get(temp));
 
-        Log.print_file("\nMotherboard\n");
-        Log.print_file("  Product:     %S\n",textas.get(product));
-        Log.print_file("  Model:       %S\n",textas.get(model));
-        Log.print_file("  Manuf:       %S\n",textas.get(manuf));
-        Log.print_file("  cs_Model:    %S\n",textas.get(cs_model));
-        Log.print_file("  cs_Manuf:    %S\n",textas.get(cs_manuf));
-        Log.print_file("  Chassis:     %d\n",ChassisType);
+       log("\nMotherboard\n");
+       logf("  Product:     %S\n",textas.get(product));
+       logf("  Model:       %S\n",textas.get(model));
+       logf("  Manuf:       %S\n",textas.get(manuf));
+       logf("  cs_Model:    %S\n",textas.get(cs_model));
+       logf("  cs_Manuf:    %S\n",textas.get(cs_manuf));
+       logf("  Chassis:     %d\n",ChassisType);
 
-        Log.print_file("\nBattery\n");
+       log("\nBattery\n");
         batteryloc=(SYSTEM_POWER_STATUS *)(textas.get(battery));
-        Log.print_file("  AC_Status:   ");
+       log("  AC_Status:   ");
         switch(batteryloc->ACLineStatus)
         {
-            case 0:Log.print_file("Offline\n");break;
-            case 1:Log.print_file("Online\n");break;
+            case 0:log("Offline\n");break;
+            case 1:log("Online\n");break;
             default:
-            case 255:Log.print_file("Unknown\n");break;
+            case 255:log("Unknown\n");break;
         }
         i=batteryloc->BatteryFlag;
-        Log.print_file("  Flags:       %d",i);
-        if(i&1)Log.print_file("[high]");
-        if(i&2)Log.print_file("[low]");
-        if(i&4)Log.print_file("[critical]");
-        if(i&8)Log.print_file("[charging]");
-        if(i&128)Log.print_file("[no battery]");
-        if(i==255)Log.print_file("[unknown]");
-        Log.print_file("\n");
+       logf("  Flags:       %d",i);
+        if(i&1)log("[high]");
+        if(i&2)log("[low]");
+        if(i&4)log("[critical]");
+        if(i&8)log("[charging]");
+        if(i&128)log("[no battery]");
+        if(i==255)log("[unknown]");
+       log("\n");
         if(batteryloc->BatteryLifePercent!=255)
-            Log.print_file("  Charged:      %d\n",batteryloc->BatteryLifePercent);
+           logf("  Charged:      %d\n",batteryloc->BatteryLifePercent);
         if(batteryloc->BatteryLifeTime!=static_cast<DWORD>(-1))
-            Log.print_file("  LifeTime:     %d mins\n",batteryloc->BatteryLifeTime/60);
+           logf("  LifeTime:     %d mins\n",batteryloc->BatteryLifeTime/60);
         if(batteryloc->BatteryFullLifeTime!=static_cast<DWORD>(-1))
-            Log.print_file("  FullLifeTime: %d mins\n",batteryloc->BatteryFullLifeTime/60);
+           logf("  FullLifeTime: %d mins\n",batteryloc->BatteryFullLifeTime/60);
 
         buf=textas.getwV(monitors);
-        Log.print_file("\nMonitors\n");
+       log("\nMonitors\n");
         for(i=0;i<buf[0];i++)
         {
             int x=buf[1+i*2];
             int y=buf[2+i*2];
-            Log.print_file("  %dcmx%dcm (%.1fin)\t%.3f %s\n",x,y,sqrt(x*x+y*y)/2.54,(double)y/x,iswide(x,y)?"wide":"");
+           logf("  %dcmx%dcm (%.1fin)\t%.3f %s\n",x,y,sqrt(x*x+y*y)/2.54,(double)y/x,iswide(x,y)?"wide":"");
         }
 
-        Log.print_file("\nMisc\n");
-        Log.print_file("  Type:        %s\n",isLaptop?"Laptop":"Desktop");
-        Log.print_file("  Locale:      %X\n",locale);
-        Log.print_file("  CPU_Arch:    %s\n",architecture?"64-bit":"32-bit");
-        Log.print_file("\n");
-    }
+       log("\nMisc\n");
+       logf("  Type:        %s\n",isLaptop?"Laptop":"Desktop");
+       logf("  Locale:      %X\n",locale);
+       logf("  CPU_Arch:    %s\n",architecture?"64-bit":"32-bit");
+       log("\n");
+    //}
 
-    if(Log.isAllowed(LOG_VERBOSE_DEVICES))
+    //if(Log.isAllowed(LOG_VERBOSE_DEVICES))
     for(auto &cur_device:Devices_list)
     {
         cur_device.print(this);
 
-        Log.print_file("DriverInfo\n");
+        log("DriverInfo\n");
         if(cur_device.getDriverIndex()>=0)
             Drivers_list[cur_device.getDriverIndex()].print(this);
         else
-            Log.print_file("  NoDriver\n");
+            log("  NoDriver\n");
 
         cur_device.printHWIDS(this);
-        Log.print_file("\n\n");
+        log("\n\n");
     }
 
     //Log.print_con("State: %d+%d+%d*%d+%d*%d\n",sizeof(State),textas.getSize(),Devices_list.size(),sizeof(Device),Drivers_list.size(),sizeof(Driver));
@@ -856,16 +863,16 @@ int State::save(const wchar_t *filename)
     int version=VER_STATE;
 
     if(Settings.flags&FLAG_NOSNAPSHOT)return 0;
-    Log.print_con("Saving state in '%S'...",filename);
+    logf("Saving state in '%S'...",filename);
     if(!System.canWriteFile(filename,L"wb"))
     {
-        Log.print_err("ERROR in state_save(): Write-protected,'%S'\n",filename);
+        logf("ERROR in state_save(): Write-protected,'%S'\n",filename);
         return 1;
     }
     f=_wfopen(filename,L"wb");
     if(!f)
     {
-        Log.print_err("ERROR in state_save(): failed _wfopen(%S)\n",errno_str());
+        //logf("ERROR in state_save(): failed _wfopen(%S)\n",errno_str());
         return 1;
     }
 
@@ -896,22 +903,22 @@ int State::save(const wchar_t *filename)
     //else fwrite(mem.get(),sz,1,f);
 
     fclose(f);
-    Log.print_con("OK\n");
+    log("OK\n");
     return 0;
 }
 
-int  State::load(const wchar_t *filename)
+int State::load(const wchar_t *filename)
 {
     char buf[BUFLEN];
     FILE *f;
     size_t sz;
     int version;
 
-    Log.print_con("Loading state from '%S'...",filename);
+    logf("Loading state from %S...",filename);
     f=_wfopen(filename,L"rb");
     if(!f)
     {
-        Log.print_err("ERROR in State::load(): failed _wfopen(%S)\n",errno_str());
+        //logf("ERROR in State::load(): failed _wfopen(%S)\n",errno_str());
         return 0;
     }
 
@@ -925,12 +932,12 @@ int  State::load(const wchar_t *filename)
 
     if(memcmp(buf,VER_MARKER,3)!=0)
     {
-        Log.print_err("ERROR in State::load(): invalid snapshot\n");
+        log("ERROR in State::load(): invalid snapshot\n");
         return 0;
     }
     if(version!=VER_STATE)
     {
-        Log.print_err("ERROR in State::load(): invalid version(%d)\n",version);
+        logf("ERROR in State::load(): invalid version(%d)\n",version);
         return 0;
     }
 
@@ -954,24 +961,23 @@ int  State::load(const wchar_t *filename)
     fakeOSversion();
 
     fclose(f);
-    Log.print_con("OK\n");
+    log("OK\n");
     return 1;
 }
 
 void State::getsysinfo_fast()
 {
-    Log.print_debug("State::getsysinfo_fast\n");
+    log("State::getsysinfo_fast\n");
     wchar_t buf[BUFLEN];
-    HKEY   hkey;
 
     // Battery
-    Log.print_debug("State::getsysinfo_fast::GetSystemPowerStatus\n");
+    log("State::getsysinfo_fast::GetSystemPowerStatus\n");
     battery=static_cast<ofst>(textas.alloc(sizeof(SYSTEM_POWER_STATUS)));
     SYSTEM_POWER_STATUS *batteryloc=(SYSTEM_POWER_STATUS *)(textas.get(battery));
     GetSystemPowerStatus(batteryloc);
 
     // Monitors
-    Log.print_debug("State::getsysinfo_fast::Monitors\n");
+    log("State::getsysinfo_fast::Monitors\n");
     DISPLAY_DEVICE DispDev;
     memset(&DispDev,0,sizeof(DispDev));
     DispDev.cb=sizeof(DispDev);
@@ -992,53 +998,31 @@ void State::getsysinfo_fast()
     monitors=static_cast<ofst>(textas.t_memcpy((char *)buf,(1+buf[0]*2)*2));
 
     // Windows version
-    Log.print_debug("State::getsysinfo_fast::Windows\n");
+    log("State::getsysinfo_fast::Windows\n");
 #ifdef _MSC_VER
 #pragma warning(push)
-#pragma warning(disable:4996)
+#pragma warning(disable:4996)  // 'GetVersionEx': was declared deprecated
 #endif
-    platform.dwOSVersionInfoSize=sizeof(OSVERSIONINFOEX);
-    if(!(GetVersionEx((OSVERSIONINFO*)&platform)))
-    {
-        platform.dwOSVersionInfoSize=sizeof(OSVERSIONINFO);
-        if(!GetVersionEx((OSVERSIONINFO*)&platform))
-            Log.print_syserr(GetLastError(),L"GetVersionEx()");
-    }
+     //platform.dwOSVersionInfoSize=sizeof(OSVERSIONINFOEX);
+     OSVERSIONINFO WinVer;
+     WinVer.dwOSVersionInfoSize = sizeof(WinVer);
+     //if(!(GetVersionEx((OSVERSIONINFO*)&platform)))
+     GetVersionEx(&WinVer);
+    // {
+    //    platform.dwOSVersionInfoSize=sizeof(OSVERSIONINFO);
+    //    if(!GetVersionEx((OSVERSIONINFO*)&platform))
+    //        .print_syserr(GetLastError(),L"GetVersionEx()");
+    //}
 
     // Windows 11
-    wsprintf(buf,L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion");
-    int ret=RegOpenKeyEx(HKEY_LOCAL_MACHINE,buf,0,KEY_QUERY_VALUE,&hkey);
-    if(ret==ERROR_SUCCESS)
-    {
-        // build number
-        wchar_t currentbuild[MAX_PATH];
-        DWORD size=MAX_PATH;
-        RegQueryValueEx(hkey,L"CurrentBuild",nullptr,nullptr,(LPBYTE)&currentbuild,&size);
-        wchar_t* endString;
-        DWORD build=wcstoul(currentbuild, &endString, 10);
-        // only change the platform info if I detect windows 11
-        if(build>=22000)
+    //wsprintf(buf,L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion");
+    //int ret=RegOpenKeyEx(HKEY_LOCAL_MACHINE,buf,0,KEY_QUERY_VALUE,&hkey);
+    if(WinVer.dwMajorVersion > 10 || WinVer.dwMajorVersion == 10 && WinVer.dwBuildNumber >= 22000)
         {
-            platform.dwBuildNumber=build;
             // major version
+            // only change if windows 11 detected
             platform.dwMajorVersion=(DWORD)11;
-            // minor version
-            platform.dwMinorVersion=0;
-            //DWORD dwData;
-            //DWORD cbData=sizeof(DWORD);
-            //DWORD dwType=REG_DWORD;
-            //RegQueryValueEx(hkey,L"UBR",nullptr,&dwType,(LPBYTE)&dwData,&cbData);
-            //platform.dwMinorVersion=dwData;
-            // display version can be "DisplayVersion" or "ReleaseId"
-            //wchar_t displayversion[MAX_PATH];
-            //RegQueryValueEx(hkey,L"DisplayVersion",nullptr,nullptr,(LPBYTE)&displayversion,&size);
-            //
-            //wchar_t releaseid[MAX_PATH];
-            //RegQueryValueEx(hkey,L"ReleaseId",nullptr,nullptr,(LPBYTE)&releaseid,&size);
         }
-    }
-    RegCloseKey(hkey);
-    //Log.print_con("Windows v%d.%d.%d\n",platform.dwMajorVersion,platform.dwMinorVersion,platform.dwBuildNumber);
 
 
     locale=GetUserDefaultLCID();
@@ -1047,10 +1031,10 @@ void State::getsysinfo_fast()
 #endif
 
     // Environment
-    Log.print_debug("State::getsysinfo_fast::Environment\n");
+    log("State::getsysinfo_fast::Environment\n");
     GetEnvironmentVariable(L"windir",buf,BUFLEN);
     wcscat(buf,L"\\inf\\");
-    windir=static_cast<ofst>(textas.strcpyw(buf));
+    windir = static_cast<ofst>(textas.strcpyw(buf));
 
     // get the system drive
     wchar_t systemDrive[BUFLEN]={0};
@@ -1067,7 +1051,7 @@ void State::getsysinfo_fast()
     temp=static_cast<ofst>(textas.strcpyw(buf));
 
     // 64-bit detection
-    Log.print_debug("State::getsysinfo_fast::Architecture\n");
+    log("State::getsysinfo_fast::Architecture\n");
     architecture=0;
     *buf=0;
     GetEnvironmentVariable(L"PROCESSOR_ARCHITECTURE",buf,BUFLEN);
@@ -1081,16 +1065,16 @@ void State::getsysinfo_fast()
 
 void State::getsysinfo_slow()
 {
-    Log.print_debug("State::getsysinfo_slow\n");
+    log("State::getsysinfo_slow\n");
     WStringShort smanuf;
     WStringShort smodel;
     WStringShort sproduct;
     WStringShort scs_manuf;
     WStringShort scs_model;
 
-    Timers.start(time_sysinfo);
+    //Timers.start(time_sysinfo);
 
-    Log.print_debug("State::getsysinfo_slow1::getbaseboard\n");
+    log("State::getsysinfo_slow1::getbaseboard\n");
     getbaseboard(smanuf,smodel,sproduct,scs_manuf,scs_model,&ChassisType);
 
     manuf=static_cast<ofst>(textas.strcpyw(smanuf.Get()));
@@ -1099,20 +1083,20 @@ void State::getsysinfo_slow()
     cs_manuf=static_cast<ofst>(textas.strcpyw(scs_manuf.Get()));
     cs_model=static_cast<ofst>(textas.strcpyw(scs_model.Get()));
 
-    Log.print_debug("State::getsysinfo_slow1::getbaseboard::manuf::%S\n",smanuf.Get());
-    Log.print_debug("State::getsysinfo_slow1::getbaseboard::product::%S\n",sproduct.Get());
-    Log.print_debug("State::getsysinfo_slow1::getbaseboard::model::%S\n",smodel.Get());
-    Log.print_debug("State::getsysinfo_slow1::getbaseboard::cs_manuf::%S\n",scs_manuf.Get());
-    Log.print_debug("State::getsysinfo_slow1::getbaseboard::cs_model::%S\n",scs_model.Get());
+    logf("State::getsysinfo_slow1::getbaseboard::manuf::%S\n",smanuf.Get());
+    logf("State::getsysinfo_slow1::getbaseboard::product::%S\n",sproduct.Get());
+    logf("State::getsysinfo_slow1::getbaseboard::model::%S\n",smodel.Get());
+    logf("State::getsysinfo_slow1::getbaseboard::cs_manuf::%S\n",scs_manuf.Get());
+    logf("State::getsysinfo_slow1::getbaseboard::cs_model::%S\n",scs_model.Get());
 
-    Timers.stop(time_sysinfo);
-    Log.print_debug("State::getsysinfo_slow1::Done\n");
+    //Timers.stop(time_sysinfo);
+    log("State::getsysinfo_slow1::Done\n");
 }
 
 void State::getsysinfo_slow(const State *prev)
 {
-    Log.print_debug("State::getsysinfo_slow2\n");
-    Timers.reset(time_sysinfo);
+    log("State::getsysinfo_slow2\n");
+    //Timers.reset(time_sysinfo);
     manuf=static_cast<ofst>(textas.strcpyw(prev->textas.getw(prev->manuf)));
     product=static_cast<ofst>(textas.strcpyw(prev->textas.getw(prev->product)));
     model=static_cast<ofst>(textas.strcpyw(prev->textas.getw(prev->model)));
@@ -1122,21 +1106,22 @@ void State::getsysinfo_slow(const State *prev)
 
 void State::scanDevices()
 {
-    //Log.print_debug("State::scanDevices\n");
+    //log("State::scanDevices\n");
     HDEVINFO hDevInfo;
     HKEY   hkey;
     wchar_t buf[BUFLEN];
     Collection collection{textas.getw(windir),L"",L""};
     Driverpack unpacked_drp{L"",L"windir.7z",&collection};
 
-    Timers.start(time_devicescan);
+    //Timers.start(time_devicescan);
     //collection.init(textas.getw(windir),L"",L"");
 
-    //Log.print_debug("State::scanDevices::SetupDiGetClassDevs\n");
+    //log("State::scanDevices::SetupDiGetClassDevs\n");
     hDevInfo=SetupDiGetClassDevs(nullptr,nullptr,nullptr,DIGCF_PRESENT|DIGCF_ALLCLASSES);
     if(hDevInfo==INVALID_HANDLE_VALUE)
     {
-        Log.print_syserr(GetLastError(),L"SetupDiGetClassDevs()");
+        log("scanDevices: SetupDiGetClassDevs() failed\n");
+        LogLastError();
         return;
     }
 
@@ -1160,7 +1145,7 @@ void State::scanDevices()
         // Driver
         if(!cur_device->getDriver())continue;
         wsprintf(buf,L"SYSTEM\\CurrentControlSet\\Control\\Class\\%s",textas.getw(cur_device->getDriver()));
-        //Log.print_debug("State::scanDevices::Driver::%S\n",buf);
+        //logf("State::scanDevices::Driver::%S\n",buf);
         ret=RegOpenKeyEx(HKEY_LOCAL_MACHINE,buf,0,KEY_QUERY_VALUE,&hkey);
         switch(ret)
         {
@@ -1170,7 +1155,8 @@ void State::scanDevices()
                 break;
 
             default:
-                Log.print_syserr(ret,L"RegOpenKeyEx()");
+                log("RegOpenKeyEx()");
+                LogLastError(ret);
 
             case ERROR_FILE_NOT_FOUND:
                 break;
@@ -1179,17 +1165,17 @@ void State::scanDevices()
         DeviceCount++;
     }
 
-    Log.print_debug("State::scanDevices::Count::%d\n",DeviceCount);
-    Log.print_debug("State::scanDevices::SetupDiDestroyDeviceInfoList\n");
+    logf("State::scanDevices::Count::%d\n",DeviceCount);
+    log("State::scanDevices::SetupDiDestroyDeviceInfoList\n");
     if(SetupDiDestroyDeviceInfoList(hDevInfo))
-        Log.print_debug("State::scanDevices::SetupDiDestroyDeviceInfoList::Success\n");
+        log("State::scanDevices::SetupDiDestroyDeviceInfoList::Success\n");
     else
     {
         DWORD error=GetLastError();
-        Log.print_debug("State::scanDevices::SetupDiDestroyDeviceInfoList::Error:%d\n",error);
+        logf("State::scanDevices::SetupDiDestroyDeviceInfoList::Error:%d\n",error);
     }
-    Timers.stop(time_devicescan);
-    Log.print_debug("State::scanDevices::Done\n");
+    //Timers.stop(time_devicescan);
+    log("State::scanDevices::Done\n");
 }
 
 void State::init()
@@ -1223,7 +1209,7 @@ size_t State::opencatfile(const Driver *cur_driver)
     wcscpy(filename+wcslen(filename)-3,L"cat");
 
     f=_wfopen(filename,L"rb");
-    //Log.print_con("Open '%S'\n",filename);
+    //logf("Open '%S'\n",filename);
     if(f)
     {
         _fseeki64(f,0,SEEK_END);
