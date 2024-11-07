@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -15,10 +15,10 @@ You should have received a copy of the GNU General Public License
 along with Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "com_header.h"
-#include "common.h"
-#include "logging.h"
-#include "settings.h"
+#include "utils/BaseUtil.h"
+#include "utils/Log.h"
+#include "Settings.h"
+#include "SDI.h"
 #include "system.h"
 #include "theme.h"
 #include "draw.h"
@@ -40,11 +40,11 @@ Vaul *vTheme;
 
 Vaul *CreateVaultLang(entry_t *entry,size_t num,int res)
 {
-		return new VaultLang(entry,num,res,WM_UPDATELANG,L"langs");
+		return new VaultLang(entry,num,res,WM_UPDATELANG,L"Langs");
 }
 Vaul *CreateVaultTheme(entry_t *entry,size_t num,int res)
 {
-		return new VaultTheme(entry,num,res,WM_UPDATETHEME,L"themes");
+		return new VaultTheme(entry,num,res,WM_UPDATETHEME,L"Themes");
 }
 
 //{ Vault
@@ -115,7 +115,7 @@ void VaultImp::parse()
 				int r=findvar(lhs);
 				if(r<0)
 				{
-						Log.print_err("ERROR: unknown var '%S'\n",lhs);
+						logf("ERROR: unknown var '%S'\n",lhs);
 				}else
 				{
 						wchar_t *r1;
@@ -158,7 +158,8 @@ void VaultImp::parse()
 						else                // Number
 						{
 								int val=readvalue(rhs);
-								//if(!entry[r].init&&entry[r].val==val)Log.print_err("WARNNING: double definition for '%S'\n",lhs);
+								if(!entry[r].init&& std::get<int>(entry[r].value)==val)
+                                    logf("WARNING: double definition for '%S'\n",lhs);
 								entry[ri].value=val;
 								entry[ri].init=2;
 						}
@@ -166,7 +167,7 @@ void VaultImp::parse()
 				lhs=le+1; // next line
 		}
 		odata_ptr=std::move(data_ptr);
-		//data_ptr.reset(datav);
+		//data_ptr.reset(datav_ptr);
 		data_ptr=std::move(datav_ptr);
 }
 
@@ -185,7 +186,7 @@ bool VaultImp::loadFromEncodedFile(const wchar_t *filename)
 		FILE *f=_wfopen(filename,L"rb");
 		if(!f)
 		{
-				Log.print_err("ERROR in loadfile(): failed _wfopen(%S)\n",filename);
+				logf("ERROR in loadfile(): failed _wfopen(%S)\n",filename);
 				return false;
 		}
 
@@ -194,16 +195,16 @@ bool VaultImp::loadFromEncodedFile(const wchar_t *filename)
 		_fseeki64(f,0,SEEK_SET);
 		if(sz<10)
 		{
-				Log.print_err("ERROR in loadfile(): '%S' has only %d bytes\n",filename,sz);
+				logf("ERROR in loadfile(): '%S' has only %d bytes\n",filename,sz);
 				fclose(f);
 				return false;
 		}
 		datav_ptr.reset(new wchar_t[sz+1]);
 		wchar_t *datav=datav_ptr.get();
-		Log.print_con("Read '%S':%d\n",filename,sz);
+		logf("Read '%S'\t%d bytes\n",filename,sz);
 
 		fread(datav,2,1,f);
-		if(!memcmp(datav,"\xEF\xBB",2))// UTF-8
+		if(!memcmp(datav,"\xEF\xBB",2))// UTF-8 BOM
 		{
 				size_t szo;
 				fread(datav,1,1,f);
@@ -239,7 +240,7 @@ bool VaultImp::loadFromEncodedFile(const wchar_t *filename)
 				f=_wfopen(filename,L"rt");
 				if(!f)
 				{
-						Log.print_err("ERROR in loadfile(): failed _wfopen(%S)\n",filename);
+						logf("ERROR in loadfile(): failed _wfopen(%S)\n",filename);
 						return false;
 				}
 				wchar_t *p=datav;(sz)--;
@@ -259,32 +260,49 @@ void VaultImp::loadFromFile(const wchar_t *filename)
 		if(!filename[0])return;
 		if(!loadFromEncodedFile(filename))
 		{
-				Log.print_err("ERROR in vault_loadfromfile(): failed to load '%S'\n",filename);
+				logf("ERROR in vault_loadfromfile(): failed to load '%S'\n",filename);
 				return;
 		}
 		parse();
 
 		for(size_t i=0;i<num;i++)
-				if(entry[i].init>=10) entry[i].value=entry[entry[i].init-10].value;
+				if(entry[i].init>=10)
+                    entry[i].value=entry[entry[i].init-10].value;
 }
 
-void VaultImp::loadFromRes(int id)
-{
-		char *data1;
-		size_t sz;
-
-		get_resource(id,(void **)&data1,&sz);
-		datav_ptr.reset(new wchar_t[sz+1]);
-		wchar_t *datav=datav_ptr.get();
-		for(size_t i=0;i<sz;i++)
+void VaultImp::loadFromRes(int resId) {
+    HRSRC resSrc = FindResourceW(nullptr, MAKEINTRESOURCE(resId), (wchar_t*)RESFILE);
+    ReportIf(!resSrc);
+    if (!resSrc) {
+        return ;
+    }
+				 HGLOBAL hRsrcMem = LoadResource(nullptr, resSrc);
+    ReportIf(!hRsrcMem);
+    if (!hRsrcMem) {
+        return ;
+    }
+    DWORD size = SizeofResource(nullptr, resSrc);
+    const char* resData = (const char*)LockResource(hRsrcMem);
+    ReportIf(!resData);
+    if (!resData) {
+        return ;
+    }
+    datav_ptr.reset(new wchar_t[size+1]);
+    wchar_t *datav=datav_ptr.get();
+    UnlockResource(res);
+		for(size_t i=0;i<size;i++)
 		{
-				if(data1[i]==L'\r') datav[i]=L' ';else
-				datav[i]=data1[i];
+            if (resData[i] == L'\r') {
+                datav[i] = L' ';
+            } else {
+
+                datav[i] = resData[i];
+            }
 		}
-		datav[sz]=0;
 		parse();
 		for(size_t i=0;i<num;i++)
-				if(entry[i].init<1)Log.print_err("ERROR in vault_loadfromres: not initialized '%S'\n",entry[i].name);
+				if(entry[i].init<1)
+                    logf("ERROR in vault_loadfromres: not initialized '%S'\n",entry[i].name);
 }
 
 VaultImp::VaultImp(entry_t *entryv,size_t numv,int resv,int elem_id_,const wchar_t *folder_):
@@ -300,7 +318,7 @@ VaultImp::VaultImp(entry_t *entryv,size_t numv,int resv,int elem_id_,const wchar
 
 void VaultImp::load(int i)
 {
-		Log.print_con("vault %d,'%S'\n",i,namelist[i]);
+		//logf("vault %d,'%S'\n",i,namelist[i]);
 		loadFromRes(res);
 		if(i<0)return;
 		loadFromFile(namelist[i]);
@@ -342,10 +360,10 @@ void VaultLang::SwitchData(int i)
 		load(i);
 }
 
-void VaultTheme::SwitchData(int i)
+void VaultTheme::SwitchData(int themeIdx)
 {
 		if(Settings.flags&FLAG_NOGUI)return;
-		load(i);
+		load(themeIdx);
 		Images->LoadAll();
 		Icons->LoadAll();
 }

@@ -71,7 +71,7 @@ public:
         if(h)
         {
             if(!CloseHandle(h))
-                Log.print_err("ERROR in ThreadImpS(): failed CloseHandle\n");
+                log("ERROR in ThreadImpS(): failed CloseHandle\n");
         }
     }
 };
