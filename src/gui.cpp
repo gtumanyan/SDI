@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -13,11 +13,11 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "com_header.h"
-#include "common.h"
-#include "logging.h"
+#include "utils/BaseUtil.h"
+#include "SDI.h"
 #include "system.h"
-#include "settings.h"
+#include "Settings.h"
+#include "VersionEx.h"
 #include "manager.h"
 #include "theme.h"
 #include "gui.h"
@@ -316,7 +316,7 @@ void wText::draw(Canvas &canvas)
 
 void wTextRev::draw(Canvas &canvas)
 {
-    Version v{VERSION_REV%100,VERSION_REV/100,VERSION_MINOR+2000 };
+    Version v{VERSION_FILEVERSION_NUM };
     WStringShort buf;
     WStringShort date;
 
