@@ -85,29 +85,21 @@ try
 	$Build | Set-Content -Path $BuildPath
 
 	$CompleteVer = "$Major.$Minor.$Revis"
-	DebugOutput("SDI version number: 'v$CompleteVer $VerPatch'")
+	DebugOutput("SDI		$CompleteVer $VerPatch")
 	
-	if ($AppVeyorEnv) {
-		# AppVeyor needs unique artefact build number
-		$AppVeyorVer = "0.0.0.$AppVeyorBuild"
-		DebugOutput("AppVeyor version number: 'v$AppVeyorVer $VerPatch'")
-		Update-AppveyorBuild -Version $AppVeyorVer
-	}
-
-	[string](Get-Content "ext\libwebp\NEWS"-TotalCount 1) -match '[\d.]+$'
-	$WebPVer = $Matches.0
-	DebugOutput("WebP $WebPVer")
+	if ((Get-Content "ext\libwebp\NEWS"-TotalCount 1) -match '[\d.]+$'){
+	$WebPVer = $Matches.0}
+	DebugOutput("WebP		$WebPVer")
 	if (!$WebPVer) { $WebPVer = 0 }
 	$TorrentVer = ((Get-Content "ext\libtorrent\Makefile"-TotalCount 1) -split '=')[1]
-	DebugOutput("Libtorrent $TorrentVer")
+	DebugOutput("Libtorrent	$TorrentVer")
 	if (!$TorrentVer) { $TorrentVer = "0.0.0" }
-	$BoostVer = [string](Get-Content "ext\boost\tools\boost_install\test\BoostVersion.cmake"-TotalCount 1).Substring(18,6)
+	$BoostVer = (Get-Content "ext\boost\tools\boost_install\test\BoostVersion.cmake"-TotalCount 1).Substring(18,6)
 	if (!$BoostVer) { $BoostVer = "0.0.0" }
-	DebugOutput("$BoostVer")
-	[string](Get-Content "ext\7Z\C\7zVersion.h"-TotalCount 4)[-1]-match '[\d.]+'
-	$7zVer=$Matches.0
-	DebugOutput("7zip version number: 'v$7zVer'")
-	if (!$7zVer) { $7zVer = 0 }
+	DebugOutput("Boost		$BoostVer")
+	if ((Get-Content "ext\7Z\C\7zVersion.h"-TotalCount 4)[-1]-match '[\d.]+')
+	{$7zVer=$Matches.0} else { $7zVer = 0 }
+	DebugOutput("7-zip		$7zVer")
 
 #~if ($VerPatch) { $VerPatch = " $VerPatch" }  # ensure space in front of string
 
