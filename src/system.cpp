@@ -13,12 +13,10 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "VersionEx.h"
-#include "com_header.h"
-#include "common.h"
 #include "utils/BaseUtil.h"
+#include "SDI.h"
 #include "utils/Log.h"
-#include "settings.h"
+#include "Settings.h"
 #include "system.h"
 #include "manager.h"
 #include "matcher.h"
@@ -27,25 +25,20 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "tchar.h"
 
 #include <process.h>
-#ifdef _MSC_VER
 #include <errno.h>
-#include <commdlg.h>
 #include <direct.h>
-#include <shellapi.h>
-#else
-#undef _INC_SHLWAPI
-#endif
 #include <setupapi.h>       // for SHELLEXECUTEINFO
 #include <shlwapi.h>        // for PathFileExists
 #include <shlobj.h>         // for SHBrowseForFolder
-#include <sapi.h>
 
 // Depend on Win32API
 #include "main.h"
 
 #include "system_imp.h"
 #include <SRRestorePtAPI.h> // for RestorePoint
-typedef int (WINAPI *WINAPI5t_SRSetRestorePointW)(PRESTOREPOINTINFOW pRestorePtSpec,PSTATEMGRSTATUS pSMgrStatus);
+#include "utils/WinUtil.h"
+
+typedef BOOL (WINAPI *PFN_SETRESTOREPTW)(PRESTOREPOINTINFOW pRestorePtSpec,PSTATEMGRSTATUS pSMgrStatus);
 
 SystemImp System;
 int monitor_pause=0;
@@ -132,19 +125,18 @@ bool SystemImp::ChooseFile(wchar_t *filename,const wchar_t *strlist,const wchar_
 		ofn.lStructSize=sizeof(OPENFILENAME);
 		ofn.hwndOwner  =MainWindow.hMain;
 		ofn.lpstrFilter=strlist;
-		ofn.nMaxFile   =BUFLEN;
+		ofn.nMaxFile   =MAX_PATH;
 		ofn.lpstrDefExt=ext;
 		ofn.lpstrFile  =filename;
 		ofn.Flags      =OFN_FILEMUSTEXIST|OFN_HIDEREADONLY|OFN_PATHMUSTEXIST|OFN_NOCHANGEDIR;
-		std::wstring initPath=System.AppPathW();
+		std::wstring initPath= GetSelfExePathWTemp();
 		ofn.lpstrInitialDir=initPath.c_str();
 
 		if(GetOpenFileName(&ofn))return true;
 		return false;
 }
-void get_resource(int id,void **data,size_t *size)
-{
-		HRSRC myResource=FindResource(nullptr,MAKEINTRESOURCE(id),(wchar_t *)RESFILE);
+void get_resource(int id,void **data,size_t *size) {
+		HRSRC myResource=FindResourceW(nullptr,MAKEINTRESOURCE(id),(wchar_t *)RESFILE);
 		if(!myResource)
 		{
 				logf("ERROR in get_resource(): failed FindResource(%d)\n",id);
@@ -152,8 +144,10 @@ void get_resource(int id,void **data,size_t *size)
 				*data=nullptr;
 				return;
 		}
-		*size=SizeofResource(nullptr,myResource);
 		*data=LoadResource(nullptr,myResource);
+        ReportIf(!myResource);
+		*size=SizeofResource(nullptr,myResource);
+        ReportIf(size == 0);
 }
 void StrFormatSize(long long val,wchar_t *buf,int len)
 {
@@ -172,7 +166,7 @@ void mkdir_r(const wchar_t *path)
 		// if it exists there's nothing to do
 		if(System.DirectoryExists(path))return;
 
-		wchar_t buf[BUFLEN];
+		wchar_t buf[MAX_PATH];
 		wcscpy(buf,path);
 		wchar_t *p=buf;
 
@@ -346,9 +340,9 @@ int SystemImp::DriveNumber(const wchar_t *filename)
 
 std::wstring SystemImp::ExpandEnvVar(std::wstring source)
 {
-		wchar_t d[BUFLEN];
+		wchar_t d[MAX_PATH];
 		*d=0;
-		ExpandEnvironmentStringsW(source.c_str(),d,BUFLEN);
+		ExpandEnvironmentStringsW(source.c_str(),d,MAX_PATH);
 		return d;
 }
 /*
@@ -552,57 +546,40 @@ std::string SystemImp::wtoa (const std::wstring& wstr)
 	 return (std::string(wstr.begin(), wstr.end()));
 }
 
-std::wstring SystemImp::AppPathW()
-{
-		std::wstring path;
-		std::wstring long_path;
-		path.resize(MAX_PATH, 0);
-		auto path_size(GetModuleFileNameW(nullptr, &path.front(), MAX_PATH));
-		path.resize(path_size);
-
-		int length=GetLongPathNameW(path.c_str(),nullptr,0);
-		wchar_t* buffer = new wchar_t[length];
-		length = GetLongPathNameW(path.c_str(), buffer, length);
-		long_path=std::wstring(buffer);
-		long_path=long_path.substr(0,long_path.find_last_of(L"\\/"));
-
-		return long_path;
-}
-
 std::string SystemImp::AppPathS()
 {
-		std::wstring path=AppPathW();
-		return wtoa(path);
+		auto path= GetSelfExePathWTemp();
+		return ToUtf8Temp(path);
 }
 
 // ToDo: Replace with UpdateSelfTo
-int SystemImp::FindLatestExeVersion(int bit)
-{
-		int ver=VERSION_REV;
-		std::wstring spec;
-		if(bit==32)spec=AppPathW()+L"\\SDI_x86*.exe";
-		else if(bit==64)spec=AppPathW()+L"\\SDI*.exe";
-		else return 0;
-
-		WIN32_FIND_DATA fd;
-		HANDLE hFind=::FindFirstFile(spec.c_str(), &fd);
-		if(hFind!=INVALID_HANDLE_VALUE)
-		{
-				do
-				{
-						if(!(fd.dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY))
-						{
-								std::wstring v=fd.cFileName;
-								int vi=0;
-								if(bit==32)vi=_wtoi(v.substr(6,3).c_str());
-								else if(bit==64)vi=_wtoi(v.substr(10,3).c_str());
-								if(vi>ver)ver=vi;
-						}
-				}while(::FindNextFile(hFind,&fd));
-				::FindClose(hFind);
-		}
-		return ver;
-}
+//int SystemImp::FindLatestExeVersion(int bit)
+//{
+//		int ver=VERSION_REV;
+//		TempStr spec;
+//		if(bit==32)spec=AppPathW()+L"\\SDI_x86*.exe";
+//		else if(bit==64)spec=AppPathW()+L"\\SDI*.exe";
+//		else return 0;
+//
+//		WIN32_FIND_DATA fd;
+//		HANDLE hFind=::FindFirstFile(spec.c_str(), &fd);
+//		if(hFind!=INVALID_HANDLE_VALUE)
+//		{
+//				do
+//				{
+//						if(!(fd.dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY))
+//						{
+//								std::wstring v=fd.cFileName;
+//								int vi=0;
+//								if(bit==32)vi=_wtoi(v.substr(6,3).c_str());
+//								else if(bit==64)vi=_wtoi(v.substr(10,3).c_str());
+//								if(vi>ver)ver=vi;
+//						}
+//				}while(::FindNextFile(hFind,&fd));
+//				::FindClose(hFind);
+//		}
+//		return ver;
+//}
 
 int SystemImp::getver(const char *s)
 {
@@ -735,7 +712,7 @@ bool SystemImp::CreateRestorePoint(std::wstring desc)
 {
 		RESTOREPOINTINFOW pRestorePtSpec;
 		STATEMGRSTATUS pSMgrStatus;
-		WINAPI5t_SRSetRestorePointW WIN5f_SRSetRestorePointW;
+		PFN_SETRESTOREPTW WIN5f_SRSetRestorePointW = NULL;
 		bool restorePointSucceeded=false;
 
 				// get the current state of restore points
@@ -744,7 +721,7 @@ bool SystemImp::CreateRestorePoint(std::wstring desc)
 				System.SetRestorePointCreationFrequency(0);
 				hinstLib=LoadLibrary(L"SrClient.dll");
 				if(hinstLib!=NULL)
-						WIN5f_SRSetRestorePointW=(WINAPI5t_SRSetRestorePointW)GetProcAddress(hinstLib,"SRSetRestorePointW");
+						WIN5f_SRSetRestorePointW=(PFN_SETRESTOREPTW)GetProcAddress(hinstLib,"SRSetRestorePointW");
 
 				if(hinstLib&&WIN5f_SRSetRestorePointW)
 				{
@@ -782,12 +759,12 @@ bool SystemImp::CreateRestorePoint(std::wstring desc)
 
 bool SystemImp::GetNonPresentDevices()
 {
-		wchar_t buf[BUFLEN];
-		buf[0]=0;
+		TCHAR Buffer[MAX_PATH];
+		Buffer[0]=0;
 		DWORD ret;
-		ret=GetEnvironmentVariable(L"DEVMGR_SHOW_NONPRESENT_DEVICES",buf,BUFLEN);
-		if(ret==0)return false;
-		ret=_wtoi(buf);
+		ret=GetEnvironmentVariable(TEXT("DEVMGR_SHOW_NONPRESENT_DEVICES"),Buffer, sizeof(Buffer) / sizeof(TCHAR));
+		if(ret==0) return false;
+		ret=_wtoi(Buffer);
 		return (ret);
 }
 
@@ -846,7 +823,7 @@ void CALLBACK FilemonImp::monitor_callback(DWORD dwErrorCode,DWORD dwNumberOfByt
 			if(!monitor_pause)
 			{
 								FILE *f;
-								wchar_t buf[BUFLEN];
+								wchar_t buf[MAX_PATH];
 								int m=0,flag;
 								size_t sz=0;
 
@@ -1071,10 +1048,10 @@ void viruscheck(const wchar_t *szFile,int action,int lParam)
 						f=_wfopen(L"\\autorun.inf",L"rb");
 						if(f)
 						{
-								char buf[BUFLEN];
-								fread(buf,BUFLEN,1,f);
+								char buf[MAX_PATH];
+								fread(buf,MAX_PATH,1,f);
 								fclose(f);
-								buf[BUFLEN-1]=0;
+								buf[MAX_PATH-1]=0;
 								if(!StrStrIA(buf,"[NOT_A_VIRUS]")&&StrStrIA(buf,"open"))
 										manager_g->itembar_setactive(SLOT_VIRUS_AUTORUN,update=1);
 						}

@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -14,7 +14,6 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <string>
-#include "windows.h"
 #ifndef SYSTEM_H
 #define SYSTEM_H
 #include "enum.h"
@@ -100,9 +99,8 @@ public:
     void UnregisterClass_log(const wchar_t *lpClassName,const wchar_t *func,const wchar_t *obj);
     int _vscwprintf_dll(const wchar_t * _Format,va_list _ArgList);
     std::string wtoa (const std::wstring& wstr);
-    std::wstring AppPathW();
     std::string AppPathS();
-    int FindLatestExeVersion(int bit=32);
+    //int FindLatestExeVersion(int bit=32);
     bool SystemProtectionEnabled(State *state);
     int GetRestorePointCreationFrequency();
     void SetRestorePointCreationFrequency(int freq);
