@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -13,11 +13,11 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "com_header.h"
-#include "common.h"
-#include "logging.h"
+#include "utils/BaseUtil.h"
+#include "SDI.h"
+#include "utils/Log.h"
 #include "system.h"
-#include "settings.h"
+#include "Settings.h"
 #include "indexing.h"
 #include "matcher.h"
 #include "manager.h"
@@ -93,7 +93,7 @@ unsigned int __stdcall Bundle::thread_loadall(void *arg)
             prmem=nvwa::total_mem_alloc;*/
 
         // Update bundle
-        Log.print_con("*** START *** %d,%d [%d]\n",bundle_display,bundle_shadow,invaidate_set);
+        logf("*** START *** %d,%d [%d]\n",bundle_display,bundle_shadow,invaidate_set);
         bundle[bundle_shadow].bundle_prep();
         bundle[bundle_shadow].bundle_load(&bundle[bundle_display]);
 
@@ -104,12 +104,12 @@ unsigned int __stdcall Bundle::thread_loadall(void *arg)
 
         if(cancel_update)
         {
-            Log.print_con("*** CANCEL ***\n\n");
+            log("*** CANCEL ***\n\n");
             deviceupdate_event->raise();
         }
         else
         {
-            Log.print_con("*** FINISH primary ***\n\n");
+            log("*** FINISH primary ***\n\n");
             invaidate_set&=~(INVALIDATE_DEVICES|INVALIDATE_INDEXES|INVALIDATE_SYSINFO);
 
             if((Settings.flags&FLAG_NOGUI)&&(Settings.flags&FLAG_AUTOINSTALL)==0)
@@ -126,17 +126,17 @@ unsigned int __stdcall Bundle::thread_loadall(void *arg)
                 if(MainWindow.hMain)SendMessage(MainWindow.hMain,WM_BUNDLEREADY,(WPARAM)&bundle[bundle_shadow],(LPARAM)&bundle[bundle_display]);
             }
 
-            // Save indexes, write info, etc
-            Log.print_con("{2Sync\n");
+            // Save indices, write info, etc
+            log("{2Sync\n");
             if(CRITICAL_SECTION_ACTIVE)EnterCriticalSection(&sync);
 
             bundle[bundle_shadow].bundle_lowpriority();
-            Log.print_con("*** FINISH secondary ***\n\n");
+            log("*** FINISH secondary ***\n\n");
 
             // Swap display and shadow bundle
             bundle_display^=1;
             bundle_shadow^=1;
-            Log.print_con("}2Sync\n");
+            log("}2Sync\n");
             bundle[bundle_shadow].bundle_init();
             PostMessage(MainWindow.hMain,WM_INDEXESSAVED,0,0);
             if(CRITICAL_SECTION_ACTIVE)LeaveCriticalSection(&sync);
@@ -157,40 +157,40 @@ void Bundle::bundle_init()
 
 void Bundle::bundle_prep()
 {
-    Log.print_debug("Bundle::bundle_prep\n");
+    log("Bundle::bundle_prep\n");
     state.getsysinfo_fast();
-    Log.print_debug("Bundle::bundle_prep::complete\n");
+    log("Bundle::bundle_prep::complete\n");
 }
 void Bundle::bundle_load(Bundle *pbundle)
 {
-    Log.print_debug("Bundle::bundle_load\n");
+    log("Bundle::bundle_load\n");
     ThreadAbs *thandle0=CreateThread();
     ThreadAbs *thandle1=CreateThread();
     ThreadAbs *thandle2=CreateThread();
 
-    Timers.start(time_test);
+    //Timers.start(time_test);
 
     // Copy data from shadow if it's not updated
     if((invaidate_set&INVALIDATE_DEVICES)==0)
     {
         state=pbundle->state;
-        Timers.reset(time_devicescan);
+        //Timers.reset(time_devicescan);
         if(invaidate_set&INVALIDATE_SYSINFO)state.getsysinfo_fast();
     }
     if((invaidate_set&INVALIDATE_SYSINFO)==0)state.getsysinfo_slow(&pbundle->state);
-    if((invaidate_set&INVALIDATE_INDEXES)==0){collection=pbundle->collection;Timers.reset(time_indexes);}
+    if((invaidate_set&INVALIDATE_INDEXES)==0)collection=pbundle->collection;
 
-    Log.print_debug("Bundle::bundle_load::thread_scandevices\n");
+    log("Bundle::bundle_load::thread_scandevices\n");
     thandle0->start(&thread_scandevices,&state);
-    Log.print_debug("Bundle::bundle_load::thread_loadindexes\n");
+    log("Bundle::bundle_load::thread_loadindexes\n");
     thandle1->start(&thread_loadindexes,&collection);
-    Log.print_debug("Bundle::bundle_load::thread_getsysinfo\n");
+    log("Bundle::bundle_load::thread_getsysinfo\n");
     thandle2->start(&thread_getsysinfo,&state);
-    Log.print_debug("Bundle::bundle_load::thandle0->join\n");
+    log("Bundle::bundle_load::thandle0->join\n");
     thandle0->join();
-    Log.print_debug("Bundle::bundle_load::thandle1->join\n");
+    log("Bundle::bundle_load::thandle1->join\n");
     thandle1->join();
-    Log.print_debug("Bundle::bundle_load::thandle2->join\n");
+    log("Bundle::bundle_load::thandle2->join\n");
     thandle2->join();
     delete thandle0;
     delete thandle1;
@@ -204,14 +204,14 @@ void Bundle::bundle_load(Bundle *pbundle)
     state.genmarker();
     matcher->getState()->textas.shrink();
     matcher->populate();
-    Timers.stop(time_test);
+    //Timers.stop(time_test);
 
-    Log.print_debug("Bundle::bundle_load::complete\n");
+    log("Bundle::bundle_load::complete\n");
 }
 
 void Bundle::bundle_lowpriority()
 {
-    Timers.stoponce(time_startup,time_total);
+    //Timers.stoponce(time_startup,time_total);
     //Timers.print();
 
     MainWindow.redrawmainwnd();
@@ -230,22 +230,22 @@ void Bundle::bundle_lowpriority()
     }
 
     #ifdef USE_TORRENT
-    if(Settings.flags&FLAG_CHECKUPDATES&&!Timers.get(time_chkupdate))
+    if(Settings.flags&FLAG_CHECKUPDATES)
         Updater->checkUpdates();
     #endif
 
     collection.save();
-    Log.gen_timestamp();
+    //Log.gen_timestamp();
     WStringShort filename;
-    filename.sprintf(L"%s\\%sstate.snp",Settings.log_dir,Log.getTimestamp());
+    filename.sprintf(L"%s\\%sstate.snp",Settings.log_dir);
     state.save(filename.Get());
 
     if(Settings.flags&COLLECTION_PRINT_INDEX)
     {
-        Log.print_con("Saving humanreadable indexes...\n");
+        log("Saving humanreadable indices...\n");
         collection.print_index_hr();
         Settings.flags&=~COLLECTION_PRINT_INDEX;
-        Log.print_con("DONE\n");
+        log("DONE\n");
     }
 }
 //}

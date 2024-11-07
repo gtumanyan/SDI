@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -13,11 +13,11 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "com_header.h"
-#include "common.h"
-#include "logging.h"
+#include "utils/BaseUtil.h"
+#include "utils/Log.h"
+#include "SDI.h"
 #include "system.h"
-#include "settings.h"
+#include "Settings.h"
 #include "indexing.h"
 #include "matcher.h"
 #include "theme.h"
@@ -217,7 +217,7 @@ void State::genmarker()
         if(StrStrIW(str,filter_list[i][j]))
             wsprintfA(marker,"%S_nb",filter_list[i][0]);
 
-    Log.print_con("Marker: '%s'\n",marker);
+    logf("Marker: '%s'\n",marker);
 }
 
 int calc_secttype(const char *s)
@@ -404,7 +404,7 @@ void MatcherImp::sort()
 
 void MatcherImp::populate()
 {
-    Timers.start(time_matcher);
+    //Timers.start(time_matcher);
 
     isLaptop=state->isLaptop;
     //wcscpy(marker,state->marker);
@@ -418,23 +418,23 @@ void MatcherImp::populate()
     devicematch_list.shrink_to_fit();
     hwidmatch_list.shrink_to_fit();
 
-    Timers.stop(time_matcher);
+    //Timers.stop(time_matcher);
 }
 
 void MatcherImp::print()
 {
     int limits[7];
 
-    if(Log.isHidden(LOG_VERBOSE_MATCHER))return;
-    Log.print_file("\n{matcher_print[devices=%d,hwids=%d]\n",devicematch_list.size(),hwidmatch_list.size());
+    if(gReducedLogging)return;
+    logf("\n{matcher_print[devices=%d,hwids=%d]\n",devicematch_list.size(),hwidmatch_list.size());
     for(auto &devicematch:devicematch_list)
     {
         devicematch.device->print(state);
-        Log.print_file("DriverInfo\n");
+        log("DriverInfo\n");
         if(devicematch.driver)
             devicematch.driver->print(state);
         else
-            Log.print_file("  NoDriver\n");
+            log("  NoDriver\n");
 
         memset(limits,0,sizeof(limits));
         Hwidmatch *hwidmatch;
@@ -445,23 +445,23 @@ void MatcherImp::print()
         hwidmatch=&hwidmatch_list[devicematch.start_matches];
         for(unsigned j=0;j<devicematch.num_matches;j++,hwidmatch++)
             hwidmatch->print_tbl(limits);
-        Log.print_file("\n");
+        log("\n");
     }
-    Log.print_file("}matcher_print\n\n");
+    log("}matcher_print\n\n");
 }
 
 int MatcherImp::write_device_list(wchar_t *filename)
 {
     if(!System.canWriteFile(filename,L"wt"))
     {
-        Log.print_err("ERROR in write_device_list(): Unwriteable,'%S'\n",filename);
+        logf("ERROR in write_device_list(): Unwriteable,'%S'\n",filename);
         return 1;
     }
 
     FILE *f=_wfopen(filename,L"wt");
     if(!f)
     {
-        Log.print_err("ERROR in write_device_list(): Failed to open file,'%S'\n",filename);
+        logf("ERROR in write_device_list(): Failed to open file,'%S'\n",filename);
         return 1;
     }
 
@@ -850,26 +850,26 @@ void Hwidmatch::print_tbl(const int *limits)
     v->str_date(date,true);
     v->str_version(vers);
 
-    Log.print_file("  %d |",      altsectscore);
-    Log.print_file(" %08X |",     score);
-    Log.print_file(" %S |",       date.Get());
-    Log.print_file(" %3d |",      decorscore);
-    Log.print_file(" %2d |",      markerscore);
-    Log.print_file(" %3X |",      status);
+    logf("  %d |",      altsectscore);
+    logf(" %08X |",     score);
+    logf(" %S |",       date.Get());
+    logf(" %3d |",      decorscore);
+    logf(" %2d |",      markerscore);
+    logf(" %3X |",      status);
         getdrp_drvsection(buf);
-    Log.print_file(" %-*s |",limits[0],buf);
+    logf(" %-*s |",limits[0],buf);
 
     wsprintfA(buf,"%ws\\%ws",     getdrp_packpath(),getdrp_packname());
-    Log.print_file(" %-*s |",     limits[1],buf);
-    Log.print_file(" %8X|",       getdrp_infcrc());
+    logf(" %-*s |",     limits[1],buf);
+    logf(" %8X|",       getdrp_infcrc());
     wsprintfA(buf,"%s%s",         getdrp_infpath(),getdrp_infname());
-    Log.print_file(" %-*s |",     limits[2],buf);
-    Log.print_file(" %-*s |",     limits[3],    getdrp_drvmanufacturer());
+    logf(" %-*s |",     limits[2],buf);
+    logf(" %-*s |",     limits[3],    getdrp_drvmanufacturer());
     wsprintfA(buf,"%ws",          vers.Get());
-    Log.print_file(" %*s |",      limits[4],buf);
-    Log.print_file(" %-*s |",     limits[5],    getdrp_drvHWID());
-    Log.print_file(" %-*s",       limits[6],      getdrp_drvdesc());
-    Log.print_file("\n");
+    logf(" %*s |",      limits[4],buf);
+    logf(" %-*s |",     limits[5],    getdrp_drvHWID());
+    logf(" %-*s",       limits[6],      getdrp_drvdesc());
+    log("\n");
 }
 
 void Hwidmatch::print_hr()
@@ -887,17 +887,17 @@ void Hwidmatch::print_hr()
     log_file("  CRC:  %8X%\n",              getdrp_infcrc(this));
     log_file("  Marker %d\n",                markerscore);
     log_file("  Status %3X\n",               status);*/
-    Log.print_file("  Pack:     %S\\%S\n", getdrp_packpath(),getdrp_packname());
+    logf("  Pack:     %S\\%S\n", getdrp_packpath(),getdrp_packname());
 
-    Log.print_file("  Name:     %s\n",     getdrp_drvdesc());
-    Log.print_file("  Provider: %s\n",     getdrp_drvmanufacturer());
-    Log.print_file("  Date:     %S\n",     date.Get());
-    Log.print_file("  Version:  %S\n",     vers.Get());
-    Log.print_file("  HWID:     %s\n",     getdrp_drvHWID());
+    logf("  Name:     %s\n",     getdrp_drvdesc());
+    logf("  Provider: %s\n",     getdrp_drvmanufacturer());
+    logf("  Date:     %S\n",     date.Get());
+    logf("  Version:  %S\n",     vers.Get());
+    logf("  HWID:     %s\n",     getdrp_drvHWID());
     getdrp_drvsection(buf);
-    Log.print_file("  inf:      %s%s,%s\n",getdrp_infpath(),getdrp_infname(),buf);
-    Log.print_file("  Score:    %08X\n",   score);
-    Log.print_file("\n");
+    logf("  inf:      %s%s,%s\n",getdrp_infpath(),getdrp_infname(),buf);
+    logf("  Score:    %08X\n",   score);
+    log("\n");
 }
 
 void Hwidmatch::popup_driverline(int *limits,Canvas &canvas,int y,int mode,size_t index)
@@ -1049,7 +1049,7 @@ int Hwidmatch::getdrp_packontorrent()const
     return drp->type==DRIVERPACK_TYPE_UPDATE;
 }
 
-//inffile
+//inf file
 const char *Hwidmatch::getdrp_infpath()const
 {
     size_t desc_index=drp->HWID_list[HWID_index].desc_index;
@@ -1078,7 +1078,7 @@ const char *Hwidmatch::getdrp_drvcat(int n)const
     size_t desc_index=drp->HWID_list[HWID_index].desc_index;
     size_t manufacturer_index=drp->desc_list[desc_index].manufacturer_index;
     size_t inffile_index=drp->manufacturer_list[manufacturer_index].inffile_index;
-    //Log.print_debug(drp->text_ind.get(drp->inffile[inffile_index].cats[n]));
+    //logf(drp->text_ind.get(drp->inffile[inffile_index].cats[n]));
     if(!drp->inffile[inffile_index].cats[n])return "";
     return drp->text_ind.get(drp->inffile[inffile_index].cats[n]);
 }

@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -13,16 +13,15 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "com_header.h"
-#include "common.h"
-
-#include "script.h"
-#include "logging.h"
+#include "utils/BaseUtil.h"
+#include "utils/Log.h"
 
 #include <windows.h>
 #include <setupapi.h>       // for CommandLineToArgvW
 #include <iostream>
-#include "settings.h"
+#include "script.h"
+#include "Settings.h"
+#include "SDI.h"
 #include "system.h"
 #include "shellapi.h"
 
@@ -42,7 +41,7 @@ extern int bundle_shadow;
 extern Manager manager_v[2];
 
 Bundle bundle[2];
-extern wchar_t extractdir[BUFLEN];
+extern wchar_t extractdir[MAX_PATH + 1];
 
 Script::Script()
 {
@@ -72,20 +71,18 @@ bool Script::loadscript()
 {
     bool ret=false;
     FILE *f;
-    wchar_t Buff[BUFLEN]=L"";
+    wchar_t Buff[MAX_PATH]=L"";
 
     // get command line
-    int argc;
-    wchar_t **argv=CommandLineToArgvW(GetCommandLineW(),&argc);
-    for(size_t i=1;i<static_cast<size_t>(argc);i++)
-    {
-        wchar_t *pr=argv[i];
-        if(pr[0]=='/')pr[0]='-';
+    int nArgs;
+    wchar_t **argsArr=CommandLineToArgvW(GetCommandLineW(),&nArgs);
+    for(int i=1;i<nArgs; i++) {
+        wchar_t *arg=argsArr[i];
+        if(arg[0]=='/')arg[0]='-';
 
-        if(StrStrIW(pr,L"-script"))
-        {
+        if(StrStrIW(arg,L"-script")) {
             // get file script file name
-            wcscpy(Buff, &pr[8]);
+            wcscpy(Buff, &arg[8]);
             if(wcslen(Buff)==0)
             {
                 std::cout << "Command line argument missing.\n";
@@ -100,7 +97,7 @@ bool Script::loadscript()
             parameters.push_back(w);
         }
         else if(parameters.size()>0)
-            parameters.push_back(pr);
+            parameters.push_back(arg);
     }
 
     // load the script
@@ -146,7 +143,7 @@ bool Script::runscript()
     std::wstring logdir(Settings.logO_dir);
     int LastExitCode=0;
     bool NeedReboot=false;
-    Log.set_verbose(0);
+    gReducedLogging=true;
     Updater=CreateUpdater();
     int torrentport=Updater->port;
 
@@ -185,7 +182,7 @@ bool Script::runscript()
         // process the command
         if(args.size()>0)
         {
-            Log.print_debug("Command: %S\n",args[0].c_str());
+            logf("Command: %S\n",args[0].c_str());
 
             if(StrStrIW(args[0].c_str(),L"init"))
             {
@@ -193,7 +190,7 @@ bool Script::runscript()
                 if(args.size()>1)
                 {
                     r=StrStrIW(args[1].c_str(),L"reindex");
-                    Log.print_debug("Argument: %S\n",args[1].c_str());
+                    logf("Argument: %S\n",args[1].c_str());
                 }
                 if(r)Settings.flags|=COLLECTION_FORCE_REINDEXING;
                 else Settings.flags&=~COLLECTION_FORCE_REINDEXING;
@@ -210,7 +207,7 @@ bool Script::runscript()
                 if(args.size()>1)
                 {
                     Updater_t::activetorrent=std::stoi(args[1]);
-                    Log.print_debug("Argument: %d\n",Updater_t::activetorrent);
+                    logf("Argument: %d\n",Updater_t::activetorrent);
                     #ifdef USE_TORRENT
                     delete Updater;
                     Updater=CreateUpdater();
@@ -219,7 +216,7 @@ bool Script::runscript()
                 else
                 {
                     LastExitCode=1;
-                    Log.print_err("Error: activetorrent : Missing argument\n");
+                    log("Error: activetorrent : Missing argument\n");
                 }
             }
             else if(StrStrIW(args[0].c_str(),L"select"))
@@ -241,18 +238,18 @@ bool Script::runscript()
                 }
                 if((filter>0)||(drpfilter.size()>0))
                 {
-                    Log.print_con("Select: filter:%d, drpfilter:%d\n",filter,drpfilter.size());
+                    logf("Select: filter:%d, drpfilter:%d\n",filter,drpfilter.size());
                     selectNone();
                     Settings.filters=filter;
                     manager_g->filter(filter,&drpfilter);
                     selectAll();
                     LastExitCode=0;
-                    Log.print_con("%d drivers selected\n",manager_g->selected());
+                    log("%d drivers selected\n",manager_g->selected());
                 }
                 else
                 {
                     LastExitCode=1;
-                    Log.print_err("Error: select : Missing argument\n");
+                    log("Error: select : Missing argument\n");
                 }
             }
             else if(StrStrIW(args[0].c_str(),L"checkupdates"))
@@ -266,14 +263,14 @@ bool Script::runscript()
                     if(_wcsicmp(args[1].c_str(),L"app")==0)
                     {
                         LastExitCode=Updater->scriptDownloadApp();
-                        if(!LastExitCode)Log.print_con("Application downloaded successfully\n");
-                        else Log.print_con("Application download failed\n");
+                        if(!LastExitCode)log("Application downloaded successfully\n");
+                        else log("Application download failed\n");
                     }
                     else if(_wcsicmp(args[1].c_str(),L"indexes")==0)
                     {
                         LastExitCode=Updater->scriptDownloadIndexes();
-                        if(!LastExitCode)Log.print_con("Indexes downloaded successfully\n");
-                        else Log.print_con("Indexes download failed\n");
+                        if(!LastExitCode)log("Indices downloaded successfully\n");
+                        else log("Indices download failed\n");
                     }
                     else if(_wcsicmp(args[1].c_str(),L"driverpacks")==0)
                     {
@@ -284,39 +281,39 @@ bool Script::runscript()
                                _wcsicmp(args[2].c_str(),L"updates")==0||
                                _wcsicmp(args[2].c_str(),L"selected")==0)
                             {
-                                Log.print_debug("Argument: %S\n",args[2].c_str());
+                                logf("Argument: %S\n",args[2].c_str());
                                 LastExitCode=Updater->scriptDownloadDrivers(args[2]);
-                                if(!LastExitCode)Log.print_con("Driver packs downloaded successfully\n");
-                                else Log.print_con("Driver packs download failed\n");
+                                if(!LastExitCode)log("Driver packs downloaded successfully\n");
+                                else log("Driver packs download failed\n");
                             }
                             else
                             {
                                 LastExitCode=1;
-                                Log.print_err("Error: get driverpacks : invalid argument\n");
+                                log("Error: get driverpacks : invalid argument\n");
                             }
                         }
                         else
                         {
                             LastExitCode=1;
-                            Log.print_err("Error: get driverpacks : missing argument\n");
+                            log("Error: get driverpacks : missing argument\n");
                         }
                     }
                     else if(_wcsicmp(args[1].c_str(),L"everything")==0)
                     {
                         LastExitCode=Updater->scriptDownloadEverything();
-                        if(!LastExitCode)Log.print_con("Everything downloaded successfully\n");
-                        else Log.print_con("Download failed\n");
+                        if (!LastExitCode)log("Everything downloaded successfully\n");
+                        else log("Download failed\n");
                     }
                     else
                     {
                         LastExitCode=1;
-                        Log.print_err("Error: get : Invalid argument\n");
+                        log("Error: get : Invalid argument\n");
                     }
                 }
                 else
                 {
                     LastExitCode=1;
-                    Log.print_err("Error: get : Missing argument\n");
+                    log("Error: get : Missing argument\n");
                 }
             }
             else if(_wcsicmp(args[0].c_str(),L"install")==0)
@@ -325,22 +322,22 @@ bool Script::runscript()
                 NeedReboot=(ret_global>>24)&0x40;
                 unsigned int failed=(ret_global>>16)&255;
                 unsigned int installed=ret_global&65535;
-                Log.print_debug("Installer return code: %d, ",ret_global);
-                Log.print_con("%d drivers installed, %d drivers failed.\n",installed,failed);
+                logf("Installer return code: %d, ",ret_global);
+                logf("%d drivers installed, %d drivers failed.\n",installed,failed);
             }
             else if(_wcsicmp(args[0].c_str(),L"snapshot")==0)
             {
                 Settings.flags&=~FLAG_NOSNAPSHOT;
-                Log.gen_timestamp();
+                //Log.gen_timestamp();
                 wchar_t filename[BUFLEN];
                 if(args.size()>1)
                     wsprintf(filename, L"%S", args[1].c_str());
                 else
-                    wsprintf(filename,L"%s\\%sstate.snp",logdir.c_str(),Log.getTimestamp());
-                Log.print_debug("Argument: %S\n",filename);
+                    wsprintf(filename,L"%s\\%sstate.snp",logdir.c_str());
+                logf("Argument: %S\n",filename);
                 State *state=manager_g->matcher->getState();
                 LastExitCode=state->save(filename);
-                Log.print_con("Snapshot %S\n",LastExitCode?L"failed":L"succeeded");
+                logf("Snapshot %S\n",LastExitCode?L"failed":L"succeeded");
                 Settings.flags|=FLAG_NOSNAPSHOT;
             }
             else if(_wcsicmp(args[0].c_str(),L"loadsnapshot")==0)
@@ -348,7 +345,7 @@ bool Script::runscript()
                 // this must be placed immediately before the init command
                 if(args.size()>1)
                 {
-                    Log.print_debug("Argument: %S\n",args[1].c_str());
+                    logf("Argument: %S\n",args[1].c_str());
                     if(System.FileExists2(args[1].c_str()))
                     {
                         wcscpy(Settings.state_file,args[1].c_str());
@@ -356,14 +353,14 @@ bool Script::runscript()
                     }
                     else
                     {
-                        Log.print_err("Error: loadsnapshot : File not found.");
+                        log("Error: loadsnapshot : File not found.");
                         LastExitCode=1;
                     }
                 }
                 else
                 {
                     LastExitCode=1;
-                    Log.print_err("Error: loadsnapshot : Missing argument\n");
+                    log("Error: loadsnapshot : Missing argument\n");
                 }
             }
             else if(_wcsicmp(args[0].c_str(),L"unloadsnapshot")==0)
@@ -383,24 +380,24 @@ bool Script::runscript()
                         desc.append(L" ");
                     }
                 }
-                Log.print_debug("Argument: %S\n",desc.c_str());
+                logf("Argument: %S\n",desc.c_str());
                 LastExitCode=!System.CreateRestorePoint(desc);
-                Log.print_con("Restore point %S: %S\n",LastExitCode?L"failed":L"succeeded", desc.c_str());
+                logf("Restore point %S: %S\n",LastExitCode?L"failed":L"succeeded", desc.c_str());
             }
             else if(StrStrIW(args[0].c_str(),L"writedevicelist"))
             {
                 if(args.size()>1)
                 {
-                    Log.print_debug("Argument: %S\n",args[1].c_str());
+                    logf("Argument: %S\n",args[1].c_str());
                     wchar_t arg[BUFLEN];
                     wcscpy(arg,args[1].c_str());
                     LastExitCode=manager_g->matcher->write_device_list(arg);
-                    Log.print_con("Write Device List %S\n",LastExitCode?L"failed":L"succeeded");
+                    log("Write Device List %S\n",LastExitCode?L"failed":L"succeeded");
                 }
                 else
                 {
                     LastExitCode=1;
-                    Log.print_err("Error: writedevicelist : Missing argument\n");
+                    log("Error: writedevicelist : Missing argument\n");
                 }
             }
             else if(StrStrIW(args[0].c_str(),L"logdir"))
@@ -408,53 +405,53 @@ bool Script::runscript()
                 if(allargs.length()>0)
                 {
                     logdir=allargs;
-                    Log.print_debug("Argument: %S\n",allargs.c_str());
+                    logf("Argument: %S\n",allargs.c_str());
                 }
                 else
                 {
                     LastExitCode=1;
-                    Log.print_err("Error: logdir : Missing argument\n");
+                    log("Error: logdir : Missing argument\n");
                 }
             }
             else if(StrStrIW(args[0].c_str(),L"drpdir"))
             {
                 if(allargs.length()>0)
                 {
-                    Log.print_debug("Argument: %S\n",allargs.c_str());
+                    logf("Argument: %S\n",allargs.c_str());
                     wcscpy(Settings.drp_dir,allargs.c_str());
                     invalidate(INVALIDATE_INDEXES|INVALIDATE_MANAGER);
                 }
                 else
                 {
                     LastExitCode=1;
-                    Log.print_err("Error: drpdir : Missing argument\n");
+                    log("Error: drpdir : Missing argument\n");
                 }
             }
             else if(StrStrIW(args[0].c_str(),L"indexdir"))
             {
                 if(allargs.length()>0)
                 {
-                    Log.print_debug("Argument: %S\n",allargs.c_str());
+                    logf("Argument: %S\n",allargs.c_str());
                     wcscpy(Settings.index_dir,allargs.c_str());
                     invalidate(INVALIDATE_INDEXES|INVALIDATE_MANAGER);
                 }
                 else
                 {
                     LastExitCode=1;
-                    Log.print_err("Error: indexdir : Missing argument\n");
+                    log("Error: indexdir : Missing argument\n");
                 }
             }
             else if (StrStrIW(args[0].c_str(),L"extractdir"))
             {
                 if(allargs.length()>0)
                 {
-                    Log.print_debug("Argument: %S\n",allargs.c_str());
+                    logf("Argument: %S\n",allargs.c_str());
                     wcscpy(extractdir,allargs.c_str());
                 }
                 else
                 {
                     LastExitCode=1;
-                    Log.print_err("Error: extractdir : Missing argument\n");
+                    logf("Error: extractdir : Missing argument\n");
                 }
             }
             else if(StrStrIW(args[0].c_str(),L"torrentport"))
@@ -462,12 +459,12 @@ bool Script::runscript()
                 if(args.size()>1)
                 {
                     torrentport=std::stoi(args[1]);
-                    Log.print_debug("Argument: %d\n",torrentport);
+                    logf("Argument: %d\n",torrentport);
                 }
                 else
                 {
                     LastExitCode=1;
-                    Log.print_err("Error: torrentport : Missing argument\n");
+                    log("Error: torrentport : Missing argument\n");
                 }
             }
             else if(_wcsicmp(args[0].c_str(),L"keeptempfiles")==0)
@@ -479,29 +476,27 @@ bool Script::runscript()
                     else if(StrStrIW(args[1].c_str(),L"off"))
                         Settings.flags&=~FLAG_KEEPTEMPFILES;
                     else
-                        Log.print_err("Error: keeptempfiles : Invalid argument");
+                        log("Error: keeptempfiles : Invalid argument");
                 }
-                Log.print_debug("Keep Temp Files is %S\n",Settings.flags&FLAG_KEEPTEMPFILES?L"on":L"off");
+                logf("Keep Temp Files is %S\n",Settings.flags&FLAG_KEEPTEMPFILES?L"on":L"off");
             }
             else if(StrStrIW(args[0].c_str(),L"echo"))
             {
-                int v=Log.get_verbose();
-                Log.set_verbose(v|LOG_VERBOSE_LOG_CON);
-                Log.print_con("%S\n",w.c_str());
-                Log.set_verbose(v);
+                bool v= gLogToConsole;
+                gLogToConsole = true;
+                logf("%S\n",w.c_str());
+                gLogToConsole = v;
             }
             else if(StrStrIW(args[0].c_str(),L"debug"))
             {
-                int v=Log.get_verbose();
                 if(args.size()>1)
                 {
                     if(StrStrIW(args[1].c_str(),L"on"))
-                        v|=LOG_VERBOSE_DEBUG;
+                        gLogToDebugger=true;
                     else if(StrStrIW(args[1].c_str(),L"off"))
-                        v&=~LOG_VERBOSE_DEBUG;
-                    Log.set_verbose(v);
+                        gLogToDebugger = false;
                 }
-                Log.print_debug("Debug is %S\n",v&LOG_VERBOSE_DEBUG?L"on":L"off");
+                logf("Debug is %S\n", gLogToDebugger ? L"on":L"off");
             }
             else if(StrStrIW(args[0].c_str(),L"logging"))
             {
@@ -510,17 +505,16 @@ bool Script::runscript()
                     if(StrStrIW(args[1].c_str(),L"on"))
                     {
                         Settings.flags&=~FLAG_NOLOGFILE;
-                        wchar_t arg[BUFLEN];
-                        wcscpy(arg,logdir.c_str());
-                        Log.start(arg);
+                        const WCHAR* logPath = logdir.c_str();
+                        StartLogToFile(logPath,true);
                     }
                     else if(StrStrIW(args[1].c_str(),L"off"))
                     {
                         Settings.flags|=FLAG_NOLOGFILE;
-                        Log.stop();
+												DestroyLogging();
                     }
                 }
-                Log.print_debug("Logging is %S\n",Settings.flags&FLAG_NOLOGFILE?L"off":L"on");
+                logf("Logging is %S\n",Settings.flags&FLAG_NOLOGFILE?L"off":L"on");
             }
             else if(StrStrIW(args[0].c_str(),L"cmd"))
             {
@@ -534,17 +528,17 @@ bool Script::runscript()
                 else
                 {
                     LastExitCode=1;
-                    Log.print_err("Error: cmd : Missing argument\n");
+                    log("Error: cmd : Missing argument\n");
                 }
             }
             else if(StrStrIW(args[0].c_str(),L"verbose"))
             {
                 if(args.size()>1)
                 {
-                    int v=std::stoi(args[1]);
-                    Log.set_verbose(v);
+                    //int v=std::stoi(args[1]);
+                    gReducedLogging=false;
                 }
-                Log.print_debug("Verbose is %d\n",Log.get_verbose());
+                logf("Verbose is %d\n", !gReducedLogging);
             }
             else if(StrStrIW(args[0].c_str(),L"enableinstall"))
             {
@@ -555,7 +549,7 @@ bool Script::runscript()
                     else if(StrStrIW(args[1].c_str(),L"off"))
                         Settings.flags|=FLAG_DISABLEINSTALL;
                 }
-                Log.print_debug("Install is %S\n",Settings.flags&FLAG_DISABLEINSTALL?L"off":L"on");
+                logf("Install is %S\n",Settings.flags&FLAG_DISABLEINSTALL?L"off":L"on");
             }
             else if(StrStrIW(args[0].c_str(),L"pause"))
             {
@@ -572,13 +566,13 @@ bool Script::runscript()
                     LastExitCode=System.run_command(L"cmd",buf,SW_HIDE,0);
                 }
             }
-            else if(_wcsicmp(args[0].c_str(),L"runlatest")==0)
-            {
-                std::wstring cmd;
-                for(std::vector<std::wstring>::size_type i = 1; i != args.size(); i++)
-                    cmd.append(L" "+args[i]);
-                RunLatest(cmd);
-            }
+            //else if(_wcsicmp(args[0].c_str(),L"runlatest")==0)
+            //{
+            //    std::wstring cmd;
+            //    for(std::vector<std::wstring>::size_type i = 1; i != args.size(); i++)
+            //        cmd.append(L" "+args[i]);
+            //    RunLatest(cmd);
+            //}
             else if(StrStrIW(args[0].c_str(),L"onerror"))
             {
                 if(LastExitCode)
@@ -587,7 +581,7 @@ bool Script::runscript()
                     {
                         if(StrStrIW(args[1].c_str(),L"end"))
                         {
-                            Log.print_err("Last operation failed, ending\n");
+                            log("Last operation failed, ending\n");
                             break;
                         }
                         else if(_wcsicmp(args[1].c_str(),L"goto")==0)
@@ -595,7 +589,7 @@ bool Script::runscript()
                             if(args.size()>2)
                             {
                                 std::wstring label=args[2];
-                                Log.print_debug("Argument: %S\n",label.c_str());
+                                logf("Argument: %S\n",label.c_str());
                                 p=label.find(L":");
                                 if(p==std::string::npos)
                                     label.insert(0, L":");
@@ -612,12 +606,12 @@ bool Script::runscript()
                                 }
                             }
                             else
-                                Log.print_err("Error: goto : Missing argument\n");
+                                log("Error: goto : Missing argument\n");
 
                         }
                     }
                     else
-                        Log.print_err("Error: onerror : Missing argument\n");
+                        log("Error: onerror : Missing argument\n");
                 }
             }
             else if(_wcsicmp(args[0].c_str(),L"goto")==0)
@@ -625,7 +619,7 @@ bool Script::runscript()
                 if(args.size()>1)
                 {
                     std::wstring label=args[1];
-                    Log.print_debug("Argument: %S\n",label.c_str());
+                    logf("Argument: %S\n",label.c_str());
                     p=label.find(L":");
                     if(p==std::string::npos)
                         label.insert(0, L":");
@@ -642,7 +636,7 @@ bool Script::runscript()
                     }
                 }
                 else
-                    Log.print_err("Error: goto : Missing argument\n");
+                    log("Error: goto : Missing argument\n");
             }
             else if(StrStrIW(args[0].c_str(),L"end"))
             {
@@ -656,7 +650,7 @@ bool Script::runscript()
                 if(p!=0)
                 {
                     LastExitCode=1;
-                    Log.print_con("Invalid command\n");
+                    log("Invalid command\n");
                 }
             }
         }
@@ -687,7 +681,7 @@ void Script::selectAll()
 int Script::updatesInitialised()
 {
     int ret=!(Settings.flags&FLAG_UPDATESOK);
-    if(ret)Log.print_err("Error: get : Updates not initialised");
+    if(ret)log("Error: get : Updates not initialised");
     return ret;
 }
 
@@ -708,6 +702,8 @@ void Script::doParameters(std::wstring &cmd)
     }
 }
 
+// Replaced with UpdateSelfTo
+#if 0
 void Script::RunLatest(std::wstring args)
 {
     // this would be run after an application update
@@ -723,12 +719,12 @@ void Script::RunLatest(std::wstring args)
 
     if(!System.FileExists2(cmd.c_str()))
     {
-        Log.print_err("File not found: %S\n",cmd.c_str());
+        logf("File not found: %S\n",cmd.c_str());
         return;
     }
 
     cmd+=args;
-    Log.print_con("Cmd: %S\n",cmd.c_str());
+    logf("Cmd: %S\n",cmd.c_str());
 
     STARTUPINFO si;
     ZeroMemory(&si,sizeof(si));
@@ -739,3 +735,4 @@ void Script::RunLatest(std::wstring args)
 
     CreateProcess(nullptr,(LPWSTR)cmd.c_str(),nullptr,nullptr,FALSE,CREATE_NEW_PROCESS_GROUP|CREATE_NEW_CONSOLE,nullptr,nullptr,&si,&pi);
 }
+#endif
