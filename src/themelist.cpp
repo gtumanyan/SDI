@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -13,7 +13,6 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "com_header.h"
 #include "theme.h"
 
 const int boxindex[BOX_NUM]=
@@ -198,7 +197,7 @@ entry_t theme[THEME_NM]=
     DEF_VAL("POPUP_BITMAP_ANCHOR")
     DEF_VAL("POPUP_BITMAP_FILL")
 
-// Popup, driver comparsion
+// Popup, driver comparison
     DEF_VAL("POPUP_HWID_COLOR")
     DEF_VAL("POPUP_CMP_BETTER_COLOR")
     DEF_VAL("POPUP_CMP_INVALID_COLOR")
@@ -647,7 +646,7 @@ entry_t theme[THEME_NM]=
     DEF_VAL("DRVITEM_TEXT1_COLOR_IU")
     DEF_VAL("DRVITEM_TEXT2_COLOR_IU")
 
-// Patreon
+// BOOSTY
     DEF_VAL("DRVITEM_INSIDE_COLOR_PT")
     DEF_VAL("DRVITEM_OUTLINE_COLOR_PT")
     DEF_VAL("DRVITEM_OUTLINE_WIDTH_PT")
