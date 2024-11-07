@@ -22,12 +22,12 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include <variant>
 
 // Theme/lang
-#define STR(A)	std::get_if<1>(&language[A].value) ? std::get<1>(language[A].value) : L""
-#define D(A)		std::get<int>(theme[A].value)
-#define D_C(A) std::get<int>(theme[A].value)
-#define D_1(A) std::get<int>(theme[A].value)
-#define D_X(A) (std::get<int>(theme[A].value) * 256 / Settings.scale)
-#define D_STR(A) std::get<1>(theme[A].value)
+#define STR(A)	 std::get_if<1>(&language[A].value) ? std::get<1>(language[A].value) : L""
+#define D(A)	 std::get<int>(theme[A].value)
+#define D_C(A)   std::get<int>(theme[A].value)
+#define D_1(A)   std::get<int>(theme[A].value)
+#define D_X(A)  (std::get<int>(theme[A].value) * 256 / Settings.scale)
+#define D_STR(A) std::get_if<wchar_t *>(&theme[A].value) ? std::get<wchar_t *>(theme[A].value) : L""
 
 #define TEXT_1(quote) L##quote
 #define DEF_VAL(a) {TEXT_1(a),0,0},
