@@ -1,0 +1,24 @@
+struct Mutex {
+    CRITICAL_SECTION cs;
+
+    Mutex() {
+        InitializeCriticalSection(&cs);
+    }
+    ~Mutex() {
+        DeleteCriticalSection(&cs);
+    }
+
+    void Lock() {
+        EnterCriticalSection(&cs);
+    }
+    void Unlock() {
+        LeaveCriticalSection(&cs);
+    }
+};
+
+void SetThreadName(const char* threadName, DWORD threadId = 0);
+
+void RunAsync(const Func0&, const char* threadName = nullptr);
+
+extern AtomicInt gDangerousThreadCount;
+bool AreDangerousThreadsPending();
