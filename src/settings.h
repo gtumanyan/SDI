@@ -162,7 +162,7 @@ enum FLAG
     FLAG_AUTOUPDATE             = 0x02000000,
     FLAG_FILTERSP               = 0x04000000,
     FLAG_OLDSTYLE               = 0x08000000,
-    FLAG_HIDEPATREON            = 0x10000000,
+    FLAG_HIDEBOOSTY             = 0x10000000,
     FLAG_NOSTOP                 = 0x20000000,
     FLAG_KEEPSEEDING            = 0x40000000,
     FLAG_SCRIPTMODE             = 0x80000000    
@@ -171,22 +171,22 @@ enum FLAG
 class Settings_t
 {
 public:
-    wchar_t curlang   [BUFLEN];
-    wchar_t curtheme  [BUFLEN];
-    wchar_t logO_dir  [BUFLEN];
+    wchar_t curlang   [10];
+    wchar_t curtheme  [10];
+    wchar_t logO_dir  [MAX_PATH];
 
-    wchar_t drp_dir   [BUFLEN];
-    wchar_t output_dir[BUFLEN];
-    wchar_t drpext_dir[BUFLEN];
-    wchar_t index_dir [BUFLEN];
-    wchar_t data_dir  [BUFLEN];
-    wchar_t log_dir   [BUFLEN];
+    wchar_t drp_dir   [MAX_PATH];
+    wchar_t output_dir[MAX_PATH];
+    wchar_t drpext_dir[MAX_PATH];
+    wchar_t index_dir [MAX_PATH];
+    wchar_t data_dir  [MAX_PATH];
+    wchar_t log_dir   [MAX_PATH];
 
-    wchar_t state_file[BUFLEN];
-    wchar_t finish    [BUFLEN];
-    wchar_t finish_upd[BUFLEN];
-    wchar_t finish_rb [BUFLEN];
-    wchar_t device_list_filename[BUFLEN];
+    wchar_t state_file[MAX_COMPUTERNAME_LENGTH+32];
+    wchar_t finish    [MAX_PATH];
+    wchar_t finish_upd[MAX_PATH];
+    wchar_t finish_rb [MAX_PATH];
+    wchar_t device_list_filename[MAX_PATH];
 
     int flags;
     int statemode;
@@ -204,8 +204,8 @@ public:
 
 public:
     Settings_t();
-    void parse(const wchar_t *str,size_t ind);
-    bool load(const wchar_t *filename);
+    void parse(const WCHAR* str,size_t ind);
+    bool load(const WCHAR* filename);
     bool load_cfg_switch(const wchar_t *cmdParams);
     void save();
     void loginfo();
