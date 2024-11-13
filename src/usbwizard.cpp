@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -16,29 +16,30 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 // have to link in comctl32
 // and call InitCommonControlsEx
 
-#include "com_header.h"
+#include "utils/BaseUtil.h"
 #include <windows.h>
 #include "logging.h"
 
-#include "common.h"
+#include "SDI.h"
 #include "system.h"
 
 #include <commctrl.h>
 #include <windowsx.h>
 #include <string>
 #include <prsht.h>
-#include "settings.h"
+#include "Settings.h"
 #include "usbwizard.h"
 #include "wizards.h"
 #include "manager.h"
 #include "matcher.h"
 #include "main.h"
 #include "indexing.h"
-#include <shlobj.h>
+#include <Shlwapi.h>
 #include "theme.h"
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
+#include "utils/WinUtil.h"
 
 extern HINSTANCE ghInst;
 extern USBWizard *USBWiz;
@@ -202,6 +203,7 @@ static void Page2PopulateCombo(HWND hwnd)
     Page2EnableButtons(hwnd);
 }
 
+#pragma warning(disable: 4244) // 'conversion' conversion from 'type1' to 'type2', possible loss of data
 static void BuildFilesList(HWND hwnd)
 {
     // compile the files list
@@ -356,7 +358,7 @@ static void BuildFilesList(HWND hwnd)
         case 0:
             {
                 std::wstring spec(Settings.data_dir);
-                spec.append(L"\\langs");
+                spec.append(L"\\Langs");
                 USBWiz->AddDirectory(spec,spec);
                 break;
             }
@@ -390,7 +392,7 @@ static void BuildFilesList(HWND hwnd)
         case 0:
         {
             std::wstring dir(Settings.data_dir);
-            dir.append(L"\\themes");
+            dir.append(L"\\Themes");
             USBWiz->AddDirectory(dir,dir);
             break;
         }
@@ -423,9 +425,9 @@ static void BuildFilesList(HWND hwnd)
     }
 
     // both executables
-    int ver=System.FindLatestExeVersion();
-    std::wstring exe32=L"SDI"+std::to_wstring(ver)+L".exe";
-    std::wstring exe64=L"SDI_x64"+std::to_wstring(ver)+L".exe";
+    //int ver=System.FindLatestExeVersion();
+    std::wstring exe32=L"SDI_x86.exe";
+    std::wstring exe64=L"SDI.exe";
     USBWiz->AddFile(exe32,targetDrive+exe32);
     USBWiz->AddFile(exe64,targetDrive+exe64);
     __int64 ExecutableSize=System.FileSize(exe32.c_str())+System.FileSize(exe64.c_str());
@@ -435,7 +437,7 @@ static void BuildFilesList(HWND hwnd)
 
     // configuration file
     // most things are default and so don't need to be defined
-    SourceFileName=wTempPath+(std::wstring)L"\\sdi2.cfg";
+    SourceFileName=wTempPath+(std::wstring)L"\\SDI2.cfg";
     FILE *f=_wfopen(SourceFileName.c_str(),L"wt");
     if(f)
     {
@@ -449,12 +451,12 @@ static void BuildFilesList(HWND hwnd)
         if(USBWiz->NoSnapshots)fwprintf(f,L"-nosnapshot ");
         if(USBWiz->NoLogs)fwprintf(f,L"-nologfile ");
         if(Settings.flags&FLAG_SHOWCONSOLE)fwprintf(f,L"-showconsole ");
-        if(Settings.flags&FLAG_HIDEPATREON)fwprintf(f,L"-hidepatreon ");
+        if(Settings.flags&FLAG_HIDEBOOSTY)fwprintf(f,L"-hideBOOSTY ");
         if(Settings.flags&FLAG_SHOWDRPNAMES1)fwprintf(f,L"-showdrpnames1 ");
         if(Settings.flags&FLAG_SHOWDRPNAMES2)fwprintf(f,L"-showdrpnames2 ");
         fclose(f);
 
-        TargetFileName=targetDrive+(std::wstring)L"sdi2.cfg";
+        TargetFileName=targetDrive+(std::wstring)L"SDI2.cfg";
         USBWiz->AddFile(SourceFileName,TargetFileName);
     }
 
@@ -693,7 +695,7 @@ static LRESULT CALLBACK Page3DlgProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lP
                     if(USBWiz->AdditionalPath.size()>0)
                         wcscpy(path,USBWiz->AdditionalPath.c_str());
                     else
-                        wcscpy(path,System.AppPathW().c_str());
+                        wcscpy(path, GetSelfExePathWTemp());
                     if(System.ChooseDir(path,L"Select Additional Path"))
                     {
                         SendMessage(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_PATHEDIT),WM_SETTEXT,0,LPARAM(path));
