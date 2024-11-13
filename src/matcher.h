@@ -104,7 +104,7 @@ public:
     friend class MatcherImp; // TODO: friend
 };
 
-// Hwidmatch is used to extract info about an available driver from indexes
+// Hwidmatch is used to extract info about an available driver from indices
 class Hwidmatch
 {
     Driverpack *drp;
