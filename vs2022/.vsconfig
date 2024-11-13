@@ -17,6 +17,8 @@
     "Microsoft.VisualStudio.Component.CppBuildInsights"
   ], 
   "extensions": [
-    "https://marketplace.visualstudio.com/items?itemName=MikeWard-AnnArbor.VSColorOutput64"
+    "https://marketplace.visualstudio.com/items?itemName=NikolayBalakin.Outputenhancer",
+    "https://marketplace.visualstudio.com/items?itemName=MadsKristensen.RainbowBraces",
+    "https://marketplace.visualstudio.com/items?itemName=MadsKristensen.Tweaks2022"
   ]
 }
