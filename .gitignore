@@ -20,7 +20,6 @@ ipch/
 *.pdb
 # These are intermediate and output folders for VC++
 **/obj
-**/x64
 
 *.res
 /Versions/build.txt
@@ -32,6 +31,7 @@ ExportedObj/
 .consulo/
 *.csproj
 /res/RCa0*
+*.map
 *.unityproj
 *.suo
 *.tlog
@@ -56,3 +56,4 @@ _buildname.txt
 *.exe
 *.zip
 
+*.docx
