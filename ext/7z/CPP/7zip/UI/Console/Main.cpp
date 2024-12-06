@@ -67,7 +67,7 @@ typedef PROCESS_MEMORY_COUNTERS *PPROCESS_MEMORY_COUNTERS;
 
 #include "../../Common/RegisterCodec.h"
 
-//#include "BenchCon.h"
+#include "BenchCon.h"
 #include "ConsoleClose.h"
 #include "ExtractCallbackConsole.h"
 #include "HashCon.h"
@@ -1245,20 +1245,20 @@ int Main2(
     #endif
 
   }
-  //else if (options.Command.CommandType == NCommandType::kBenchmark)
-  //{
-  //  CStdOutStream &so = (g_StdStream ? *g_StdStream : g_StdOut);
-  //  hresultMain = BenchCon(EXTERNAL_CODECS_VARS_L
-  //      options.Properties, options.NumIterations, (FILE *)so);
-  //  if (hresultMain == S_FALSE)
-  //  {
-  //    so << endl;
-  //    if (g_ErrStream)
-  //      *g_ErrStream << "\nDecoding ERROR\n";
-  //    retCode = NExitCode::kFatalError;
-  //    hresultMain = S_OK;
-  //  }
-  //}
+  else if (options.Command.CommandType == NCommandType::kBenchmark)
+  {
+    CStdOutStream &so = (g_StdStream ? *g_StdStream : g_StdOut);
+    hresultMain = BenchCon(EXTERNAL_CODECS_VARS_L
+        options.Properties, options.NumIterations, (FILE *)so);
+    if (hresultMain == S_FALSE)
+    {
+      so << endl;
+      if (g_ErrStream)
+        *g_ErrStream << "\nDecoding ERROR\n";
+      retCode = NExitCode::kFatalError;
+      hresultMain = S_OK;
+    }
+  }
   else if (isExtractGroupCommand || options.Command.CommandType == NCommandType::kList)
   {
     UStringVector ArchivePathsSorted;

@@ -1,7 +1,11 @@
-﻿// DirItem.h
+// DirItem.h
 
 #ifndef ZIP7_INC_DIR_ITEM_H
 #define ZIP7_INC_DIR_ITEM_H
+
+#ifdef _WIN32
+#include "../../../Common/MyLinux.h"
+#endif
 
 #include "../../../Common/MyString.h"
 
