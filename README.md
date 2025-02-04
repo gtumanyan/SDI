@@ -15,12 +15,12 @@ You can download the prebuilt binary from the [Telegram topic](https://t.me/Snap
 Follow [guide](https://github.com/gtumanyan/SDI/blob/dev/Docs/building-win-x64.md) if you want to
 build by yourself
 
-## Donation
-
-Enjoy using **SDI**? Consider sending me a [tip](https://boosty.to/snappydriverinstaller/donate)!
-
 ## Libraries used
 
 - [7-Zip](https://sourceforge.net/projects/sevenzip)
 - [Libtorrent](https://github.com/arvidn/libtorrent)
-- [libwebp](https://github.com/webmproject/libwebp)
+- [Libwebp](https://github.com/webmproject/libwebp)
+
+## Donations
+
+<a href="https://boosty.to/snappydriverinstaller/donate"><img src="https://boosty.to/favicon.png" width='40'></a>  <a href="bitcoin:bc1q4tkryu9gff0p6wfggrl9f7a0hlkk6rup0jfqle?message=support%20SDI"><img src=https://bitcoin.org/favicon.png  alt="BTC" width='40'/>
