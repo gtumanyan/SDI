@@ -30,15 +30,22 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectName)_x86</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectName)</TargetName>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug' or '$(Configuration)'=='AVX2Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -47,7 +54,8 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros">
+  </PropertyGroup>
   <PropertyGroup>
     <LinkIncremental Condition="$(Configuration.EndsWith('Debug'))">true</LinkIncremental>
     <LinkIncremental Condition="$(Configuration.EndsWith('Release'))">false</LinkIncremental>
@@ -61,32 +69,39 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
-    <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <GenerateManifest>false</GenerateManifest>
+  <PropertyGroup Condition="$(Configuration.EndsWith('Release'))">
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalOptions> /external:I "../ext/boost" %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <DisableSpecificWarnings>4244;4251;4268;4275;4373;4503;4127;4309;4310</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4244;4245;4251;4268;4275;4373;4503;4127;4309;4310</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <ForceConformanceInForLoopScope>
+      </ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <MinimalRebuild>
       </MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <LanguageStandard_C>stdclatest</LanguageStandard_C>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <DiagnosticsFormat>Caret</DiagnosticsFormat>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <SupportJustMyCode>
       </SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType>
+      </TreatWChar_tAsBuiltInType>
       <UseFullPaths>false</UseFullPaths>
-      <WarningLevel>Level2</WarningLevel>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>NOMINMAX;USE_TORRENT;WIN32;_WINDOWS;TORRENT_USE_ASSERTS;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;BOOST_SYSTEM_USE_UTF8;_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_ABI_VERSION=100;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_USE_RTC=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;USE_TORRENT;WIN32;_WINDOWS;TORRENT_USE_ASSERTS;BOOST_ASIO_ENABLE_CANCELIO;BOOST_ASIO_NO_DEPRECATED;WIN32_LEAN_AND_MEAN;BOOST_ALL_NO_LIB;_SCL_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;TORRENT_NO_DEPRECATE;TORRENT_DISABLE_EXTENSIONS;TORRENT_USE_I2P=0;TORRENT_DISABLE_LOGGING;TORRENT_DISABLE_MUTABLE_TORRENTS;TORRENT_DISABLE_STREAMING;TORRENT_DISABLE_ENCRYPTION;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level4</WarningLevel>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
@@ -94,13 +109,13 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <FullProgramDatabaseFile>true</FullProgramDatabaseFile>
-      <AdditionalDependencies>bcrypt.lib;comctl32.lib;delayimp.lib;iphlpapi.lib;dbghelp.lib;msimg32.lib;newdev.lib;setupapi.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;wbemuuid.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;gdi32.lib;ole32.lib;newdev.lib;dwmapi.lib;setupapi.lib;shell32.lib;shlwapi.lib;kernel32.lib;user32.lib;winspool.lib;comdlg32.lib;advapi32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;wbemuuid.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateMapFile>true</GenerateMapFile>
-      <AdditionalOptions>/DELAYLOAD:msimg32.dll /DELAYLOAD:shlwapi.dll /DELAYLOAD:wininet.dll %(AdditionalOptions)</AdditionalOptions>
       <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
+      <SubSystem>Windows</SubSystem>
+      <DelayLoadDLLs>comctl32.dll;gdi32.dll;ole32.dll;dwmapi.dll;setupapi.dll;shell32.dll;shlwapi.dll;wininet.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
@@ -128,6 +143,7 @@
       <StringPooling>true</StringPooling>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SetChecksum>true</SetChecksum>
@@ -137,31 +153,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <BuildLog />
     <ClCompile>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <ExternalTemplatesDiagnostics>true</ExternalTemplatesDiagnostics>
-      <AdditionalIncludeDirectories>..\src;..\ext\7z\c\;..\ext\boost;..\ext\libtorrent\include;..\ext\libwebp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <UseFullPaths>false</UseFullPaths>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <MinimumRequiredVersion>6.00</MinimumRequiredVersion>
+    </Link>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
-    <Link>
-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <ShowProgress>LinkVerbose</ShowProgress>
-    </Link>
     <ProjectReference />
     <PreBuildEvent />
+    <ProjectReference />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;_WIN64;_WIN32_WINNT=0x0600;WINVER=0x0600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
       <ExternalTemplatesDiagnostics>true</ExternalTemplatesDiagnostics>
-      <AdditionalIncludeDirectories>..\src;..\ext\7z\c\;..\ext\boost;..\ext\libtorrent\include;..\ext\libwebp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\src;..\ext\SevenZip\c\;..\ext\boost;..\ext\libtorrent\include;..\ext\libwebp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <UseFullPaths>false</UseFullPaths>
     </ClCompile>
     <Link>
@@ -175,18 +188,17 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>NDEBUG;WIN32;_WIN32_WINNT=0x0501;WINVER=0x0501;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WIN32_WINNT=0x0600;WINVER=0x0600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <AdditionalOptions>/GA /Zc:threadSafeInit- /wd26429 /wd26446 /wd26472 /wd26481 /wd26482 /wd26485 /wd26486 /wd26489 %(AdditionalOptions)</AdditionalOptions>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <ExternalTemplatesDiagnostics>true</ExternalTemplatesDiagnostics>
-      <AdditionalIncludeDirectories>..\src;..\ext\7z\c\;..\ext\boost;..\ext\libtorrent\include;..\ext\libwebp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\src;..\ext\SevenZip\c\;..\ext\boost;..\ext\libtorrent\include;..\ext\libwebp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <UseFullPaths>false</UseFullPaths>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
-    <ProjectReference />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='LLVMRelease|Win32'">
     <ClCompile>
@@ -205,31 +217,35 @@
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <AdditionalOptions>/GA /Zc:threadSafeInit- /wd26429 /wd26446 /wd26472 /wd26481 /wd26482 /wd26485 /wd26486 /wd26489 %(AdditionalOptions)</AdditionalOptions>
       <ExternalTemplatesDiagnostics>true</ExternalTemplatesDiagnostics>
-      <AdditionalIncludeDirectories>..\src;..\ext\7z\c\;..\ext\boost;..\ext\libtorrent\include;..\ext\libwebp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\src;..\ext\SevenZip\c\;..\ext\boost;..\ext\libtorrent\include;..\ext\libwebp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <UseFullPaths>false</UseFullPaths>
     </ClCompile>
+    <Link>
+      <MinimumRequiredVersion>6.01</MinimumRequiredVersion>
+    </Link>
     <ResourceCompile>
-      <PreprocessorDefinitions>_UNICODE;UNICODE;_WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WIN64;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\baseboard.cpp" />
     <ClCompile Include="..\src\cli.cpp" />
-    <ClCompile Include="..\src\CrashHandlerNoOp.cpp" />
-    <ClCompile Include="..\src\draw.cpp">
-    </ClCompile>
+    <ClCompile Include="..\src\darkmode.cpp" />
+    <ClCompile Include="..\src\draw.cpp" />
     <ClCompile Include="..\src\enum.cpp" />
     <ClCompile Include="..\src\gui.cpp" />
     <ClCompile Include="..\src\indexing.cpp" />
     <ClCompile Include="..\src\install.cpp" />
     <ClCompile Include="..\src\langlist.cpp" />
-    <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\manager.cpp" />
     <ClCompile Include="..\src\matcher.cpp" />
     <ClCompile Include="..\src\model.cpp" />
     <ClCompile Include="..\src\Settings.cpp" />
     <ClCompile Include="..\src\script.cpp" />
     <ClCompile Include="..\src\SDI.cpp" />
+    <ClCompile Include="..\src\stdfn.cpp" />
+    <ClCompile Include="..\src\stdio.cpp" />
+    <ClCompile Include="..\src\stdlg.cpp" />
     <ClCompile Include="..\src\system.cpp" />
     <ClCompile Include="..\src\theme.cpp" />
     <ClCompile Include="..\src\themelist.cpp" />
@@ -237,6 +253,10 @@
     <ClCompile Include="..\src\usbwizard.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\7zip.h" />
+    <ClInclude Include="..\src\darkmode.h" />
+    <ClInclude Include="..\src\msapi_utf8.h" />
+    <ClInclude Include="..\src\registry.h" />
     <ClInclude Include="..\src\theme_imp.h" />
     <ClInclude Include="..\src\wizards.h" />
     <ClInclude Include="..\src\cli.h" />
@@ -246,12 +266,9 @@
     <ClInclude Include="..\src\gui.h" />
     <ClInclude Include="..\src\utils\BaseUtil.h" />
     <ClInclude Include="..\src\utils\FileUtil.h" />
-    <ClInclude Include="..\src\utils\HttpUtil.h" />
     <ClInclude Include="..\src\indexing.h" />
     <ClInclude Include="..\src\install.h" />
     <ClInclude Include="..\src\langlist.h" />
-    <ClInclude Include="..\src\utils\Log.h" />
-    <ClInclude Include="..\src\main.h" />
     <ClInclude Include="..\src\manager.h" />
     <ClInclude Include="..\src\matcher.h" />
     <ClInclude Include="..\src\model.h" />
@@ -271,14 +288,14 @@
   <ItemGroup>
     <ClCompile Include="..\src\utils\BaseUtil.cpp" />
     <ClCompile Include="..\src\utils\FileUtil.cpp" />
-    <ClCompile Include="..\src\utils\HttpUtil.cpp" />
-    <ClCompile Include="..\src\utils\Log.cpp" />
     <ClCompile Include="..\src\utils\StrconvUtil.cpp" />
     <ClCompile Include="..\src\utils\StrUtil.cpp" />
     <ClCompile Include="..\src\utils\TempAllocator.cpp" />
     <ClCompile Include="..\src\utils\WinUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\res\install64.exe" />
+    <None Include="..\res\logo.webp" />
     <None Include="..\res\watermark.bmp" />
     <None Include="..\res\down.webp" />
     <None Include="..\res\up.webp" />
@@ -289,6 +306,7 @@
     <ResourceCompile Include="..\src\SDI.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Manifest Include="..\res\SDI.manifest" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\res\SDI.ico" />
@@ -298,8 +316,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\res\cli.txt" />
+    <Text Include="..\res\gpl-3.0.txt" />
     <Text Include="..\tools\langs\english.txt" />
-    <Text Include="..\Tools\Themes\Light.txt" />
+    <Text Include="..\Tools\Themes\win11dark.txt" />
     <Text Include="..\Versions\build.txt">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </ExcludedFromBuild>
@@ -312,11 +331,11 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="7ZIP.vcxproj">
-      <Project>{9fe9a4f2-4e31-41ef-8189-167465a02ffd}</Project>
-    </ProjectReference>
     <ProjectReference Include="libwebp.vcxproj">
       <Project>{62bb7cf1-7358-3583-a1c2-97513c0a19cb}</Project>
+    </ProjectReference>
+    <ProjectReference Include="SevenZip.vcxproj">
+      <Project>{9fe9a4f2-4e31-41ef-8189-167465a02ffd}</Project>
     </ProjectReference>
     <ProjectReference Include="torrent-rasterbar.vcxproj">
       <Project>{ba188557-1b9a-3461-ad3f-2009be8c5b71}</Project>

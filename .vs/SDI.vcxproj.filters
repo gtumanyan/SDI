@@ -9,7 +9,6 @@
     <ClCompile Include="..\src\indexing.cpp" />
     <ClCompile Include="..\src\install.cpp" />
     <ClCompile Include="..\src\langlist.cpp" />
-    <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\manager.cpp" />
     <ClCompile Include="..\src\matcher.cpp" />
     <ClCompile Include="..\src\model.cpp" />
@@ -23,12 +22,14 @@
     <ClCompile Include="..\src\usbwizard.cpp" />
     <ClCompile Include="..\src\utils\BaseUtil.cpp" />
     <ClCompile Include="..\src\utils\FileUtil.cpp" />
-    <ClCompile Include="..\src\utils\HttpUtil.cpp" />
-    <ClCompile Include="..\src\utils\Log.cpp" />
     <ClCompile Include="..\src\utils\StrconvUtil.cpp" />
     <ClCompile Include="..\src\utils\TempAllocator.cpp" />
     <ClCompile Include="..\src\utils\WinUtil.cpp" />
-    <ClCompile Include="..\src\CrashHandlerNoOp.cpp" />
+    <ClCompile Include="..\src\utils\StrUtil.cpp" />
+    <ClCompile Include="..\src\stdio.cpp" />
+    <ClCompile Include="..\src\stdlg.cpp" />
+    <ClCompile Include="..\src\stdfn.cpp" />
+    <ClCompile Include="..\src\darkmode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\wizards.h" />
@@ -39,12 +40,9 @@
     <ClInclude Include="..\src\gui.h" />
     <ClInclude Include="..\src\utils\BaseUtil.h" />
     <ClInclude Include="..\src\utils\FileUtil.h" />
-    <ClInclude Include="..\src\utils\HttpUtil.h" />
     <ClInclude Include="..\src\indexing.h" />
     <ClInclude Include="..\src\install.h" />
     <ClInclude Include="..\src\langlist.h" />
-    <ClInclude Include="..\src\utils\Log.h" />
-    <ClInclude Include="..\src\main.h" />
     <ClInclude Include="..\src\manager.h" />
     <ClInclude Include="..\src\matcher.h" />
     <ClInclude Include="..\src\model.h" />
@@ -62,6 +60,11 @@
     <ClInclude Include="..\src\VersionEx.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\theme_imp.h" />
+    <ClInclude Include="..\src\msapi_utf8.h" />
+    <ClInclude Include="..\src\7zip.h" />
+    <ClInclude Include="..\src\registry.h" />
+    <ClInclude Include="..\src\darkmode.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\res\boosty.webp">
@@ -93,6 +96,10 @@
     <None Include="..\src\SDI.ver">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\res\install64.exe" />
+    <None Include="..\res\logo.webp">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Versions\build.txt">
@@ -104,9 +111,10 @@
     <Text Include="..\tools\langs\english.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="..\Tools\Themes\Light.txt">
+    <Text Include="..\Tools\Themes\win11dark.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="..\res\gpl-3.0.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resource Files">
@@ -120,5 +128,10 @@
     <ResourceCompile Include="..\src\SDI.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="..\res\SDI.manifest">
+      <Filter>Resource Files</Filter>
+    </Manifest>
   </ItemGroup>
 </Project>
