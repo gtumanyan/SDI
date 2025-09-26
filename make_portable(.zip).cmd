@@ -16,8 +16,8 @@ SET INPUTDIRx86=.
 SET INPUTDIRx64=.
 SET TEMP_NAME="make_portable_temp"
 
-IF NOT EXIST "SDI.exe"   CALL :SUBMSG "ERROR" "Compile SDI x86 first!"
-IF NOT EXIST "SDI64.exe"   CALL :SUBMSG "ERROR" "Compile SDI x64 first!"
+IF NOT EXIST "SDI_x86.exe"   CALL :SUBMSG "ERROR" "Compile SDI x86 first!"
+IF NOT EXIST "SDI.exe"   CALL :SUBMSG "ERROR" "Compile SDI x64 first!"
 
 CALL :SubGetVersion
 CALL :SubDetectSevenzipPath

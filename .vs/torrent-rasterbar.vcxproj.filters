@@ -70,9 +70,6 @@
     <ClCompile Include="..\ext\libtorrent\src\disk_buffer_pool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Repos\SDI\ext\libtorrent\src\disk_completed_queue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\ext\libtorrent\src\disk_io_thread_pool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -97,9 +94,6 @@
     <ClCompile Include="..\ext\libtorrent\src\escape_string.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Repos\SDI\ext\libtorrent\src\ffs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\ext\libtorrent\src\file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -107,9 +101,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ext\libtorrent\src\file_storage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Repos\SDI\ext\libtorrent\src\file_pool_impl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ext\libtorrent\src\fingerprint.cpp">
@@ -184,9 +175,6 @@
     <ClCompile Include="..\ext\libtorrent\src\mmap_disk_io.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Repos\SDI\ext\libtorrent\src\disk_job.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\ext\libtorrent\src\mmap_storage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -257,7 +245,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ext\libtorrent\src\receive_buffer.cpp">
-
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ext\libtorrent\src\request_blocks.cpp">
@@ -267,12 +254,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ext\libtorrent\src\resolver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Repos\SDI\ext\libtorrent\src\rtc_signaling.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Repos\SDI\ext\libtorrent\src\rtc_stream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ext\libtorrent\src\session.cpp">
@@ -317,9 +298,6 @@
     <ClCompile Include="..\ext\libtorrent\src\socks5_stream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Repos\SDI\ext\libtorrent\src\ssl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\ext\libtorrent\src\stack_allocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -360,9 +338,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ext\libtorrent\src\tracker_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Repos\SDI\ext\libtorrent\src\tracker_list.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ext\libtorrent\src\truncate.cpp">
@@ -503,6 +478,12 @@
     <ClCompile Include="..\ext\libtorrent\src\ed25519\hasher512.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\ext\libtorrent\src\disk_interface.cpp" />
+    <ClCompile Include="..\ext\libtorrent\src\ffs.cpp" />
+    <ClCompile Include="..\ext\libtorrent\src\file_view_pool.cpp" />
+    <ClCompile Include="..\ext\libtorrent\src\http_seed_connection.cpp" />
+    <ClCompile Include="..\ext\libtorrent\src\mmap_disk_job.cpp" />
+    <ClCompile Include="..\ext\libtorrent\src\web_connection_base.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\add_torrent_params.hpp">
@@ -718,9 +699,6 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\torrent_status.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\tracker_event.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\truncate.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -772,16 +750,7 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\bandwidth_socket.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\bencoder.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\bind_to_device.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\bloom_filter.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\bt_peer_connection.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\buffer.hpp">
@@ -793,25 +762,7 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\chained_buffer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\choker.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\copy_ptr.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\cpuid.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\crc32c.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\deadline_timer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\debug.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\debug_disk_thread.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\deferred_handler.hpp">
@@ -838,13 +789,7 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\disk_buffer_pool.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\disk_completed_queue.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\mmap_disk_job.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\disk_job.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\disk_io_thread_pool.hpp">
@@ -862,9 +807,6 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\ed25519.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\enum_net.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\escape_string.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -872,9 +814,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\ffs.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\file.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\file_descriptor.hpp">
@@ -886,31 +825,10 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\file_view_pool.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\file_pool.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\file_pool_impl.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\has_block.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\hash_picker.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\heterogeneous_queue.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\http_connection.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\http_parser.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\http_stream.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\http_tracker_connection.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\instantiate_connection.hpp">
@@ -922,22 +840,13 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\io.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\io_bytes.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\ip_helpers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\ip_notifier.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\ip_voter.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\keepalive.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\link.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\listen_socket_handle.hpp">
@@ -950,12 +859,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\merkle_tree.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\mmap_storage.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\netlink.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\netlink_utils.hpp">
@@ -973,34 +876,7 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\packet_pool.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\parse_url.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\part_file.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\path.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\peer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\peer_class_set.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\peer_connection.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\peer_list.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\piece_block_progress.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\piece_picker.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\platform_util.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\polymorphic_socket.hpp">
@@ -1012,44 +888,19 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\portmap.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\proxy_base.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\proxy_settings.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\puff.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\random.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\range.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\readwrite.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\receive_buffer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\request_blocks.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\resolve_links.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\resolver.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\resolver_interface.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\rtc_signaling.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\rtc_stream.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\scope_end.hpp">
@@ -1076,34 +927,7 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\set_traffic_class.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\sha1.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\sha256.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\sha512.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\sliding_average.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\socket_io.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\socket_type.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\stack_allocator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\stat.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\stat_cache.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\storage_array.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\storage_free_list.hpp">
@@ -1115,16 +939,10 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\string_ptr.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\string_util.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\strview_less.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\suggest_piece.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\tailqueue.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\throw.hpp">
@@ -1136,40 +954,13 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\timestamp_history.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\torrent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\torrent_impl.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\torrent_list.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\torrent_peer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\torrent_peer_allocator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\tracker_list.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\tracker_manager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\udp_socket.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\udp_tracker_connection.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\union_endpoint.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\unique_ptr.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\utf8.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\utp_socket_manager.hpp">
@@ -1181,9 +972,6 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\vector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\vector_utils.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\win_crypto_provider.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1191,9 +979,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\win_util.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\xml_parse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\kademlia\announce_flags.hpp">
@@ -1277,6 +1062,57 @@
     <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\hasher512.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\bt_peer_connection.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\choker.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\copy_ptr.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\crc32c.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\deadline_timer.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\debug.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\enum_net.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\file.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\hash_picker.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\io.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\ip_voter.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\link.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\lsd.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\mmap_storage.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\netlink.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\optional.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\parse_url.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\part_file.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer_class_set.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer_connection.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\peer_list.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\piece_block_progress.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\piece_picker.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\platform_util.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\proxy_base.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\puff.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\random.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\request_blocks.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\resolve_links.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\sha1.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\sha256.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\sliding_average.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\socket_io.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\stack_allocator.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\stat.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\stat_cache.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\string_util.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\tailqueue.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\torrent.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\torrent_peer.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\torrent_peer_allocator.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\tracker_manager.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\udp_socket.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\udp_tracker_connection.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\union_endpoint.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\utf8.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\vector_utils.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\xml_parse.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\aligned_union.hpp" />
+    <ClInclude Include="..\ext\libtorrent\include\libtorrent\aux_\posix_part_file.hpp" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

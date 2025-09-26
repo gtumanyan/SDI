@@ -27,12 +27,11 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include <Shlwapi.h>
 #include <shellapi.h>       // for CommandLineToArgvW
 
-#include "main.h"
 #include "enum.h"
 
 int volatile installmode=MODE_NONE;
 int invaidate_set;
-unsigned int num_cores;
+uint8_t num_cores;
 int ret_global=0;
 
 Settings_t::Settings_t()
@@ -95,15 +94,34 @@ bool Settings_t::argflg(const wchar_t *s,const wchar_t *cmp,int f)
     return false;
 }
 
+// Если в комстроке указан действительный путь, установить драйвера из этой папки
+bool Settings_t::install(WCHAR* cmdLine)
+{   
+    if (PathFileExists(cmdLine)) {
+        wcscpy_s(drpext_dir, cmdLine);
+        flags |= FLAG_AUTOCLOSE |
+            FLAG_AUTOINSTALL | FLAG_NORESTOREPOINT | FLAG_DPINSTMODE |//FLAG_DISABLEINSTALL|
+            FLAG_PRESERVECFG;
+        return true;
+    }
+    else return false;
+}
+
 void Settings_t::parse(const WCHAR* cmdLine,size_t ind) {
     WinVersions winVersions;
 
-    logf("Args:[%S]\n",cmdLine);
+    uprintf("Args:[%S]\n",cmdLine);
+    
+    
+    
     int nArgs;
+    
     WCHAR** argsArr=CommandLineToArgvW(cmdLine,&nArgs);
     for(size_t i=ind;i<static_cast<size_t>(nArgs);i++)
     {
         wchar_t *pr=argsArr[i];
+  
+
         if(pr[0]=='/') pr[0]='-';
 
         if(argstr(pr,L"-drp_dir:",       drp_dir))	continue;
@@ -150,10 +168,10 @@ void Settings_t::parse(const WCHAR* cmdLine,size_t ind) {
         {
             WStringShort cmd;
             cmd.sprintf(L"7za.exe %s",StrStrIW(cmdLine,L"-7z")+4);
-            logf("Executing '%S'\n",cmd.Get());
+            uprintf("Executing '%S'\n",cmd.Get());
             registerall();
             ret_global=Extract7z(cmd.Get());
-            logf("Ret: %d\n",ret_global);
+            uprintf("Ret: %d\n",ret_global);
             statemode=STATEMODE_EXIT;
             break;
         }
@@ -169,12 +187,12 @@ void Settings_t::parse(const WCHAR* cmdLine,size_t ind) {
         if(!_wcsicmp(pr,L"-install")&&nArgs-i==3)
         {
             wchar_t buf[BUFLEN];
-            logf("Install '%S' '%s'\n",argsArr[i+1],argsArr[i+2]);
+            uprintf("Install '%S' '%S'\n",argsArr[i+1],argsArr[i+2]);
             GetEnvironmentVariable(L"TEMP",buf,BUFLEN);
             wsprintf(extractdir,L"%s\\SDI",buf);
             installmode=MODE_INSTALLING;
             driver_install(argsArr[i+1],argsArr[i+2],&ret_global,&needreboot);
-            logf("Ret: %X,%d\n",ret_global,needreboot);
+            uprintf("Ret: %X,%d\n",ret_global,needreboot);
             if(needreboot)ret_global|=0x80000000;
             wsprintf(buf,L" /c rd /s /q \"%s\"",extractdir);
             System.run_command(L"cmd",buf,SW_HIDE,1);
@@ -226,7 +244,8 @@ void Settings_t::parse(const WCHAR* cmdLine,size_t ind) {
         else if( StrStrIW(pr,GFG_DEF))
             continue;
 
-        logf("Unknown argument '%S'\n",pr);
+       
+        else uprintf("Unknown argument '%S'\n",pr);
         if(statemode==STATEMODE_EXIT)break;
     }
 
@@ -241,7 +260,7 @@ void Settings_t::save()
     if(flags&FLAG_PRESERVECFG)return;
     if(!System.canWriteFile(L"SDI2.cfg",L"wt"))
     {
-        logf("ERROR in settings_save(): Write-protected,'SDI2.cfg'\n");
+        uprintf("ERROR in settings_save(): Write-protected,'SDI2.cfg'\n");
         return;
     }
     FILE *f=_wfopen(L"SDI2.cfg",L"wt");
@@ -278,32 +297,32 @@ void Settings_t::loginfo()
 {
     if(!gReducedLogging)
     {
-        log("Settings\n");
-        logf("  drp_dir='%S'\n",drp_dir);
-        logf("  index_dir='%S'\n",index_dir);
-        logf("  output_dir='%S'\n",output_dir);
-        logf("  data_dir='%S'\n",data_dir);
-        logf("  log_dir='%S'\n",log_dir);
-        logf("  extractdir='%S'\n",extractdir);
-        logf("  lang=%S\n",curlang);
-        logf("  theme=%S\n",curtheme);
-        logf("  scale=%d\n",scale);
-        logf("  expertmode=%d\n",expertmode);
-        logf("  filters=%d\n",filters);
-        logf("  autoinstall=%d\n",(flags&FLAG_AUTOINSTALL)?1:0);
-        logf("  autoclose=%d\n",(flags&FLAG_AUTOCLOSE)?1:0);
-        logf("  failsafe=%d\n",(flags&FLAG_FAILSAFE)?1:0);
-        logf("  delextrainfs=%d\n",(flags&FLAG_DELEXTRAINFS)?1:0);
-        logf("  checkupdates=%d\n",(flags&FLAG_CHECKUPDATES)?1:0);
-        logf("  norestorepnt=%d\n",(flags&FLAG_NORESTOREPOINT)?1:0);
-        logf("  disableinstall=%d\n",(flags&FLAG_DISABLEINSTALL)?1:0);
-        logf("  nostop=%d\n",(flags&FLAG_NOSTOP)?1:0);
-        log("\n");
+        uprintfs("Settings\n");
+        uprintf("  drp_dir='%S'\n",drp_dir);
+        uprintf("  index_dir='%S'\n",index_dir);
+        uprintf("  output_dir='%S'\n",output_dir);
+        uprintf("  data_dir='%S'\n",data_dir);
+        uprintf("  log_dir='%S'\n",log_dir);
+        uprintf("  extractdir='%S'\n",extractdir);
+        uprintf("  lang=%S\n",curlang);
+        uprintf("  theme=%S\n",curtheme);
+        uprintf("  scale=%d\n",scale);
+        uprintf("  expertmode=%d\n",expertmode);
+        uprintf("  filters=%d\n",filters);
+        uprintf("  autoinstall=%d\n",(flags&FLAG_AUTOINSTALL)?1:0);
+        uprintf("  autoclose=%d\n",(flags&FLAG_AUTOCLOSE)?1:0);
+        uprintf("  failsafe=%d\n",(flags&FLAG_FAILSAFE)?1:0);
+        uprintf("  delextrainfs=%d\n",(flags&FLAG_DELEXTRAINFS)?1:0);
+        uprintf("  checkupdates=%d\n",(flags&FLAG_CHECKUPDATES)?1:0);
+        uprintf("  norestorepnt=%d\n",(flags&FLAG_NORESTOREPOINT)?1:0);
+        uprintf("  disableinstall=%d\n",(flags&FLAG_DISABLEINSTALL)?1:0);
+        uprintf("  nostop=%d\n",(flags&FLAG_NOSTOP)?1:0);
+        uprintfs("\n");
 
-        if(statemode==STATEMODE_EMUL)log("Virtual system system config '%S'\n",state_file);
-        if(virtual_arch_type)log("Virtual Windows version: %d-bit\n",virtual_arch_type);
-        if(virtual_os_version)logf("Virtual Windows version: %d.%d\n",virtual_os_version/10,virtual_os_version%10);
-        log("\n");
+        if(statemode==STATEMODE_EMUL)uprintf("Virtual system system config '%S'\n",state_file);
+        if(virtual_arch_type)uprintf("Virtual Windows version: %d-bit\n",virtual_arch_type);
+        if(virtual_os_version)uprintf("Virtual Windows version: %d.%d\n",virtual_os_version/10,virtual_os_version%10);
+        uprintfs("\n");
     }
 }
 
@@ -329,11 +348,11 @@ bool Settings_t::loadCFGFile(const wchar_t *FileName,wchar_t *DestStr)
     *DestStr=0;
 
     ExpandEnvironmentStringsW(FileName,Buff,BUFLEN);
-    logf("Loading %S\n",Buff);
+    uprintf("Loading %S\n",Buff);
     f=_wfopen(Buff,L"rt");
     if(!f)
     {
-        logf("Failed to load %S\n",Buff);
+        uprintf("Failed to load %S\n",Buff);
         return false;
     }
 

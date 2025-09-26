@@ -13,30 +13,29 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "utils/BaseUtil.h"
+#include <shlobj.h>         // for SHBrowseForFolder
+#include <shlwapi.h>        // for PathFileExists
+#include <setupapi.h>       // for SHELLEXECUTEINFO
+
+#include <direct.h>
+#include <process.h>
+#include <errno.h>
+#include <SRRestorePtAPI.h> // for RestorePoint
+
 #include "SDI.h"
-#include "utils/Log.h"
+#include "resource.h"
 #include "Settings.h"
 #include "system.h"
+#include "enum.h"
 #include "manager.h"
 #include "matcher.h"
 #include "commdlg.h"
 #include "shellapi.h"
 #include "tchar.h"
 
-#include <process.h>
-#include <errno.h>
-#include <direct.h>
-#include <setupapi.h>       // for SHELLEXECUTEINFO
-#include <shlwapi.h>        // for PathFileExists
-#include <shlobj.h>         // for SHBrowseForFolder
-
-// Depend on Win32API
-#include "main.h"
-
 #include "system_imp.h"
-#include <SRRestorePtAPI.h> // for RestorePoint
 #include "utils/WinUtil.h"
+
 
 typedef BOOL (WINAPI *PFN_SETRESTOREPTW)(PRESTOREPOINTINFOW pRestorePtSpec,PSTATEMGRSTATUS pSMgrStatus);
 
@@ -87,7 +86,7 @@ bool SystemImp::IsLangInstalled(int group)
 
 unsigned SystemImp::GetTickCountWr()
 {
-		return GetTickCount();
+		return GetTickCount64();
 }
 
 SystemImp::SystemImp()
@@ -135,20 +134,25 @@ bool SystemImp::ChooseFile(wchar_t *filename,const wchar_t *strlist,const wchar_
 		if(GetOpenFileName(&ofn))return true;
 		return false;
 }
-void get_resource(int id,void **data,size_t *size) {
-		HRSRC myResource=FindResourceW(nullptr,MAKEINTRESOURCE(id),(wchar_t *)RESFILE);
-		if(!myResource)
-		{
-				logf("ERROR in get_resource(): failed FindResource(%d)\n",id);
+
+void get_resource(int id,void **data,size_t *size)
+{
+		HRSRC res;
+
+		res=FindResourceW(nullptr, MAKEINTRESOURCE(id), (wchar_t*)RESFILE);
+		if(res == NULL)	{
+				uprintf("Could not locate resource '%s': %s", MAKEINTRESOURCE(id), WindowsErrorString());
 				*size=0;
 				*data=nullptr;
 				return;
 		}
-		*data=LoadResource(nullptr,myResource);
-        ReportIf(!myResource);
-		*size=SizeofResource(nullptr,myResource);
-        ReportIf(size == 0);
+		*data=LoadResource(nullptr,res);
+		if (*data == NULL) {
+		uprintf("Could not load resource '%s': %s", MAKEINTRESOURCE(id), WindowsErrorString());
+		}
+		*size=SizeofResource(nullptr,res);
 }
+
 void StrFormatSize(long long val,wchar_t *buf,int len)
 {
 		StrFormatByteSizeW(val,buf,len);
@@ -183,9 +187,8 @@ void mkdir_r(const wchar_t *path)
 		while((p==wcschr(p,L'\\')))
 		{
 				*p=0;
-				if(_wmkdir(buf)<0&&errno!=EEXIST&&wcslen(buf)>2)
-				{
-						logf("ERROR in mkdir_r(): failed _wmkdir(%S,%d). Write protected?\n",buf,errno);
+				if(_wmkdir(buf)<0 && errno!=EEXIST && wcslen(buf)>2) {
+						uprintf("ERROR in mkdir_r(): failed _wmkdir(%S,%d). Write protected?\n",buf,errno);
 						return;
 				}
 				*p=L'\\';
@@ -193,33 +196,36 @@ void mkdir_r(const wchar_t *path)
 		}
 		// final directory component
 		if(_wmkdir(buf)<0&&errno!=EEXIST&&wcslen(buf)>2)
-				logf("ERROR in mkdir_r(): failed _wmkdir(%S,%d). Write protected?\n",buf,errno);
+				uprintf("ERROR in mkdir_r(): failed _wmkdir(%S,%d). Write protected?\n",buf,errno);
 }
 
-void SystemImp::UnregisterClass_log(const wchar_t *lpClassName,const wchar_t *func,const wchar_t *obj)
+int SystemImp::UnregisterClass_log(const wchar_t *lpClassName,const wchar_t *func,const wchar_t *obj)
 {
-		if(!UnregisterClass(lpClassName,ghInst))
-				logf("ERROR in %S(): failed UnregisterClass(%S)\n",func,obj);
+    if(!UnregisterClass(lpClassName,hMainInstance)) {
+				uprintf("ERROR in %S(): failed UnregisterClass(%S)\n",func,obj);
+        return 1;
+    }
+    return 0;
 }
 
-bool SystemImp::FileAvailable(const wchar_t *path, int numRetries, int waitTime)
+BOOL SystemImp::FileAvailable(const wchar_t *path, int numRetries, int waitTime)
 {
 		// this repeatedly tests for existence of the given file
 		// for the given number of retries
-		bool FileOk;
+		BOOL ret;
 		int retries=0;
 
-		FileOk=System.FileExists(path);
-		while(!FileOk)
+		ret=System.FileExists(path);
+		while(!ret)
 		{
 				retries++;
 				if(retries>numRetries)break;
-				log("Waiting: %S\n", path);
+				uprintf("Waiting for access on %s...", path);
 				Sleep(waitTime*1000);
-				FileOk=System.FileExists(path);
+				ret=System.FileExists(path);
 		}
 
-		return(FileOk);
+		return(ret);
 }
 
 bool SystemImp::FileExists(const wchar_t *path)
@@ -360,16 +366,16 @@ int SystemImp::canWrite(const wchar_t *path)
 				if(!GetVolumeInformation(drive,nullptr,0,nullptr,nullptr,&flagsv,nullptr,0))
 				{
 						lasterror=GetLastError();
-						logf("Error: canWrite : GetVolumeInformation(1) failed with error %d\n",lasterror);
-						if(lasterror==3)logf("Error: Path not found: %S\n",path);
+						uprintf("Error: canWrite : GetVolumeInformation(1) failed with error %d\n",lasterror);
+						if(lasterror==3)uprintf("Error: Path not found: %S\n",path);
 				}
 		}
 		else
 				if(!GetVolumeInformation(nullptr,nullptr,0,nullptr,nullptr,&flagsv,nullptr,0))
 				{
 						lasterror=GetLastError();
-						logf("Error: canWrite : GetVolumeInformation(2) failed with error %d\n",lasterror);
-						if(lasterror==3)logf("Error: Path not found: %S\n",path);
+						uprintf("Error: canWrite : GetVolumeInformation(2) failed with error %d\n",lasterror);
+						if(lasterror==3)uprintf("Error: Path not found: %S\n",path);
 				}
 
 		return (flagsv&FILE_READ_ONLY_VOLUME)?0:1;
@@ -393,8 +399,8 @@ bool SystemImp::canWriteFile(const wchar_t *path,const wchar_t *mode)
 				if(!GetVolumeInformation(drive,nullptr,0,nullptr,nullptr,&flagsv,nullptr,0))
 				{
 						lasterror=GetLastError();
-						logf("Error: canWriteFile : GetVolumeInformation(1) failed with error %d\n",lasterror);
-						if(lasterror==3)logf("Error: Path not found: %S\n",path);
+						uprintf("Error: canWriteFile : GetVolumeInformation(1) failed with error %d\n",lasterror);
+						if(lasterror==3)uprintf("Error: Path not found: %S\n",path);
 				}
 		}
 		// test if the file can be opened for the required mode
@@ -403,7 +409,7 @@ bool SystemImp::canWriteFile(const wchar_t *path,const wchar_t *mode)
 				err = _wfopen_s(&stream, path, mode);
 				if (err)
 				{
-						logf("Error %d The file %S was not opened\n",err,path);
+						uprintf("Error %d The file %S was not opened\n",err,path);
 						return(false);
 				}
 				// Close stream if it isn't NULL
@@ -412,7 +418,7 @@ bool SystemImp::canWriteFile(const wchar_t *path,const wchar_t *mode)
 						err = fclose(stream);
 						if (err)
 						{
-								logf("The file %S was not closed\n,path");
+								uprintf("The file %S was not closed\n,path");
 						}
 						return(true);
 				}
@@ -439,8 +445,8 @@ int SystemImp::canWriteDirectory(const wchar_t *path)
 				if(!GetVolumeInformation(drive,nullptr,0,nullptr,nullptr,&flagsv,nullptr,0))
 				{
 						lasterror=GetLastError();
-						logf("Error: canWriteDirectory : GetVolumeInformation(1) failed with error %d\n",lasterror);
-						if(lasterror==3)logf("Error: Path not found: %S\n",path);
+						uprintf("Error: canWriteDirectory : GetVolumeInformation(1) failed with error %d\n",lasterror);
+						if(lasterror==3)uprintf("Error: Path not found: %S\n",path);
 				}
 		}
 		// test if i can create a temporary file in the given directory
@@ -484,7 +490,7 @@ int SystemImp::run_command(const wchar_t* file,const wchar_t* cmd,int show,int w
 		ShExecInfo.lpParameters=cmd;
 		ShExecInfo.nShow=show;
 
-		logf("Run(%S%S,%d,%d)\n",file,cmd,show,wait);
+		uprintf("Running command: '%S%S,%d,%d",file,cmd,show,wait);
 		// is file "open"
 		if(!wcscmp(file,L"open"))
 				ShellExecute(nullptr,L"open",cmd,nullptr,nullptr,SW_SHOWNORMAL);
@@ -633,7 +639,7 @@ bool SystemImp::SystemProtectionEnabled(State *state)
 		// this reads the 64 bit registry from either 32-bit or 64-bit application
 		// if i can't find it or read it i'll assume yes
 		bool ret=true;
-		DWORD err;
+		LONG err;
 		HKEY hkey;
 		err=RegOpenKeyEx(HKEY_LOCAL_MACHINE,L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore",0,KEY_READ|KEY_WOW64_64KEY,&hkey);
 		if(err==ERROR_SUCCESS)
@@ -647,20 +653,23 @@ bool SystemImp::SystemProtectionEnabled(State *state)
 						err=RegQueryValueEx(hkey,L"DisableSR",nullptr,&dwType,(LPBYTE)&dwData,&cbData);
 						if(err==ERROR_SUCCESS)ret=dwData==0;
 						else if(err==ERROR_FILE_NOT_FOUND)ret=false;
-						else logf("ERROR in SystemProtectionEnabled(): error in RegQueryValueEx %d\n",err);
+						else uprintf("SystemProtectionEnabled: Failed to read DisableSR value - error %lx", err);
 				}
+        // windows 11 - unknown state
+        else if(vMajor==11)
+            ret=true;
 				// every other version
 				else
 				{
 						err=RegQueryValueEx(hkey,L"RPSessionInterval",nullptr,&dwType,(LPBYTE)&dwData,&cbData);
 						if(err==ERROR_SUCCESS)ret=dwData==1;
 						else if(err==ERROR_FILE_NOT_FOUND)ret=false;
-						else logf("ERROR in SystemProtectionEnabled(): error in RegQueryValueEx %d\n",err);
+						else ubprintf("SystemProtectionEnabled: Failed to read RPSessionInterval value - error %lx", err);
 				}
 
 				RegCloseKey(hkey);
 		}
-		else logf("ERROR in SystemProtectionEnabled(): error in RegOpenKeyEx %d\n",err);
+		else ubprintf("SystemProtectionEnabled: Failed to read SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore - error %lx", err);
 		return ret;
 }
 
@@ -682,7 +691,7 @@ int SystemImp::GetRestorePointCreationFrequency()
 				else ret=-1;
 				RegCloseKey(hkey);
 		}
-		else logf("ERROR in GetRestorePointCreationFrequency(): error in RegOpenKeyEx %d\n",err);
+		else uprintf("ERROR in GetRestorePointCreationFrequency(): error in RegOpenKeyEx %d\n",err);
 		return ret;
 }
 
@@ -705,7 +714,7 @@ void SystemImp::SetRestorePointCreationFrequency(int freq)
 						RegSetValueEx(hkey,L"SystemRestorePointCreationFrequency",0,dwType,(LPBYTE)&dwData,cbData);
 				RegCloseKey(hkey);
 		}
-		else logf("ERROR in SetRestorePointCreationFrequency(): error in RegOpenKeyEx %d\n",err);
+		else uprintf("ERROR in SetRestorePointCreationFrequency(): error in RegOpenKeyEx %d\n",err);
 }
 
 bool SystemImp::CreateRestorePoint(std::wstring desc)
@@ -737,7 +746,7 @@ bool SystemImp::CreateRestorePoint(std::wstring desc)
 						else
 						{
 								restorePointSucceeded=WIN5f_SRSetRestorePointW(&pRestorePtSpec,&pSMgrStatus);
-								logf("Restore Point: %d (%d)\n",(int)restorePointSucceeded,pSMgrStatus.nStatus);
+								uprintf("Restore Point: %d (%d)\n",(int)restorePointSucceeded,pSMgrStatus.nStatus);
 						}
 						// return it to the state we found it in
 						System.SetRestorePointCreationFrequency(restorePointFrequency);
@@ -745,13 +754,13 @@ bool SystemImp::CreateRestorePoint(std::wstring desc)
 						if(!restorePointSucceeded)
 						{
 								if(pSMgrStatus.nStatus==ERROR_SERVICE_DISABLED)
-										logf("ERROR: CreateRestorePoint : Failed to create restore point. Restore points disabled.\n");
+										uprintf("ERROR: CreateRestorePoint : Failed to create restore point. Restore points disabled.\n");
 								else
-										logf("ERROR: CreateRestorePoint : Failed to create restore point.\n");
+										uprintf("ERROR: CreateRestorePoint : Failed to create restore point.\n");
 						}
 				}
 				else
-						logf("ERROR: CreateRestorePoint : Failed to create restore point %d\n",hinstLib);
+						uprintf("ERROR: CreateRestorePoint : Failed to create restore point %d\n",hinstLib);
 
 				if(hinstLib)FreeLibrary(hinstLib);
 		return restorePointSucceeded;
@@ -829,9 +838,9 @@ void CALLBACK FilemonImp::monitor_callback(DWORD dwErrorCode,DWORD dwNumberOfByt
 
 								errno=0;
 								wsprintf(buf,L"%ws\\%ws",pMonitor->dir,szFile);
-								log("{\n  changed'%S'\n",buf);
+								uprintf("{\n  changed'%S'\n",buf);
 								f=_wfsopen(buf,L"rb",0x10); //deny read/write mode
-								if(f)m=2;
+								if(f) m=2;
 								if(!f)
 								{
 										f=_wfopen(buf,L"rb");
@@ -874,10 +883,10 @@ void CALLBACK FilemonImp::monitor_callback(DWORD dwErrorCode,DWORD dwNumberOfByt
 												flag=0;
 								}
 
-								logf("  %c a(%d),m(%d),err(%02d),size(%9d)\n",flag?'+':'-',pNotify->Action,m,errno,sz);
+								uprintf("  %c a(%d),m(%d),err(%02d),size(%9d)\n",flag?'+':'-',pNotify->Action,m,errno,sz);
 
 								if(flag)pMonitor->callback(szFile,pNotify->Action,(int)pMonitor->lParam);
-								log("}\n\n");
+								uprintf("}\n\n");
 			}
 		}while(pNotify->NextEntryOffset!=0);
 	}
@@ -1056,7 +1065,7 @@ void viruscheck(const wchar_t *szFile,int action,int lParam)
 										manager_g->itembar_setactive(SLOT_VIRUS_AUTORUN,update=1);
 						}
 						else
-								log("NOTE: cannot open autorun.inf [error: %d]\n",errno);
+								uprintf("NOTE: cannot open autorun.inf [error: %d]\n",errno);
 				}
 		}
 
@@ -1081,7 +1090,7 @@ void viruscheck(const wchar_t *szFile,int action,int lParam)
 								WStringShort bufw;
 								bufw.sprintf(L"\\%ws\\not_a_virus.txt",FindFileData.cFileName);
 								if(System.FileExists(bufw.Get()))continue;
-								log("VIRUS_WARNING: hidden folder '%S'\n",FindFileData.cFileName);
+								uprintf("VIRUS_WARNING: hidden folder '%S'\n",FindFileData.cFileName);
 								manager_g->itembar_setactive(SLOT_VIRUS_HIDDEN,update=1);
 						}
 				}
@@ -1116,7 +1125,7 @@ static BOOL CALLBACK ShowHelpProcedure(HWND hwnd,UINT Message,WPARAM wParam,LPAR
 				SetWindowTextW(hEditBox,L"Close");
 
 				get_resource(IDR_CLI_HELP,(void **)&s,&sz);
-				hEditBox=GetDlgItem(hwnd,IDC_EDIT1);
+				hEditBox=GetDlgItem(hwnd,IDC_LICENSE_TEXT);
 
 				SendMessage(hEditBox,WM_SETFONT,(WPARAM)CLIHelp_Font,0);
 
@@ -1142,7 +1151,7 @@ static BOOL CALLBACK ShowHelpProcedure(HWND hwnd,UINT Message,WPARAM wParam,LPAR
 				break;
 
 		case WM_CTLCOLORSTATIC:
-				hEditBox=GetDlgItem(hwnd,IDC_EDIT1);
+				hEditBox=GetDlgItem(hwnd,IDC_LICENSE_TEXT);
 				if((HWND)lParam==hEditBox)
 				{
 						HDC hdcStatic=(HDC)wParam;
@@ -1163,6 +1172,6 @@ void ShowHelp()
 		CLIHelp_Font=CreateFont(-12,0,0,0,FW_DONTCARE,FALSE,FALSE,FALSE,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,
 														CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,VARIABLE_PITCH,L"Consolas");
 
-		DialogBox(ghInst,MAKEINTRESOURCE(IDD_LICENSE),nullptr,(DLGPROC)ShowHelpProcedure);
+		DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_LICENSE),nullptr,(DLGPROC)ShowHelpProcedure);
 		DeleteObject(CLIHelp_Font);
 }

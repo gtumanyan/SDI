@@ -27,7 +27,6 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 // Depend on Win32API
 #include "enum.h"
-#include "main.h"    // for Popup
 #include "device.h"  // for CM_PROB_DISABLED
 
 //{ Global variables
@@ -217,7 +216,7 @@ void State::genmarker()
         if(StrStrIW(str,filter_list[i][j]))
             wsprintfA(marker,"%S_nb",filter_list[i][0]);
 
-    logf("Marker: '%s'\n",marker);
+    uprintf("Marker: '%s'\n",marker);
 }
 
 int calc_secttype(const char *s)
@@ -426,7 +425,7 @@ void MatcherImp::print()
     int limits[7];
 
     if(gReducedLogging)return;
-    logf("\n{matcher_print[devices=%d,hwids=%d]\n",devicematch_list.size(),hwidmatch_list.size());
+    uprintf("\n{matcher_print[devices=%d,hwids=%d]\n",devicematch_list.size(),hwidmatch_list.size());
     for(auto &devicematch:devicematch_list)
     {
         devicematch.device->print(state);
@@ -454,14 +453,14 @@ int MatcherImp::write_device_list(wchar_t *filename)
 {
     if(!System.canWriteFile(filename,L"wt"))
     {
-        logf("ERROR in write_device_list(): Unwriteable,'%S'\n",filename);
+        uprintf("ERROR in write_device_list(): Unwriteable,'%S'\n",filename);
         return 1;
     }
 
     FILE *f=_wfopen(filename,L"wt");
     if(!f)
     {
-        logf("ERROR in write_device_list(): Failed to open file,'%S'\n",filename);
+        uprintf("ERROR in write_device_list(): Failed to open file,'%S'\n",filename);
         return 1;
     }
 
@@ -850,25 +849,25 @@ void Hwidmatch::print_tbl(const int *limits)
     v->str_date(date,true);
     v->str_version(vers);
 
-    logf("  %d |",      altsectscore);
-    logf(" %08X |",     score);
-    logf(" %S |",       date.Get());
-    logf(" %3d |",      decorscore);
-    logf(" %2d |",      markerscore);
-    logf(" %3X |",      status);
+    uprintf("  %d |",      altsectscore);
+    uprintf(" %08X |",     score);
+    uprintf(" %S |",       date.Get());
+    uprintf(" %3d |",      decorscore);
+    uprintf(" %2d |",      markerscore);
+    uprintf(" %3X |",      status);
         getdrp_drvsection(buf);
-    logf(" %-*s |",limits[0],buf);
+    uprintf(" %-*s |",limits[0],buf);
 
     wsprintfA(buf,"%ws\\%ws",     getdrp_packpath(),getdrp_packname());
-    logf(" %-*s |",     limits[1],buf);
-    logf(" %8X|",       getdrp_infcrc());
+    uprintf(" %-*s |",     limits[1],buf);
+    uprintf(" %8X|",       getdrp_infcrc());
     wsprintfA(buf,"%s%s",         getdrp_infpath(),getdrp_infname());
-    logf(" %-*s |",     limits[2],buf);
-    logf(" %-*s |",     limits[3],    getdrp_drvmanufacturer());
+    uprintf(" %-*s |",     limits[2],buf);
+    uprintf(" %-*s |",     limits[3],    getdrp_drvmanufacturer());
     wsprintfA(buf,"%ws",          vers.Get());
-    logf(" %*s |",      limits[4],buf);
-    logf(" %-*s |",     limits[5],    getdrp_drvHWID());
-    logf(" %-*s",       limits[6],      getdrp_drvdesc());
+    uprintf(" %*s |",      limits[4],buf);
+    uprintf(" %-*s |",     limits[5],    getdrp_drvHWID());
+    uprintf(" %-*s",       limits[6],      getdrp_drvdesc());
     log("\n");
 }
 
@@ -887,16 +886,16 @@ void Hwidmatch::print_hr()
     log_file("  CRC:  %8X%\n",              getdrp_infcrc(this));
     log_file("  Marker %d\n",                markerscore);
     log_file("  Status %3X\n",               status);*/
-    logf("  Pack:     %S\\%S\n", getdrp_packpath(),getdrp_packname());
+    uprintf("  Pack:     %S\\%S\n", getdrp_packpath(),getdrp_packname());
 
-    logf("  Name:     %s\n",     getdrp_drvdesc());
-    logf("  Provider: %s\n",     getdrp_drvmanufacturer());
-    logf("  Date:     %S\n",     date.Get());
-    logf("  Version:  %S\n",     vers.Get());
-    logf("  HWID:     %s\n",     getdrp_drvHWID());
+    uprintf("  Name:     %s\n",     getdrp_drvdesc());
+    uprintf("  Provider: %s\n",     getdrp_drvmanufacturer());
+    uprintf("  Date:     %S\n",     date.Get());
+    uprintf("  Version:  %S\n",     vers.Get());
+    uprintf("  HWID:     %s\n",     getdrp_drvHWID());
     getdrp_drvsection(buf);
-    logf("  inf:      %s%s,%s\n",getdrp_infpath(),getdrp_infname(),buf);
-    logf("  Score:    %08X\n",   score);
+    uprintf("  inf:      %s%s,%s\n",getdrp_infpath(),getdrp_infname(),buf);
+    uprintf("  Score:    %08X\n",   score);
     log("\n");
 }
 
@@ -1078,7 +1077,7 @@ const char *Hwidmatch::getdrp_drvcat(int n)const
     size_t desc_index=drp->HWID_list[HWID_index].desc_index;
     size_t manufacturer_index=drp->desc_list[desc_index].manufacturer_index;
     size_t inffile_index=drp->manufacturer_list[manufacturer_index].inffile_index;
-    //logf(drp->text_ind.get(drp->inffile[inffile_index].cats[n]));
+    //uprintf(drp->text_ind.get(drp->inffile[inffile_index].cats[n]));
     if(!drp->inffile[inffile_index].cats[n])return "";
     return drp->text_ind.get(drp->inffile[inffile_index].cats[n]);
 }

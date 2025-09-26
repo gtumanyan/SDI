@@ -1,0 +1,293 @@
+THEME_NAME              = "Windows 11 Light"
+
+// Main window
+MAINWND_TRANSPARENCY     = 245
+MAINWND_TEXT_COLOR       = 0x000000
+MAINWND_WX               = 1024
+MAINWND_WY               = 729
+MAINWND_MINX             = 845
+MAINWND_MINY             = 625
+MAINWND_INSIDE_COLOR     = 0xf9f4ef
+MAINWND_OUTLINE_COLOR    = 0xf9f4ef
+MAINWND_OUTLINE_WIDTH    = 0
+MAINWND_OUTLINE_ROUND    = 0
+MAINWND_BITMAP_FILENAME  = ""
+MAINWND_BITMAP_ANCHOR    = top_left
+MAINWND_BITMAP_FILL      = htile_vtile
+
+// Font
+//FONT_NAME                = "Segoe UI"
+//FONT_SIZE                = 15
+
+// Popup (описание драйверов)
+POPUP_TRANSPARENCY       = 235
+POPUP_FONT_SIZE          = 13
+POPUP_WX                 = 450
+POPUP_WY                 = 13
+POPUP_INSIDE_COLOR       = 0xf9f4ef
+POPUP_TEXT_COLOR         = 0x000000
+POPUP_HWID_COLOR         = 0xA25100
+//POPUP_CMP_BETTER_COLOR   = 0x00d800
+//POPUP_CMP_INVALID_COLOR  = 0x3434ff
+//POPUP_LST_BETTER_COLOR   = 0x00A000
+//POPUP_LST_WORSE_COLOR    = 0x0000FF
+//POPUP_LST_INVALID_COLOR  = 0xC3C3C3
+POPUP_LST_SELECTED_COLOR = 0xFFFFFF
+//POPUP_OUTLINE_COLOR      = 0xFFFFFF
+
+// Checkboxes on left panel
+CHKBOX_TEXT_OFSX            = 22
+CHKBOX_TEXT_COLOR           = 0x000000
+CHKBOX_TEXT_COLOR_H         = 0xc65300 (цвет текста кнопок слева при наведении)
+CHKBOX_SIZE                 = 18
+ITEM_CHECKBOX_SIZE          = 18
+BUTTON_BITMAP_CHECKED       = "win11light\checked1.webp"
+BUTTON_BITMAP_CHECKED_H     = "win11light\checked1_h.webp"
+BUTTON_BITMAP_UNCHECKED     = "win11light\unchecked1.webp"
+BUTTON_BITMAP_UNCHECKED_H   = "win11light\unchecked1_h.webp"
+ITEM_BITMAP_CHECKED         = "win11light\checked2.webp"
+ITEM_BITMAP_CHECKED_H       = "win11light\checked2_h.webp"
+ITEM_BITMAP_UNCHECKED       = "win11light\unchecked2.webp"
+ITEM_BITMAP_UNCHECKED_H     = "win11light\unchecked2_h.webp"
+ITEM_EXPAND_UP              = "win11light\up.webp"
+ITEM_EXPAND_UP_H            = "win11light\up.webp"
+ITEM_EXPAND_DOWN            = "win11light\down.webp"
+ITEM_EXPAND_DOWN_H          = "win11light\down.webp"
+
+// Checkbox (selected via the keyboard)
+KBHLT_INSIDE_COLOR          = 0xfdfbfb
+KBHLT_OUTLINE_WIDTH         = 1 (обводка)
+KBHLT_OUTLINE_COLOR         = 0xeae6e1 (цвет обводки)
+KBHLT_OUTLINE_ROUND         = 5 (округлости)
+
+// Progress bar (active)
+PROGR_INSIDE_COLOR          = 0x70e070
+PROGR_OUTLINE_COLOR         = PROGR_INSIDE_COLOR
+PROGR_OUTLINE_ROUND         = 0
+
+// Panel, generic
+PANEL_INSIDE_COLOR       = 0xFF000000
+PANEL_OUTLINE_ROUND      = 0
+PANEL_OUTLINE_COLOR = 0xFF000000 // Transparent
+PANEL_OUTLINE_WIDTH = 0
+PANEL_OUTLINE_ROUND = 2
+//PANEL_BITMAP_FILENAME    = "grass\semi.webp"
+//PANEL_BITMAP_FILL        = hstr_vstr
+
+// Panel, sysinfo
+PANEL1_OFSX              = 209
+PANEL1_OFSY              = 10
+PANEL1_WX                = -620
+
+// Panel, install
+PANEL2_OFSX              = 0
+PANEL2_OFSY              = 0
+PANEL2_WX                = -1
+PANEL2_WY                = 30
+PANEL2_INSIDE_COLOR      = 0xFF000000
+PANEL2_OUTLINE_WIDTH     = 0
+PANEL2_BITMAP_FILENAME   = ""
+
+// Panel, lang_theme
+PANEL3_OFSY              = 135
+
+// Panel, actions
+PANEL4_OFSY              = 245
+
+// Panel, filters (found)
+PANEL5_OFSY              = 340
+
+// Panel, filters (not found)
+PANEL6_OFSY              = 500
+
+// Panel, filters (special)
+PANEL7_OFSY              = 617
+
+// Panel, revision
+PANEL8_OFSX              = 20
+PANEL8_OFSY              = 110
+PANEL8_BITMAP_FILENAME   = ""
+
+// Panel, install button
+PANEL9_OFSX              = -205
+PANEL9_OFSY              = 10
+PANEL9_WX                = 177
+PANEL9_WY                = 69
+PANEL9_OUTLINE_WIDTH     = -1
+PANEL9_OUTLINE_COLOR     = 0xeae6e1
+PANEL9_OUTLINE_COLOR_H   = 0xeae6e1
+PANEL9_OUTLINE_ROUND     = 15 (округлости)
+PANEL9_OUTLINE_ROUND_H   = 15
+PANEL9_INSIDE_COLOR      = 0xffa344
+PANEL9_INSIDE_COLOR_H    = 0xffb354
+
+// Panel, selectall button
+PANEL10_OFSX             = -362
+PANEL10_OFSY             = 10
+PANEL10_WX               = 160
+PANEL10_WY               = 30
+PANEL10_OUTLINE_WIDTH    = PANEL9_OUTLINE_WIDTH
+PANEL10_OUTLINE_ROUND     = 15 (округлости)
+PANEL10_OUTLINE_ROUND_H   = 15
+PANEL10_INSIDE_COLOR      = 0xfdfbfb
+PANEL10_INSIDE_COLOR_H    = 0xf9f6f5
+
+// Panel, selectnone button
+PANEL11_OFSX             = PANEL10_OFSX
+PANEL11_OFSY             = 49
+PANEL11_WX               = PANEL10_WX
+PANEL11_WY               = PANEL10_WY
+PANEL11_OUTLINE_WIDTH    = PANEL9_OUTLINE_WIDTH
+PANEL11_OUTLINE_ROUND     = 15 (округлости)
+PANEL11_OUTLINE_ROUND_H   = 15
+PANEL11_INSIDE_COLOR      = 0xfdfbfb
+PANEL11_INSIDE_COLOR_H    = 0xf9f6f5
+
+// Panel, options
+PANEL12_OFSX             = -613
+PANEL12_OFSY             = PANEL1_OFSY
+PANEL12_WX               = 272
+PANEL12_WY               = PANEL_WY
+
+// Panel, logo
+PANEL13_OFSX             = 30
+PANEL13_OFSY             = 20
+PANEL13_WX               = 150
+PANEL13_WY               = 84
+PANEL13_INSIDE_COLOR     = 0xFF000000
+PANEL13_OUTLINE_COLOR    = 0xFF000000
+PANEL13_OUTLINE_WIDTH    = 0
+PANEL13_BITMAP_FILENAME  = "win11light\logo.webp"
+
+// Buttons on left panel
+BUTTON_INSIDE_COLOR      = 0xFF000000
+BUTTON_OUTLINE_WIDTH     = 0
+BUTTON_OUTLINE_ROUND     = 0
+BUTTON_INSIDE_COLOR_H    = 0xfdfbfb (левая панель кнопок при наведении)
+BUTTON_OUTLINE_WIDTH_H   = 1 (обводка при наведении)
+BUTTON_OUTLINE_COLOR_H   = 0xeae6e1 (цвет обводки при наведении)
+BUTTON_OUTLINE_ROUND     = 5 (округлости)
+BUTTON_OUTLINE_ROUND_H   = 5
+
+// Driver list
+DRVLIST_OFSX             = 209
+DRVLIST_OFSY             = 90
+DRVLIST_WX               = -7
+DRVLIST_WY               = -5
+DRVLIST_INSIDE_COLOR     = 0xFF000000
+DRVLIST_OUTLINE_COLOR    = 0x000000
+DRVLIST_OUTLINE_WIDTH    = 0
+DRVLIST_OUTLINE_ROUND    = 0
+//DRVLIST_BITMAP_FILENAME  = "grass\semi.webp"
+//DRVLIST_BITMAP_FILL      = hstr_vstr (влияет на размер логотипа)
+
+// Driver item (generic style)
+DRVITEM_WX               = -10
+DRVITEM_WY               = 38
+DRVITEM_OFSX             = 15
+DRVITEM_OFSY             = 15
+DRVITEM_LINE_INTEND      = 30
+DRVITEM_LINE_COLOR       = 0xbbbbbb
+DRVITEM_LINE_WIDTH       = 2
+DRVITEM_OUTLINE_WIDTH    = 1 (обводка)
+DRVITEM_OUTLINE_COLOR    = 0xeae6e1 (цвет обводки)
+DRVITEM_OUTLINE_COLOR_H  = 0xeae6e1 (цвет обводки при наведении)
+DRVITEM_DIST_Y0          = 40
+DRVITEM_DIST_Y1          = DRVITEM_DIST_Y0
+DRVITEM_DIST_Y2          = 5 (дистанция между кнопкми)
+DRVITEM_OUTLINE_ROUND    = 15 (округлости)
+DRVITEM_OUTLINE_ROUND_H  = 15
+DRVITEM_INSIDE_COLOR     = 0xfdfbfb (цвет кнопок)
+DRVITEM_INSIDE_COLOR_H   = 0xf9f6f5
+DRVITEM_TEXT1_COLOR      = 0x000000
+DRVITEM_TEXT2_COLOR      = 0x000000
+DRVITEM_TEXT1_COLOR_PN   = 0x000000
+DRVITEM_TEXT2_COLOR_PN   = 0x5c5c5c (цвет текста пакета драйверов)
+
+// BETTER_NEW
+DRVITEM_TEXT2_COLOR_BN   = 0xA25100
+
+// SAME_NEW
+DRVITEM_TEXT2_COLOR_SN   = DRVITEM_TEXT2_COLOR_BN
+
+// WORSE_NEW
+DRVITEM_TEXT2_COLOR_WN   = DRVITEM_TEXT2_COLOR_BN
+
+// BETTER_CUR
+DRVITEM_TEXT2_COLOR_BC   = DRVITEM_TEXT2_COLOR_BN
+
+// BETTER_OLD
+DRVITEM_TEXT2_COLOR_BO   = 0x008100
+
+// MISSING
+DRVITEM_TEXT2_COLOR_MS   = 0x008400
+
+// OLD
+//DRVITEM_TEXT2_COLOR_SO   = 0x9999ff
+
+// WORSE_OLD
+//DRVITEM_TEXT2_COLOR_WO   = 0x9999ff
+
+// Patreon
+DRVITEM_INSIDE_COLOR_PT     = 0xc7b4a7
+DRVITEM_INSIDE_COLOR_PT_H   = 0xd7c4b7
+DRVITEM_TEXT1_COLOR_PT      = DRVITEM_TEXT1_COLOR
+DRVITEM_TEXT2_COLOR_PT      = DRVITEM_TEXT1_COLOR
+
+// Кнопка обновления драйверов
+DRVITEM_INSIDE_COLOR_IU     = PANEL9_INSIDE_COLOR
+DRVITEM_INSIDE_COLOR_IU_H   = PANEL9_INSIDE_COLOR_H
+DRVITEM_TEXT1_COLOR_IU      = DRVITEM_TEXT1_COLOR
+DRVITEM_TEXT2_COLOR_IU      = DRVITEM_TEXT1_COLOR
+
+// Кнопка завершения эмуляции системы
+DRVITEM_INSIDE_COLOR_IF     = 0xc578e4
+DRVITEM_INSIDE_COLOR_IF_H   = 0xd588f4
+DRVITEM_TEXT1_COLOR_IF      = DRVITEM_TEXT1_COLOR
+DRVITEM_TEXT2_COLOR_IF      = DRVITEM_TEXT1_COLOR
+
+// Кнопка ошибка установки и кнопка проблем с точкой восстановления
+DRVITEM_INSIDE_COLOR_DE     = DRVITEM_INSIDE_COLOR
+DRVITEM_INSIDE_COLOR_DE_H   = DRVITEM_INSIDE_COLOR_H
+DRVITEM_TEXT1_COLOR_DE      = DRVITEM_TEXT2_COLOR_SO
+DRVITEM_TEXT2_COLOR_DE      = DRVITEM_TEXT2_COLOR_SO
+
+// Virus alert
+DRVITEM_INSIDE_COLOR_VR     = 0x0000ff
+DRVITEM_INSIDE_COLOR_VR_H   = 0x0000df
+DRVITEM_TEXT1_COLOR_VR      = DRVITEM_TEXT1_COLOR
+DRVITEM_TEXT2_COLOR_VR      = DRVITEM_TEXT1_COLOR
+
+// Цвета кнопок драйверов при завершение установки
+DRVITEM_INSIDE_COLOR_D1     = DRVITEM_INSIDE_COLOR
+DRVITEM_INSIDE_COLOR_D1_H   = 0xedebeb
+DRVITEM_TEXT1_COLOR_D1      = DRVITEM_TEXT2_COLOR_MS
+DRVITEM_TEXT2_COLOR_D1      = DRVITEM_TEXT2_COLOR_MS
+
+// Цвета кнопок драйверов при завершение установки, с требованием перезагрузки
+DRVITEM_INSIDE_COLOR_D2     = DRVITEM_INSIDE_COLOR
+DRVITEM_INSIDE_COLOR_D2_H   = 0xedebeb
+DRVITEM_TEXT1_COLOR_D2      = 0x0050b8
+DRVITEM_TEXT2_COLOR_D2      = 0x0050b8
+
+// Драйвер не найден
+DRVITEM_INSIDE_COLOR_NM     = DRVITEM_INSIDE_COLOR
+DRVITEM_INSIDE_COLOR_NM_H   = DRVITEM_INSIDE_COLOR_H
+DRVITEM_TEXT1_COLOR_NM      = DRVITEM_TEXT2_COLOR_SO
+DRVITEM_TEXT2_COLOR_NM      = 0x5c5c5c
+
+// Драйвер установлен, но его нет в паке
+DRVITEM_INSIDE_COLOR_NU     = DRVITEM_INSIDE_COLOR
+DRVITEM_INSIDE_COLOR_NU_H   = DRVITEM_INSIDE_COLOR_H
+DRVITEM_TEXT1_COLOR_NU      = DRVITEM_TEXT1_COLOR
+DRVITEM_TEXT2_COLOR_NU      = 0x5c5c5c
+
+// Стандартные драйвера уже установленные в системе
+DRVITEM_INSIDE_COLOR_NS     = DRVITEM_INSIDE_COLOR
+DRVITEM_INSIDE_COLOR_NS_H   = DRVITEM_INSIDE_COLOR_H
+DRVITEM_TEXT1_COLOR_NS      = DRVITEM_TEXT1_COLOR
+DRVITEM_TEXT2_COLOR_NS      = 0x5c5c5c
+
+// ???????????????????????????????????????????????
+//DRVITEM_INSIDE_COLOR_D0 = 0x000000
+//DRVITEM_INSIDE_COLOR_D0_H = 0x000000

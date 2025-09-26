@@ -13,30 +13,24 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "utils\baseutil.h"
-#include "utils\log.h"
+
+#include <windows.h>
+#include <memory>
+#include <commctrl.h>         // for WC_COMBOBOX
+#include <setupapi.h>       // for SetupDiGetClassDescription()
+
+#include <webp/decode.h>
+
 #include "SDI.h"
+#include "utils\baseutil.h"
 #include "system.h"
 #include "Settings.h"
 #include "gui.h"
 #include "theme.h"
 #include "draw.h"
-
-#include <CommCtrl.h>         // for WC_COMBOBOX
-
-// Depend on Win32API
-#include "enum.h"     // todo: lots of Win32
-#include "main.h"     // todo: lots of Win32
-
-#include <setupapi.h>       // for SetupDiLoadClassIcon()
-#include <webp/decode.h>
-#include <memory>
-
 #include "draw_imp.h"
 
-//{ Global vars
-int rtl=0;
-//}
+#include "enum.h"     // todo: lots of Win32
 
 //{ wFont
 wFont *wFont::Create(){return new wFontImp;}
@@ -44,18 +38,18 @@ wFont *wFont::Create(){return new wFontImp;}
 void wFontImp::SetFont(const wchar_t *name,int size,bool bold)
 {
 		if(hFont&&!DeleteObject(hFont))
-				logf("ERROR in setfont(): failed DeleteObject\n");
+				uprintf("ERROR in setfont(): failed DeleteObject\n");
 
 		hFont=CreateFont(-size,0,0,0,bold?FW_BOLD:FW_DONTCARE,FALSE,FALSE,FALSE,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,
 										 CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,VARIABLE_PITCH,name);
 
-		if(!hFont)logf("ERROR in setfont(): failed CreateFont\n");
+		if(!hFont)uprintf("ERROR in setfont(): failed CreateFont\n");
 }
 
 wFontImp::~wFontImp()
 {
 		if(hFont&&!DeleteObject(hFont))
-				logf("ERROR in manager_free(): failed DeleteObject\n");
+				uprintf("ERROR in manager_free(): failed DeleteObject\n");
 }
 //}
 
@@ -63,20 +57,20 @@ wFontImp::~wFontImp()
 ClipRegionImp::ClipRegionImp(int x1,int y1,int x2,int y2):
 		hrgn(CreateRectRgn(x1,y1,x2,y2))
 {
-		if(!hrgn)logf("ERROR in ClipRegion(): failed CreateRectRgn\n");
+		if(!hrgn)uprintf("ERROR in ClipRegion(): failed CreateRectRgn\n");
 }
 
 ClipRegionImp::ClipRegionImp(int x1,int y1,int x2,int y2,int r):
 		hrgn(CreateRoundRectRgn(x1,y1,x2,y2,r,r))
 {
-		if(!hrgn)logf("ERROR in ClipRegion(): failed CreateRoundRectRgn\n");
+		if(!hrgn)uprintf("ERROR in ClipRegion(): failed CreateRoundRectRgn\n");
 }
 
 void ClipRegionImp::setRegion(int x1,int y1,int x2,int y2)
 {
 		if(hrgn)DeleteObject(hrgn);
 		hrgn=CreateRectRgn(x1,y1,x2,y2);
-		if(!hrgn)logf("ERROR in ClipRegion(): failed setRegion\n");
+		if(!hrgn)uprintf("ERROR in ClipRegion(): failed setRegion\n");
 }
 
 ClipRegionImp::~ClipRegionImp()
@@ -172,9 +166,9 @@ void ImageImp::Release()
 		{
 				SelectObject(ldc,oldbitmap);
 				int r=DeleteDC(ldc);
-				if(!r)logf("ERROR in box_init(): failed DeleteDC\n");
+				if(!r)uprintf("ERROR in box_init(): failed DeleteDC\n");
 				r=DeleteObject(bitmap);
-				if(!r)logf("ERROR in box_init(): failed DeleteObject\n");
+				if(!r)uprintf("ERROR in box_init(): failed DeleteObject\n");
 		}
 		bitmap=nullptr;
 		ldc=nullptr;
@@ -187,30 +181,23 @@ void ImageImp::LoadFromFile(const wchar_t *filename)
 
 		WStringShort name;
 		name.sprintf(L"%s\\Themes\\%s",Settings.data_dir,filename);
-		FILE *fp=_wfopen(name.Get(),L"rb");
-		if(!fp)
-		{
-				logf("ERROR in image_loadFile(): file '%S' not found\n",name.Get());
+		FILE* fd=_wfopen(name.Get(),L"rb");
+		if(fd==NULL) {
+				uprintf("ERROR: Can't load theme file '%S'",name.Get());
 				return;
 		}
-		_fseeki64(fp,0,SEEK_END);
-		size_t size=static_cast<size_t>(_ftelli64(fp));
-        size_t nRead = 0;
-		_fseeki64(fp,0,SEEK_SET);
+
+		fseek(fd,0L,SEEK_END);
+		size_t size = static_cast<size_t>(ftell(fd));
+		fseek(fd,0L,SEEK_SET);
 		std::unique_ptr<BYTE[]> imgbuf(new BYTE[size]);
 
-		nRead=fread(imgbuf.get(),1,size,fp);
-		if(!size) {
-            int err = ferror(fp);
-            int isEof = feof(fp);
-            logf("ImageImp::LoadFromFile: fread() failed, path: '%s', size: %d, nRead: %d, err: %d, isEof: %d\n", name.Get(),
-                (int)size, (int)nRead, err, isEof);
-            // we should either get eof or err
-            // either way shouldn't happen because we're reading the exact size of file
-            ReportIf(!(isEof || (err != 0)));
+		size=fread(imgbuf.get(),1,size,fd);
+		if(size==0) {
+        uprintf("ERROR in image_loadFile(): Can't read '%S'\n",name.Get());
 			return;
 		}
-		fclose(fp);
+		fclose(fd);
 		CreateMyBitmap(imgbuf.get(),size);
 }
 
@@ -220,9 +207,8 @@ void ImageImp::LoadFromRes(int id)
 		HGLOBAL myResourceData;
 
 		get_resource(id,&myResourceData,&sz);
-		if(!sz)
-		{
-				logf("ERROR in image_loadRes(): failed get_resource\n");
+		if(!sz) {
+				uprintf("  Could not access source image");
 				return;
 		}
 		CreateMyBitmap(static_cast<BYTE *>(myResourceData),sz);
@@ -237,13 +223,13 @@ void ImageImp::CreateMyBitmap(BYTE *data,size_t sz)
 		int ret= WebPGetInfo(data,sz,&sx,&sy);
 		if(!ret)
 		{
-				logf("ERROR in image_load(): failed WebPGetInfo(%d)\n",ret);
+				uprintf("ERROR in image_load(): failed WebPGetInfo(%d)\n",ret);
 				return;
 		}
 		big=WebPDecodeBGRA(data,sz,&sx,&sy);
 		if(!big)
 		{
-				logf("ERROR in image_load(): failed WebPDecodeBGRA\n");
+				uprintf("ERROR in image_load(): failed WebPDecodeBGRA\n");
 				return;
 		}
 
@@ -262,7 +248,7 @@ void ImageImp::CreateMyBitmap(BYTE *data,size_t sz)
 		bitmap=CreateDIBSection(ldc,&bmi,DIB_RGB_COLORS,reinterpret_cast<void **>(&bits),nullptr,0);
 		if(!bitmap)
 		{
-				logf("ERROR in CreateMyBitmap(): failed CreateDIBSection\n");
+				uprintf("ERROR in CreateMyBitmap(): failed CreateDIBSection\n");
 				free(big);
 				return;
 		}
@@ -294,7 +280,7 @@ void ImageImp::Draw(HDC dc,int x1,int y1,int x2,int y2,int anchor,int fill)
 
 		if(!sx)return;
 
-		SetLayout(ldc,rtl?LAYOUT_RTL:0);
+		SetLayout(ldc,right_to_left_mode?LAYOUT_RTL:0);
 
 		wx=(fill&HSTR)?x2-x1:sx;
 		wy=(fill&VSTR)?y2-y1:sy;
@@ -370,7 +356,7 @@ void ImageStorangeImp::LoadAll()
 				}
 				if(i==j)
 				{
-                        logf("Load %S for %S\n",str, theme[index[i]+add].name);
+            uprintf("Load %S for %S\n",str, theme[index[i]+add].name);
 						a[i].Load(index[i]+add);
 				}
 		}
@@ -385,11 +371,11 @@ void CanvasImp::DrawConnection(int x1,int pos,int ofsy,int curpos)
 		HGDIOBJ oldpen,newpen;
 
 		newpen=CreatePen(PS_SOLID,D_1(DRVITEM_LINE_WIDTH),D_C(DRVITEM_LINE_COLOR));
-		oldpen=SelectObject(hdcMem,newpen);
-		MoveToEx(hdcMem,x1-D_X(DRVITEM_LINE_INTEND)/2,curpos-D_X(DRVITEM_DIST_Y0)+D_X(DRVITEM_WY)-ofsy,nullptr);
-		LineTo(hdcMem,x1-D_X(DRVITEM_LINE_INTEND)/2,pos+D_X(DRVITEM_WY)/2);
-		LineTo(hdcMem,x1,pos+D_X(DRVITEM_WY)/2);
-		SelectObject(hdcMem,oldpen);
+		oldpen=SelectObject(hdc,newpen);
+		MoveToEx(hdc,x1-D_X(DRVITEM_LINE_INTEND)/2,curpos-D_X(DRVITEM_DIST_Y0)+D_X(DRVITEM_WY)-ofsy,nullptr);
+		LineTo(hdc,x1-D_X(DRVITEM_LINE_INTEND)/2,pos+D_X(DRVITEM_WY)/2);
+		LineTo(hdc,x1,pos+D_X(DRVITEM_WY)/2);
+		SelectObject(hdc,oldpen);
 		DeleteObject(newpen);
 }
 
@@ -397,37 +383,37 @@ CanvasImp::CanvasImp():
 		x(0),
 		y(0),
 		localDC(nullptr),
-		hdcMem(CreateCompatibleDC(nullptr)),
+		hdc(CreateCompatibleDC(nullptr)),
 		bitmap(nullptr),
 		oldbitmap(nullptr),
 		//ps(nullptr),
 		hwnd(nullptr),
 		clipping(nullptr)
 {
-		if(!hdcMem)
-				logf("ERROR in canvas_init(): failed CreateCompatibleDC\n");
+		if(!hdc)
+				uprintf("ERROR in canvas_init(): failed CreateCompatibleDC\n");
 		else
 		{
-				int r=SetBkMode(hdcMem,TRANSPARENT);
-				if(!r)logf("ERROR in canvas_init(): failed SetBkMode\n");
+				int r=SetBkMode(hdc,TRANSPARENT);
+				if(!r)uprintf("ERROR in canvas_init(): failed SetBkMode\n");
 		}
 }
 
 CanvasImp::~CanvasImp()
 {
-		if(hdcMem)
+		if(hdc)
 		{
-				int r=DeleteDC(hdcMem);
-				if(!r)logf("ERROR in canvas_free(): failed DeleteDC\n");
-				hdcMem=nullptr;
+				int r=DeleteDC(hdc);
+				if(!r)uprintf("ERROR in canvas_free(): failed DeleteDC\n");
+				hdc=nullptr;
 		}
 
 		if(bitmap)
 		{
-				//r=(int)SelectObject(hdcMem,oldbitmap);
+				//r=(int)SelectObject(hdcBitmap,oldbitmap);
 				//if(!r)Log.log_err("ERROR in canvas_free(): failed SelectObject\n");
 				int r=DeleteObject(bitmap);
-				if(!r)logf("ERROR in canvas_free(): failed DeleteObject\n");
+				if(!r)uprintf("ERROR in canvas_free(): failed DeleteObject\n");
 				bitmap=nullptr;
 		}
 }
@@ -438,7 +424,7 @@ void CanvasImp::begin(p_wnd_handle_type nhwnd,int nx,int ny,bool mirror)
 
 		hwnd=*reinterpret_cast<HWND *>(nhwnd);
 		localDC=BeginPaint(hwnd,&ps);
-		if(!localDC)logf("ERROR in canvas_begin(): failed BeginPaint\n");
+		if(!localDC)uprintf("ERROR in canvas_begin(): failed BeginPaint\n");
 
 		if(x!=nx||y!=ny)
 		{
@@ -446,29 +432,29 @@ void CanvasImp::begin(p_wnd_handle_type nhwnd,int nx,int ny,bool mirror)
 				y=ny;
 				if(bitmap)
 				{
-						HGDIOBJ r=SelectObject(hdcMem,oldbitmap);
-						if(!r)logf("ERROR in canvas_begin(): failed SelectObject(oldbitmap)\n");
+						HGDIOBJ r=SelectObject(hdc,oldbitmap);
+						if(!r)uprintf("ERROR in canvas_begin(): failed SelectObject(oldbitmap)\n");
 						r32=DeleteObject(bitmap);
-						if(!r32)logf("ERROR in canvas_begin(): failed DeleteObject\n");
+						if(!r32)uprintf("ERROR in canvas_begin(): failed DeleteObject\n");
 				}
 				bitmap=CreateCompatibleBitmap(localDC,x,y);
 				if(!bitmap)
-						logf("ERROR in canvas_begin(): failed CreateCompatibleBitmap\n");
+						uprintf("ERROR in canvas_begin(): failed CreateCompatibleBitmap\n");
 				else
 				{
-						oldbitmap=static_cast<HBITMAP>(SelectObject(hdcMem,bitmap));
-						if(!oldbitmap)logf("ERROR in canvas_begin(): failed SelectObject(bitmap)\n");
+						oldbitmap=static_cast<HBITMAP>(SelectObject(hdc,bitmap));
+						if(!oldbitmap)uprintf("ERROR in canvas_begin(): failed SelectObject(bitmap)\n");
 				}
 		}
 		clipping=CreateRectRgnIndirect(&ps.rcPaint);
-		if(!clipping)logf("ERROR in canvas_begin(): failed BeginPaint\n");
-		SetStretchBltMode(hdcMem,HALFTONE);
-		r32=SelectClipRgn(hdcMem,clipping);
-		if(!r32)logf("ERROR in canvas_begin(): failed SelectClipRgn\n");
+		if(!clipping)uprintf("ERROR in canvas_begin(): failed BeginPaint\n");
+		SetStretchBltMode(hdc,HALFTONE);
+		r32=SelectClipRgn(hdc,clipping);
+		if(!r32)uprintf("ERROR in canvas_begin(): failed SelectClipRgn\n");
 		if(mirror)
-				SetLayout(hdcMem,rtl?LAYOUT_RTL:0);
+				SetLayout(hdc,right_to_left_mode?LAYOUT_RTL:0);
 		else
-				SetLayout(hdcMem,0);
+				SetLayout(hdc,0);
 }
 
 void CanvasImp::end()
@@ -477,13 +463,13 @@ void CanvasImp::end()
 
 		r=BitBlt(localDC,
 						 ps.rcPaint.left,ps.rcPaint.top,ps.rcPaint.right,ps.rcPaint.bottom,
-						 hdcMem,
+						 hdc,
 						 ps.rcPaint.left,ps.rcPaint.top,
 						 SRCCOPY);
-		SelectClipRgn(hdcMem,nullptr);
-		if(!r)logf("ERROR in canvas_end(): failed BitBlt\n");
+		SelectClipRgn(hdc,nullptr);
+		if(!r)uprintf("ERROR in canvas_end(): failed BitBlt\n");
 		r=DeleteObject(clipping);
-		if(!r)logf("ERROR in canvas_end(): failed DeleteObject\n");
+		if(!r)uprintf("ERROR in canvas_end(): failed DeleteObject\n");
 		EndPaint(hwnd,&ps);
 }
 //}
@@ -491,54 +477,54 @@ void CanvasImp::end()
 //{ Draw
 void CanvasImp::DrawTextXY(int x1,int y1,LPCTSTR buf)
 {
-		TextOut(hdcMem,x1,y1,buf,static_cast<int>(wcslen(buf)));
+		TextOut(hdc,x1,y1,buf,static_cast<int>(wcslen(buf)));
 }
 
 void CanvasImp::SetTextColor(int color)
 {
-		::SetTextColor(hdcMem,color);
+		::SetTextColor(hdc,color);
 }
 
 void CanvasImp::SetFont(wFont *font)
 {
-		SelectObject(hdcMem,dynamic_cast<wFontImp *>(font)->hFont);
+		SelectObject(hdc,dynamic_cast<wFontImp *>(font)->hFont);
 }
 
 void CanvasImp::SetClipRegion(ClipRegion &clip)
 {
-		SelectClipRgn(hdcMem,clip.imp->hrgn);
+		SelectClipRgn(hdc,clip.imp->hrgn);
 }
 
 void CanvasImp::ClearClipRegion()
 {
-		SelectClipRgn(hdcMem,nullptr);
+		SelectClipRgn(hdc,nullptr);
 }
 
 void CanvasImp::CalcBoundingBox(const wchar_t *str,RECT_WR *rect)
 {
-		DrawText(hdcMem,str,-1,reinterpret_cast<RECT *>(rect),DT_WORDBREAK|DT_CALCRECT);
+		DrawText(hdc,str,-1,reinterpret_cast<RECT *>(rect),DT_WORDBREAK|DT_CALCRECT);
 }
 
 void CanvasImp::DrawTextRect(const wchar_t *bufw,RECT_WR *rect,int flags)
 {
-		DrawText(hdcMem,bufw,-1,reinterpret_cast<RECT *>(rect),DT_WORDBREAK|flags);
+		DrawText(hdc,bufw,-1,reinterpret_cast<RECT *>(rect),DT_WORDBREAK|flags);
 }
 
 int  CanvasImp::GetTextExtent(const wchar_t *str)
 {
 		SIZE ss;
-		GetTextExtentPoint32(hdcMem,str,static_cast<int>(wcslen(str)),&ss);
+		GetTextExtentPoint32(hdc,str,static_cast<int>(wcslen(str)),&ss);
 		return ss.cx;
 }
 
 void CanvasImp::DrawImage(Image &image,int x1,int y1,int wx,int wy,int flags1,int flags2)
 {
-		(dynamic_cast<ImageImp &>(image)).Draw(hdcMem,x1,y1,wx,wy,flags1,flags2);
+		(dynamic_cast<ImageImp &>(image)).Draw(hdc,x1,y1,wx,wy,flags1,flags2);
 }
 
 void CanvasImp::CopyCanvas(Canvas *source,int x1,int y1)
 {
-		BitBlt(hdcMem,0,0,x,y,dynamic_cast<CanvasImp *>(source)->hdcMem,x1,y1,SRCCOPY);
+		BitBlt(hdc,0,0,x,y,dynamic_cast<CanvasImp *>(source)->hdc,x1,y1,SRCCOPY);
 }
 
 void CanvasImp::loadGUID(GUID *g,const char *s)
@@ -577,30 +563,30 @@ void CanvasImp::DrawIcon(int x1,int y1,const char *guid_driverpack,const Device 
 		if(!ret)ret=SetupDiLoadClassIcon(&device->DeviceInfoData.ClassGuid,&hIcon,nullptr);
 		if(hIcon)
 		{
-				if(rtl)
+				if(right_to_left_mode)
 				{
 						HICON miricon;
 						miricon=CreateMirroredIcon(hIcon);
 						DestroyIcon(hIcon);
 						hIcon=miricon;
 				}
-				DrawIconEx(hdcMem,x1,y1,hIcon,D_X(ITEM_ICON_SIZE),D_X(ITEM_ICON_SIZE),0,nullptr,DI_NORMAL);
+				DrawIconEx(hdc,x1,y1,hIcon,D_X(ITEM_ICON_SIZE),D_X(ITEM_ICON_SIZE),0,nullptr,DI_NORMAL);
 				DestroyIcon(hIcon);
 		}
 }
 
 void CanvasImp::DrawEmptyRect(int x1,int y1,int x2,int y2,int color)
 {
-		SelectObject(hdcMem,GetStockObject(DC_BRUSH));
-		SelectObject(hdcMem,GetStockObject(DC_PEN));
-		SetDCBrushColor(hdcMem,color);
-		Rectangle(hdcMem,x1,y1,x2,y2);
+		SelectObject(hdc,GetStockObject(DC_BRUSH));
+		SelectObject(hdc,GetStockObject(DC_PEN));
+		SetDCBrushColor(hdc,color);
+		Rectangle(hdc,x1,y1,x2,y2);
 }
 
 void CanvasImp::DrawLine(int x1,int y1,int x2,int y2)
 {
-		MoveToEx(hdcMem,x1,y1,nullptr);
-		LineTo(hdcMem,x2,y2);
+		MoveToEx(hdc,x1,y1,nullptr);
+		LineTo(hdc,x2,y2);
 }
 
 void CanvasImp::DrawFilledRect(int x1,int y1,int x2,int y2,int color1,int color2,int w,int rn)
@@ -611,43 +597,43 @@ void CanvasImp::DrawFilledRect(int x1,int y1,int x2,int y2,int color1,int color2
 		unsigned r32;
 
 		if(x1>x2)return;
-		oldbrush=static_cast<HBRUSH>(SelectObject(hdcMem,GetStockObject(color1&0xFF000000?NULL_BRUSH:DC_BRUSH)));
+		oldbrush=static_cast<HBRUSH>(SelectObject(hdc,GetStockObject(color1&0xFF000000?NULL_BRUSH:DC_BRUSH)));
 		//newbrush=CreateSolidBrush(color1);
-		//oldbrush=(HBRUSH)SelectObject(hdcMem,newbrush);
-		if(color1&0xFF000000)(HBRUSH)SelectObject(hdcMem,GetStockObject(NULL_BRUSH));
+		//oldbrush=(HBRUSH)SelectObject(hdcBitmap,newbrush);
+		if(color1&0xFF000000)(HBRUSH)SelectObject(hdc,GetStockObject(NULL_BRUSH));
 
-		if(!oldbrush)logf("ERROR in drawrect(): failed SelectObject(GetStockObject)\n");
-		r32=SetDCBrushColor(hdcMem,color1);
-		if(r32==CLR_INVALID)logf("ERROR in drawrect(): failed SetDCBrushColor\n");
+		if(!oldbrush)uprintf("ERROR in drawrect(): failed SelectObject(GetStockObject)\n");
+		r32=SetDCBrushColor(hdc,color1);
+		if(r32==CLR_INVALID)uprintf("ERROR in drawrect(): failed SetDCBrushColor\n");
 
 		newpen=CreatePen(w?PS_SOLID:PS_NULL,w,color2);
 		if(newpen)
 		{
-				oldpen=static_cast<HPEN>(SelectObject(hdcMem,newpen));
-				if(!oldpen)logf("ERROR in drawrect(): failed SelectObject(newpen)\n");
+				oldpen=static_cast<HPEN>(SelectObject(hdc,newpen));
+				if(!oldpen)uprintf("ERROR in drawrect(): failed SelectObject(newpen)\n");
 		}
 		else
-				logf("ERROR in drawrect(): failed CreatePen\n");
+				uprintf("ERROR in drawrect(): failed CreatePen\n");
 
 		if(rn)
-				RoundRect(hdcMem,x1,y1,x2,y2,rn,rn);
+				RoundRect(hdc,x1,y1,x2,y2,rn,rn);
 		else
-				Rectangle(hdcMem,x1,y1,x2,y2);
+				Rectangle(hdc,x1,y1,x2,y2);
 
 		if(oldpen)
 		{
-				r=SelectObject(hdcMem,oldpen);
-				if(!r)logf("ERROR in drawrect(): failed SelectObject(oldpen)\n");
+				r=SelectObject(hdc,oldpen);
+				if(!r)uprintf("ERROR in drawrect(): failed SelectObject(oldpen)\n");
 		}
 		if(oldbrush)
 		{
-				r=SelectObject(hdcMem,oldbrush);
-				if(!r)logf("ERROR in drawrect(): failed SelectObject(oldbrush)\n");
+				r=SelectObject(hdc,oldbrush);
+				if(!r)uprintf("ERROR in drawrect(): failed SelectObject(oldbrush)\n");
 		}
 		if(newpen)
 		{
 				r32=DeleteObject(newpen);
-				if(!r32)logf("ERROR in drawrect(): failed DeleteObject(newpen)\n");
+				if(!r32)uprintf("ERROR in drawrect(): failed DeleteObject(newpen)\n");
 		}
 }
 
@@ -655,13 +641,13 @@ void CanvasImp::DrawWidget(int x1,int y1,int x2,int y2,int id)
 {
 		if(id<0||id>=BOX_NUM)
 		{
-				logf("ERROR in box_draw(): invalid id=%d\n",id);
+				uprintf("ERROR in box_draw(): invalid id=%d\n",id);
 				return;
 		}
 		int i=boxindex[id];
 		if(i<0||i>=THEME_NM)
 		{
-				logf("ERROR in box_draw(): invalid index=%d\n",i);
+				uprintf("ERROR in box_draw(): invalid index=%d\n",i);
 				return;
 		}
 		DrawFilledRect(x1,y1,x2,y2,D_C(i),D_C(i+1),D_1(i+2),D_X(i+3));
@@ -681,7 +667,7 @@ void CanvasImp::DrawCheckbox(int x1,int y1,int wx,int wy,int checked,int active,
 		if((dynamic_cast<ImageImp *>(vTheme->GetIcon(i)))->IsLoaded())
 				DrawImage(*vTheme->GetIcon(i),x1,y1,x1+wx,y1+wy,0,Image::HSTR|Image::VSTR);
 		else
-				DrawFrameControl(hdcMem,&rect,DFC_BUTTON,DFCS_BUTTONCHECK|(checked?DFCS_CHECKED:0));
+				DrawFrameControl(hdc,&rect,DFC_BUTTON,DFCS_BUTTONCHECK|(checked?DFCS_CHECKED:0));
 }
 
 HICON CanvasImp::CreateMirroredIcon(HICON hiconOrg)
@@ -770,10 +756,10 @@ void Popup_t::drawpopup(size_t itembar,int str_id,int type,int x,int y,HWND hwnd
 
 		if((type==FLOATING_CMPDRIVER||type==FLOATING_DRIVERLST)&&itembar==0)type=FLOATING_NONE;
 		auto floating_string = *STR(str_id);
-		//logf("%S\n", floating_string);
+		//uprintf("%S\n", floating_string);
 		if(type==FLOATING_TOOLTIP && (str_id<=1 || !floating_string)) type=FLOATING_NONE;
 
-		if(rtl)p.x+=floating_x;
+		if(right_to_left_mode)p.x+=floating_x;
 		ClientToScreen(hwnd,&p);
 		needupdate=floating_itembar!=itembar||floating_type!=type;
 		floating_itembar=itembar;
@@ -820,7 +806,7 @@ void Popup_t::onHover()
 		if(GetForegroundWindow()!=MainWindow.hMain)return;
 		wait=false;
 		if(MainWindow.kbpanel)return;
-		if(floating_type&&rtl)
+		if(floating_type&&right_to_left_mode)
 		{
 				/*if(floating_type==FLOATING_CMPDRIVER||floating_type==FLOATING_DRIVERLST)
 				{

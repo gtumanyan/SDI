@@ -7,54 +7,23 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
+#ifndef _USING_V110_SDK71_
+#define _USING_V110_SDK71_
+#endif
 #include <windows.h>
+#ifndef IDC_STATIC
+#define IDC_STATIC -1
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (United States) resources
+// Neutral resources
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// 100
-//
-
-IDR_UP                  100                     "..\\res\\up.webp"
-
-IDR_DOWN                100                     "..\\res\\down.webp"
-
-IDR_UP_H                100                     "..\\res\\up.webp"
-
-IDR_DOWN_H              100                     "..\\res\\down.webp"
-
-IDR_LOGO                100                     "..\\res\\logo.webp"
-
-IDR_BOOSTY              100                     "..\\res\\boosty.webp"
-
-IDR_LICENSE             100                     "..\\res\\gpl-3.0.txt"
-
-IDR_THEME               100                     "..\\Tools\\Themes\\Win11Dark.txt"
-
-IDR_LANG                100                     "..\\Tools\\langs\\english.txt"
-
-IDR_INSTALL64           100                     "..\\res\\install64.exe"
-
-IDR_CLI_HELP            100                     "..\\res\\CLI.txt"
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Bitmap
-//
-
-IDB_LOGO                BITMAP                  "..\\res\\logo128.bmp"
-
-IDB_WATERMARK           BITMAP                  "..\\res\\watermark.bmp"
-
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+#pragma code_page(1251)
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -62,25 +31,24 @@ IDB_WATERMARK           BITMAP                  "..\\res\\watermark.bmp"
 //
 
 IDD_ABOUT DIALOGEX 0, 0, 382, 170
-STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION |WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION
 CAPTION "Snappy Driver Installer"
-FONT 9, "MS Sans Serif"
+FONT 9, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    CONTROL         IDB_LOGO,IDC_STATIC,"Static",SS_BITMAP,10,7,32,32
-    LTEXT           "",IDC_VERSION,105,7,200,24,ES_CENTER | ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP
+    CONTROL         VK_GAMEPAD_LEFT_THUMBSTICK_LEFT,IDC_STATIC,"Static",SS_BITMAP,10,7,32,32
+    CTEXT           "",IDC_VERSION,105,7,200,24,SS_REALSIZEIMAGE
     LTEXT           "based on Snappy Driver Installer (https://sdi-tool.org/)",IDC_STATIC,105,24,255,8
     LTEXT           "",IDC_BUILD_INFO,105,39,200,8
     LTEXT           "",IDC_COPYRIGHT,105,54,200,8
     LTEXT           "",IDC_WEBLINK,210,54,200,8,SS_NOTIFY
     LTEXT           "",IDC_SUPPORTLINK,105,75,275,20,SS_NOTIFY
     LTEXT           "Developers:",IDC_DEVELOPERS,10,97,360,30
-    LTEXT   "Gregory Tumanyan <https://t.me/gtumanyan> (Current Maintainer), Glenn Delahoy, BadPointer (Founder).",0,58,97,290,30
-    LTEXT   "Snappy Driver Installer uses the following technologies:"
-            ,IDC_TECHNOLOGIES,10,116,360,12,SS_LEFT
+    LTEXT           "Gregory Tumanyan <https://t.me/flounderingreg> (Current Maintainer), Glenn Delahoy, BadPointer (Founder).",0,58,97,290,30
+    LTEXT           "Snappy Driver Installer uses the following technologies:",IDC_TECHNOLOGIES,10,116,360,12
     LTEXT           "",IDC_WEBP_VERSION,10,126,140,8
     LTEXT           "",IDC_TORR_VERSION,10,136,140,8
     LTEXT           "",IDC_7ZIP_VERSION,10,146,140,8
-    LTEXT	    "Driver Packs by SamLab",IDC_STATIC,10,156,360,8,SS_LEFT
+    LTEXT           "Driver Packs by SamLab",IDC_STATIC,10,156,360,8
     DEFPUSHBUTTON   "&OK",IDOK,322,150,50,14
 END
 
@@ -92,7 +60,7 @@ BEGIN
     LTEXT           "Please read the following License Agreement carefully before using this program.",0,10,10,300,20
     DEFPUSHBUTTON   "&Decline",IDCANCEL,10,268,70,20
     PUSHBUTTON      "&Accept",IDOK,255,268,70,20
-    EDITTEXT        IDC_EDIT1,10,30,315,230,ES_MULTILINE | ES_READONLY | WS_VSCROLL
+    EDITTEXT        IDC_LICENSE_TEXT,10,30,315,230,ES_MULTILINE | ES_READONLY | WS_VSCROLL
 END
 
 IDD_UPDATE DIALOGEX 0, 0, 400, 370
@@ -115,17 +83,6 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,205,321,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,262,321,50,14
     PUSHBUTTON      "Accept",IDACCEPT,322,321,50,14
-END
-
-IDD_DIALOG3 DIALOGEX 0, 0, 263, 261
-STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
-EXSTYLE WS_EX_CONTROLPARENT
-CAPTION "Options"
-FONT 8, "MS Shell Dlg", 0, 0, 0x1
-BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,152,238,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,205,238,50,14
-    CONTROL         "",IDC_TAB1,"SysTabControl32",WS_TABSTOP,5,5,253,220
 END
 
 IDD_VIEWSETTINGS DIALOGEX 0, 0, 0, 0
@@ -185,6 +142,17 @@ BEGIN
     EDITTEXT        IDD_P3_DIR5E,15,174,210,14,ES_AUTOHSCROLL
 END
 
+IDD_LOG DIALOGEX 0, 0, 366, 326
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Log"
+FONT 9, "Segoe UI Symbol", 400, 0, 0x0
+BEGIN
+    EDITTEXT        IDC_LOG_EDIT,0,0,366,296,ES_MULTILINE | ES_READONLY | NOT WS_BORDER | WS_VSCROLL,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "Clear",IDC_LOG_CLEAR,192,305,50,12
+    PUSHBUTTON      "Save",IDC_LOG_SAVE,249,305,50,12
+    DEFPUSHBUTTON   "Close",IDCANCEL,306,305,50,12
+END
+
 IDD_ADVANCEDSETTINGS DIALOGEX 0, 0, 0, 0
 STYLE DS_SETFONT | DS_CONTROL | WS_CHILD | WS_CAPTION
 CAPTION "Advanced Settings"
@@ -206,7 +174,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Welcome"
 FONT 9, "Segoe UI", 400, 0, 0x1
 BEGIN
-    CONTROL         IDB_LOGO,IDC_STATIC,"Static",SS_BITMAP,13,5,32,32
+    CONTROL         VK_GAMEPAD_LEFT_THUMBSTICK_LEFT,IDC_STATIC,"Static",SS_BITMAP,13,5,32,32
     LTEXT           "",IDD_WELC_TITLE,99,4,237,90
     LTEXT           "",IDC_VERSION,100,24,250,43
     LTEXT           "",IDC_BUILD_INFO,100,34,200,90
@@ -225,31 +193,16 @@ BEGIN
     PUSHBUTTON      "&Close",IDD_WELC_CLOSE,266,261,50,14,BS_FLAT
 END
 
-IDD_TRANSL_EDITDIALOG DIALOGEX 0, 0, 350, 200
-STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Snappy Driver Installer Language Translation Tool"
-FONT 9, "MS Sans Serif", 0, 0, 0x1
+IDD_OPTIONS DIALOGEX 0, 0, 263, 261
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTROLPARENT
+CAPTION "Options"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    LTEXT           "Key:",0,10,8,20,12
-    LTEXT           "KEY_VALUE",IDC_TRANSL_KEYVALUE,30,8,330,12
-    LTEXT           "Reference (English):",IDC_STATIC,10,19,330,12
-    EDITTEXT        IDC_TRANSL_EDIT1,10,28,330,60,ES_MULTILINE | ES_READONLY | WS_DISABLED | WS_VSCROLL
-    LTEXT           "Translation:",IDC_TRANSL_LANGUAGEID,10,93,330,12
-    EDITTEXT        IDC_TRANSL_EDIT2,10,102,330,60,ES_MULTILINE | WS_VSCROLL
-    PUSHBUTTON      "Copy Reference To Clipboard",IDC_TRANSL_COPYCLIP,260,3,80,23,BS_MULTILINE
-    DEFPUSHBUTTON   "&Accept",IDOK,210,180,60,15
-    PUSHBUTTON      "&Cancel",IDCANCEL,280,180,60,15
+    CONTROL         "",IDC_TAB1,"SysTabControl32",WS_TABSTOP,5,5,253,220
+    DEFPUSHBUTTON   "OK",IDOK,152,238,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,205,238,50,14
 END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Icon
-//
-
-// Icon with lowest ID value placed first to ensure application icon
-// remains consistent on all systems.
-IDR_MAINWND             ICON                    "..\\res\\SDI.ico"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -257,7 +210,7 @@ IDR_MAINWND             ICON                    "..\\res\\SDI.ico"
 // RT_MANIFEST
 //
 
-1                       RT_MANIFEST             "..\\res\\SDI.exe.manifest"
+1                       RT_MANIFEST             "..\\res\\SDI.manifest"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -276,15 +229,7 @@ BEGIN
     BEGIN
     END
 
-    IDD_DIALOG3, DIALOG
-    BEGIN
-    END
-
     IDD_WELCOME, DIALOG
-    BEGIN
-    END
-
-    IDD_TRANSL_EDITDIALOG, DIALOG
     BEGIN
     END
 END
@@ -304,7 +249,14 @@ END
 
 2 TEXTINCLUDE 
 BEGIN
-    "#include <windows.h>\0"
+    "#ifndef _USING_V110_SDK71_\r\n"
+    "#define _USING_V110_SDK71_\r\n"
+    "#endif\r\n"
+    "#include <windows.h>\r\n"
+    "#ifndef IDC_STATIC\r\n"
+    "#define IDC_STATIC -1\r\n"
+    "#endif\r\n"
+    "\0"
 END
 
 3 TEXTINCLUDE 
@@ -317,6 +269,16 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON                ICON                    "../res/SDI.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // AFX_DIALOG_LAYOUT
 //
 
@@ -325,7 +287,55 @@ BEGIN
     0
 END
 
-#endif    // English (United States) resources
+IDD_LOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_LICENSE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// 100
+//
+
+IDR_UP                  100                     "..\\res\\up.webp"
+
+IDR_DOWN                100                     "..\\res\\down.webp"
+
+IDR_UP_H                100                     "..\\res\\up.webp"
+
+IDR_DOWN_H              100                     "..\\res\\down.webp"
+
+IDR_LOGO                100                     "..\\res\\logo.webp"
+
+IDR_BOOSTY              100                     "..\\res\\boosty.webp"
+
+IDR_LICENSE             100                     "..\\res\\gpl-3.0.txt"
+
+IDR_THEME               100                     "..\\Tools\\Themes\\Win11Dark.txt"
+
+IDR_LANG                100                     "..\\Tools\\langs\\english.txt"
+
+IDR_INSTALL64           100                     "..\\res\\install64.exe"
+
+IDR_CLI_HELP            100                     "..\\res\\CLI.txt"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_LOGO                BITMAP                  "..\\res\\logo128.bmp"
+
+IDB_WATERMARK           BITMAP                  "..\\res\\watermark.bmp"
+
+#endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 
 

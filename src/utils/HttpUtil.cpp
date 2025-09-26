@@ -10,11 +10,11 @@ constexpr const WCHAR* kUserAgent = L"SdiHTTP";
 
 bool IsHttpRspOk(const HttpRsp* rsp) {
     if (rsp->error != ERROR_SUCCESS) {
-        logf("HttpRspOk: rsp->error %d, should be %d (ERROR_SUCCESS)\n", (int)rsp->error, (int)ERROR_SUCCESS);
+        uprintf("HttpRspOk: rsp->error %d, should be %d (ERROR_SUCCESS)\n", (int)rsp->error, (int)ERROR_SUCCESS);
         return false;
     }
     if (rsp->httpStatusCode >= 300) {
-        logf("HttpRspOk: rsp->httpStatusCode: %d\n", (int)rsp->httpStatusCode);
+        uprintf("HttpRspOk: rsp->httpStatusCode: %d\n", (int)rsp->httpStatusCode);
         return false;
     }
     return true;
@@ -24,7 +24,7 @@ constexpr const int kBufSize = 256 * 1024;
 
 // Download content of a url to a file
 bool HttpGetToFile(const char* urlA, const char* destFilePath) {
-    logf("HttpGetToFile: url: '%s', file: '%s'\n", urlA, destFilePath);
+    uprintf("HttpGetToFile: url: '%s', file: '%s'\n", urlA, destFilePath);
     bool ok = false;
     HINTERNET hReq = nullptr, hInet = nullptr;
     DWORD dwRead = 0;
@@ -37,7 +37,7 @@ bool HttpGetToFile(const char* urlA, const char* destFilePath) {
     HANDLE hf =
         CreateFileW(pathW, GENERIC_WRITE, FILE_SHARE_READ, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
     if (INVALID_HANDLE_VALUE == hf) {
-        logf("HttpGetToFile: CreateFileW('%s') failed\n", destFilePath);
+        uprintf("HttpGetToFile: CreateFileW('%s') failed\n", destFilePath);
         LogLastError();
         goto Exit;
     }

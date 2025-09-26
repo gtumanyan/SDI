@@ -39,7 +39,6 @@ class Script
         int updatesInitialised();
         void doParameters(std::wstring &cmd);
         std::vector<std::wstring> parameters;
-        void RunLatest(std::wstring args);
 };
 
 #endif // SCRIPT_H

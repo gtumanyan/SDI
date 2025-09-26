@@ -21,6 +21,10 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #pragma warning( disable : 4996 )
 #endif
 
+#include <windows.h>
+#include <direct.h> // for _mkdir and _getcwd
+#include <iostream>
+
 #include "libtorrent/torrent_info.hpp"
 #include "libtorrent/session.hpp"
 #include "libtorrent/alert_types.hpp"
@@ -30,25 +34,21 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "utils/WinUtil.h"
 #include "utils/FileUtil.h"
 
-#include "SDI.h"
+#include "resource.h"
 #include "theme.h"
 #include "draw.h"
 
 #include "Settings.h"
 #include "gui.h"
+#include "SDI.h"
 #include "system.h"
 #include "matcher.h"
 #include "manager.h"
 #include "Flags.h"
 #include "install.h"
-#include <direct.h> // for _mkdir and _getcwd
 
 using namespace lt;
 
-// Depend on Win32API
-#include "main.h"
-// for std:cout
-#include <iostream>
 #include "Update.h"
 
 #include "utils/Log.h"
@@ -129,7 +129,7 @@ class UpdaterImp:public Updater_t
 private:
     const char* active_torrent_url =nullptr;
 		std::wstring const* active_torrent_save_path;
-		char save_path[BUFSIZ];
+		char save_path[MAX_PATH];
 		int downloadTorrent();
 		void updateTorrentStatus();
 		void removeOldDriverpacks(const wchar_t *ptr);
@@ -670,7 +670,7 @@ BOOL CALLBACK UpdateDialog_t::UpdateProcedure(HWND hwnd,UINT Message,WPARAM wPar
 
 				case WM_TIMER:
 						if(ses && ses->is_paused() == 0)UpdateDialog.populate(1);
-						log(".");
+						uprintfs(".");
 						break;
 
 				case WM_COMMAND:
@@ -980,13 +980,13 @@ void UpdateDialog_t::setFilePriority(const wchar_t *name,download_priority_t pri
 		if(StrStrIA(gH.torrent_file()->files().file_path(i).c_str(),buf))
 		{
 				gH.file_priority(i,pri);
-				logf("Req(%S,%d)\n",name,pri);
+				uprintf("Req(%S,%d)\n",name,pri);
 		}
 }
 
 void UpdateDialog_t::openDialog()
 {
-		DialogBox(ghInst,MAKEINTRESOURCE(IDD_DIALOG2),MainWindow.hMain,(DLGPROC)UpdateProcedure);
+		DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_DIALOG2),MainWindow.hMain,(DLGPROC)UpdateProcedure);
 }
 //}
 
@@ -1092,7 +1092,7 @@ void UpdaterImp::removeOldDriverpacks(const wchar_t *ptr)
 						if(!s)return;
 						WStringShort buf;
 						buf.sprintf(L"%ws\\%s",Settings.drp_dir,s);
-						logf("Old file: %S\n",buf.Get());
+						uprintf("Old file: %S\n",buf.Get());
 						_wremove(buf.Get());
 						return;
 				}
@@ -1168,24 +1168,24 @@ void UpdaterImp::moveNewFiles()
 				wchar_t* buffer;
 				int cwdDrive=-1;
 				if ( (buffer = _wgetcwd(nullptr,BUFLEN) ) == nullptr)
-						log("_wgetcwd error");
+						uprintfs("_wgetcwd error");
 				else
 						cwdDrive = System.DriveNumber(buffer);
 
 				// find the source  drive
 				int srcDrive = System.DriveNumber(filenamefull_src);
 				if (srcDrive==-1) srcDrive=cwdDrive;
-				logf("Src: %d %S\n",srcDrive,filenamefull_src);
+				uprintf("Src: %d %S\n",srcDrive,filenamefull_src);
 				// find the destination drive
 				int destDrive = System.DriveNumber(filenamefull_dst);
 				if ( (wcscspn(filenamefull_dst,L"\\\\")!=0) && (destDrive==-1) ) destDrive=cwdDrive;
-				logf("Dst: %d %S\n",destDrive,filenamefull_dst);
+				uprintf("Dst: %d %S\n",destDrive,filenamefull_dst);
 
 				// if source and destination drive are the same then perform a move
 				if (srcDrive==destDrive)
 				{
 						// Move file
-						logf("Move new file: %S\n",filenamefull_dst);
+						uprintf("Move new file: %S\n",filenamefull_dst);
 						if(!MoveFileEx(filenamefull_src,filenamefull_dst,MOVEFILE_REPLACE_EXISTING||
 																														 MOVEFILE_COPY_ALLOWED||
 																														 MOVEFILE_WRITE_THROUGH))
@@ -1196,9 +1196,9 @@ void UpdaterImp::moveNewFiles()
 				// if not perform a copy / delete
 				else
 				{
-						logf("Copy new file: %S\n",filenamefull_dst);
+						uprintf("Copy new file: %S\n",filenamefull_dst);
                         if (!CopyFileExW(filenamefull_src, filenamefull_dst, nullptr, nullptr, nullptr, 0)) {
-                            //logf(GetLastError(),L"CopyFileExW()");
+                            //uprintf(GetLastError(),L"CopyFileExW()");
                             LogLastError();
                         }
 						else if(System.FileExists(filenamefull_dst))
@@ -1212,7 +1212,7 @@ void UpdaterImp::checkUpdates()
 {
 		if(!System.canWriteDirectory(L"update"))
 		{
-				log("ERROR in checkUpdates(): Write-protected,'update'\n");
+				uprintfs("ERROR in checkUpdates(): Write-protected,'update'\n");
 				return;
 		}
 
@@ -1375,7 +1375,7 @@ int UpdaterImp::downloadTorrent() try
     lt::settings_pack mSettingsPack;
 		mSettingsPack.set_str(lt::settings_pack::listen_interfaces, "0.0.0.0:port,[::]:port)");
 
-  //      if(ec)logf("ERROR: failed to open listen socket: %s\n",ec.message().c_str());
+  //      if(ec)uprintf("ERROR: failed to open listen socket: %s\n",ec.message().c_str());
 		//log("Listen port: %d (%s)\nDownload limit: %dKb\nUpload limit: %dKb\n",
 		//			ses->listen_port(),ses->is_listening()?"connected":"disconnected",
 		//			downlimit,uplimit);
@@ -1402,9 +1402,10 @@ int UpdaterImp::downloadTorrent() try
 
 		wcstombs(save_path, active_torrent_save_path->c_str(), BUFSIZ);
         // download the torrent file to feed to the libtorrent
-        logf("Starting to download '%s'\n", active_torrent_url);
-        bool ok = HttpGetToFile(active_torrent_url, save_path);
-        logf("HttpGetToFile(): ok=%d, downloaded to '%s'\n", (int)ok, save_path);
+        uprintf("Starting to download '%s'\n", active_torrent_url);
+				char tmp[MAX_PATH];
+        bool ok = DownloadToFileOrBufferEx(active_torrent_url, save_path, _STRG(VERSION_FILEVERSION_LONG), NULL, hMainDialog, FALSE);
+        uprintf("HttpGetToFile(): ok=%d, downloaded to '%s'\n", (int)ok, save_path);
 
 		p.save_path = save_path;
 		p.storage_mode = allocation_mode;
@@ -1435,23 +1436,23 @@ int UpdaterImp::downloadTorrent() try
         std::cout << "done, pausing torrent" << std::endl;
         ses->pause();
 
-        if (ec)logf("ERROR: failed to add torrent: %s\n", ec.message().c_str());
+        if (ec)uprintf("ERROR: failed to add torrent: %s\n", ec.message().c_str());
 
 //set_torrent_params();
 //gH.resume();
 
 
 		// Download torrent
-		log("Waiting for torrent handle");
+		uprintfs("Waiting for torrent handle");
 
 		for(int i=0;i<200;i++)
 		{
-				log(".");
+				uprintfs(".");
 				// test if torrent has been retrieved
 				if(gH.torrent_file())
 				{
 						downloadmangar_exitflag=DOWNLOAD_STATUS_TORRENT_GOT;
-						log("DONE\n");
+						uprintfs("DONE\n");
 						return 0;
 						break;
 				}
@@ -1475,7 +1476,7 @@ int UpdaterImp::downloadTorrent() try
 	{
 			if (emptydrp) manager_g->itembar_settext(SLOT_NODRIVERS, 1);
 			downloadmangar_exitflag = DOWNLOAD_STATUS_STOPPING;
-			log("FAILED\n");
+			uprintfs("FAILED\n");
 			return 0;
 	}
 	else return 1;
@@ -1483,12 +1484,12 @@ int UpdaterImp::downloadTorrent() try
 		// Populate list
 		int i=UpdateDialog.populate(0);
 		if(UpdateDialog.TorrentRevision==0)
-				log("Latest Version: Not found.\n");
+				uprintfs("Latest Version: Not found.\n");
 		else if(UpdateDialog.TorrentRevision<=UpdateDialog.LocalRevision)
-				logf("Latest Version: R%d. Up to date.\n",UpdateDialog.TorrentRevision);
+				uprintf("Latest Version: R%d. Up to date.\n",UpdateDialog.TorrentRevision);
 		else
-				logf("Latest Version: R%d.\n",UpdateDialog.TorrentRevision);
-		logf("Updated driver packs available: %d\n",i&0xFF);
+				uprintf("Latest Version: R%d.\n",UpdateDialog.TorrentRevision);
+		uprintf("Updated driver packs available: %d\n",i&0xFF);
 
 		// clear the torrent priorities
         for (file_index_t j(0); static_cast<int>(j) < numfiles; j++) {
@@ -1516,7 +1517,7 @@ void UpdaterImp::resumeDownloading()
 		if(ses->is_paused())
 		{
 				gH.force_recheck();
-				log("torrent_resume\n");
+				uprintfs("torrent_resume\n");
 				downloadmangar_exitflag=DOWNLOAD_STATUS_DOWLOADING_DATA;
 				downloadmangar_event->raise();
 		}
@@ -1543,11 +1544,11 @@ int UpdaterImp::scriptInitUpdates(int torrentport)
 		{
 				Updater->numfiles=ti->num_files();
 				Settings.flags|=FLAG_UPDATESOK;
-				log("Torrent downloaded successfully\n");
+				uprintfs("Torrent downloaded successfully\n");
 		}
 		else
 		{
-				log("Torrent download failed\n");
+				uprintfs("Torrent download failed\n");
 				return 1;
 		}
 
@@ -1558,7 +1559,7 @@ int UpdaterImp::scriptDownloadApp()
 {
 		if((Settings.flags&FLAG_UPDATESOK)==0)
 		{
-				log("Error: get : Updates not initialised");
+				uprintfs("Error: get : Updates not initialized");
 				return 1;
 		}
 
@@ -1578,7 +1579,7 @@ int UpdaterImp::scriptDownloadIndexes()
 {
 		if((Settings.flags&FLAG_UPDATESOK)==0)
 		{
-				log("Error: get : Updates not initialized");
+				uprintfs("Error: get : Updates not initialized");
 				return 1;
 		}
 		std::shared_ptr<lt::torrent_info const> ti=gH.torrent_file();
@@ -1601,10 +1602,10 @@ int UpdaterImp::scriptDownloadDrivers(std::wstring mode)
 {
 		if((Settings.flags&FLAG_UPDATESOK)==0)
 		{
-				log("Error: get : Updates not initialised");
+				uprintfs("Error: get : Updates not initialized");
 				return 1;
 		}
-		logf("%d items selected\n",manager_g->selected());
+		uprintf("%d items selected\n",manager_g->selected());
 
 		bool all=_wcsicmp(mode.c_str(),L"all")==0;
 		bool missing=_wcsicmp(mode.c_str(),L"missing")==0;
@@ -1647,7 +1648,7 @@ int UpdaterImp::scriptDownloadDrivers(std::wstring mode)
 						}
 						if(getfile)
 						{
-								logf("Getting: %s\n", file.c_str());
+								uprintf("Getting: %s\n", file.c_str());
 								gH.file_priority(i,low_priority);
 								updatecount++;
 						}
@@ -1656,11 +1657,11 @@ int UpdaterImp::scriptDownloadDrivers(std::wstring mode)
 
 		if(!updatecount)
 		{
-				log("Driver packs are up to date, nothing to do\n");
+				uprintfs("Driver packs are up to date, nothing to do\n");
 				return 0;
 		}
 
-		logf("Getting %d driver packs\n",updatecount);
+		uprintf("Getting %d driver packs\n",updatecount);
 		return scriptDoDownload();
 }
 
@@ -1668,7 +1669,7 @@ int UpdaterImp::scriptDownloadEverything()
 {
 		if((Settings.flags&FLAG_UPDATESOK)==0)
 		{
-				log("Error: get : Updates not initialised");
+				uprintfs("Error: get : Updates not initialized");
 				return 1;
 		}
 
@@ -1700,7 +1701,7 @@ int UpdaterImp::scriptDownloadEverything()
 						// newer or missing
 						if(newver>curver)
 						{
-								logf("Getting: %s\n", file.c_str());
+								uprintf("Getting: %s\n", file.c_str());
 								gH.file_priority(i,low_priority);
 						}
 				}
@@ -1725,7 +1726,7 @@ int UpdaterImp::scriptInstall()
 		// check if anything selected
 		if(manager_g->selected()==0)
 		{
-				log("Error: install : Nothing selected.\n");
+				uprintfs("Error: install : Nothing selected.\n");
 				return 1;
 		}
 
@@ -1824,7 +1825,7 @@ void UpdaterImp::StartSeedingDrivers()
 						{
 								gH.rename_file(i,file);
 								gH.file_priority(i,low_priority);
-								logf("Seeding: %s\n",file.c_str());
+								uprintf("Seeding: %s\n",file.c_str());
 						}
 				}
 		}
@@ -1860,11 +1861,11 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 	UNREFERENCED_PARAMETER(arg);
 
 		// Wait till is allowed to download the torrent
-		log("{thread_download\n");
+	uprintfs("{thread_download\n");
 		downloadmangar_event->wait();
 		if(downloadmangar_exitflag!=DOWNLOAD_STATUS_DOWLOADING_TORRENT)
 		{
-				log("}thread_download(never started)\n");
+				uprintfs("}thread_download(never started)\n");
 				return 0;
 		}
 
@@ -1873,7 +1874,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 		int TorrentResults=Updater1->downloadTorrent();
 		if(downloadmangar_exitflag!=DOWNLOAD_STATUS_TORRENT_GOT)
 		{
-				log("}thread_download(failed to download torrent)\n");
+				uprintfs("}thread_download(failed to download torrent)\n");
 				return 0;
 		}
 
@@ -1904,7 +1905,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 				if(downloadmangar_exitflag==DOWNLOAD_STATUS_STOPPING)break;
 
 				// Downloading loop
-				log("{torrent_starting\n");
+				uprintfs("{torrent_starting\n");
 				while(downloadmangar_exitflag==DOWNLOAD_STATUS_DOWLOADING_DATA&&ses)
 				{
 						Sleep(500);
@@ -1923,17 +1924,17 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 						for (auto a : alerts)
 						{
 								if (!gReducedLogging) continue;
-								logf("Torrent: %s | %s\n", a->what(), a->message().c_str());
+								uprintf("Torrent: %s | %s\n", a->what(), a->message().c_str());
 						}
 
 						// process the downloads when finished and not seeding
 						if((TorrentStatus.status_strid==STR_TR_ST0+libtorrent::torrent_status::finished)&&!seed_mode)
 						{
-								log("Torrent: finished\n");
+								uprintfs("Torrent: finished\n");
 								ses->pause();
 
 								// Flush cache
-								log("Torrent: flushing cache...");
+								uprintfs("Torrent: flushing cache...");
 								gH.flush_cache();
 								// synchronize to make sure the files have been created on disk
 								using namespace lt;
@@ -1942,12 +1943,12 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 										auto const* a=ses->wait_for_alert(seconds(60*2));
 										if(!a)
 										{
-												log("time out\n");
+												uprintfs("time out\n");
 												break;
 										}
 										if(alert_cast<cache_flushed_alert>(a))
 										{
-												log("done\n");
+												uprintfs("done\n");
 												break;
 										}
 								}
@@ -1986,15 +1987,17 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 										// Flash in taskbar
 										MainWindow.ShowProgressInTaskbar(false);
 										FLASHWINFO fi;
+
 										fi.cbSize=sizeof(FLASHWINFO);
 										fi.hwnd=MainWindow.hMain;
+										// Use FLASHW_ALL to flash the main dialog
 										fi.dwFlags=FLASHW_ALL|FLASHW_TIMERNOFG;
-										fi.uCount=1;
+										fi.uCount=0;
 										fi.dwTimeout=0;
 										if(installmode==MODE_NONE)
 										{
 												FlashWindowEx(&fi);
-												invalidate(INVALIDATE_INDEXES|INVALIDATE_MANAGER);
+												invalidate(INVALIDATE_INDICES|INVALIDATE_MANAGER);
 										}
 								}// else script mode
 						}
@@ -2004,19 +2007,19 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 				ses->pause();
 				Updater1->updateTorrentStatus();
 				monitor_pause=0;
-				log("}torrent_stop\n");
+				uprintfs("}torrent_stop\n");
 				downloadmangar_event->reset();
 		} // !=DOWNLOAD_STATUS_STOPPING
 
 		if(ses)
 		{
-				log("Closing torrent session...");
+				uprintfs("Closing torrent session...");
 				ses->remove_torrent(gH);
 				ses->pause();
 				ses->abort();
-				log("DONE\n");
+				uprintfs("DONE\n");
 		}
-		log("}thread_download\n");
+		uprintfs("}thread_download\n");
 		return 0;
 }
 
@@ -2048,12 +2051,12 @@ void UpdaterImp::OpenDialog(){UpdateDialog.openDialog();}
 void UpdateSelfTo(const char* path) {
     ReportIf(!path);
     if (!file::Exists(path)) {
-        logf("UpdateSelfTo: failed because destination doesn't exist\n");
+        uprintf("UpdateSelfTo: failed because destination doesn't exist\n");
         return;
     }
 
     auto sleepMs = gCli->sleepMs;
-    logf("UpdateSelfTo: '%s', sleep for %d ms\n", path, sleepMs);
+    uprintf("UpdateSelfTo: '%s', sleep for %d ms\n", path, sleepMs);
     // sleeping for a bit to make sure that the program that launched us
     // had time to exit so that we can overwrite it
     ::Sleep(gCli->sleepMs);
@@ -2063,10 +2066,10 @@ void UpdateSelfTo(const char* path) {
     // TODO: maybe retry if copy fails under the theory that the file
     // might be temporarily locked
     if (!ok) {
-        logf("UpdateSelfTo: failed to copy self to file\n");
+        uprintf("UpdateSelfTo: failed to copy self to file\n");
         return;
     }
-    logf("UpdateSelfTo: copied self to file\n");
+    uprintf("UpdateSelfTo: copied self to file\n");
 
     TempStr args = str::FormatTemp(R"(-sleep-ms 500 -delete-file "%s")", srcPath);
     CreateProcessHelper(path, args);

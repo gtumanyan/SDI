@@ -24,14 +24,14 @@ BEGIN
   BEGIN
     BLOCK "040904b0"
     BEGIN
-      VALUE "Comments",         SAPPNAME
-      VALUE "FileDescription",  SAPPNAME
-      VALUE "InternalName",     SAPPNAME
-      VALUE "ProductName",      SAPPNAME
+      VALUE "Comments",         APPLICATION_NAME
+      VALUE "FileDescription",  APPLICATION_NAME
+      VALUE "InternalName",     APPLICATION_NAME
+      VALUE "ProductName",      APPLICATION_NAME
       VALUE "FileVersion",      _STRG(VERSION_FILEVERSION)
       VALUE "ProductVersion",   _STRG(VERSION_FILEVERSION)
       VALUE "LegalCopyright",   VERSION_LEGALCOPYRIGHT
-      VALUE "OriginalFilename", SAPPNAME ".exe"
+      VALUE "OriginalFilename", APPLICATION_NAME ".exe"
     END
   END
   BLOCK "VarFileInfo"

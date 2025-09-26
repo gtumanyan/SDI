@@ -2,32 +2,6 @@
 // Microsoft Visual C++ generated include file.
 // Used by SDI.rc
 //
-
-#ifndef IDC_STATIC
-#define IDC_STATIC                     (-1)
-#endif
-
-// About
-#define IDD_ABOUT                       100
-#define IDD_ABOUT_T1  									801
-#define IDC_VERSION                     100
-#define IDC_AUTHORNAME                  804
-#define IDC_WEBPAGE_TEXT                103
-#define IDC_WEBPAGE_LINK                104
-#define IDC_TELEGRAM_TEXT               107
-#define IDC_TELEGRAM_LINK               108
-#define IDC_SDI_PAGE_TEXT               109
-#define IDC_BOOSTY_LINK                	110
-#define IDC_SDI_PAGE_LINK               112
-#define IDC_DEVELOPERS 									806
-#define IDC_TECHNOLOGIES								106
-#define IDC_WEBP_VERSION                811
-#define IDC_TORR_VERSION                812
-#define IDC_7ZIP_VERSION								813	
-
-
-#define IDC_BUILD_INFO                  113
-
 #define SW_HIDE                         0
 #define HIDE_WINDOW                     0
 #define WM_NULL                         0x0000
@@ -815,7 +789,8 @@
 #define LANG_FRISIAN                    0x62
 #define VK_NUMPAD3                      0x63
 #define LANG_PASHTO                     0x63
-#define IDR_MAINWND                     100
+#define IDD_ABOUT                       100
+#define IDC_VERSION                     100
 #define WINAPI_FAMILY_DESKTOP_APP       100
 #define VK_NUMPAD4                      0x64
 #define LANG_FILIPINO                   0x64
@@ -824,26 +799,36 @@
 #define VK_NUMPAD5                      0x65
 #define LANG_DIVEHI                     0x65
 #define VK_NUMPAD6                      0x66
+#define IDC_WEBPAGE_TEXT                103
 #define VK_NUMPAD7                      0x67
 #define LANG_FULAH                      0x67
 #define LANG_PULAR                      0x67
+#define IDD_LOG                         103
+#define IDC_WEBPAGE_LINK                104
 #define VK_NUMPAD8                      0x68
 #define LANG_HAUSA                      0x68
 #define VK_NUMPAD9                      0x69
+#define IDC_TECHNOLOGIES                106
 #define VK_MULTIPLY                     0x6A
 #define LANG_YORUBA                     0x6a
+#define IDC_TELEGRAM_TEXT               107
 #define VK_ADD                          0x6B
 #define LANG_QUECHUA                    0x6b
+#define IDC_TELEGRAM_LINK               108
 #define VK_SEPARATOR                    0x6C
 #define LANG_SOTHO                      0x6c
+#define IDC_SDI_PAGE_TEXT               109
 #define VK_SUBTRACT                     0x6D
 #define LANG_BASHKIR                    0x6d
+#define IDC_BOOSTY_LINK                 110
 #define VK_DECIMAL                      0x6E
 #define LANG_LUXEMBOURGISH              0x6e
 #define VK_DIVIDE                       0x6F
 #define LANG_GREENLANDIC                0x6f
+#define IDC_SDI_PAGE_LINK               112
 #define VK_F1                           0x70
 #define LANG_IGBO                       0x70
+#define IDC_BUILD_INFO                  113
 #define VK_F2                           0x71
 #define VK_F3                           0x72
 #define VK_F4                           0x73
@@ -855,7 +840,7 @@
 #define VK_F7                           0x76
 #define VK_F8                           0x77
 #define VK_F9                           0x78
-#define WHEEL_DELTA                     120
+#define IDI_ICON                        120
 #define LANG_YI                         0x78
 #define VK_F10                          0x79
 #define VK_F11                          0x7A
@@ -1042,7 +1027,7 @@
 #define IDR_LOGO                        211
 #define VK_GAMEPAD_LEFT_THUMBSTICK_DOWN 0xD4
 #define EM_GETMARGINS                   0x00D4
-#define IDR_PATREON                     212
+#define IDR_BOOSTY                      212
 #define VK_GAMEPAD_LEFT_THUMBSTICK_RIGHT 0xD5
 #define EM_GETLIMITTEXT                 0x00D5
 #define VK_GAMEPAD_LEFT_THUMBSTICK_LEFT 0xD6
@@ -1156,7 +1141,8 @@
 #define IDD_DIALOG2                     302
 #define IDD_UPDATE                      302
 #define IDD_DIALOG3                     303
-#define IDC_EDIT1                       304
+#define IDD_OPTIONS                     303
+#define IDC_LICENSE_TEXT                304
 #define IDACCEPT                        305
 #define WM_CTLCOLORMSGBOX               0x0132
 #define IDCHECKALL                      306
@@ -1177,7 +1163,7 @@
 #define IDOPTIONS                       315
 #define IDCHECKNETWORK                  316
 #define IDSELECTION                     317
-#define IDD_VIEWSETTINGS                       400
+#define IDD_VIEWSETTINGS                400
 #define IDD_P1_DRV                      401
 #define IDD_P1_DRV1                     402
 #define IDD_P1_DRV2                     403
@@ -1192,7 +1178,7 @@
 #define IDD_P1_HINTL                    412
 #define IDD_P1_HINTE                    413
 #define MN_GETHMENU                     0x01E1
-#define IDD_UPDATESSETTINGS                       500
+#define IDD_UPDATESSETTINGS             500
 #define IDD_P2_TOR                      501
 #define IDD_P2_PORT                     502
 #define IDD_P2_CON                      503
@@ -1278,7 +1264,7 @@
 #define WM_POINTERROUTEDTO              0x0251
 #define WM_POINTERROUTEDAWAY            0x0252
 #define WM_POINTERROUTEDRELEASED        0x0253
-#define IDD_PATHSETTINGS                       600
+#define IDD_PATHSETTINGS                600
 #define IDD_P3_DIR1                     601
 #define IDD_P3_DIR2                     602
 #define IDD_P3_DIR3                     603
@@ -1303,7 +1289,7 @@
 #define WM_NCMOUSELEAVE                 0x02A2
 #define WM_MOUSELEAVE                   0x02A3
 #define WM_WTSSESSION_CHANGE            0x02B1
-#define IDD_ADVANCEDSETTINGS                       700
+#define IDD_ADVANCEDSETTINGS            700
 #define IDD_P4_CMDG                     701
 #define IDD_P4_CMDL                     702
 #define IDD_P4_CMD1                     703
@@ -1348,20 +1334,27 @@
 #define WM_THEMECHANGED                 0x031A
 #define WM_CLIPBOARDUPDATE              0x031D
 #define WM_DWMCOMPOSITIONCHANGED        0x031E
+#define IDC_LOG_EDIT                    798
 #define WM_DWMNCRENDERINGCHANGED        0x031F
+#define IDC_LOG_SAVE                    799
 #define WM_DWMCOLORIZATIONCOLORCHANGED  0x0320
+#define IDC_LOG_CLEAR                   800
+#define IDD_ABOUT_T1                    801
 #define WM_DWMWINDOWMAXIMIZEDCHANGE     0x0321
 #define IDC_COPYRIGHT                   802
 #define WM_DWMSENDICONICTHUMBNAIL       0x0323
+#define IDC_AUTHORNAME                  804
+#define IDC_DEVELOPERS                  806
 #define WM_DWMSENDICONICLIVEPREVIEWBITMAP 0x0326
+#define IDC_WEBP_VERSION                811
+#define IDC_TORR_VERSION                812
+#define IDC_7ZIP_VERSION                813
 #define WM_GETTITLEBARINFOEX            0x033F
 #define WM_HANDHELDFIRST                0x0358
 #define WM_HANDHELDLAST                 0x035F
 #define WM_AFXFIRST                     0x0360
 #define WM_AFXLAST                      0x037F
 #define WM_PENWINFIRST                  0x0380
-
-// welcome box
 #define IDD_WELCOME                     900
 #define IDD_WELC_TITLE                  901
 #define IDD_WELC_SUBTITLE               902
@@ -1375,25 +1368,31 @@
 #define IDD_WELC_BUTTON3_DESC           910
 #define WM_PENWINLAST                   0x038F
 #define IDD_WELC_CLOSE                  911
-#define IDC_WEBLINK      		            912
-#define IDC_SUPPORTLINK                913
+#define IDC_WEBLINK                     912
+#define IDC_SUPPORTLINK                 913
 #define IDD_WELC_TEXT                   920
 #define WM_DDE_FIRST                    0x03E0
 #define IDD_TRANSL_EDITDIALOG           1000
 #define IDC_TRANSL_KEYVALUE             1001
 #define IDC_TRANSL_EDIT1                1002
 #define IDC_TRANSL_LANGUAGEID           1003
-#define IDC_TRANSL_EDIT2                1010
+#define IDC_PROGRESS		                1010
 #define IDC_TRANSL_COPYCLIP             1011
 #define IDC_TRANSL_CLEAR                1012
+#define IDC_LOG                         1054
+#define MSG_000                         3000
+#define MSG_020                         3020
+#define MSG_085                         3085
+#define MSG_241                         3241
+#define MSG_MAX                         3400
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        103
+#define _APS_NEXT_RESOURCE_VALUE        106
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1000
-#define _APS_NEXT_SYMED_VALUE           101
+#define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif

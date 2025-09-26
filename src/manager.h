@@ -44,7 +44,7 @@ enum SLOTS
     SLOT_VIRUS_RECYCLER= 2,
     SLOT_VIRUS_HIDDEN  = 3,
     SLOT_NODRIVERS     = 4,
-    SLOT_PATREON       = 5,
+    SLOT_BOOSTY       = 5,
     SLOT_TRANSLATION   = 6,
     SLOT_DOWNLOAD      = 7,
     SLOT_NOUPDATES     = 8,
@@ -156,7 +156,7 @@ public:
     const wchar_t *getHWIDby(int id)const;
     static unsigned int __stdcall thread_install(void *arg);
 
-    friend int _7z_setcomplited(long long i); // TODO: friend
+    friend int _7z_setcomplete(long long i); // TODO: friend
 };
 
 #endif

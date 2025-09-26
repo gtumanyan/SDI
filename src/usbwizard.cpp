@@ -21,6 +21,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "logging.h"
 
 #include "SDI.h"
+#include "resource.h"
 #include "system.h"
 
 #include <commctrl.h>
@@ -32,7 +33,6 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "wizards.h"
 #include "manager.h"
 #include "matcher.h"
-#include "main.h"
 #include "indexing.h"
 #include <Shlwapi.h>
 #include "theme.h"
@@ -41,7 +41,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include <fstream>
 #include "utils/WinUtil.h"
 
-extern HINSTANCE ghInst;
+extern HINSTANCE hMainInstance;
 extern USBWizard *USBWiz;
 extern Manager *manager_g;
 
@@ -82,7 +82,7 @@ static LRESULT CALLBACK Page1DlgProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lP
                                                 STR(STR_USBWIZ_TITLE),
                                                 WS_CHILD|WS_VISIBLE|SS_LEFT,
                                                 210,20,280,40,
-                                                hwnd,nullptr,ghInst,nullptr);
+                                                hwnd,nullptr,hMainInstance,nullptr);
                 if(hStaticText==nullptr)return true;
                 // create a font for the static control
                 HFONT hFont=CreateFont(22,0,0,0,650,
@@ -555,7 +555,7 @@ static LRESULT CALLBACK Page2DlgProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lP
                     b.append(STR(STR_USBWIZ_PAGE2_DELCONF2));
                     if(MessageBox(hwnd,b.c_str(),STR(STR_USBWIZ_PAGE2_DELCONF),MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2)==IDYES)
                     {
-                        SetCursor(LoadCursor(ghInst,IDC_WAIT));
+                        SetCursor(LoadCursor(hMainInstance,IDC_WAIT));
                         USBWiz->ClearTarget(hwnd);
                         BuildFilesList(hwnd);
                         Page2PopulateCombo(hwnd);
@@ -877,7 +877,7 @@ static LRESULT CALLBACK Page5DlgProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lP
                                                 STR(STR_USBWIZ_PAGE5_TITLE),
                                                 WS_CHILD|WS_VISIBLE|SS_LEFT,
                                                 210,20,640,26,
-                                                hwnd,nullptr,ghInst,nullptr);
+                                                hwnd,nullptr,hMainInstance,nullptr);
                 if(hStaticText==nullptr)return true;
                 // create a font for the static control
                 HFONT hFont=CreateFont(22,0,0,0,650,
@@ -938,7 +938,7 @@ bool USBWizard::doWizard()
 {
     psp[0].dwSize=sizeof(PROPSHEETPAGE);
     psp[0].dwFlags=PSP_HIDEHEADER|PSP_USETITLE;
-    psp[0].hInstance=ghInst;
+    psp[0].hInstance=hMainInstance;
     psp[0].pszTemplate=MAKEINTRESOURCE(IDD_USBWIZ_PAGE1);
     psp[0].lParam=0;
     psp[0].pszTitle=STR(STR_USBWIZ_TITLE);
@@ -946,7 +946,7 @@ bool USBWizard::doWizard()
 
     psp[1].dwSize=sizeof(PROPSHEETPAGE);
     psp[1].dwFlags=PSP_USEHEADERTITLE|PSP_USEHEADERSUBTITLE;
-    psp[1].hInstance=ghInst;
+    psp[1].hInstance=hMainInstance;
     psp[1].pszTemplate=MAKEINTRESOURCE(IDD_USBWIZ_PAGE2);
     psp[1].pszHeaderTitle=STR(STR_USBWIZ_PAGE2_TITLE);
     psp[1].pszHeaderSubTitle=STR(STR_USBWIZ_PAGE2_SUBTITLE);
@@ -955,7 +955,7 @@ bool USBWizard::doWizard()
 
     psp[2].dwSize=sizeof(PROPSHEETPAGE);
     psp[2].dwFlags=PSP_USEHEADERTITLE|PSP_USEHEADERSUBTITLE;
-    psp[2].hInstance=ghInst;
+    psp[2].hInstance=hMainInstance;
     psp[2].pszTemplate=MAKEINTRESOURCE(IDD_USBWIZ_PAGE3);
     psp[2].pszHeaderTitle=STR(STR_USBWIZ_PAGE3_TITLE);
     psp[2].pszHeaderSubTitle=STR(STR_USBWIZ_PAGE3_SUBTITLE);
@@ -964,7 +964,7 @@ bool USBWizard::doWizard()
 
     psp[3].dwSize=sizeof(PROPSHEETPAGE);
     psp[3].dwFlags=PSP_USEHEADERTITLE|PSP_USEHEADERSUBTITLE;
-    psp[3].hInstance=ghInst;
+    psp[3].hInstance=hMainInstance;
     psp[3].pszTemplate=MAKEINTRESOURCE(IDD_USBWIZ_PAGE4);
     psp[3].pszHeaderTitle=STR(STR_USBWIZ_PAGE4_TITLE);
     psp[3].pszHeaderSubTitle=STR(STR_USBWIZ_PAGE4_SUBTITLE);
@@ -973,7 +973,7 @@ bool USBWizard::doWizard()
 
     psp[4].dwSize=sizeof(PROPSHEETPAGE);
     psp[4].dwFlags=PSP_HIDEHEADER;
-    psp[4].hInstance=ghInst;
+    psp[4].hInstance=hMainInstance;
     psp[4].pszTemplate=MAKEINTRESOURCE(IDD_USBWIZ_PAGE5);
     psp[4].pszHeaderTitle=STR(STR_USBWIZ_PAGE5_TITLE);
     psp[4].lParam=0;
@@ -981,11 +981,11 @@ bool USBWizard::doWizard()
 
     psh.dwSize=sizeof(PROPSHEETHEADER);
     psh.dwFlags=PSH_PROPSHEETPAGE|PSH_WIZARD97|PSH_USEICONID|PSH_WATERMARK;
-    psh.hInstance=ghInst;
+    psh.hInstance=hMainInstance;
     psh.hwndParent=MainWindow.hMain;
     psh.nPages=5;
     psh.nStartPage=0;
-    psh.pszIcon=MAKEINTRESOURCE(IDR_MAINWND);
+    psh.pszIcon=MAKEINTRESOURCE(IDI_ICON);
     psh.pszbmWatermark=MAKEINTRESOURCE(IDB_WATERMARK);
     psh.ppsp=(LPCPROPSHEETPAGE)&psp;
     psh.pfnCallback=nullptr;

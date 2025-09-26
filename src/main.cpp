@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -15,7 +15,6 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "utils/BaseUtil.h"
 #include "SDI.h"
-#include "utils/Log.h"
 #include "system.h"     // non-portable
 #include "Settings.h"
 #include "cli.h"
@@ -24,7 +23,6 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "update.h"
 #include "install.h"    // non-portable
 #include "gui.h"
-#include "draw.h"   // non-portable
 #include "theme.h"
 #include "usbwizard.h"
 #include "VersionEx.h"
@@ -44,23 +42,30 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "enum.h"   // non-portable
 #include "main.h"
 #include "model.h"
+#include "msapi_utf8.h"
+
 #include "script.h"
 
 #include "wizards.h"
 #include "utils/WinUtil.h"
 
-//{ Global variables
+/*
+ * Globals
+ */
 Manager manager_v[2];
 Manager *manager_g=&manager_v[0];
 Console_t *Console;
 USBWizard *USBWiz;
 
+static BOOL log_displayed = FALSE;
 volatile int installupdate_exitflag=0;
 Event *installupdate_event;
 
 volatile int deviceupdate_exitflag=0;
 Event *deviceupdate_event;
-HINSTANCE ghInst;
+HINSTANCE hMainInstance;
+HWND hMainDialog = NULL;
+HWND hLog = NULL;
 CRITICAL_SECTION sync;
 bool CRITICAL_SECTION_ACTIVE=false;
 int manager_active=0;
@@ -72,8 +77,7 @@ HMENU pSysMenu,ToolsMenu,UpdatesMenu;
 int pSysMenuCount=0;
 TORRENT_SELECTION_MODE TorrentSelectionMode=TSM_NONE;
 
-// http://www.winprog.org/tutorial/dlgfaq.html
-HBRUSH g_hbrDlgBackground = CreateSolidBrush(GetSysColor(COLOR_BTNFACE));
+
 
 // drag/drop in elevated processes
 // https://helgeklein.com/blog/2010/03/how-to-enable-drag-and-drop-for-an-elevated-mfc-application-on-vistawindows-7/
@@ -89,34 +93,6 @@ MainWindow_t MainWindow;
 Settings_t Settings;
 //}
 
-class Console1:public Console_t
-{
-		bool keep_open;
-
-public:
-		Console1()
-		{
-				DWORD dwProcessId;
-				GetWindowThreadProcessId(GetConsoleWindow(),&dwProcessId);
-				keep_open=GetCurrentProcessId()!=dwProcessId;
-				if(!keep_open)ShowWindow(GetConsoleWindow(),SW_HIDE);
-		}
-		~Console1()
-		{
-				if(keep_open)return;
-				ShowWindow(GetConsoleWindow(),SW_SHOW);
-		}
-		void Show()
-		{
-				if(keep_open)return;
-				ShowWindow(GetConsoleWindow(),SW_SHOWNOACTIVATE);
-		}
-		void Hide()
-		{
-				if(keep_open)return;
-				ShowWindow(GetConsoleWindow(),SW_HIDE);
-		}
-};
 
 class Console2:public Console_t
 {
@@ -138,15 +114,15 @@ public:
 		}
 };
 
-//=============================================================================
-//
-//  WinMain()
-//
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nShowCmd)
+/*
+ * Application Entrypoint
+ */
+int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
-		UNREFERENCED_PARAMETER(hPrevInstance);
-		UNREFERENCED_PARAMETER(lpCmdLine);
-		ghInst=hInstance;
+		BOOL attached_console = FALSE;
+
+		// Save instance of the application for further reference
+		hMainInstance = hInstance;
 
 		//Timers.start(time_total);
 
@@ -197,35 +173,15 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		// Close the app if the work is done
 		if(Settings.statemode==STATEMODE_EXIT)
 		{
-				//if(backtrace)FreeLibrary(backtrace);
 				delete Console;
 				return ret_global;
-		}
-
-        if (!IsDebuggerPresent()) {
-            // VSCode shows both debugger output and console out which doubles the logging
-            // TODO: only if AttachConsole() succeeds?
-            gLogToConsole = true;
         }
 
         // Bring back the console window
-		if(Settings.flags&FLAG_SHOWCONSOLE&&gLogToConsole)
+    if(Settings.flags&FLAG_SHOWCONSOLE)
 				Console->Show();
 		else
 				Console->Hide();
-
-		// Start logging
-    if (!(Settings.flags && FLAG_NOLOGFILE)) {
-        ExpandEnvironmentStrings(Settings.logO_dir, Settings.log_dir, BUFLEN);
-        if (Settings.log_dir) {
-            StartLogToFile(Settings.log_dir, true);
-            Settings.loginfo();
-        }
-    }
-		#ifndef NDEBUG
-		log("Debug info present\n");
-		//if(backtrace)Log.print_con("Backtrace is loaded\n");
-		#endif
 
 		#ifdef BENCH_MODE
 		System.benchmark();
@@ -297,12 +253,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 				FreeLibrary(backtrace);
 		else
 				signal(SIGSEGV,SIG_DFL);*/
-
-		// Stop logging
-		//time_total=System.GetTickCountWr()-time_total;
-		//Timers.print();
-        DestroyLogging();
-		delete Console;
 
 		// Exit
 		return ret_global;
@@ -400,14 +350,14 @@ void MainWindow_t::MainLoop(int nCmd)
 		memset(&wcx,0,sizeof(WNDCLASSEX));
 		wcx.cbSize=         sizeof(WNDCLASSEX);
 		wcx.lpfnWndProc=    WndProcMainCallback;
-		wcx.hInstance=      ghInst;
-		wcx.hIcon=          LoadIcon(ghInst,MAKEINTRESOURCE(IDR_MAINWND));
+		wcx.hInstance=      hMainInstance;
+		wcx.hIcon=          LoadIcon(hMainInstance,MAKEINTRESOURCE(IDR_MAINWND));
 		wcx.hCursor=        LoadCursor(nullptr,IDC_ARROW);
 		wcx.lpszClassName=  classMain;
 		wcx.hbrBackground=  (HBRUSH)(COLOR_WINDOW+1);
 		if(!RegisterClassEx(&wcx))
 		{
-				logf("ERROR in gui(): failed to register '%S' class\n",wcx.lpszClassName);
+				uprintf("gui() ERROR: failed to register '%S' class\n",wcx.lpszClassName);
 				return;
 		}
 
@@ -417,7 +367,7 @@ void MainWindow_t::MainLoop(int nCmd)
 		wcx.hIcon=nullptr;
 		if(!RegisterClassEx(&wcx))
 		{
-				logf("ERROR in gui(): failed to register '%S' class\n",wcx.lpszClassName);
+				uprintf("gui() ERROR: failed to register '%S' class\n",wcx.lpszClassName);
 				System.UnregisterClass_log(classMain,L"gui",L"classMain");
 				return;
 		}
@@ -427,7 +377,7 @@ void MainWindow_t::MainLoop(int nCmd)
 		wcx.lpszClassName=classField;
 		if(!RegisterClassEx(&wcx))
 		{
-				logf("ERROR in gui(): failed to register '%S' class\n",wcx.lpszClassName);
+				uprintf("gui() ERROR: failed to register '%S' class\n",wcx.lpszClassName);
 				System.UnregisterClass_log(classMain,L"gui",L"classMain");
 				System.UnregisterClass_log(classPopup,L"gui",L"classPopup");
 				return;
@@ -439,16 +389,12 @@ void MainWindow_t::MainLoop(int nCmd)
 												_W(SAPPNAME),
 												WS_OVERLAPPEDWINDOW|WS_CLIPCHILDREN,
 												CW_USEDEFAULT,CW_USEDEFAULT,D(MAINWND_WX),D(MAINWND_WY),
-												nullptr,nullptr,ghInst,nullptr);
+												nullptr,nullptr,hMainInstance,nullptr);
 		if(!hMain)
 		{
-				logf("ERROR in gui(): failed to create '%S' window\n",classMain);
+				uprintf("Unable to create '%S' window\n",classMain);
 				return;
 		}
-
-		// license dialog
-		if(!Settings.license)
-				DialogBox(ghInst,MAKEINTRESOURCE(IDD_LICENSE),nullptr,(DLGPROC)LicenseProcedure);
 
 		// Enable updates notifications
 		if(Settings.license==2)
@@ -563,9 +509,14 @@ void MainWindow_t::MainLoop(int nCmd)
 				}
 		}
 
-		System.UnregisterClass_log(classMain,L"gui",L"classMain");
-		System.UnregisterClass_log(classPopup,L"gui",L"classPopup");
-		System.UnregisterClass_log(classField,L"gui",L"classField");
+    // UnregisterClass will fail if a window is still in use
+    // result is application can't shut down
+    if( (System.UnregisterClass_log(classMain,L"gui",L"classMain") or
+         System.UnregisterClass_log(classPopup,L"gui",L"classPopup") or
+         System.UnregisterClass_log(classField,L"gui",L"classField")) ) {
+             // the ugly way to end the process
+            _Exit(0);
+}
 }
 //}
 
@@ -578,86 +529,6 @@ void drp_callback(const wchar_t *szFile,int action,int lParam)
 		if(StrStrIW(szFile,L".7z")&&Updater->isPaused())invalidate(INVALIDATE_INDEXES);
 }
 
-const wchar_t MainWindow_t::classMain[]= L"classSDIMain";
-const wchar_t MainWindow_t::classField[]=L"classSDIField";
-const wchar_t MainWindow_t::classPopup[]=L"classSDIPopup";
-MainWindow_t::MainWindow_t()
-{
-		hFont=wFont::Create();
-		hLang=nullptr;
-		hTheme=nullptr;
-
-		mousex=-1;
-		mousey=-1;
-		mousedown=MOUSE_NONE;
-		kbpanel=KB_NONE;
-}
-
-MainWindow_t::~MainWindow_t()
-{
-		delete hFont;
-		delete hLang;
-		delete hTheme;
-}
-
-void MainWindow_t::lang_refresh()
-{
-		if(!hMain||!hField)
-		{
-				logf("ERROR in lang_refresh(): hMain is %d, hField is %d\n",hMain,hField);
-				return;
-		}
-
-		rtl=std::get<int>(language[STR_RTL].value);
-		if(rtl!=1)rtl=0;
-		setMirroring(hField);
-		setMirroring(hMain);
-		hLang->SetMirroring();
-		hTheme->SetMirroring();
-		Popup->setMirroring();
-
-		RECT rect;
-		GetWindowRect(hMain,&rect);
-		MoveWindow(hMain,rect.left,rect.top,D(MAINWND_WX),D(MAINWND_WY)+1,1);
-		MoveWindow(hMain,rect.left,rect.top,D(MAINWND_WX),D(MAINWND_WY),1);
-
-		LoadMenuItems();
-}
-
-void MainWindow_t::theme_refresh()
-{
-		hFont->SetFont(D_STR(FONT_NAME),D_X(FONT_SIZE));
-		int fz=D_X(POPUP_FONT_SIZE);
-		if(fz<10)fz=10;
-		Popup->hFontP->SetFont(D_STR(FONT_NAME),fz);
-		Popup->hFontBold->SetFont(D_STR(FONT_NAME),fz,true);
-		D(POPUP_WY)=fz*120/100*Settings.scale/256;
-
-		hLang->SetFont(hFont);
-		hTheme->SetFont(hFont);
-
-		if(!hMain||!hField)
-		{
-				logf("ERROR in theme_refresh(): hMain is %d, hField is %d\n",hMain,hField);
-				return;
-		}
-
-		if(Settings.autosized)
-		{
-				MoveWindow(hField,Xm(D_X(DRVLIST_OFSX),D_X(DRVLIST_WX)),Ym(D_X(DRVLIST_OFSY)),XM(D_X(DRVLIST_WX),D_X(DRVLIST_OFSX)),YM(D_X(DRVLIST_WY),D_X(DRVLIST_OFSY)),TRUE);
-				wPanels->arrange();
-				manager_g->setpos();
-				MainWindow.redrawmainwnd();
-				MainWindow.redrawfield();
-				return;
-		}
-
-		// Resize window
-		RECT rect;
-		GetWindowRect(hMain,&rect);
-		MoveWindow(hMain,rect.left,rect.top,D(MAINWND_WX),D(MAINWND_WY)+1,1);
-		MoveWindow(hMain,rect.left,rect.top,D(MAINWND_WX),D(MAINWND_WY),1);
-}
 
 struct TData
 {
@@ -757,10 +628,10 @@ static BOOL CALLBACK DialogProc1(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 						Settings.wndwx=rect.right-rect.left;
 						Settings.wndwy=rect.bottom-rect.top;
 
-						data.pages[0]=CreateDialog(ghInst,MAKEINTRESOURCE(IDD_VIEWSETTINGS),hwnd,(DLGPROC)DialogPage);
-						data.pages[1]=CreateDialog(ghInst,MAKEINTRESOURCE(IDD_UPDATESSETTINGS),hwnd,(DLGPROC)DialogPage);
-						data.pages[2]=CreateDialog(ghInst,MAKEINTRESOURCE(IDD_PATHSETTINGS),hwnd,(DLGPROC)DialogPage);
-						data.pages[3]=CreateDialog(ghInst,MAKEINTRESOURCE(IDD_ADVANCEDSETTINGS),hwnd,(DLGPROC)DialogPage);
+						data.pages[0]=CreateDialog(hMainInstance,MAKEINTRESOURCE(IDD_VIEWSETTINGS),hwnd,(DLGPROC)DialogPage);
+						data.pages[1]=CreateDialog(hMainInstance,MAKEINTRESOURCE(IDD_UPDATESSETTINGS),hwnd,(DLGPROC)DialogPage);
+						data.pages[2]=CreateDialog(hMainInstance,MAKEINTRESOURCE(IDD_PATHSETTINGS),hwnd,(DLGPROC)DialogPage);
+						data.pages[3]=CreateDialog(hMainInstance,MAKEINTRESOURCE(IDD_ADVANCEDSETTINGS),hwnd,(DLGPROC)DialogPage);
 
 						data.tab=GetDlgItem(hwnd,IDC_TAB1);
 						if(data.tab)
@@ -768,13 +639,13 @@ static BOOL CALLBACK DialogProc1(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 								TCITEM tci;
 								tci.mask = TCIF_TEXT;
 								tci.pszText = const_cast<wchar_t *>(STR(STR_OPTION_VIEW_TAB));
-								if(TabCtrl_InsertItem(data.tab, 0, &tci)==-1)log("ERROR in winMain(): failed to insert page in tab control.\n");
+								if(TabCtrl_InsertItem(data.tab, 0, &tci)==-1) uprintf("ERROR in winMain(): failed to insert page in tab control.\n");
 								tci.pszText = const_cast<wchar_t *>(STR(STR_OPTION_UPDATES_TAB));
-								if(TabCtrl_InsertItem(data.tab, 1, &tci)==-1)log("ERROR in winMain(): failed to insert page in tab control.\n");
+								if(TabCtrl_InsertItem(data.tab, 1, &tci)==-1) uprintf("ERROR in winMain(): failed to insert page in tab control.\n");
 								tci.pszText = const_cast<wchar_t *>(STR(STR_OPTION_PATH_TAB));
-								if(TabCtrl_InsertItem(data.tab, 2, &tci)==-1)log("ERROR in winMain(): failed to insert page in tab control.\n");
+								if(TabCtrl_InsertItem(data.tab, 2, &tci)==-1) uprintf("ERROR in winMain(): failed to insert page in tab control.\n");
 								tci.pszText = const_cast<wchar_t *>(STR(STR_OPTION_ADVANCED_TAB));
-								if(TabCtrl_InsertItem(data.tab, 3, &tci)==-1)log("ERROR in winMain(): failed to insert page in tab control.\n");
+								if(TabCtrl_InsertItem(data.tab, 3, &tci)==-1) uprintf("ERROR in winMain(): failed to insert page in tab control.\n");
 
 								RECT rc;
 								GetWindowRect(data.tab,&rc);
@@ -883,7 +754,7 @@ static BOOL CALLBACK DialogProc1(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 
 								OnSelChange();
 
-								if (rtl)
+								if (right_to_left_mode)
 								{
 										setMirroring(hwnd);
 										// iterate all controls on the dialog
@@ -1049,7 +920,7 @@ INT_PTR CALLBACK AboutDlgProc(HWND hwnd, UINT umsg, WPARAM wParam, LPARAM lParam
 		return TRUE;
 		case WM_CTLCOLORSTATIC:
 		{
-				// modify the fonts for colours and bold and size etc
+				// modify the fonts for colors and bold and size etc
 				HWND Ctl1=GetDlgItem(hwnd,IDD_ABOUT_T1);
 				//HWND Ctl3=GetDlgItem(hwnd, IDC_STATIC_AUTHORS);
 				HWND Ctl4=GetDlgItem(hwnd, IDC_VERSION);
@@ -1237,34 +1108,12 @@ void escapeAmp(wchar_t *buf,const wchar_t *source)
 //}
 
 //{ GUI Helpers
-HWND CreateWindowMF(const wchar_t *type,const wchar_t *name,HWND hwnd,intptr_t id,DWORD f)
-{
-		return CreateWindow(type,name,WS_CHILD|WS_VISIBLE|f,0,0,0,0,hwnd,(HMENU)(id),ghInst,NULL);
-}
-
-void GetRelativeCtrlRect(HWND hWnd,RECT *rc)
-{
-		GetWindowRect(hWnd,rc);
-		ScreenToClient(GetParent(hWnd),(LPPOINT)&((LPPOINT)rc)[0]);
-		ScreenToClient(GetParent(hWnd),(LPPOINT)&((LPPOINT)rc)[1]);
-		//MapWindowPoints(nullptr,hWnd,(LPPOINT)&rc,2);
-		rc->right-=rc->left;
-		rc->bottom-=rc->top;
-}
-
-void setMirroring(HWND hwnd)
-{
-		LONG_PTR v=GetWindowLongPtr(hwnd,GWL_EXSTYLE);
-		if(rtl)v|=WS_EX_LAYOUTRTL;else v&=~WS_EX_LAYOUTRTL;
-		SetWindowLongPtr(hwnd,GWL_EXSTYLE,v);
-}
-
 void setMirroringEdit(HWND hwnd)
 {
 		setMirroring(hwnd);
 
 		// reposition edit controls for right-to-left
-		if(rtl)
+		if(right_to_left_mode)
 		{
 				RECT p,r;
 				GetWindowRect(GetParent(hwnd),&p);
@@ -1277,18 +1126,12 @@ void setMirroringEdit(HWND hwnd)
 		}
 }
 
-void checktimer(const wchar_t *str,long long t,int uMsg)
-{
-		if(System.GetTickCountWr()-t>20&& !gReducedLogging)
-				logf("GUI lag in %S[%X]: %ld\n",str,uMsg,System.GetTickCountWr()-t);
-}
-
 void MainWindow_t::redrawfield()
 {
 		if(Settings.flags&FLAG_NOGUI)return;
 		if(!hField)
 		{
-				log("ERROR in redrawfield(): hField is 0\n");
+				uprintf("ERROR in redrawfield(): hField is 0\n");
 				return;
 		}
 		InvalidateRect(hField,nullptr,0);
@@ -1299,7 +1142,7 @@ void MainWindow_t::redrawmainwnd()
 		if(Settings.flags&FLAG_NOGUI)return;
 		if(!hMain)
 		{
-				log("ERROR in redrawmainwnd(): hMain is 0\n");
+				uprintf("ERROR in redrawmainwnd(): hMain is 0\n");
 				return;
 		}
 		InvalidateRect(hMain,nullptr,0);
@@ -1355,7 +1198,7 @@ void MainWindow_t::DownloadedTorrent(int TorrentResults)
 				if(!System.FileExists2(spec1)&&!System.FileExists2(spec2)&&(argc<2))
 				{
 						TorrentSelectionMode=TSM_NONE;
-						DialogBox(ghInst,MAKEINTRESOURCE(IDD_WELCOME), MainWindow.hMain,(DLGPROC)WelcomeProcedure);
+						DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_WELCOME), MainWindow.hMain,(DLGPROC)WelcomeProcedure);
 				}
 				// otherwise if there are updates of the current torrent then stop switching
 				// ToDo UpdateCheck.cpp
@@ -1499,7 +1342,7 @@ LRESULT MainWindow_t::WndProcCommon(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lPa
 								if(mousedown==MOUSE_MOVE||abs(mousex-x)>2||abs(mousey-y)>2)
 								{
 										mousedown=MOUSE_MOVE;
-										MoveWindow(hMain,rect.left+(x-mousex)*(rtl?-1:1),rect.top+y-mousey,
+										MoveWindow(hMain,rect.left+(x-mousex)*(right_to_left_mode?-1:1),rect.top+y-mousey,
 															 rect.right-rect.left,rect.bottom-rect.top,1);
 								}
 						}
@@ -1843,7 +1686,7 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 								wPanels->Accept(cv);
 						}
 						if(wParam==VK_F1)
-								DialogBox(ghInst, MAKEINTRESOURCE(IDD_ABOUT), hwnd, AboutDlgProc);
+								DialogBox(hMainInstance, MAKEINTRESOURCE(IDD_ABOUT), hwnd, AboutDlgProc);
 						if(wParam==VK_F5&&ctrl_down)
 								invalidate(INVALIDATE_DEVICES);else
 						if(wParam==VK_F5)
@@ -1896,7 +1739,7 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 
 				case WM_DEVICECHANGE:
 						if(installmode==MODE_INSTALLING)break;
-						logf("WM_DEVICECHANGE(%x,%x)\n",wParam,lParam);
+						//logf("WM_DEVICECHANGE(%x,%x)\n",wParam,lParam);
 						invalidate(INVALIDATE_DEVICES);
 						break;
 
@@ -1944,7 +1787,7 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 								{
 										case IDM_ABOUT:
 										{
-												DialogBox( ghInst,MAKEINTRESOURCE(IDD_ABOUT), MainWindow.hMain,AboutDlgProc);
+												DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_ABOUT), MainWindow.hMain,AboutDlgProc);
 												return 0;
 										}
 										case IDM_SEED:
@@ -2043,12 +1886,12 @@ LRESULT MainWindow_t::WndProcMain(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 										}
 										case IDM_WELCOME:
 										{
-												DialogBox(ghInst,MAKEINTRESOURCE(IDD_WELCOME), MainWindow.hMain,(DLGPROC)WelcomeProcedure);
+												DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_WELCOME), MainWindow.hMain,(DLGPROC)WelcomeProcedure);
 												return 0;
 										}
 										case IDM_LICENSE:
 										{
-												DialogBox(ghInst,MAKEINTRESOURCE(IDD_LICENSE),MainWindow.hMain,(DLGPROC)LicenseProcedure);
+												DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_LICENSE),MainWindow.hMain,(DLGPROC)LicenseCallback);
 												return 0;
 										}
 										case IDM_USBWIZARD:
@@ -2257,7 +2100,7 @@ void DrvDirCommand::LeftClick(bool)
 
 void DrvOptionsCommand::LeftClick(bool)
 {
-		DialogBox(ghInst,MAKEINTRESOURCE(IDD_DIALOG3),MainWindow.hMain,(DLGPROC)DialogProc1);
+		DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_DIALOG3),MainWindow.hMain,(DLGPROC)DialogProc1);
 }
 
 void InstallCommand::LeftClick(bool)
@@ -2381,7 +2224,7 @@ LRESULT MainWindow_t::WndProcField(HWND hwnd,UINT message,WPARAM wParam,LPARAM l
 						if(Popup->floating_itembar==SLOT_BOOSTY)
 						{
 								if(StrStrIW(STR(STR_LANG_ID),L"Russian"))
-										System.run_command(L"open",L"http://vk.com/snappydriverinstaller?w=page-71369181_50543112",SW_SHOWNORMAL,0);
+										System.run_command(L"open",L"https://t.me/Snappy_Driver_Installer/3112",SW_SHOWNORMAL,0);
 								else
 										System.run_command(L"open",L"https://boosty.to/snappydriverinstaller/donate",SW_SHOWNORMAL,0);
 								break;
@@ -2501,7 +2344,7 @@ void Popup_t::init()
 {
 		hPopup=CreateWindowEx(WS_EX_LAYERED|WS_EX_NOACTIVATE|WS_EX_TOPMOST|WS_EX_TRANSPARENT,
 				MainWindow.classPopup,L"",WS_POPUP,
-				0,0,0,0,MainWindow.hMain,(HMENU)nullptr,ghInst,nullptr);
+				0,0,0,0,MainWindow.hMain,(HMENU)nullptr,hMainInstance,nullptr);
 }
 
 void Popup_t::AddShift(int i)
@@ -2608,97 +2451,6 @@ LRESULT Popup_t::PopupProcedure2(HWND hwnd,UINT message,WPARAM wParam,LPARAM lPa
 		return 0;
 }
 
-BOOL CALLBACK LicenseProcedure(HWND hwnd,UINT Message,WPARAM wParam,LPARAM lParam)
-{
-		WINDOWPOS *wpos;
-		HWND hEditBox;
-		RECT rect;
-		LPCSTR s;
-		size_t sz;
-
-		switch(Message)
-		{
-				case WM_INITDIALOG:
-						get_resource(IDR_LICENSE,(void **)&s,&sz);
-						hEditBox=GetDlgItem(hwnd,IDC_EDIT1);
-						SetWindowTextA(hEditBox,s);
-						SendMessage(hEditBox,EM_SETREADONLY,1,0);
-						// only show decline button on startup
-						if(GetParent(hwnd))
-						{
-								ShowWindow(GetDlgItem(hwnd,IDCANCEL),SW_HIDE);
-								SetFocus(GetDlgItem(hwnd,IDOK));
-						}
-						return TRUE;
-
-				case WM_COMMAND:
-						switch(LOWORD(wParam))
-						{
-								case IDOK:
-										Settings.license=2;
-										EndDialog(hwnd,IDOK);
-										return TRUE;
-
-								case IDCANCEL:
-										if(!GetParent(hwnd))Settings.license=0;
-										EndDialog(hwnd,IDCANCEL);
-										return TRUE;
-
-								default:
-										break;
-						}
-						break;
-
-				case WM_WINDOWPOSCHANGED:
-						wpos=(WINDOWPOS*)lParam;
-						{
-								int r=SystemParametersInfo(SPI_GETWORKAREA,0,&rect,0);
-								if(r&&wpos->cy-rect.bottom>0)
-								{
-										int sz1=rect.bottom-20-wpos->cy;
-										wpos->y=10;
-										wpos->cy=rect.bottom-20;
-										MoveWindow(hwnd,wpos->x,wpos->y,wpos->cx,wpos->cy,1);
-
-										GetRelativeCtrlRect(GetDlgItem(hwnd,IDC_EDIT1),&rect);
-										rect.bottom+=sz1;
-										MoveWindow(GetDlgItem(hwnd,IDC_EDIT1),rect.left,rect.top,rect.right,rect.bottom,1);
-
-										GetRelativeCtrlRect(GetDlgItem(hwnd,IDOK),&rect);
-										rect.top+=sz1;
-										MoveWindow(GetDlgItem(hwnd,IDOK),rect.left,rect.top,rect.right,rect.bottom,1);
-
-										GetRelativeCtrlRect(GetDlgItem(hwnd,IDCANCEL),&rect);
-										rect.top+=sz1;
-										MoveWindow(GetDlgItem(hwnd,IDCANCEL),rect.left,rect.top,rect.right,rect.bottom,1);
-								}
-						}
-						return TRUE;
-
-				case WM_CTLCOLORSTATIC:
-						hEditBox=GetDlgItem(hwnd,IDC_EDIT1);
-						if((HWND)lParam==hEditBox)
-						{
-								HDC hdcStatic=(HDC)wParam;
-								SetTextColor(hdcStatic, GetSysColor(COLOR_WINDOWTEXT));
-								SetBkColor(hdcStatic, GetSysColor(COLOR_WINDOW));
-								return (LRESULT)GetStockObject(HOLLOW_BRUSH);
-						}
-						else
-						{
-								HDC hdcStatic=(HDC)wParam;
-								SetBkMode(hdcStatic,TRANSPARENT);
-								return (INT_PTR)g_hbrDlgBackground;
-						}
-
-				case WM_CTLCOLORDLG:
-						return (INT_PTR)g_hbrDlgBackground;
-
-				default:
-						break;
-		}
-		return FALSE;
-}
 
 BOOL CALLBACK WelcomeProcedure(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 {

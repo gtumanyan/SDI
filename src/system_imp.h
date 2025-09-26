@@ -71,7 +71,7 @@ public:
         if(h)
         {
             if(!CloseHandle(h))
-                log("ERROR in ThreadImpS(): failed CloseHandle\n");
+                uprintf("ERROR in ThreadImpS(): failed CloseHandle\n");
         }
     }
 };

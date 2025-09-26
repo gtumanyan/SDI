@@ -104,23 +104,8 @@ inline void CrashMe() {
 
 // in release builds ReportIf()/ReportIfQuick() will break if running under
 // the debugger. In other builds it send a debug report
-#undef UPLOAD_REPORT
-#if defined(PRE_RELEASE_VER) || defined(DEBUG) || defined(ASAN_BUILD)
-#define UPLOAD_REPORT
-#endif
-
-extern void _uploadDebugReport(const char*, bool, bool);
 void BreakIfUnderDebugger();
 
-#ifdef UPLOAD_REPORT
-#define ReportIfCond(cond, condStr, isCrash, captureCallstack)      \
-    __analysis_assume(!(cond));                                     \
-    do {                                                            \
-        if (cond) {                                                 \
-            _uploadDebugReport(condStr, isCrash, captureCallstack); \
-        }                                                           \
-    } while (0)
-#else
 // version that is a no-op
 #define ReportIfCond(cond, x, y, z) \
     __analysis_assume(!(cond));     \
@@ -129,7 +114,6 @@ void BreakIfUnderDebugger();
             BreakIfUnderDebugger(); \
         }                           \
     } while (0)
-#endif
 
 #define ReportIf(cond) ReportIfCond(cond, #cond, false, true)
 #define ReportIfQuick(cond) ReportIfCond(cond, #cond, false, false)

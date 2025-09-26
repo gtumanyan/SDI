@@ -13,17 +13,16 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef THEME_H
-#define THEME_H
+#pragma once
 
 #include "themelist.h"
 #include "langlist.h"
 #include <string>
 #include <variant>
 
-// Theme/lang
-#define STR(A)	 std::get_if<1>(&language[A].value) ? std::get<1>(language[A].value) : L""
-#define D(A)	 std::get<int>(theme[A].value)
+// Theme/Lang
+#define STR(A)	(std::get_if<1>(&language[A].value) ? std::get<1>(language[A].value) : L"")
+#define D(A)		 std::get<int>(theme[A].value)
 #define D_C(A)   std::get<int>(theme[A].value)
 #define D_1(A)   std::get<int>(theme[A].value)
 #define D_X(A)  (std::get<int>(theme[A].value) * 256 / Settings.scale)
@@ -34,7 +33,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #define DEF_STR(a) {TEXT_1(a),0,0},
 
 // Declarations
-class Image;																										
+class Image;
 class Combobox;
 class Vaul;
 struct entry_t;
@@ -73,5 +72,3 @@ public:
 };
 Vaul *CreateVaultLang(entry_t *entry,size_t num,int res);
 Vaul *CreateVaultTheme(entry_t *entry,size_t num,int res);
-
-#endif

@@ -12,9 +12,9 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more d
 You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include "registry.h"
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#pragma once
 
 #define SAVE_INSTALLED_ID_DEF   L"-save-installed-id"
 #define HWIDINSTALLED_DEF       L"-HWIDInstalled:"
@@ -177,7 +177,7 @@ public:
 
     wchar_t drp_dir   [MAX_PATH];
     wchar_t output_dir[MAX_PATH];
-    wchar_t drpext_dir[MAX_PATH];
+    WCHAR drpext_dir[MAX_PATH];
     wchar_t index_dir [MAX_PATH];
     wchar_t data_dir  [MAX_PATH];
     wchar_t log_dir   [MAX_PATH];
@@ -204,6 +204,7 @@ public:
 
 public:
     Settings_t();
+    bool install(WCHAR* cmdLine);
     void parse(const WCHAR* str,size_t ind);
     bool load(const WCHAR* filename);
     bool load_cfg_switch(const wchar_t *cmdParams);
@@ -220,5 +221,3 @@ private:
     wchar_t *ltrim(wchar_t *s);
 };
 extern Settings_t Settings;
-
-#endif

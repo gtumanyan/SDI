@@ -118,13 +118,13 @@ class Parser
     Driverpack *pack;
     std::unordered_map<std::string,std::string> *string_list;
     const wchar_t *inffile;
-    Txt textholder;
 
     const char *blockBeg;
     const char *blockEnd;
     const char *strBeg;
     const char *strEnd;
 
+    std::string current_subst;
 private:
     void parseWhitespace(bool eatnewline);
     void trimtoken();

@@ -17,7 +17,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 class wFontImp:public wFont
 {
 private:
-    HFONT hFont;
+    HFONT hFont = NULL;
     friend class CanvasImp;
     friend class ComboboxImp;
 
@@ -113,7 +113,7 @@ class CanvasImp:public Canvas
 {
     int x,y;
     HDC localDC;
-    HDC hdcMem;
+    HDC hdc;
     HBITMAP bitmap,oldbitmap;
     PAINTSTRUCT ps;
     HWND hwnd;

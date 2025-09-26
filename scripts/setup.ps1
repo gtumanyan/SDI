@@ -7,10 +7,11 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 ## Install Git
 winget install Git.Git -i
 
-## Install VS 2022
+## Install VS 2026
 # https://learn.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-community?view=vs-2022&preserve-view=true#desktop-development-with-c
-Write-Host "`n Install VS 2022" -ForegroundColor Green
-winget install Microsoft.VisualStudio.2022.Community.Preview --override "install --config $PSScriptRoot\..\.vs\.vsconfig --locale en-US --passive --wait --allowUnsignedExtensions"
+Write-Host "`n Install VS 2026" -ForegroundColor Green
+winget install Microsoft.VisualStudio.Community.Insiders --override "install --config $PSScriptRoot\..\.vs\.vsconfig --locale en-US --passive --wait --allowUnsignedExtensions"
 
 ## Start SDI Project
-Start-Process "$PSScriptRoot\..\vs2022\SDI.sln"
+Write-Verbose -Message $PSScriptRoot
+Start-Process "$PSScriptRoot\..\SDI.sln"

@@ -30,6 +30,9 @@
     <ClCompile Include="..\src\stdlg.cpp" />
     <ClCompile Include="..\src\stdfn.cpp" />
     <ClCompile Include="..\src\darkmode.cpp" />
+    <ClCompile Include="..\src\utils\Log.cpp" />
+    <ClCompile Include="..\src\net.cpp" />
+    <ClCompile Include="..\src\localization.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\wizards.h" />
@@ -65,6 +68,8 @@
     <ClInclude Include="..\src\7zip.h" />
     <ClInclude Include="..\src\registry.h" />
     <ClInclude Include="..\src\darkmode.h" />
+    <ClInclude Include="..\src\utils\Log.h" />
+    <ClInclude Include="..\src\localization.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\res\boosty.webp">

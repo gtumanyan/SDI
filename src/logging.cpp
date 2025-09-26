@@ -109,7 +109,7 @@ void Log_t::start(wchar_t *logdir)
     filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
     if(!(System.canWriteDirectory(logdir)&&System.canWriteFile(filename.Get(),L"wt")))
     {
-        Log.print_err("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
+        logf("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
         GetEnvironmentVariable(L"TEMP",logdir,BUFLEN);
         wcscat(logdir,L"\\SDI_logs");
         filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
@@ -118,7 +118,7 @@ void Log_t::start(wchar_t *logdir)
     logfile=_wfopen(filename.Get(),L"wt");
     if(!logfile)
     {
-        Log.print_err("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
+        logf("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
         GetEnvironmentVariable(L"TEMP",logdir,BUFLEN);
         wcscat(logdir,L"\\SDI_logs");
         filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
@@ -126,7 +126,7 @@ void Log_t::start(wchar_t *logdir)
         logfile=_wfopen(filename.Get(),L"wb");
     }
     if((log_verbose&LOG_VERBOSE_BATCH)==0)
-        Log.print_file("{start logging\n%s\n\n", VERSION_FILEVERSION_LONG);
+        Log.print_file("{start logging\n%s\n\n", _STRG(VERSION_FILEVERSION_LONG));
 }
 
 void Log_t::save()
@@ -253,7 +253,7 @@ void Log_t::print_syserr(int r,const wchar_t *s)
     WString buf;
     FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,
         nullptr,r,MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT),buf.GetV(),static_cast<DWORD>(buf.Length()),nullptr);
-    Log.print_err("ERROR with %S:[%x]'%S'\n",s,r,buf.Get());
+    logf("ERROR with %S:[%x]'%S'\n",s,r,buf.Get());
     error_count++;
 }
 
@@ -288,7 +288,7 @@ void Log_t::print_syserr(int r,const wchar_t *s)
 //    {
 //        buf.sprintf(L"Exception: unknown");
 //    }
-//    Log.print_err("ERROR: %S\n",buf.Get());
+//    logf("ERROR: %S\n",buf.Get());
 //    Log.save();
 //    Log.stop();
 //    buf.append(L"\n\nThe program will self terminate now.");
@@ -299,7 +299,7 @@ void Log_t::print_syserr(int r,const wchar_t *s)
 //
 //static void myunexpected()
 //{
-//    Log.print_err("ERROR: myunexpected()\n");
+//    logf("ERROR: myunexpected()\n");
 //    myterminate();
 //}
 //
@@ -311,7 +311,7 @@ void Log_t::print_syserr(int r,const wchar_t *s)
 //
 //void SignalHandler(int signum)
 //{
-//    Log.print_err("!!! Crashed %d!!!\n",signum);
+//    logf("!!! Crashed %d!!!\n",signum);
 //    Log.save();
 //    Log.stop();
 //}

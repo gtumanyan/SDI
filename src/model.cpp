@@ -27,7 +27,6 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 // Depend on Win32API
 #include "enum.h"
-#include "main.h"
 #include "model.h"
 
 extern Event *deviceupdate_event;
@@ -52,7 +51,7 @@ unsigned int __stdcall Bundle::thread_loadindexes(void *arg)
 {
     Collection *collection=static_cast<Collection *>(arg);
 
-    if(invaidate_set&INVALIDATE_INDEXES)collection->updatedir();
+    if(invaidate_set&INVALIDATE_INDICES)collection->updatedir();
     return 0;
 }
 
@@ -93,7 +92,7 @@ unsigned int __stdcall Bundle::thread_loadall(void *arg)
             prmem=nvwa::total_mem_alloc;*/
 
         // Update bundle
-        logf("*** START *** %d,%d [%d]\n",bundle_display,bundle_shadow,invaidate_set);
+        uprintf("*** START *** %d,%d [%d]\n",bundle_display,bundle_shadow,invaidate_set);
         bundle[bundle_shadow].bundle_prep();
         bundle[bundle_shadow].bundle_load(&bundle[bundle_display]);
 
@@ -110,7 +109,7 @@ unsigned int __stdcall Bundle::thread_loadall(void *arg)
         else
         {
             log("*** FINISH primary ***\n\n");
-            invaidate_set&=~(INVALIDATE_DEVICES|INVALIDATE_INDEXES|INVALIDATE_SYSINFO);
+            invaidate_set&=~(INVALIDATE_DEVICES|INVALIDATE_INDICES|INVALIDATE_SYSINFO);
 
             if((Settings.flags&FLAG_NOGUI)&&(Settings.flags&FLAG_AUTOINSTALL)==0)
             {
@@ -178,7 +177,7 @@ void Bundle::bundle_load(Bundle *pbundle)
         if(invaidate_set&INVALIDATE_SYSINFO)state.getsysinfo_fast();
     }
     if((invaidate_set&INVALIDATE_SYSINFO)==0)state.getsysinfo_slow(&pbundle->state);
-    if((invaidate_set&INVALIDATE_INDEXES)==0)collection=pbundle->collection;
+    if((invaidate_set&INVALIDATE_INDICES)==0)collection=pbundle->collection;
 
     log("Bundle::bundle_load::thread_scandevices\n");
     thandle0->start(&thread_scandevices,&state);
@@ -242,7 +241,7 @@ void Bundle::bundle_lowpriority()
 
     if(Settings.flags&COLLECTION_PRINT_INDEX)
     {
-        log("Saving humanreadable indices...\n");
+        log("Saving text indices...\n");
         collection.print_index_hr();
         Settings.flags&=~COLLECTION_PRINT_INDEX;
         log("DONE\n");

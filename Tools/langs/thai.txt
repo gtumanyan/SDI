@@ -9,7 +9,7 @@ STR_LANG_CODE                 = 0x1E
 
 
 // left panel
-STR_SHOW_SYSINFO              = "ข้อมูลระบบ"
+STR_SHOW_SYSINFO              = ""
 STR_SHOW_SYSINFO_H            = "ข้อมูลระบบ"
 
 STR_INSTALL                   = "ติดตั้ง"

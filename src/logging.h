@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -71,7 +71,7 @@ enum LOG_VERBOSE
 class Log_t
 {
 private:
-    wchar_t timestamp[BUFLEN];
+    //wchar_t timestamp[BUFLEN];
     FILE *logfile=nullptr;
     int error_count=0;
     int log_console=0;
@@ -108,7 +108,7 @@ public:
     int get_verbose(){return log_verbose;}
     void set_mode(int a){log_console=a;}
     int getErrorCount(){return error_count;}
-    wchar_t *getTimestamp(){return timestamp;}
+    //wchar_t *getTimestamp(){return timestamp;}
 
     friend class Settings_t;
 };

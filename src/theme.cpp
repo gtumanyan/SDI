@@ -15,23 +15,20 @@ You should have received a copy of the GNU General Public License
 along with Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <windows.h>
+#include <memory>
+
 #include "utils/BaseUtil.h"
-#include "utils/Log.h"
+#include "themelist.h"
 #include "Settings.h"
 #include "SDI.h"
 #include "system.h"
+
 #include "theme.h"
 #include "draw.h"
-
-#include <windows.h>
-
-// Depend on Win32API
-#include "main.h"
-
-#include <memory>
-#include <string.h>
-
+#include "resource.h"
 #include "theme_imp.h"
+
 
 //{ Global vars
 Vaul *vLang;
@@ -61,7 +58,7 @@ int VaultImp::findvar(wchar_t *str)
 		*p=0;
 
 		auto got=lookuptbl.find(std::wstring(str));
-		i=(got!=lookuptbl.end())?got->second:0;
+		i=(got!=lookuptbl.end()) ? got->second : 0;
 		i--;
 		*p=c;
 		return i;
@@ -115,7 +112,7 @@ void VaultImp::parse()
 				int r=findvar(lhs);
 				if(r<0)
 				{
-						logf("ERROR: unknown var '%S'\n",lhs);
+						uprintf("ERROR: unknown var '%S'\n",lhs);
 				}else
 				{
 						wchar_t *r1;
@@ -158,8 +155,8 @@ void VaultImp::parse()
 						else                // Number
 						{
 								int val=readvalue(rhs);
-								if(!entry[r].init&& std::get<int>(entry[r].value)==val)
-                                    logf("WARNING: double definition for '%S'\n",lhs);
+								if(!entry[r].init && std::get<int>(entry[r].value)==val)
+										uprintf("WARNING: Duplicate definition for '%S'", lhs);
 								entry[ri].value=val;
 								entry[ri].init=2;
 						}
@@ -186,7 +183,7 @@ bool VaultImp::loadFromEncodedFile(const wchar_t *filename)
 		FILE *f=_wfopen(filename,L"rb");
 		if(!f)
 		{
-				logf("ERROR in loadfile(): failed _wfopen(%S)\n",filename);
+				uprintf("theme: could not open '%S'\n", filename);
 				return false;
 		}
 
@@ -195,13 +192,13 @@ bool VaultImp::loadFromEncodedFile(const wchar_t *filename)
 		_fseeki64(f,0,SEEK_SET);
 		if(sz<10)
 		{
-				logf("ERROR in loadfile(): '%S' has only %d bytes\n",filename,sz);
+				uprintf("ERROR in loadfile(): '%S' has only %d bytes\n",filename,sz);
 				fclose(f);
 				return false;
 		}
 		datav_ptr.reset(new wchar_t[sz+1]);
 		wchar_t *datav=datav_ptr.get();
-		logf("Read '%S'\t%d bytes\n",filename,sz);
+		uprintf("Read '%S'\t%d bytes\n",filename,sz);
 
 		fread(datav,2,1,f);
 		if(!memcmp(datav,"\xEF\xBB",2))// UTF-8 BOM
@@ -238,9 +235,8 @@ bool VaultImp::loadFromEncodedFile(const wchar_t *filename)
 		{
 				fclose(f);
 				f=_wfopen(filename,L"rt");
-				if(!f)
-				{
-						logf("ERROR in loadfile(): failed _wfopen(%S)\n",filename);
+				if(f==NULL)	{
+						uprintf("theme: could not open '%S'\n", filename);
 						return false;
 				}
 				wchar_t *p=datav;(sz)--;
@@ -257,10 +253,11 @@ bool VaultImp::loadFromEncodedFile(const wchar_t *filename)
 
 void VaultImp::loadFromFile(const wchar_t *filename)
 {
-		if(!filename[0])return;
+		if ((filename == NULL) || (filename[0] == 0))
+				return;
 		if(!loadFromEncodedFile(filename))
 		{
-				logf("ERROR in vault_loadfromfile(): failed to load '%S'\n",filename);
+				uprintf("theme: failed to load '%S'\n", filename);
 				return;
 		}
 		parse();
@@ -302,7 +299,7 @@ void VaultImp::loadFromRes(int resId) {
 		parse();
 		for(size_t i=0;i<num;i++)
 				if(entry[i].init<1)
-                    logf("ERROR in vault_loadfromres: not initialized '%S'\n",entry[i].name);
+        uprintf("ERROR in vault_loadfromres: not initialized '%S'\n",entry[i].name);
 }
 
 VaultImp::VaultImp(entry_t *entryv,size_t numv,int resv,int elem_id_,const wchar_t *folder_):
@@ -318,7 +315,7 @@ VaultImp::VaultImp(entry_t *entryv,size_t numv,int resv,int elem_id_,const wchar
 
 void VaultImp::load(int i)
 {
-		//logf("vault %d,'%S'\n",i,namelist[i]);
+		//uprintf("vault %d,'%S'\n",i,namelist[i]);
 		loadFromRes(res);
 		if(i<0)return;
 		loadFromFile(namelist[i]);

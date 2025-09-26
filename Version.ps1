@@ -4,7 +4,6 @@
 # - adapt $Build number in case of local machine builds
 # ------------------------------------------------------------
 param(
-	[switch]$AppVeyorEnv = $false,
 	[string]$VerPatch = ""
 )
 # ------------------------------------------------------------
@@ -33,7 +32,7 @@ function DebugOutput($msg)
 
 try 
 {
-	$AppName = "SDI 2024"
+	$AppName = "SDI 2025"
 	$Major = [int]$(Get-Date -format yy)
 	$Minor = [int]$(Get-Date -format MM)
 	$Revis = [int]$(Get-Date -format dd)
@@ -52,35 +51,25 @@ try
 	$LastBuildDay = [string](Get-Content $DayPath)
 	if (!$LastBuildDay) { $LastBuildDay = 0 }
 
-	$AppVeyorBuild = [int]($env:appveyor_build_number) # AppVeyor internal
-
-	if ($AppVeyorEnv) {
-		if ($LastBuildDay -ne "$Revis") {
-			$Revis | Set-Content -Path $DayPath
-			$Build = 1  # reset (AppVeyor)
-		}
-		$CommitID = ([string]($env:appveyor_repo_commit)).substring(0,8)
+	if ($LastBuildDay -ne "$Revis") {
+		$Revis | Set-Content -Path $DayPath
+		$Build = -1  # reset (local build)
 	}
-	else {
-		if ($LastBuildDay -ne "$Revis") {
-			$Revis | Set-Content -Path $DayPath
-			$Build = -1  # reset (local build)
-		}
-		# locally: increase build number and persist it
-		$Build = $Build + 1
-		# locally: read commit ID from .git\refs\heads\<first file>
-		$HeadDir = ".git\refs\heads"
-		$HeadMaster = Get-ChildItem -Path $HeadDir -Force -Recurse -File | Select-Object -First 1
-		$CommitID = [string](Get-Content "$HeadDir\$HeadMaster" -TotalCount 8)
-		if (!$CommitID) {
-            $length = ([string]($env:computername)).length
-			$CommitID = ([string]($env:computername)).substring(0,[math]::min($length,8)).ToLower()
-		}
-		$CommitID = $CommitID -replace '"', ''
-		$CommitID = $CommitID -replace "'", ''
-		$length = $CommitID.length
-		$CommitID = $CommitID.substring(0,[math]::min($length,8))
+	# locally: increase build number and persist it
+	$Build = $Build + 1
+	# locally: read commit ID from .git\refs\heads\<first file>
+	$HeadDir = ".git\refs\heads"
+	$HeadMaster = Get-ChildItem -Path $HeadDir -Force -Recurse -File | Select-Object -First 1
+	$CommitID = [string](Get-Content "$HeadDir\$HeadMaster" -TotalCount 8)
+	if (!$CommitID) {
+           $length = ([string]($env:computername)).length
+		$CommitID = ([string]($env:computername)).substring(0,[math]::min($length,8)).ToLower()
 	}
+	$CommitID = $CommitID -replace '"', ''
+	$CommitID = $CommitID -replace "'", ''
+	$length = $CommitID.length
+	$CommitID = $CommitID.substring(0,[math]::min($length,8))
+	
 	if (!$CommitID) { $CommitID = "---" }
 	$Build | Set-Content -Path $BuildPath
 
@@ -97,7 +86,7 @@ try
 	$BoostVer = (Get-Content "ext\boost\tools\boost_install\test\BoostVersion.cmake"-TotalCount 1).Substring(18,6)
 	if (!$BoostVer) { $BoostVer = "0.0.0" }
 	DebugOutput("Boost		$BoostVer")
-	if ((Get-Content "ext\7Z\C\7zVersion.h"-TotalCount 4)[-1]-match '[\d.]+')
+	if ((Get-Content "ext\SevenZip\C\7zVersion.h"-TotalCount 4)[-1]-match '[\d.]+')
 	{$7zVer=$Matches.0} else { $7zVer = 0 }
 	DebugOutput("7-zip		$7zVer")
 

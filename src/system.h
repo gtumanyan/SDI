@@ -14,9 +14,14 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <string>
-#ifndef SYSTEM_H
-#define SYSTEM_H
+
 #include "enum.h"
+
+#pragma once
+
+#define ubprintf(...) do { safe_sprintf(&ubuffer[ubuffer_pos], UBUFFER_SIZE - ubuffer_pos - 4, __VA_ARGS__); \
+	ubuffer_pos = strlen(ubuffer); ubuffer[ubuffer_pos++] = '\r'; ubuffer[ubuffer_pos++] = '\n'; \
+	ubuffer[ubuffer_pos] = 0; } while(0)
 
 //{ Event
 class Event
@@ -83,7 +88,7 @@ public:
     void benchmark();
 
     void deletefile(const wchar_t *filename);
-    bool FileAvailable(const wchar_t *path, int numRetries, int waitTime);
+    BOOL FileAvailable(const wchar_t *path, int numRetries, int waitTime);
     bool FileExists(const wchar_t *filename);
     bool FileExists2(const wchar_t *spec);
     bool DirectoryExists(const wchar_t *spec);
@@ -96,9 +101,10 @@ public:
     void fileDelSpec(wchar_t *filename);
     int DriveNumber(const wchar_t *filename);
 
-    void UnregisterClass_log(const wchar_t *lpClassName,const wchar_t *func,const wchar_t *obj);
+    int UnregisterClass_log(const wchar_t *lpClassName,const wchar_t *func,const wchar_t *obj);
     int _vscwprintf_dll(const wchar_t * _Format,va_list _ArgList);
     std::string wtoa (const std::wstring& wstr);
+    std::wstring AppPathW();
     std::string AppPathS();
     //int FindLatestExeVersion(int bit=32);
     bool SystemProtectionEnabled(State *state);
@@ -126,5 +132,3 @@ extern int monitor_pause;
 
 typedef BOOL (WINAPI *LPFN_Wow64DisableWow64FsRedirection)(PVOID *OldValue);
 typedef BOOL (WINAPI *LPFN_Wow64RevertWow64FsRedirection)(PVOID OldValue);
-
-#endif

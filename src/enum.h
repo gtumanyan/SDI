@@ -13,8 +13,9 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ENUM_H
-#define ENUM_H
+#include <unordered_map>
+
+#pragma once
 
 // Declarations
 class Manager;
@@ -52,21 +53,13 @@ struct SP_DEVINFO_DATA_32
     DWORD     DevInst;
     int       Reserved;
 
-#ifdef __GNUC__
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-//warning: 'class Driverpack' has pointer data members
-#endif
     SP_DEVINFO_DATA_32():cbSize(sizeof(SP_DEVINFO_DATA_32)),DevInst(0),Reserved(0){}
-#ifdef __GNUC__
-#pragma GCC diagnostic pop
-#endif
 };
 
 // Device
 class Device
 {
-    int driver_index;
+    int driVERSION_INDEX;
 
     ofst Devicedesc;
     ofst HardwareID;
@@ -88,8 +81,8 @@ private:
     void read_device_property(HDEVINFO hDevInfo,State *state,int id,ofst *val);
 
 public:
-    void setDriverIndex(int v){driver_index=v;}
-    int  getDriverIndex()const{return driver_index;}
+    void setDriverIndex(int v){driVERSION_INDEX=v;}
+    int  getDriverIndex()const{return driVERSION_INDEX;}
     ofst getHardwareID()const{return HardwareID;}
     ofst getCompatibleIDs()const{return CompatibleIDs;}
     ofst getFriendlyName()const{return FriendlyName;}
@@ -110,7 +103,7 @@ public:
     //Device(Device &&)=default;
     Device(HDEVINFO hDevInfo,State *state,int i);
     Device(State *state);
-    Device():driver_index(-1),Devicedesc(0),HardwareID(0),CompatibleIDs(0),Driver(0),
+    Device():driVERSION_INDEX(-1),Devicedesc(0),HardwareID(0),CompatibleIDs(0),Driver(0),
         Mfg(0),FriendlyName(0),Capabilities(0),ConfigFlags(0),
         InstanceId(0),status(0),problem(0),ret(0),DeviceInfoData(){}
 
@@ -139,6 +132,7 @@ class Driver
 
 private:
     void read_reg_val(HKEY hkey,State *state,const wchar_t *key,ofst *val);
+		#define BUFLEN 4096
     void scaninf(State *state,Driverpack *unpacked_drp,int &inf_pos);
     int findHWID_in_list(const wchar_t *p,const wchar_t *str);
     void calc_dev_pos(const Device *cur_device,const State *state,int *ishw,int *dev_pos);
@@ -297,5 +291,3 @@ int calc_identifierscore(int dev_pos,int dev_ishw,int inf_pos);
 unsigned calc_score(int catalogfile,int feature,int rank,const State *state,int isnt);
 int calc_secttype(const char *s);
 int calc_signature(int catalogfile,const State *state,int isnt);
-
-#endif

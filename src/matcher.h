@@ -159,7 +159,7 @@ public:
     const wchar_t *getdrp_packname()const;
     void getdrp_packnameVirtual(WStringShort &s)const;
     int   getdrp_packontorrent()const;
-    //inffile
+    //infFile
     const char *getdrp_infpath()const;
     const char *getdrp_infname()const;
     const char *getdrp_drvfield(int n)const;

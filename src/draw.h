@@ -13,8 +13,7 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DRAW_H
-#define DRAW_H
+#pragma once
 
 // Declarations
 class Image;
@@ -24,9 +23,6 @@ class Device;
 struct RECT_WR;
 //typedef HWND *p_wnd_handle_type;
 typedef void *p_wnd_handle_type;
-
-// Global vars
-extern int rtl;
 
 //{ Font
 class wFont
@@ -153,4 +149,3 @@ void format_size(wchar_t *buf,long long val,int isspeed);
 void format_time(wchar_t *buf,long long val);
 //}
 
-#endif

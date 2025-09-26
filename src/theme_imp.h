@@ -33,7 +33,7 @@ protected:
     int elem_id;
     const wchar_t *folder;
 
-    wchar_t namelist[41][128];
+    wchar_t namelist[64][128];
 
 protected:
     int  findvar(wchar_t *str);

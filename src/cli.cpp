@@ -49,7 +49,7 @@ void SaveHWID(wchar_t *hwid)
         FILE* f=_wfopen(CLIParam.SaveInstalledFileName,L"a+");
         if(!f)
         {
-            logf("Failed to create '%S'\n", CLIParam.SaveInstalledFileName);
+            uprintf("Failed to create '%S'\n", CLIParam.SaveInstalledFileName);
             return;
         }
         fwprintf(f,L"%s",hwid);
@@ -81,7 +81,7 @@ void Parse_HWID_installed_swith(const wchar_t *ParamStr)
     size_t tmpLen=wcslen(HWIDINSTALLED_DEF);
     if(wcslen(ParamStr)<(tmpLen+17)) //-HWIDInstalled:VEN_xxxx&DEV_xxxx
     {
-        logf("invalid parameter %S\n",ParamStr);
+        uprintf("invalid parameter %S\n",ParamStr);
         ret_global=24;//ERROR_BAD_LENGTH;
         Settings.statemode=STATEMODE_EXIT;
         return;
@@ -128,7 +128,7 @@ void RUN_CLI()
             ExpandPath(CLIParam.SaveInstalledFileName);
             FILE *f;
             f=_wfopen(CLIParam.SaveInstalledFileName,L"rt");
-            if(!f)logf("Failed to open '%S'\n",CLIParam.SaveInstalledFileName);
+            if(!f)uprintf("Failed to open '%S'\n",CLIParam.SaveInstalledFileName);
             else
             {
                 wchar_t buf[86];

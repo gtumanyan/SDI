@@ -21,7 +21,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include <comdef.h>         // for _bstr_t
 #include <WbemIdl.h>        // for IWbemLocator
 #pragma comment(lib, "wbemuuid.lib")    //To compile in MSVS
-//#pragma comment(lib, "Msimg32.lib")     // for AlphaBlend
+#pragma comment(lib, "Msimg32.lib")     // for AlphaBlend
 #pragma comment(lib, "Setupapi.lib")    // for SetupDiLoadClassIcon
 
 // Depend on Win32API
@@ -38,7 +38,7 @@ int State::getbaseboard(WStringShort &manuf1,WStringShort &model1,WStringShort &
     hres=CoInitializeEx(nullptr,COINIT_MULTITHREADED);
     if(FAILED(hres))
     {
-        logf("FAILED to initialize COM library\n");
+        uprintf("FAILED to initialize COM library\n");
         return 0;
     }
 
@@ -48,7 +48,7 @@ int State::getbaseboard(WStringShort &manuf1,WStringShort &model1,WStringShort &
                                   RPC_C_IMP_LEVEL_IMPERSONATE,nullptr,EOAC_NONE,nullptr);
         /*if(FAILED(hres))
         {
-            logf("FAILED to initialize security. Error code = 0x%lX\n",hres);
+            uprintf("FAILED to initialize security. Error code = 0x%lX\n",hres);
             //CoUninitialize();
             return 0;
         }*/
@@ -58,7 +58,7 @@ int State::getbaseboard(WStringShort &manuf1,WStringShort &model1,WStringShort &
     hres=CoCreateInstance(CLSID_WbemLocator,nullptr,CLSCTX_INPROC_SERVER,IID_IWbemLocator,(LPVOID *)&pLoc);
     if(FAILED(hres))
     {
-        logf("FAILED to create IWbemLocator object. Error code = 0x%lX\n",hres);
+        uprintf("FAILED to create IWbemLocator object. Error code = 0x%lX\n",hres);
         //CoUninitialize();
         return 0;
     }
@@ -67,7 +67,7 @@ int State::getbaseboard(WStringShort &manuf1,WStringShort &model1,WStringShort &
     hres=pLoc->ConnectServer(_bstr_t(L"ROOT\\CIMV2"),nullptr,nullptr,nullptr,0,nullptr,nullptr,&pSvc);
     if(FAILED(hres))
     {
-        logf("FAILED to connect to root\\cimv2. Error code = 0x%lX\n",hres);
+        uprintf("FAILED to connect to root\\cimv2. Error code = 0x%lX\n",hres);
         pLoc->Release();
         //CoUninitialize();
         return 0;
@@ -79,7 +79,7 @@ int State::getbaseboard(WStringShort &manuf1,WStringShort &model1,WStringShort &
                            RPC_C_AUTHN_LEVEL_CALL,RPC_C_IMP_LEVEL_IMPERSONATE,nullptr,EOAC_NONE);
     if(FAILED(hres))
     {
-        logf("FAILED to set proxy blanket. Error code = 0x%lX\n",hres);
+        uprintf("FAILED to set proxy blanket. Error code = 0x%lX\n",hres);
         pSvc->Release();
         pLoc->Release();
         //CoUninitialize();
@@ -93,7 +93,7 @@ int State::getbaseboard(WStringShort &manuf1,WStringShort &model1,WStringShort &
         WBEM_FLAG_FORWARD_ONLY|WBEM_FLAG_RETURN_IMMEDIATELY,nullptr,&pEnumerator);
     if(FAILED(hres))
     {
-        logf("FAILED to query for Win32_BaseBoard. Error code = 0x%lX\n",hres);
+        uprintf("FAILED to query for Win32_BaseBoard. Error code = 0x%lX\n",hres);
         pSvc->Release();
         pLoc->Release();
         //CoUninitialize();
@@ -131,7 +131,7 @@ int State::getbaseboard(WStringShort &manuf1,WStringShort &model1,WStringShort &
         WBEM_FLAG_FORWARD_ONLY|WBEM_FLAG_RETURN_IMMEDIATELY,nullptr,&pEnumerator);
     if(FAILED(hres))
     {
-        logf("FAILED to query for Win32_ComputerSystem. Error code = 0x%lX\n",hres);
+        uprintf("FAILED to query for Win32_ComputerSystem. Error code = 0x%lX\n",hres);
         pSvc->Release();
         pLoc->Release();
         //CoUninitialize();
@@ -165,7 +165,7 @@ int State::getbaseboard(WStringShort &manuf1,WStringShort &model1,WStringShort &
         WBEM_FLAG_FORWARD_ONLY|WBEM_FLAG_RETURN_IMMEDIATELY,nullptr,&pEnumerator);
     if(FAILED(hres))
     {
-        logf("FAILED to query for Win32_SystemEnclosure. Error code = 0x%lX\n",hres);
+        uprintf("FAILED to query for Win32_SystemEnclosure. Error code = 0x%lX\n",hres);
         pSvc->Release();
         pLoc->Release();
         //CoUninitialize();

@@ -15,8 +15,7 @@ You should have received a copy of the GNU General Public License
 along with Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef THEMELIST_H
-#define THEMELIST_H
+#pragma once
 
 #define POPUP_SYSINFO_OFS (D_X(FONT_SIZE)*95/10)
 
@@ -120,8 +119,8 @@ enum
     BOX_KBHLT,
     BOX_NOUPDATES,
     BOX_NOUPDATES_H,
-    BOX_PATREON,
-    BOX_PATREON_H,
+    BOX_BOOSTY,
+    BOX_BOOSTY_H,
     //BOX_TRANSLATION,
     //BOX_TRANSLATION_H,
     BOX_DRVITEM_PN,
@@ -643,7 +642,7 @@ enum
     DRVITEM_TEXT1_COLOR_IU,
     DRVITEM_TEXT2_COLOR_IU,
 
-// Patreon
+// BOOSTY
     DRVITEM_INSIDE_COLOR_PT,
     DRVITEM_OUTLINE_COLOR_PT,
     DRVITEM_OUTLINE_WIDTH_PT,
@@ -1062,5 +1061,3 @@ enum
 
 extern const int boxindex[BOX_NUM];
 extern const int iconindex[ICON_NUM];
-
-#endif

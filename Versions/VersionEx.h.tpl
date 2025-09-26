@@ -5,7 +5,7 @@
 //                                                         //
 // //////////////////////////////////////////////////////////
 #define APPNAME $APPNAME$
-#define SAPPNAME "$APPNAME$"
+#define APPLICATION_NAME "$APPNAME$"
 #define VERSION_MAJOR $MAJOR$
 #define VERSION_MINOR $MINOR$
 #define VERSION_REV $MAINT$

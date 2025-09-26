@@ -32,7 +32,6 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 // Depend on Win32API
 #include "enum.h"
-#include "main.h"
 
 //{ Global vars
 const status_t statustnl[NUM_STATUS]=
@@ -284,7 +283,7 @@ void itembar_t::contextmenu(int x,int y)
 
     int flags1=checked?MF_CHECKED:0;
     if(!hwidmatch&&index!=SLOT_RESTORE_POINT)flags1|=MF_GRAYED;
-    if(rtl)x=MainWindow.mainx_c-x;
+    if(right_to_left_mode)x=MainWindow.mainx_c-x;
 
     if(Popup->floating_itembar==SLOT_RESTORE_POINT)
     {
@@ -293,7 +292,7 @@ void itembar_t::contextmenu(int x,int y)
 
         RECT rect;
         SetForegroundWindow(MainWindow.hMain);
-        GetWindowRect(MainWindow.hField,&rect);
+        GetWindowRect(MainWindow.hwndFrame,&rect);
         TrackPopupMenu(hPopupMenu,TPM_LEFTALIGN,rect.left+x,rect.top+y,0,MainWindow.hMain,nullptr);
         return;
     }
@@ -349,7 +348,7 @@ void itembar_t::contextmenu(int x,int y)
 
     RECT rect;
     SetForegroundWindow(MainWindow.hMain);
-    GetWindowRect(MainWindow.hField,&rect);
+    GetWindowRect(MainWindow.hwndFrame,&rect);
     TrackPopupMenu(hPopupMenu,TPM_LEFTALIGN,rect.left+x,rect.top+y,0,MainWindow.hMain,nullptr);
 }
 
@@ -451,7 +450,7 @@ void itembar_t::popup_drivercmp(Manager *manager,Canvas &canvas,int wx,int wy,si
             if(!_wcsicmp(i_hwid,p))pp|=1;
             if(!_wcsicmp(a_hwid,p))pp|=2;
             if(!cm_hwid&&(pp==1||pp==2))cm_hwid=pp;
-            if(rtl)
+            if(right_to_left_mode)
                 td.TextOutF_RTL(pp?D_C(POPUP_HWID_COLOR):c0,bolder,L"%s",p);
             else
                 td.TextOutF(pp?D_C(POPUP_HWID_COLOR):c0,L"%s",p);
@@ -470,7 +469,7 @@ void itembar_t::popup_drivercmp(Manager *manager,Canvas &canvas,int wx,int wy,si
             if(!_wcsicmp(i_hwid,p))pp|=1;
             if(!_wcsicmp(a_hwid,p))pp|=2;
             if(!cm_hwid&&(pp==1||pp==2))cm_hwid=pp;
-            if(rtl)
+            if(right_to_left_mode)
                 td.TextOutF_RTL(pp?D_C(POPUP_HWID_COLOR):c0,bolder,L"%s",p);
             else
                 td.TextOutF(pp?D_C(POPUP_HWID_COLOR):c0,L"%s",p);
@@ -507,8 +506,8 @@ void itembar_t::popup_drivercmp(Manager *manager,Canvas &canvas,int wx,int wy,si
         td.TextOutF(               c0,L"%s%s",STR(STR_HINT_PROVIDER),txt->get(cur_driver->ProviderName));
         td.TextOutF(cm_date ==1?cb:c0,L"%s%s",STR(STR_HINT_DATE),date.Get());
         td.TextOutF(cm_ver  ==1?cb:c0,L"%s%s",STR(STR_HINT_VERSION),vers.Get());
-        td.TextOutF(cm_hwid ==1?cb:c0,L"%s%s%s",STR(STR_HINT_ID),rtl?L"\u200F":L"",i_hwid);
-        td.TextOutF(               c0,L"%s%s%s",STR(STR_HINT_INF),rtl?L"\u200F":L"",txt->get(cur_driver->InfPath));
+        td.TextOutF(cm_hwid ==1?cb:c0,L"%s%s%s",STR(STR_HINT_ID),right_to_left_mode?L"\u200F":L"",i_hwid);
+        td.TextOutF(               c0,L"%s%s%s",STR(STR_HINT_INF),right_to_left_mode?L"\u200F":L"",txt->get(cur_driver->InfPath));
         td.TextOutF(               c0,L"%s%s%s",STR(STR_HINT_SECTION),txt->get(cur_driver->InfSection),txt->get(cur_driver->InfSectionExt));
         td.TextOutF(cm_score==1?cb:c0,L"%s%08X",STR(STR_HINT_SCORE),score);
     }
@@ -537,8 +536,8 @@ void itembar_t::popup_drivercmp(Manager *manager,Canvas &canvas,int wx,int wy,si
         td.TextOutF(               c0,L"%s%S",STR(STR_HINT_PROVIDER),hwidmatch_f->getdrp_drvmanufacturer());
         td.TextOutF(cm_date ==2?cb:c0,L"%s%s",STR(STR_HINT_DATE),date.Get());
         td.TextOutF(cm_ver  ==2?cb:c0,L"%s%s",STR(STR_HINT_VERSION),vers.Get());
-        td.TextOutF(cm_hwid ==2?cb:c0,L"%s%s%S",STR(STR_HINT_ID),rtl?L"\u200F":L"",hwidmatch_f->getdrp_drvHWID());
-        td.TextOutF(               c0,L"%s%s%S%S",STR(STR_HINT_INF),rtl?L"\u200F":L"",hwidmatch_f->getdrp_infpath(),hwidmatch_f->getdrp_infname());
+        td.TextOutF(cm_hwid ==2?cb:c0,L"%s%s%S",STR(STR_HINT_ID),right_to_left_mode?L"\u200F":L"",hwidmatch_f->getdrp_drvHWID());
+        td.TextOutF(               c0,L"%s%s%S%S",STR(STR_HINT_INF),right_to_left_mode?L"\u200F":L"",hwidmatch_f->getdrp_infpath(),hwidmatch_f->getdrp_infname());
         td.TextOutF(hwidmatch_f->getDecorscore()?c0:D_C(POPUP_CMP_INVALID_COLOR),L"%s%S",STR(STR_HINT_SECTION),bufw+500);
         td.TextOutF(cm_score==2?cb:c0,L"%s%08X",STR(STR_HINT_SCORE),hwidmatch_f->getScore());
     }
@@ -611,7 +610,7 @@ bool Manager::isSelected(const wchar_t *s)
             if(StrStrIW(drp.c_str(),s))
             {
                 ret=true;
-                //if(ret)logf("%S is selected.\n", s);
+                //if(ret)uprintf("%S is selected.\n", s);
                 break;
             }
         }
@@ -669,7 +668,7 @@ void Manager::filter(int options,std::vector<std::wstring> *drpfilter)
         if(!devicematch){itembar++;i++;continue;}
         for(j=0;j<devicematch->num_matches;j++,itembar++,i++)
         {
-            if(!itembar)logf("ERROR a%d\n",j);
+            if(!itembar)uprintf("ERROR a%d\n",j);
             // default state is inactive
             itembar->isactive=0;
             //if(!itembar->hwidmatch)Log.print_con("ERROR %d,%d\n",itembar->index,j);
@@ -690,10 +689,10 @@ void Manager::filter(int options,std::vector<std::wstring> *drpfilter)
             if((options&FILTER_SHOW_INVALID)==0&&!itembar->hwidmatch->isdrivervalid())
                 continue;
 
-            if((options&FILTER_SHOW_DUP)==0&&itembar->hwidmatch->getStatus()&STATUS_DUP)
+            if((options&FILTER_SHOW_DUP)==0 && itembar->hwidmatch->getStatus()&STATUS_DUP)
                 continue;
 
-            if((options&FILTER_SHOW_DUP)&&itembar->hwidmatch->getStatus()&STATUS_DUP)
+            if((options&FILTER_SHOW_DUP) && itembar->hwidmatch->getStatus()&STATUS_DUP)
             {
                 itembar1=&items_list[i];
                 for(k=0;k<devicematch->num_matches-j;k++,itembar1++)
@@ -838,18 +837,18 @@ void Manager::print_tbl()
     for(auto itembar=items_list.begin()+RES_SLOTS;itembar!=items_list.end();++itembar,k++)
         if(itembar->isactive&&(itembar->first&2)==0)
         {
-            logf("$%04d|",k);
+            uprintf("$%04d|",k);
             if(itembar->hwidmatch)
                 itembar->hwidmatch->print_tbl(limits);
             else
-                logf("'%S'\n",matcher->getState()->textas.get(itembar->devicematch->device->Devicedesc));
+                uprintf("'%S'\n",matcher->getState()->textas.get(itembar->devicematch->device->Devicedesc));
             act++;
         }else
         {
 //            log_file("$%04d|^^ %d,%d\n",k,itembar->devicematch->num_matches,(itembar->hwidmatch)?itembar->hwidmatch->status:-1);
         }
 
-    logf("}manager_print[%d]\n\n",act);
+    uprintf("}manager_print[%d]\n\n",act);
 }
 
 int Manager::getlocale()
@@ -874,7 +873,7 @@ void Manager::print_hr()
             if(Settings.flags&FLAG_FILTERSP&&!itembar->hwidmatch->isvalidcat(matcher->getState()))continue;
             wchar_t buf[BUFLEN];
             itembar->str_status(buf);
-            logf("\n$%04d, %S\n",k,buf);
+            uprintf("\n$%04d, %S\n",k,buf);
             if(itembar->devicematch->device)
             {
                 itembar->devicematch->device->print(matcher->getState());
@@ -898,7 +897,7 @@ void Manager::print_hr()
 //            log_file("$%04d|^^ %d,%d\n",k,itembar->devicematch->num_matches,(itembar->hwidmatch)?itembar->hwidmatch->status:-1);
         }
 
-    logf("}manager_print[%d]\n\n",act);
+    uprintf("}manager_print[%d]\n\n",act);
 }
 
 //{ User interaction
@@ -1212,7 +1211,7 @@ int Manager::selected()
         if(itembar->checked)
         {
             count++;
-            //logf("%S\n",itembar->hwidmatch->getdrp_packname());
+            //uprintf("%S\n",itembar->hwidmatch->getdrp_packname());
         }
     return count;
 }
@@ -1612,7 +1611,7 @@ int Manager::drawitem(Canvas &canvas,size_t index,int ofsy,int zone,int cutoff)
                 if(oldstyle)
                     canvas.DrawTextXY(x+D_X(ITEM_TEXT_OFS_X),pos,bufw);
                 else
-                    canvas.DrawTextRect(bufw,&rect,rtl?DT_RIGHT:0);
+                    canvas.DrawTextRect(bufw,&rect,right_to_left_mode?DT_RIGHT:0);
 
 
                 // Available driver status
@@ -1765,10 +1764,10 @@ void Manager::draw(Canvas &canvas,int ofsy)
     RECT rect;
 
     GetCursorPos(&p);
-    ScreenToClient(MainWindow.hField,&p);
+    ScreenToClient(MainWindow.hwndFrame,&p);
     hitscan(p.x,p.y,&cur_i,&zone);
 
-    GetClientRect(MainWindow.hField,&rect);
+    GetClientRect(MainWindow.hwndFrame,&rect);
     canvas.DrawWidget(0,0,rect.right,rect.bottom,BOX_DRVLIST);
 
     cutoff=calc_cutoff();
@@ -1827,7 +1826,7 @@ void Manager::restorepos1(Manager *manager_prev)
             }
 
             if(!cnt)Settings.flags&=~FLAG_AUTOINSTALL;
-            logf("Autoinstall rescan: %d found\n",cnt);
+            uprintf("Autoinstall rescan: %d found\n",cnt);
         }
 
         if(installmode==MODE_NONE||(installmode==MODE_SCANNING&&cnt))
@@ -1884,7 +1883,7 @@ void Manager::restorepos(Manager *manager_old)
     }
     if(invaidate_set&INVALIDATE_MANAGER)return;
 
-    logf("{Updated %d->%d %d\n",manager_old->items_list.size(),items_list.size(),t_new);
+    uprintf("{Updated %d->%d %d\n",manager_old->items_list.size(),items_list.size(),t_new);
     gLogToConsole=true;
     itembar_new=&items_list[RES_SLOTS];
     for(i=RES_SLOTS;i<items_list.size();i++,itembar_new++)
@@ -1893,7 +1892,7 @@ void Manager::restorepos(Manager *manager_old)
 
         if(itembar_act&&itembar_cmp(itembar_new,&manager_old->items_list[itembar_act],t_new,t_old))
         {
-            logf("Act %d -> %d\n",itembar_act,i);
+            uprintf("Act %d -> %d\n",itembar_act,i);
             itembar_act=i;
         }
 
@@ -1925,14 +1924,14 @@ void Manager::restorepos(Manager *manager_old)
         if(show_changes)
         if(j==manager_old->items_list.size())
         {
-            logf("\nAdded   $%04d|%S|%S|",i,t_new->getw(itembar_new->devicematch->device->Driver),
+            uprintf("\nAdded   $%04d|%S|%S|",i,t_new->getw(itembar_new->devicematch->device->Driver),
                     t_new->getw(itembar_new->devicematch->device->Devicedesc));
 
             if(itembar_new->hwidmatch)
             {
 				int limits[7];
                 memset(limits,0,sizeof(limits));
-                logf("%d|\n",itembar_new->hwidmatch->getHWID_index());
+                uprintf("%d|\n",itembar_new->hwidmatch->getHWID_index());
                 itembar_new->hwidmatch->print_tbl(limits);
             }
             else
@@ -1946,13 +1945,13 @@ void Manager::restorepos(Manager *manager_old)
     {
         if(itembar_old->isactive!=9)
         {
-            logf("\nDeleted $%04d|%S|%S|",j,t_old+itembar_old->devicematch->device->Driver,
+            uprintf("\nDeleted $%04d|%S|%S|",j,t_old+itembar_old->devicematch->device->Driver,
                     t_old+itembar_old->devicematch->device->getDescr());
             if(itembar_old->hwidmatch)
             {
 				int limits[7];
                 memset(limits,0,sizeof(limits));
-                logf("%d|\n",itembar_old->hwidmatch->getHWID_index());
+                uprintf("%d|\n",itembar_old->hwidmatch->getHWID_index());
                 itembar_old->hwidmatch->print_tbl(limits);
             }
             else

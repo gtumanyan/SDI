@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -13,7 +13,6 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "com_header.h"
 #include "theme.h"
 
 entry_t language[STR_NM]=
@@ -423,10 +422,10 @@ entry_t language[STR_NM]=
 		DEF_STR("STR_OPTION_CMD_FINISHDN")
 		DEF_STR("STR_OPTION_CONSOLE")
 
-// Patreon
-		DEF_STR("STR_PATREON1")
-		DEF_STR("STR_PATREON2")
-		DEF_STR("STR_PATREON_H")
+// BOOSTY
+		DEF_STR("STR_BOOSTY1")
+		DEF_STR("STR_BOOSTY2")
+		DEF_STR("STR_BOOSTY_H")
 
 // Welcome
 		DEF_STR("STR_WELCOME_TITLE")
@@ -495,4 +494,7 @@ entry_t language[STR_NM]=
 		DEF_STR("STR_USBWIZ_PROGR_COPYING")
 		DEF_STR("STR_USBWIZ_PROGR_DELETING")
 
+		DEF_STR("MSG_107")
+		DEF_STR("MSG_215")
+		DEF_STR("MSG_216")
 };

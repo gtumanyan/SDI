@@ -24,29 +24,32 @@
   <PropertyGroup Label="Globals">
     <ProjectName>SevenZip</ProjectName>
     <ProjectGuid>{9FE9A4F2-4E31-41EF-8189-167465A02FFD}</ProjectGuid>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+  </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -56,11 +59,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
-    <LinkIncremental Condition="$(Configuration.EndsWith('Debug'))">true</LinkIncremental>
-    <LinkIncremental Condition="$(Configuration.EndsWith('Release'))">false</LinkIncremental>
     <OutDir>..\lib\$(Configuration)_$(Platform)\</OutDir>
     <IntDir>..\obj\$(Configuration)_$(Platform)\$(ProjectName)\</IntDir>
+    <LinkIncremental Condition="$(Configuration.EndsWith('Debug'))">true</LinkIncremental>
+    <LinkIncremental Condition="$(Configuration.EndsWith('Release'))">false</LinkIncremental>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -79,9 +81,6 @@
       <FavorSizeOrSpeed Condition="'$(Configuration)' == 'Release'">Size</FavorSizeOrSpeed>
       <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">Z7_LZMA_DEC_OPT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <MASM>
-      <UseSafeExceptionHandlers Condition="'$(Platform)'=='Win32'">true</UseSafeExceptionHandlers>
-    </MASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -154,53 +153,94 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <MinimalRebuild>
-      </MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
       <Optimization>MaxSpeed</Optimization>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;Z7_NO_CRYPTO;Z7_LZMA_PROB32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerOutput>NoListing</AssemblerOutput>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningVersion>18</WarningVersion>
+      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>None</DebugInformationFormat>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <ObjectFileName>$(IntDir)</ObjectFileName>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Lib>
-      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+      <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="..\ext\SevenZip\ASM\x86\7zAsm.asm" />
-    <CustomBuild Include="..\ext\SevenZip\ASM\x86\7zCrcOpt.asm">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ml.exe -c -Fo$(OutDir)%(Filename).obj %(FullPath)
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ml64.exe -Dx64 -c -Fo$(OutDir)%(Filename).obj %(FullPath)
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml.exe -c -Fo$(OutDir)%(Filename).obj %(FullPath)
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ml64.exe -Dx64 -c -Fo$(OutDir)%(Filename).obj %(FullPath)
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)%(Filename).obj;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\ext\SevenZip\ASM\x86\LzmaDecOpt.asm">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ml64.exe -Dx64 -c -WX -W3 -Fo$(OutDir)%(Filename).obj %(FullPath)
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ml64.exe -Dx64 -c -Fo$(OutDir)%(Filename).obj %(FullPath)
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)%(Filename).obj;%(Outputs)</Outputs>
-    </CustomBuild>
-    <None Include="..\ext\SevenZip\C\7zCrcOpt.c" />
-    <None Include="..\ext\SevenZip\C\LzFindOpt.c" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="..\ext\SevenZip\C\7zBuf.c" />
+    <ClCompile Include="..\ext\SevenZip\C\7zCrc.c" />
+    <ClCompile Include="..\ext\SevenZip\C\7zCrcOpt.c">
+      <ExcludedFromBuild Condition="'$(Platform)'!='ARM64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\ext\SevenZip\C\7zDec.c" />
+    <ClCompile Include="..\ext\SevenZip\C\7zFile.c" />
+    <ClCompile Include="..\ext\SevenZip\C\7zStream.c" />
+    <ClCompile Include="..\ext\SevenZip\C\Alloc.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\ext\SevenZip\C\Bcj2.c" />
+    <ClCompile Include="..\ext\SevenZip\C\Bcj2Enc.c" />
+    <ClCompile Include="..\ext\SevenZip\C\Bra.c" />
+    <ClCompile Include="..\ext\SevenZip\C\Bra86.c" />
+    <ClCompile Include="..\ext\SevenZip\C\CpuArch.c" />
+    <ClCompile Include="..\ext\SevenZip\C\Delta.c" />
+    <ClCompile Include="..\ext\SevenZip\C\DllSecur.c" />
+    <ClCompile Include="..\ext\SevenZip\C\LzFind.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeader>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\ext\SevenZip\C\LzFindMt.c" />
+    <ClCompile Include="..\ext\SevenZip\C\LzFindOpt.c">
+      <ExcludedFromBuild Condition="'$(Platform)'=='x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\ext\SevenZip\C\Lzma2Dec.c" />
+    <ClCompile Include="..\ext\SevenZip\C\Lzma2DecMt.c" />
+    <ClCompile Include="..\ext\SevenZip\C\Lzma2Enc.c" />
+    <ClCompile Include="..\ext\SevenZip\C\Lzma86Dec.c" />
+    <ClCompile Include="..\ext\SevenZip\C\Lzma86Enc.c" />
+    <ClCompile Include="..\ext\SevenZip\C\LzmaDec.c">
+      <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">_LZMA_DEC_OPT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="..\ext\SevenZip\C\LzmaEnc.c" />
+    <ClCompile Include="..\ext\SevenZip\C\MtCoder.c" />
+    <ClCompile Include="..\ext\SevenZip\C\MtDec.c" />
+    <ClCompile Include="..\ext\SevenZip\C\Threads.c" />
+    <ClCompile Include="..\ext\SevenZip\CPP\Common\CRC.cpp" />
+    <ClCompile Include="..\ext\SevenZip\CPP\Common\CrcReg.cpp" />
     <ClCompile Include="..\ext\SevenZip\CPP\7zip\Archive\7z\7zCompressionMode.cpp" />
     <ClCompile Include="..\ext\SevenZip\CPP\7zip\Archive\7z\7zDecode.cpp" />
     <ClCompile Include="..\ext\SevenZip\CPP\7zip\Archive\7z\7zEncode.cpp" />
@@ -287,10 +327,8 @@
     <ClCompile Include="..\ext\SevenZip\CPP\7zip\Compress\LzmaEncoder.cpp" />
     <ClCompile Include="..\ext\SevenZip\CPP\7zip\Compress\LzmaRegister.cpp" />
     <ClCompile Include="..\ext\SevenZip\C\7zArcIn.c" />
-    <ClCompile Include="..\ext\SevenZip\CPP\Common\CRC.cpp" />
     <ClCompile Include="..\ext\SevenZip\CPP\Common\DynLimBuf.cpp" />
     <ClCompile Include="..\ext\SevenZip\CPP\Common\CommandLineParser.cpp" />
-    <!-- <ClCompile Include="..\ext\SevenZip\CPP\Common\CrcReg.cpp" /> -->
     <ClCompile Include="..\ext\SevenZip\CPP\Common\IntToString.cpp" />
     <ClCompile Include="..\ext\SevenZip\CPP\Common\ListFileUtils.cpp" />
     <ClCompile Include="..\ext\SevenZip\CPP\Common\MyString.cpp" />
@@ -313,80 +351,6 @@
     <ClCompile Include="..\ext\SevenZip\CPP\Windows\System.cpp" />
     <ClCompile Include="..\ext\SevenZip\CPP\Windows\SystemInfo.cpp" />
     <ClCompile Include="..\ext\SevenZip\CPP\Windows\TimeUtils.cpp" />
-    <ClCompile Include="..\ext\SevenZip\C\7zBuf.c" />
-    <ClCompile Include="..\ext\SevenZip\C\7zCrc.c" />
-    <ClCompile Include="..\ext\SevenZip\C\7zDec.c" />
-    <ClCompile Include="..\ext\SevenZip\C\7zFile.c" />
-    <ClCompile Include="..\ext\SevenZip\C\7zStream.c" />
-    <ClCompile Include="..\ext\SevenZip\C\Alloc.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </PrecompiledHeader>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZip\C\Bcj2.c" />
-    <ClCompile Include="..\ext\SevenZip\C\Bcj2Enc.c" />
-    <ClCompile Include="..\ext\SevenZip\C\Bra.c" />
-    <ClCompile Include="..\ext\SevenZip\C\Bra86.c" />
-    <ClCompile Include="..\ext\SevenZip\C\CpuArch.c" />
-    <ClCompile Include="..\ext\SevenZip\C\Delta.c" />
-    <ClCompile Include="..\ext\SevenZip\C\DllSecur.c" />
-    <ClCompile Include="..\ext\SevenZip\C\LzFind.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </PrecompiledHeader>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZip\C\LzFindMt.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </PrecompiledHeader>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\ext\SevenZip\C\Lzma2Dec.c" />
-    <ClCompile Include="..\ext\SevenZip\C\Lzma2DecMt.c" />
-    <ClCompile Include="..\ext\SevenZip\C\Lzma2Enc.c" />
-    <ClCompile Include="..\ext\SevenZip\C\Lzma86Dec.c" />
-    <ClCompile Include="..\ext\SevenZip\C\Lzma86Enc.c" />
-    <ClCompile Include="..\ext\SevenZip\C\LzmaDec.c" />
-    <ClCompile Include="..\ext\SevenZip\C\LzmaEnc.c" />
-    <ClCompile Include="..\ext\SevenZip\C\MtCoder.c" />
-    <ClCompile Include="..\ext\SevenZip\C\MtDec.c" />
-    <ClCompile Include="..\ext\SevenZip\C\Threads.c" />
     <ClCompile Include="..\ext\SevenZip\CPP\7zip\UI\Common\ArchiveExtractCallback.cpp" />
     <ClCompile Include="..\ext\SevenZip\CPP\7zip\UI\Common\ArchiveOpenCallback.cpp" />
     <ClCompile Include="..\ext\SevenZip\CPP\7zip\UI\Common\DefaultName.cpp" />
@@ -407,6 +371,29 @@
     <ClCompile Include="..\ext\SevenZip\CPP\7zip\UI\Console\PercentPrinter.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ext\SevenZip\C\7z.h" />
+    <ClInclude Include="..\ext\SevenZip\C\7zAlloc.h" />
+    <ClInclude Include="..\ext\SevenZip\C\7zBuf.h" />
+    <ClInclude Include="..\ext\SevenZip\C\7zCrc.h" />
+    <ClInclude Include="..\ext\SevenZip\C\7zFile.h" />
+    <ClInclude Include="..\ext\SevenZip\C\7zTypes.h" />
+    <ClInclude Include="..\ext\SevenZip\C\7zVersion.h" />
+    <ClInclude Include="..\ext\SevenZip\C\Alloc.h" />
+    <ClInclude Include="..\ext\SevenZip\C\Bcj2.h" />
+    <!-- <ClInclude Include="..\ext\SevenZip\C\Bcj2Coder.h" /> -->
+    <ClInclude Include="..\ext\SevenZip\C\CpuArch.h" />
+    <ClInclude Include="..\ext\SevenZip\C\DllSecur.h" />
+    <ClInclude Include="..\ext\SevenZip\C\LzFind.h" />
+    <ClInclude Include="..\ext\SevenZip\C\LzFindMt.h" />
+    <ClInclude Include="..\ext\SevenZip\C\Lzma2Dec.h" />
+    <ClInclude Include="..\ext\SevenZip\C\Lzma2DecMt.h" />
+    <ClInclude Include="..\ext\SevenZip\C\Lzma2Enc.h" />
+    <ClInclude Include="..\ext\SevenZip\C\Lzma86.h" />
+    <ClInclude Include="..\ext\SevenZip\C\LzmaDec.h" />
+    <ClInclude Include="..\ext\SevenZip\C\LzmaEnc.h" />
+    <ClInclude Include="..\ext\SevenZip\C\MtCoder.h" />
+    <ClInclude Include="..\ext\SevenZip\C\MtDec.h" />
+    <ClInclude Include="..\ext\SevenZip\C\Threads.h" />
     <ClInclude Include="..\ext\SevenZip\CPP\7zip\Archive\7z\7zCompressionMode.h" />
     <ClInclude Include="..\ext\SevenZip\CPP\7zip\Archive\7z\7zDecode.h" />
     <ClInclude Include="..\ext\SevenZip\CPP\7zip\Archive\7z\7zEncode.h" />
@@ -493,59 +480,27 @@
     <ClInclude Include="..\ext\SevenZip\CPP\Windows\System.h" />
     <ClInclude Include="..\ext\SevenZip\CPP\Windows\SystemInfo.h" />
     <ClInclude Include="..\ext\SevenZip\CPP\Windows\TimeUtils.h" />
-    <ClInclude Include="..\ext\SevenZip\C\7z.h" />
-    <ClInclude Include="..\ext\SevenZip\C\7zAlloc.h" />
-    <ClInclude Include="..\ext\SevenZip\C\7zBuf.h" />
-    <ClInclude Include="..\ext\SevenZip\C\7zCrc.h" />
-    <ClInclude Include="..\ext\SevenZip\C\7zFile.h" />
-    <ClInclude Include="..\ext\SevenZip\C\7zTypes.h" />
-    <ClInclude Include="..\ext\SevenZip\C\7zVersion.h" />
-    <ClInclude Include="..\ext\SevenZip\C\Alloc.h" />
-    <ClInclude Include="..\ext\SevenZip\C\Bcj2.h" />
-    <!-- <ClInclude Include="..\ext\SevenZip\C\Bcj2Coder.h" /> -->
-    <ClInclude Include="..\ext\SevenZip\C\CpuArch.h" />
-    <ClInclude Include="..\ext\SevenZip\C\DllSecur.h" />
-    <ClInclude Include="..\ext\SevenZip\C\LzFind.h" />
-    <ClInclude Include="..\ext\SevenZip\C\LzFindMt.h" />
-    <ClInclude Include="..\ext\SevenZip\C\Lzma2Dec.h" />
-    <ClInclude Include="..\ext\SevenZip\C\Lzma2DecMt.h" />
-    <ClInclude Include="..\ext\SevenZip\C\Lzma2Enc.h" />
-    <ClInclude Include="..\ext\SevenZip\C\Lzma86.h" />
-    <ClInclude Include="..\ext\SevenZip\C\LzmaDec.h" />
-    <ClInclude Include="..\ext\SevenZip\C\LzmaEnc.h" />
-    <ClInclude Include="..\ext\SevenZip\C\MtCoder.h" />
-    <ClInclude Include="..\ext\SevenZip\C\MtDec.h" />
-    <ClInclude Include="..\ext\SevenZip\C\Threads.h" />
   </ItemGroup>
-  <Target Name="SevenZipCrcHardwareAccelerationBuildAssemblySource" BeforeTargets="_MASM">
-    <ItemGroup Condition="'$(Platform)' == 'x64'">
-      <MASM Include="..\ext\SevenZip\Asm\x86\7zCrcOpt.asm" />
-    </ItemGroup>
-  </Target>
-  <Target Name="SevenZipCrcHardwareAccelerationBuildCSource" BeforeTargets="BeforeClCompile">
-    <ItemGroup Condition="'$(Platform)' != 'x64'">
-      <ClCompile Include="..\ext\SevenZip\C\7zCrcOpt.c">
-        <Optimization Condition="'$(Configuration)'=='Release'">MaxSpeed</Optimization>
-      </ClCompile>
-    </ItemGroup>
-  </Target>
-  <Target Name="SevenZipCoreLzmaDecHardwareAccelerationBuildAssemblySource" BeforeTargets="_MASM">
-    <ItemGroup Condition="'$(Platform)' == 'x64'">
-      <MASM Include="..\ext\SevenZip\ASM\x86\LzmaDecOpt.asm" />
-    </ItemGroup>
-  </Target>
-  <Target Name="SevenZipLzFindOptHardwareAccelerationBuildAssemblySource" BeforeTargets="_MASM">
-    <ItemGroup Condition="'$(Platform)'=='x64'">
-      <MASM Include="..\ext\SevenZip\Asm\x86\LzFindOpt.asm" />
-    </ItemGroup>
-  </Target>
-  <Target Name="SevenZipCoreLzFindOptHardwareAccelerationBuildCSource" BeforeTargets="BeforeClCompile">
-    <ItemGroup Condition="'$(Platform)' != 'x64'">
-      <ClCompile Include="..\ext\SevenZip\C\LzFindOpt.c">
-        <Optimization Condition="'$(Configuration)' == 'Release'">MaxSpeed</Optimization>
-      </ClCompile>
-    </ItemGroup>
-  </Target>
+  <ItemGroup>
+    <MASM Include="..\ext\SevenZip\ASM\x86\7zAsm.asm">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </MASM>
+    <MASM Include="..\ext\SevenZip\Asm\x86\7zCrcOpt.asm">
+      <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">x64</PreprocessorDefinitions>
+      <ExcludedFromBuild Condition="'$(Platform)'=='ARM64'">true</ExcludedFromBuild>
+    </MASM>
+    <MASM Include="..\ext\SevenZip\Asm\x86\LzFindOpt.asm">
+      <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">x64</PreprocessorDefinitions>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
+    </MASM>
+    <MASM Include="..\ext\SevenZip\ASM\x86\LzmaDecOpt.asm">
+      <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">x64</PreprocessorDefinitions>
+      <ExcludedFromBuild Condition="'$(Platform)'!='x64'">true</ExcludedFromBuild>
+    </MASM>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Condition="'$(Platform)' == 'x64'" Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\marmasm.targets" />
+  </ImportGroup>
 </Project>

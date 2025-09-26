@@ -5,7 +5,7 @@ extern bool gLogToDebugger;
 extern bool gReducedLogging;
 extern bool gLogToPipe;
 extern const char* gLogAppName;
-extern char* gLogFilePath;
+extern WCHAR* gLogFilePath;
 void StartLogToFile(const WCHAR* path, bool removeIfExists);
 bool WriteCurrentLogToFile(const char* path);
 

@@ -55,7 +55,9 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #define WEB_BOOSTYPAGE				"https://boosty.to/snappydriverinstaller/donate"
 #define VERSION_TELEGRAM_DISPLAY	"https://t.me/Snappy_Driver_Installer"
 
-
+#define VER_MARKER							"SDW"
+#define VERSION_INDEX           0x205
+#define VERSION_STATE						0x102
 
 #define VERSION_LIBTORRENT	           L"LibTorrent " _W(_STRG(_V(TORRENT_VER)))
 #define VERSION_7ZIP                   L"7zip " _W(_STRG(_V(SZIP_VER)))

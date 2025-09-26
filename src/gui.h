@@ -13,10 +13,50 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GUI_H
-#define GUI_H
-
+#include "settings.h"
 #include "themelist.h"
+
+#pragma once
+
+// Toolbar icons main color
+#define TOOLBAR_ICON_COLOR							          RGB(0x29, 0x80, 0xB9)
+
+// Dark Mode Colors
+#define DARKMODE_TOOLBAR_ICON_COLOR					      RGB(0xFF, 0xD7, 0x00)
+#define DARKMODE_NORMAL_TEXT_COLOR					      RGB(0xE0, 0xE0, 0xE0)
+#define DARKMODE_DISABLED_TEXT_COLOR				      RGB(0x80, 0x80, 0x80)
+#define DARKMODE_NORMAL_DIALOG_BACKGROUND_COLOR		RGB(0x20, 0x20, 0x20)
+#define DARKMODE_NORMAL_CONTROL_BACKGROUND_COLOR	RGB(0x38, 0x38, 0x38)
+
+// Types of update progress we report
+enum update_progress_type {
+    UPT_PERCENT = 0,
+    UPT_SPEED,
+    UPT_ETA,
+    UPT_MAX
+};
+
+// Size of the download speed history ring.
+#define SPEED_HISTORY_SIZE 20
+
+// The minimum time length of a history sample. By default, each sample is at least 150ms long,
+// which means that, over the course of 20 samples, "current" download speed spans at least 3s
+// into the past.
+#define SPEED_SAMPLE_MIN 150
+
+// The time after which the download starts to be considered "stalled", i.e. the current
+// bandwidth is not printed and the recent download speeds are scratched.
+#define STALL_START_TIME 5000
+
+// Time between screen refreshes will not be shorter than this.
+// NB: In SDI' case, "screen" means the text overlaid on the progress bar.
+#define SCREEN_REFRESH_INTERVAL 200
+
+// Don't refresh the ETA too often to avoid jerkiness in predictions.
+// This allows ETA to change approximately once per second.
+#define ETA_REFRESH_INTERVAL 990
+
+extern int bh;
 
 // Declarations
 class Canvas;
@@ -25,6 +65,8 @@ class WidgetComposite;
 
 // Global vars
 extern WidgetComposite *wPanels;
+
+void GetRelativeCtrlRect(HWND hWnd,RECT *rc);
 
 //{ ### Command ###
 class Command
@@ -51,6 +93,8 @@ public:
     int  GetBitfieldState(){return 1<<action_id;}
     int  GetActionID(){return action_id;}
 };
+
+HWND CreateWindowMF(const wchar_t* type, const wchar_t* name, HWND hwnd, intptr_t id, DWORD f);
 
 class ExpertmodeCheckboxCommand:public Command
 {
@@ -482,4 +526,3 @@ int Ym(int y);
 int XM(int x,int o);
 int YM(int y,int o);
 
-#endif

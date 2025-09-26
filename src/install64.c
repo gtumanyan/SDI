@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ static void print_error(int r,const WCHAR *s)
     wprintf(L"ERROR with %ws:[%d]'%s'\n",s,r,buf);
 }
 
-int WINAPI WinMain(HINSTANCE hThisInstance,HINSTANCE hPrevInstance,LPSTR lpszArgument,int nCmdShow)
+int APIENTRY WinMain(HINSTANCE hThisInstance,HINSTANCE hPrevInstance,LPSTR lpszArgument,int nCmdShow)
 {
 	UNREFERENCED_PARAMETER(hThisInstance);
 	UNREFERENCED_PARAMETER(hPrevInstance);

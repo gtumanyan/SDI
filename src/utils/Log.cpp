@@ -3,6 +3,7 @@
 #include "ScopedWin.h"
 #include "WinUtil.h"
 #include "FileUtil.h"
+#include "Log.h"
 
 constexpr const WCHAR* kPipeName = L"\\\\.\\pipe\\LOCAL\\ArsLexis-Logger";
 
@@ -15,7 +16,7 @@ Mutex gLogMutex;
 HeapAllocator* gLogAllocator = nullptr;
 
 str::Str* gLogBuf = nullptr;
-bool gLogToConsole = false;
+bool gLogToConsole = true;
 // we always log if IsDebuggerPresent()
 // this forces logging to debugger always
 bool gLogToDebugger = false;
@@ -28,7 +29,7 @@ bool gDestroyedLogging = false;
 
 // if true, doesn't log if the same text has already been logged
 // reduces logging but also can be confusing i.e. log lines are not showing up
-bool gSkipDuplicateLines = false;
+bool gSkipDuplicateLines = true;
 
 bool gLogToPipe = true;
 HANDLE hLogPipe = INVALID_HANDLE_VALUE;

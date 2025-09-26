@@ -483,3 +483,9 @@ STR_USBWIZ_PAGE5_DESC    = "We have all the information we need. When you click 
 STR_USBWIZ_PROGR_TITLE    = "Creating USB Drive"
 STR_USBWIZ_PROGR_COPYING  = "Copying files"
 STR_USBWIZ_PROGR_DELETING = "Deleting files from removable drive"
+
+MSG_107	 = "All files"
+# Example: "Opened some_file.txt"
+MSG_215	 = "Opened %s"
+# Example: "Saved sdi.log"
+MSG_216	 = "Saved %s"
