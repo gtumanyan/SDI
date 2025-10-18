@@ -220,7 +220,7 @@ void Parser::subStr() {
         strtolower(v1b,vers_len);
         auto rr=string_list->find(std::string(v1b,vers_len));
         if(rr!=string_list->end()) {
-            current_subst = rr->second; // сохраняем в string
+            current_subst = rr->second; // СЃРѕС…СЂР°РЅСЏРµРј РІ string
             strBeg=current_subst.c_str();
             strEnd=strBeg+current_subst.size();
             return;
@@ -252,9 +252,9 @@ void Parser::subStr() {
 #ifdef DEBUG_EXTRACHECKS
             else uprintf("String '%s' not found in %S(%S)\n", key.c_str(), pack->getFilename(), inffile);
 #endif
-            cur = p + 1;    // продолжаем после закрывающего '%'
+            cur = p + 1;    // РїСЂРѕРґРѕР»Р¶Р°РµРј РїРѕСЃР»Рµ Р·Р°РєСЂС‹РІР°СЋС‰РµРіРѕ '%'
         } else {
-            // нет закрывающего '%', копируем остаток
+            // РЅРµС‚ Р·Р°РєСЂС‹РІР°СЋС‰РµРіРѕ '%', РєРѕРїРёСЂСѓРµРј РѕСЃС‚Р°С‚РѕРє
             out.push_back(*next);
             cur = next + 1;
         }
@@ -262,7 +262,7 @@ void Parser::subStr() {
 
     if (!substituted) return;
 
-    current_subst.swap(out);  // кладём результат в поле Parser
+    current_subst.swap(out);  // РєР»Р°РґС‘Рј СЂРµР·СѓР»СЊС‚Р°С‚ РІ РїРѕР»Рµ Parser
     strBeg=current_subst.c_str();
     strEnd=strBeg+current_subst.size();
 }
@@ -1346,7 +1346,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
 
     char secttry[256];
     char line[2048];
-    ofst  strs[64];
+    ofst strs[64];
 
     std::unordered_map<std::string,std::string> string_list;
     std::unordered_multimap<std::string,sect_data_t> section_list;
@@ -1551,10 +1551,11 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
                     else
                         wsprintfA(secttry,"%s",text_ind.get(strs[0]));
 
-                    strtolower(secttry,strlen(secttry));
+                    //strtolower(secttry,strlen(secttry));
 
                     auto range2=section_list.equal_range(secttry);
-                    if(range2.first==range2.second)uprintf("ERROR: missing [%s] in %S\n",secttry,inffull.Get());
+                    bool found_section = range2.first != range2.second;
+
                     for(auto got2=range2.first;got2!=range2.second;++got2)
                     {
                         sect_data_t *lnk2=&got2->second;
@@ -1682,9 +1683,19 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
                         }
                     }
 
-                    if(!parse_info.parseField())break;
+                    if (!parse_info.parseField())
+                    {
+                        if (!found_section)
+                            uprintf("ERROR: missing [%s] in %S\n", secttry, inffull.Get());
+                        break;
+                    }
                     parse_info.readStr(&s1b,&s1e);
-                    if(s1b>s1e)break;
+                    if (s1b > s1e)
+                    {
+                        if (!found_section)
+                            uprintf("ERROR: missing [%s] in %S\n", secttry, inffull.Get());
+                        break;
+                    }
                     strtolower(s1b,s1e-s1b);
                     strs[cur_manuf->sections_n++]=static_cast<ofst>(text_ind.t_memcpyz(s1b,s1e-s1b));
                 }

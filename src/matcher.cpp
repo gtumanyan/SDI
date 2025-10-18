@@ -858,7 +858,7 @@ void Hwidmatch::print_tbl(const int *limits)
         getdrp_drvsection(buf);
     uprintf(" %-*s |",limits[0],buf);
 
-    wsprintfA(buf,"%ws\\%ws",     getdrp_packpath(),getdrp_packname());
+    wsprintfA(buf,"%ws\\%ws", getdrp_packpath(),getdrp_packname());
     uprintf(" %-*s |",     limits[1],buf);
     uprintf(" %8X|",       getdrp_infcrc());
     wsprintfA(buf,"%s%s",         getdrp_infpath(),getdrp_infname());
