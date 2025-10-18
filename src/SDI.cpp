@@ -44,7 +44,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "wizards.h"
 
-BOOL log_displayed = FALSE;
+static BOOL log_displayed = FALSE;
 static HWND hStart = NULL;
 
 /*
@@ -294,7 +294,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		}
 		CoUninitialize();
 		//safe_closehandle(mutex);	# TODO
-		uprintf("*** " APPLICATION_NAME " exit ***\n");
+		uprintf("*** " APPNAME " exit ***\n");
 #ifdef _CRTDBG_MAP_ALLOC
 		_CrtDumpMemoryLeaks();
 #endif
@@ -430,7 +430,7 @@ void MainWindow_t::MainLoop(int nShowCmd) {
     // Main windows
 		hMain = CreateWindowExW(WS_EX_LAYERED,
                         classMain,
-												_W(APPLICATION_NAME),
+						APPLICATION_NAME,
                         WS_OVERLAPPEDWINDOW|WS_CLIPCHILDREN,
                         CW_USEDEFAULT,CW_USEDEFAULT,D(MAINWND_WX),D(MAINWND_WY),
                         nullptr,nullptr,hMainInstance,nullptr);
@@ -2760,7 +2760,7 @@ void WString_dyn::vsprintf(const wchar_t *format,va_list args)
     if(r>len)
         Resize(r);
     r=vswprintf_s(buf_cur,len,format,args);
-    duprintf("%d,(%S),[%S]\n",r,format,buf_cur);
+    //duprintf("%d,(%S),[%S]\n",r,format,buf_cur);
 }
 
 void WString_dyn::append(const wchar_t *str)
@@ -2880,8 +2880,8 @@ LRESULT CALLBACK PopupProcedure(HWND hwnd,UINT message,WPARAM wParam,LPARAM lPar
 //{ 7-zip
 size_t encode(char *dest,size_t dest_sz,const char *src,size_t src_sz)
 {
-		Lzma86_Encode((Byte *)dest,(SizeT *)&dest_sz,(const Byte *)src,src_sz,0,1<<23,SZ_FILTER_NO);
-		return dest_sz;
+    Lzma86_Encode((Byte *)dest,(SizeT *)&dest_sz,(const Byte *)src,src_sz,0,1<<23,SZ_FILTER_AUTO);
+    return dest_sz;
 }
 
 size_t decode(char *dest,size_t dest_sz,const char *src,size_t src_sz) {
@@ -2892,7 +2892,7 @@ size_t decode(char *dest,size_t dest_sz,const char *src,size_t src_sz) {
 		void registerall()
 {
 		NArchive::N7z::register7z();
-		//registerBCJ();
+		registerBCJ();
 		registerBCJ2();
 		//registerBranch();
 		//registerCopy();

@@ -15,3 +15,4 @@ REGISTER_FILTER_E(BCJ,
     0x3030103, "BCJ")
 
 }}
+void registerBCJ(){}
