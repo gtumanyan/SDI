@@ -29,6 +29,8 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "enum.h"
 
+static BOOL log_displayed = FALSE;
+
 //{ Global vars
 WidgetComposite *wPanels=nullptr;
 //}
