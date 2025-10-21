@@ -172,12 +172,12 @@ class Settings_t
 {
 public:
     wchar_t curlang   [10];
-    wchar_t curtheme  [10];
+    wchar_t curtheme  [16];
     wchar_t logO_dir  [MAX_PATH];
 
     wchar_t drp_dir   [MAX_PATH];
     wchar_t output_dir[MAX_PATH];
-    WCHAR drpext_dir[MAX_PATH];
+    WCHAR   drpext_dir[MAX_PATH];
     wchar_t index_dir [MAX_PATH];
     wchar_t data_dir  [MAX_PATH];
     wchar_t log_dir   [MAX_PATH];
