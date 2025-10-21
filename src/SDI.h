@@ -622,7 +622,7 @@ namespace N7z{
 extern int  Extract7z(const wchar_t *str);
 extern void registerBCJ();
 extern void registerBCJ2();
-//extern void registerBranch();
+extern void registerBranch();
 //extern void registerCopy();
 extern void registerLZMA();
 extern void registerLZMA2();

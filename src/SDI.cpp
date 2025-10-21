@@ -2894,7 +2894,7 @@ size_t decode(char *dest,size_t dest_sz,const char *src,size_t src_sz) {
 		NArchive::N7z::register7z();
 		registerBCJ();
 		registerBCJ2();
-		//registerBranch();
+		registerBranch();
 		//registerCopy();
 		registerLZMA();
 		registerLZMA2();
