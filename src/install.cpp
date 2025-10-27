@@ -716,8 +716,8 @@ int Autoclicker_t::cmpclickdata(int *a,int *b)
 
 BOOL CALLBACK Autoclicker_t::EnumWindowsProc(HWND hwnd,LPARAM lParam)
 {
-		wchar_t buf[BUFLEN];
-		WINDOWINFO pwi;
+	WCHAR buf[MAX_CLASS_NAME] = { L'\0' };
+	WINDOWINFO pwi;
 		wnddata_t w;
 		int i;
 
@@ -726,11 +726,11 @@ BOOL CALLBACK Autoclicker_t::EnumWindowsProc(HWND hwnd,LPARAM lParam)
 
 		if(lParam&2)
 		{
-				GetWindowText(hwnd,buf,BUFLEN);
+				GetWindowText(hwnd,buf, _countof(buf));
 				uprintf("Window %06X,%06X '%S'\n",hwnd,GetParent(hwnd),buf);
-				GetClassName(hwnd,buf,BUFLEN);
+				GetClassName(hwnd,buf, _countof(buf));
 				uprintf("Class: '%S'\n",buf);
-				RealGetWindowClass(hwnd,buf,BUFLEN);
+				RealGetWindowClass(hwnd,buf, _countof(buf));
 				uprintf("RealClass: '%S'\n",buf);
 				uprintfs("\n");
 		}

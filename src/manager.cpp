@@ -27,6 +27,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "update.h"
 #include "utils/log.h"
 
+#include <cfgmgr32.h>
 #include <process.h>
 #include <windows.h>
 
@@ -361,9 +362,9 @@ void itembar_t::popup_drivercmp(Manager *manager,Canvas &canvas,int wx,int wy,si
     Hwidmatch *hwidmatch_f=hwidmatch;
     State *state=manager->matcher->getState();
 
-    wchar_t bufw[BUFLEN];
-    wchar_t i_hwid[BUFLEN];
-    wchar_t a_hwid[BUFLEN];
+    wchar_t bufw[200];
+    wchar_t i_hwid[200];
+    wchar_t a_hwid[200];
 
     const Txt *txt=&state->textas;
     int maxln=0;
@@ -871,7 +872,7 @@ void Manager::print_hr()
         if(itembar->isactive&&(itembar->first&2)==0)
         {
             if(Settings.flags&FLAG_FILTERSP&&!itembar->hwidmatch->isvalidcat(matcher->getState()))continue;
-            wchar_t buf[BUFLEN];
+            wchar_t buf[512];
             itembar->str_status(buf);
             uprintf("\n$%04d, %S\n",k,buf);
             if(itembar->devicematch->device)
@@ -1397,7 +1398,7 @@ int Manager::drawitem(Canvas &canvas,size_t index,int ofsy,int zone,int cutoff)
 {
     itembar_t *itembar=&items_list[index];
 
-    wchar_t bufw[BUFLEN];
+    wchar_t bufw[2048];
     int x=Xg(D_X(DRVITEM_OFSX),D_X(DRVITEM_WX));
     int wx=XG(D_X(DRVITEM_WX),x);
     int r=D_X(boxindex[itembar->box_status()]+3);
@@ -1838,7 +1839,7 @@ void Manager::restorepos1(Manager *manager_prev)
         }
         else
         {
-            wchar_t buf[BUFLEN];
+            wchar_t buf[RESTART_MAX_CMD_LINE];
 
             installmode=MODE_NONE;
             if(isRebootDesired())
@@ -1971,8 +1972,8 @@ void Manager::popup_driverlist(Canvas &canvas,int wx,int wy,size_t i)
 
     itembar_t *itembar;
     POINT p;
-    wchar_t i_hwid[BUFLEN];
-    wchar_t bufw[BUFLEN];
+    wchar_t i_hwid[MAX_DEVICE_ID_LEN];
+    wchar_t bufw[MAX_DEVICE_ID_LEN];
     int lne=D_X(POPUP_WY);
     size_t k;
     int maxsz=0;

@@ -852,7 +852,7 @@ void Popup_t::getPos(long int *x,long int *y)
 void format_size(wchar_t *buf,long long val,int isspeed)
 {
 #ifdef USE_TORRENT
-		StrFormatSize(val,buf,BUFLEN);
+		StrFormatSize(val,buf,128);
 #else
 		buf[0]=0;
 		UNREFERENCED_PARAMETER(val);

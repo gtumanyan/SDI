@@ -154,8 +154,8 @@ void findosattr(char *bufa,const char *adr,size_t len)
     {
         if(*p=='O'&&!memcmp(p,osatt,10))
         {
-            int ofs=p[19]=='2'||p[19]=='1'?1:0;
-            if(!*bufa||bufal<wcslen((wchar_t *)(p+18+ofs)))
+            int ofs=(p[19]=='2'||p[19]=='1')?1:0;
+            if(!*bufa || bufal < wcslen((wchar_t *)(p+18+ofs)))
             {
                 wsprintfA(bufa,"%ws",p+18+ofs);
                 bufal=strlen(bufa);
@@ -1573,7 +1573,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
                             int feature_c=0xFF;
                             size_t install_picket_c;
 
-                            char installsection[BUFLEN];
+                            char installsection[255];
                             sect_data_t *lnk3;
 
                             memcpy(installsection,s1b,s1e-s1b);installsection[s1e-s1b]=0;
@@ -1607,7 +1607,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
                                     installsection[strlen(installsection)-1]=0;
                                 }
                             }
-                            char iii[BUFLEN];
+                            char iii[256];
                             *iii=0;
                             //int cnt=0;
                             if(range3.first==range3.second)
@@ -1985,7 +1985,7 @@ void Driverpack::print_index_hr()
     Version *t;
     data_inffile_t *d_i;
     Hwidmatch hwidmatch(this,0);
-    char buf[BUFLEN];
+    char buf[256];
     wchar_t filename[MAX_PATH + 1];
     FILE *f;
     int cnts[NUM_DECS],plain;
@@ -2119,7 +2119,7 @@ void Driverpack::fillinfo(const char *sect,const char *hwid,unsigned start_index
 void Driverpack::getindexfilename(const wchar_t *dir,const wchar_t *ext,wchar_t *indfile)
 {
     wchar_t *p;
-    wchar_t buf[BUFLEN];
+    wchar_t buf[FILENAME_MAX];
     wsprintf(buf,L"%s",getFilename());
 
     // sanity checks
@@ -2144,7 +2144,7 @@ void Driverpack::getindexfilename(const wchar_t *dir,const wchar_t *ext,wchar_t 
 
 void Driverpack::parsecat(wchar_t const *pathinf,wchar_t const *inffilename,const char *adr,size_t len)
 {
-    char bufa[BUFLEN];
+    char bufa[512];
 
     findosattr(bufa,adr,len);
     if(*bufa)

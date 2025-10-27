@@ -68,7 +68,7 @@ class TorrentStatus_t
 		__int64 elapsed,remaining;
 
 		int status_strid;
-		wchar_t error[BUFLEN];
+		wchar_t error[12];
 		int uploadspeed,downloadspeed;
 		int seedstotal,seedsconnected;
 		int peerstotal,peersconnected;
@@ -362,6 +362,7 @@ public:
 		}
 		void SetItemTextUpdate(int iItem,int iSubItem,const wchar_t *str)
 		{
+			const auto BUFLEN = 256;
 				wchar_t buf[BUFLEN];
 
 				*buf=0;
@@ -422,7 +423,7 @@ void UpdateDialog_t::calctotalsize()
 		for(int i=0;i<ListView.GetItemCount();i++)
 		if(ListView.GetCheckState(i))
 		{
-				wchar_t buf[BUFLEN];
+				wchar_t buf[32];
 				ListView.GetItemText(i,1,buf,32);
 				totalsize+=_wtoi_my(buf);
 		}
@@ -769,7 +770,7 @@ BOOL CALLBACK UpdateDialog_t::UpdateProcedure(HWND hwnd,UINT Message,WPARAM wPar
 
 int UpdateDialog_t::populate(int update,bool clearlist)
 {
-		wchar_t buf[BUFLEN];
+		wchar_t buf[MAX_PATH];
 		int ret=0;
 		LocalRevision=0;
 		TorrentRevision=0;
@@ -973,7 +974,7 @@ int UpdateDialog_t::populate(int update,bool clearlist)
 
 void UpdateDialog_t::setFilePriority(const wchar_t *name,download_priority_t pri)
 {
-		char buf[BUFLEN];
+		char buf[MAX_PATH];
 		wsprintfA(buf,"%S",name);
 
 		for(lt::file_index_t i(0); static_cast<int>(i) <Updater->numfiles; ++i)
@@ -1128,11 +1129,11 @@ void UpdaterImp::moveNewFiles()
 						// Skip autorun.inf and del_old_driverpacks.bat
 						if(StrStrIA(filenamefull.c_str(),"autorun.inf")||StrStrIA(filenamefull.c_str(),".bat"))continue;
 
-						wchar_t filenamefull_src[BUFLEN];
+						wchar_t filenamefull_src[MAX_PATH];
 						wsprintf(filenamefull_src,L"%s\\%S", active_torrent_save_path->c_str(), ti->files().file_path(i).c_str());
 
 						// Determine destination dirs
-						wchar_t filenamefull_dst[BUFLEN];
+						wchar_t filenamefull_dst[MAX_PATH];
 						wsprintf(filenamefull_dst,L"%S",filenamefull.c_str());
 						strsub(filenamefull_dst,L"indexes\\SDI",Settings.index_dir);
 						strsub(filenamefull_dst,L"drivers",Settings.drp_dir);
@@ -1167,7 +1168,7 @@ void UpdaterImp::moveNewFiles()
 				// get current working drive
 				wchar_t* buffer;
 				int cwdDrive=-1;
-				if ( (buffer = _wgetcwd(nullptr,BUFLEN) ) == nullptr)
+				if ( (buffer = _wgetcwd(nullptr,MAX_PATH) ) == nullptr)
 						uprintfs("_wgetcwd error");
 				else
 						cwdDrive = System.DriveNumber(buffer);
@@ -1229,7 +1230,8 @@ void UpdaterImp::ShowProgress(wchar_t *buf)
 
 		if(ses)
 		{
-				wchar_t num1[BUFLEN],num2[BUFLEN],num3[BUFLEN],num4[BUFLEN];
+			const auto BUFLEN = 128;
+			wchar_t num1[BUFLEN],num2[BUFLEN],num3[BUFLEN],num4[BUFLEN];
 				format_size(num1,TorrentStatus.downloaded,0);
 				format_size(num2,TorrentStatus.downloadsize,0);
 				format_size(num3,TorrentStatus.uploadspeed,1);
@@ -1277,6 +1279,7 @@ void UpdaterImp::ShowPopup(Canvas &canvas)
 		TorrentStatus_t t;
 		int p0=D_X(POPUP_OFSX),p1=D_X(POPUP_OFSX)+10;
 		long long per=0;
+		const auto BUFLEN = 128;
 		wchar_t num1[BUFLEN],num2[BUFLEN];
 
 		td.y=D_X(POPUP_OFSY);
@@ -1797,7 +1800,7 @@ void UpdaterImp::StartSeedingDrivers()
 		// and enable seeding for whatever files exist there
 		// once it had been done, but it was no good for regular downloading
 
-		wchar_t buf[BUFLEN];
+		wchar_t buf[FILENAME_MAX];
 		buf[0]=0;
 		ses->pause();
 		std::shared_ptr<lt::torrent_info const> ti;
@@ -1820,7 +1823,7 @@ void UpdaterImp::StartSeedingDrivers()
 						// prepend the app path
 						file=System.AppPathS()+"\\"+file;
 						// if the file exists, reset the path in the torrent and enable it
-						MultiByteToWideChar(CP_ACP,MB_PRECOMPOSED,file.c_str(),strlen(file.c_str())+1,buf,BUFLEN);
+						MultiByteToWideChar(CP_ACP,MB_PRECOMPOSED,file.c_str(),strlen(file.c_str())+1,buf, FILENAME_MAX);
 						if(System.FileExists2(buf))
 						{
 								gH.rename_file(i,file);

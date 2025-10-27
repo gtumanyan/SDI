@@ -104,7 +104,7 @@ struct FilemonDataPOD
 	LPARAM     lParam;
 	DWORD      notifyFilter;
 	BOOL       fStop;
-	wchar_t    dir[BUFLEN];
+	wchar_t    dir[MAX_PATH];
 	int        subdirs;
 	FileChangeCallback callback;
 };

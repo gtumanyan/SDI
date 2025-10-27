@@ -147,8 +147,8 @@ static void Page2PopulateCombo(HWND hwnd)
     wchar_t myDrives[] = L"A:\\";
 
     // get the system drive
-    wchar_t systemDrive[BUFLEN]={0};
-    GetEnvironmentVariable(L"SystemDrive",systemDrive,BUFLEN);
+    wchar_t systemDrive[_MAX_DRIVE]={0};
+    GetEnvironmentVariable(L"SystemDrive",systemDrive, _countof(systemDrive));
     wcscat(systemDrive,L"\\");
 
     // get all logical drives
@@ -238,7 +238,7 @@ static void BuildFilesList(HWND hwnd)
                 USBWiz->AddFile(SourceFileName,TargetFileName);
 
                 // index
-                wchar_t indexname[BUFLEN];
+                wchar_t indexname[FILENAME_MAX];
                 drp.getindexfilename(col->getIndex_bin_dir(),L"bin",indexname);
                 SourceFileName=indexname;
                 TargetFileName=targetDrive+(std::wstring)indexname;
@@ -268,7 +268,7 @@ static void BuildFilesList(HWND hwnd)
                     USBWiz->AddFile(SourceFileName,TargetFileName);
 
                     // index
-                    wchar_t indexname[BUFLEN];
+                    wchar_t indexname[FILENAME_MAX];
                     drp.getindexfilename(col->getIndex_bin_dir(),L"bin",indexname);
                     SourceFileName=indexname;
                     TargetFileName=targetDrive+(std::wstring)indexname;
@@ -297,7 +297,7 @@ static void BuildFilesList(HWND hwnd)
                     USBWiz->AddFile(SourceFileName,TargetFileName);
 
                     // index
-                    wchar_t indexname[BUFLEN];
+                    wchar_t indexname[FILENAME_MAX];
                     drp.getindexfilename(col->getIndex_bin_dir(),L"bin",indexname);
                     SourceFileName=(std::wstring)indexname;
                     TargetFileName=targetDrive+(std::wstring)indexname;

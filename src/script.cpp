@@ -13,12 +13,12 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "utils/BaseUtil.h"
-#include "utils/Log.h"
-
 #include <windows.h>
 #include <setupapi.h>       // for CommandLineToArgvW
 #include <iostream>
+
+#include "logging.h"
+
 #include "script.h"
 #include "Settings.h"
 #include "SDI.h"
@@ -40,7 +40,9 @@ extern int bundle_shadow;
 extern Manager manager_v[2];
 
 Bundle bundle[2];
-extern wchar_t extractdir[MAX_PATH + 1];
+extern wchar_t extractdir[MAX_PATH];
+
+constexpr size_t COMMAND_LINE_LIMIT = 32767;  // Windows documented limit
 
 Script::Script()
 {
@@ -90,8 +92,8 @@ bool Script::loadscript()
             }
 
             // %0 is always the script file name
-            wchar_t w[BUFLEN]=L"";
-            ExpandEnvironmentStringsW(Buff, w, BUFLEN);
+            wchar_t w[COMMAND_LINE_LIMIT+1]=L"";
+            ExpandEnvironmentStringsW(Buff, w, COMMAND_LINE_LIMIT + 1);
             parameters.clear();
             parameters.push_back(w);
         }
@@ -147,19 +149,19 @@ bool Script::runscript()
     int torrentport=Updater->port;
 
     // get the system drive
-    wchar_t systemDrive[BUFLEN]={0};
-    GetEnvironmentVariable(L"SystemDrive",systemDrive,BUFLEN);
+    wchar_t systemDrive[MAX_PATH]={0};
+    GetEnvironmentVariable(L"SystemDrive",systemDrive,MAX_PATH);
     wcscat(systemDrive,L"\\temp");
 
     // temp directory
-    wchar_t buf[BUFLEN];
-    GetEnvironmentVariable(L"TEMP",buf,BUFLEN);
+    wchar_t buf[MAX_PATH];
+    GetEnvironmentVariable(L"TEMP",buf,MAX_PATH);
 
     // if the TEMP environment variable is not set then use the system drive
     if(wcslen(buf)==0)
         wcscpy(buf,systemDrive);
 
-    GetEnvironmentVariable(L"TEMP",buf,BUFLEN);
+    GetEnvironmentVariable(L"TEMP",buf,MAX_PATH);
     wsprintf(extractdir,L"%s\\SDI",buf);
 
     // iterate the script text lines
@@ -181,7 +183,7 @@ bool Script::runscript()
         // process the command
         if(args.size()>0)
         {
-            uprintf("Command: %S\n",args[0].c_str());
+            duprintf("Command: %S\n",args[0].c_str());
 
             if(StrStrIW(args[0].c_str(),L"init"))
             {
@@ -189,7 +191,7 @@ bool Script::runscript()
                 if(args.size()>1)
                 {
                     r=StrStrIW(args[1].c_str(),L"reindex");
-                    uprintf("Argument: %S\n",args[1].c_str());
+                    duprintf("Argument: %S\n",args[1].c_str());
                 }
                 if(r)Settings.flags|=COLLECTION_FORCE_REINDEXING;
                 else Settings.flags&=~COLLECTION_FORCE_REINDEXING;
@@ -206,7 +208,7 @@ bool Script::runscript()
                 if(args.size()>1)
                 {
                     Updater_t::activetorrent=std::stoi(args[1]);
-                    uprintf("Argument: %d\n",Updater_t::activetorrent);
+                    duprintf("Argument: %d\n",Updater_t::activetorrent);
                     #ifdef USE_TORRENT
                     delete Updater;
                     Updater=CreateUpdater();
@@ -280,7 +282,7 @@ bool Script::runscript()
                                _wcsicmp(args[2].c_str(),L"updates")==0||
                                _wcsicmp(args[2].c_str(),L"selected")==0)
                             {
-                                uprintf("Argument: %S\n",args[2].c_str());
+                                duprintf("Argument: %S\n",args[2].c_str());
                                 LastExitCode=Updater->scriptDownloadDrivers(args[2]);
                                 if(!LastExitCode)uprintfs("Driver packs downloaded successfully\n");
                                 else uprintfs("Driver packs download failed\n");
@@ -321,19 +323,19 @@ bool Script::runscript()
                 NeedReboot=(ret_global>>24)&0x40;
                 unsigned int failed=(ret_global>>16)&255;
                 unsigned int installed=ret_global&65535;
-                uprintf("Installer return code: %d, ",ret_global);
+                duprintf("Installer return code: %d, ",ret_global);
                 uprintf("%d drivers installed, %d drivers failed.\n",installed,failed);
             }
             else if(_wcsicmp(args[0].c_str(),L"snapshot")==0)
             {
                 Settings.flags&=~FLAG_NOSNAPSHOT;
-                //Log.gen_timestamp();
-                wchar_t filename[BUFLEN];
+                Log.gen_timestamp();
+                wchar_t filename[MAX_PATH];
                 if(args.size()>1)
                     wsprintf(filename, L"%S", args[1].c_str());
                 else
-                    wsprintf(filename,L"%s\\%sstate.snp",logdir.c_str());
-                uprintf("Argument: %S\n",filename);
+                    wsprintf(filename,L"%s\\%sstate.snp",logdir.c_str(),Log.getTimestamp());
+                duprintf("Argument: %S\n",filename);
                 State *state=manager_g->matcher->getState();
                 LastExitCode=state->save(filename);
                 uprintf("Snapshot %S\n",LastExitCode?L"failed":L"succeeded");
@@ -344,7 +346,7 @@ bool Script::runscript()
                 // this must be placed immediately before the init command
                 if(args.size()>1)
                 {
-                    uprintf("Argument: %S\n",args[1].c_str());
+                    duprintf("Argument: %S\n",args[1].c_str());
                     if(System.FileExists2(args[1].c_str()))
                     {
                         wcscpy(Settings.state_file,args[1].c_str());
@@ -379,7 +381,7 @@ bool Script::runscript()
                         desc.append(L" ");
                     }
                 }
-                uprintf("Argument: %S\n",desc.c_str());
+                duprintf("Argument: %S\n",desc.c_str());
                 LastExitCode=!System.CreateRestorePoint(desc);
                 uprintf("Restore point %S: %S\n",LastExitCode?L"failed":L"succeeded", desc.c_str());
             }
@@ -387,8 +389,8 @@ bool Script::runscript()
             {
                 if(args.size()>1)
                 {
-                    uprintf("Argument: %S\n",args[1].c_str());
-                    wchar_t arg[BUFLEN];
+                    duprintf("Argument: %S\n",args[1].c_str());
+                    wchar_t arg[COMMAND_LINE_LIMIT+1];
                     wcscpy(arg,args[1].c_str());
                     LastExitCode=manager_g->matcher->write_device_list(arg);
                     uprintf("Write Device List %S\n",LastExitCode?L"failed":L"succeeded");
@@ -404,7 +406,7 @@ bool Script::runscript()
                 if(allargs.length()>0)
                 {
                     logdir=allargs;
-                    uprintf("Argument: %S\n",allargs.c_str());
+                    duprintf("Argument: %S\n",allargs.c_str());
                 }
                 else
                 {
@@ -416,7 +418,7 @@ bool Script::runscript()
             {
                 if(allargs.length()>0)
                 {
-                    uprintf("Argument: %S\n",allargs.c_str());
+                    duprintf("Argument: %S\n",allargs.c_str());
                     wcscpy(Settings.drp_dir,allargs.c_str());
                     invalidate(INVALIDATE_INDICES|INVALIDATE_MANAGER);
                 }
@@ -430,7 +432,7 @@ bool Script::runscript()
             {
                 if(allargs.length()>0)
                 {
-                    uprintf("Argument: %S\n",allargs.c_str());
+                    duprintf("Argument: %S\n",allargs.c_str());
                     wcscpy(Settings.index_dir,allargs.c_str());
                     invalidate(INVALIDATE_INDICES|INVALIDATE_MANAGER);
                 }
@@ -444,7 +446,7 @@ bool Script::runscript()
             {
                 if(allargs.length()>0)
                 {
-                    uprintf("Argument: %S\n",allargs.c_str());
+                    duprintf("Argument: %S\n",allargs.c_str());
                     wcscpy(extractdir,allargs.c_str());
                 }
                 else
@@ -458,7 +460,7 @@ bool Script::runscript()
                 if(args.size()>1)
                 {
                     torrentport=std::stoi(args[1]);
-                    uprintf("Argument: %d\n",torrentport);
+                    duprintf("Argument: %d\n",torrentport);
                 }
                 else
                 {
@@ -477,25 +479,27 @@ bool Script::runscript()
                     else
                         uprintfs("Error: keeptempfiles : Invalid argument");
                 }
-                uprintf("Keep Temp Files is %S\n",Settings.flags&FLAG_KEEPTEMPFILES?L"on":L"off");
+                duprintf("Keep Temp Files is %S\n",Settings.flags&FLAG_KEEPTEMPFILES?L"on":L"off");
             }
             else if(StrStrIW(args[0].c_str(),L"echo"))
             {
-                bool v= gLogToConsole;
-                gLogToConsole = true;
+                int v=Log.get_verbose();
+                Log.set_verbose(v|LOG_VERBOSE_LOG_CON);
                 uprintf("%S\n",w.c_str());
-                gLogToConsole = v;
+                Log.set_verbose(v);
             }
             else if(StrStrIW(args[0].c_str(),L"debug"))
             {
+                int v=Log.get_verbose();
                 if(args.size()>1)
                 {
                     if(StrStrIW(args[1].c_str(),L"on"))
-                        gLogToDebugger=true;
+                        v|=LOG_VERBOSE_DEBUG;
                     else if(StrStrIW(args[1].c_str(),L"off"))
-                        gLogToDebugger = false;
+                        v&=~LOG_VERBOSE_DEBUG;
+                    Log.set_verbose(v);
                 }
-                uprintf("Debug is %S\n", gLogToDebugger ? L"on":L"off");
+                duprintf("Debug is %S\n", v&LOG_VERBOSE_DEBUG ? L"on":L"off");
             }
             else if(StrStrIW(args[0].c_str(),L"logging"))
             {
@@ -504,16 +508,17 @@ bool Script::runscript()
                     if(StrStrIW(args[1].c_str(),L"on"))
                     {
                         Settings.flags&=~FLAG_NOLOGFILE;
-                        const WCHAR* logPath = logdir.c_str();
-                        StartLogToFile(logPath,true);
+                        wchar_t arg[COMMAND_LINE_LIMIT+1];
+                        wcscpy(arg,logdir.c_str());
+                        Log.start(arg);
                     }
                     else if(StrStrIW(args[1].c_str(),L"off"))
                     {
                         Settings.flags|=FLAG_NOLOGFILE;
-												DestroyLogging();
+                        Log.stop();
                     }
                 }
-                uprintf("Logging is %S\n",Settings.flags&FLAG_NOLOGFILE?L"off":L"on");
+                duprintf("Logging is %S\n",Settings.flags&FLAG_NOLOGFILE?L"off":L"on");
             }
             else if(StrStrIW(args[0].c_str(),L"cmd"))
             {
@@ -534,10 +539,10 @@ bool Script::runscript()
             {
                 if(args.size()>1)
                 {
-                    //int v=std::stoi(args[1]);
-                    gReducedLogging=false;
+                    int v=std::stoi(args[1]);
+                    Log.set_verbose(v);
                 }
-                uprintf("Verbose is %d\n", !gReducedLogging);
+                duprintf("Verbose is %d\n", Log.get_verbose());
             }
             else if(StrStrIW(args[0].c_str(),L"enableinstall"))
             {
@@ -548,7 +553,7 @@ bool Script::runscript()
                     else if(StrStrIW(args[1].c_str(),L"off"))
                         Settings.flags|=FLAG_DISABLEINSTALL;
                 }
-                uprintf("Install is %S\n",Settings.flags&FLAG_DISABLEINSTALL?L"off":L"on");
+                duprintf("Install is %S\n",Settings.flags&FLAG_DISABLEINSTALL?L"off":L"on");
             }
             else if(StrStrIW(args[0].c_str(),L"pause"))
             {

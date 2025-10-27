@@ -169,7 +169,7 @@ const markers_t markers[NUM_MARKERS]=
     {"winall", -1,-1,-1},
 };
 
-char marker[BUFLEN];
+char marker[MAX_INF_STRING_LENGTH];
 int isLaptop;
 //}
 
@@ -221,7 +221,7 @@ void State::genmarker()
 
 int calc_secttype(const char *s)
 {
-    char buf[BUFLEN];
+    char buf[MAX_INF_SECTION_NAME_LENGTH];
     char *p=buf;
 
     s=StrStrIA(s,".nt");
@@ -254,7 +254,7 @@ int Hwidmatch::calc_decorscore(int id,const State *state)
 
 int Hwidmatch::calc_markerscore(const State *state,const char *path)
 {
-    char buf[BUFLEN];
+    char buf[MAX_PATH];
     int majver,
         minver,
         arch=state->getArchitecture(),
@@ -343,7 +343,7 @@ Matcher *CreateMatcher()
 
 void MatcherImp::findHWIDs(Devicematch *devicematch,const wchar_t *hwidv,int dev_pos,int ishw)
 {
-    char hwid[BUFLEN];
+    char hwid[MAX_DEVICE_ID_LEN];
     wsprintfA(hwid,"%ws",hwidv);
 
 	size_t sz = strlen(hwid);
@@ -367,7 +367,7 @@ void MatcherImp::sort()
 {
     Hwidmatch *match1,*match2,*bestmatch;
     Hwidmatch matchtmp(nullptr,0);
-    char sect1[BUFLEN];
+    char sect1[MAX_INF_SECTION_NAME_LENGTH];
 
     for(auto &devicematch:devicematch_list)
     {
@@ -429,11 +429,11 @@ void MatcherImp::print()
     for(auto &devicematch:devicematch_list)
     {
         devicematch.device->print(state);
-        log("DriverInfo\n");
+        uprintfs("DriverInfo\n");
         if(devicematch.driver)
             devicematch.driver->print(state);
         else
-            log("  NoDriver\n");
+            uprintfs("  NoDriver\n");
 
         memset(limits,0,sizeof(limits));
         Hwidmatch *hwidmatch;
@@ -444,9 +444,9 @@ void MatcherImp::print()
         hwidmatch=&hwidmatch_list[devicematch.start_matches];
         for(unsigned j=0;j<devicematch.num_matches;j++,hwidmatch++)
             hwidmatch->print_tbl(limits);
-        log("\n");
+        uprintfs("\n");
     }
-    log("}matcher_print\n\n");
+    uprintfs("}matcher_print\n\n");
 }
 
 int MatcherImp::write_device_list(wchar_t *filename)
@@ -618,7 +618,7 @@ int Hwidmatch::isblacklisted(const State *state,const wchar_t *hwid,const char *
 {
     if(StrStrIW(state->textas.getw(devicematch->device->getHardwareID()),hwid))
     {
-        char buf[BUFLEN];
+        char buf[256];
         getdrp_drvsection(buf);
         if(StrStrIA(buf,section))return 1;
     }
@@ -674,7 +674,7 @@ int Hwidmatch::calc_altsectscore(const State *state,int curscore)
 
     for(int pos=0;pos<numsects;pos++)
     {
-        char buf[BUFLEN];
+        char buf[256];
         drp->getdrp_drvsectionAtPos(buf,pos,manufacturer_index);
         if(calc_decorscore(calc_secttype(buf),state)>curscore)
             return 0;
@@ -781,7 +781,7 @@ Hwidmatch::Hwidmatch(Driverpack *drp1,int HWID_index1,int dev_pos,int ishw,State
     HWID_index(HWID_index1),
     devicematch(devicematch1)
 {
-    char buf[BUFLEN];
+    char buf[256];
 
     getdrp_drvsection(buf);
 
@@ -819,7 +819,7 @@ void Hwidmatch::minlen(const char *s,int *len)
 void Hwidmatch::calclen(int *limits)
 {
     Version *v;
-    char buf[BUFLEN];
+    char buf[FILENAME_MAX];
     WStringShort vers;
 
     getdrp_drvsection(buf);
@@ -840,7 +840,7 @@ void Hwidmatch::calclen(int *limits)
 
 void Hwidmatch::print_tbl(const int *limits)
 {
-    char buf[BUFLEN];
+    char buf[FILENAME_MAX];
     Version *v;
     WStringShort date;
     WStringShort vers;
@@ -855,25 +855,25 @@ void Hwidmatch::print_tbl(const int *limits)
     uprintf(" %3d |",      decorscore);
     uprintf(" %2d |",      markerscore);
     uprintf(" %3X |",      status);
-        getdrp_drvsection(buf);
+    getdrp_drvsection(buf);
     uprintf(" %-*s |",limits[0],buf);
 
     wsprintfA(buf,"%ws\\%ws", getdrp_packpath(),getdrp_packname());
     uprintf(" %-*s |",     limits[1],buf);
     uprintf(" %8X|",       getdrp_infcrc());
-    wsprintfA(buf,"%s%s",         getdrp_infpath(),getdrp_infname());
+    wsprintfA(buf,"%s%s",  getdrp_infpath(),getdrp_infname());
     uprintf(" %-*s |",     limits[2],buf);
-    uprintf(" %-*s |",     limits[3],    getdrp_drvmanufacturer());
-    wsprintfA(buf,"%ws",          vers.Get());
+    uprintf(" %-*s |",     limits[3],getdrp_drvmanufacturer());
+    wsprintfA(buf,"%ws",   vers.Get());
     uprintf(" %*s |",      limits[4],buf);
-    uprintf(" %-*s |",     limits[5],    getdrp_drvHWID());
-    uprintf(" %-*s",       limits[6],      getdrp_drvdesc());
-    log("\n");
+    uprintf(" %-*s |",     limits[5],getdrp_drvHWID());
+    uprintf(" %-*s",       limits[6],getdrp_drvdesc());
+    uprintfs("\n");
 }
 
 void Hwidmatch::print_hr()
 {
-    char buf[BUFLEN];
+    char buf[FILENAME_MAX];
     Version *v;
     WStringShort date;
     WStringShort vers;
@@ -896,13 +896,13 @@ void Hwidmatch::print_hr()
     getdrp_drvsection(buf);
     uprintf("  inf:      %s%s,%s\n",getdrp_infpath(),getdrp_infname(),buf);
     uprintf("  Score:    %08X\n",   score);
-    log("\n");
+    uprintfs("\n");
 }
 
 void Hwidmatch::popup_driverline(int *limits,Canvas &canvas,int y,int mode,size_t index)
 {
-    char buf[BUFLEN];
-    wchar_t bufw[BUFLEN];
+    char buf[256];
+    wchar_t bufw[256];
     Version *v=getdrp_drvversion();
 
     textdata_horiz_t td(canvas,Popup->getShift(),limits,mode);
@@ -929,14 +929,16 @@ void Hwidmatch::popup_driverline(int *limits,Canvas &canvas,int y,int mode,size_
     td.TextOutP(L"| %s",date.Get());
     td.TextOutP(L"| %3d",decorscore);
     td.TextOutP(L"| %d",markerscore);
-    td.TextOutP(L"| %3X",status);getdrp_drvsection(buf);
+    td.TextOutP(L"| %3X",status);
+    getdrp_drvsection(buf);
     td.TextOutP(L"| %S",buf);
     td.TextOutP(L"| %s\\%s",getdrp_packpath(),getdrp_packname());
     td.TextOutP(L"| %08X",getdrp_infcrc());
     td.TextOutP(L"| %S%S",getdrp_infpath(),getdrp_infname());
     td.TextOutP(L"| %S",getdrp_drvmanufacturer());
     td.TextOutP(L"| %s",vers.Get());
-    td.TextOutP(L"| %S",getdrp_drvHWID());wsprintf(bufw,L"%S",getdrp_drvdesc());
+    td.TextOutP(L"| %S",getdrp_drvHWID());
+    wsprintf(bufw,L"%S",getdrp_drvdesc());
     td.TextOutP(L"| %s",bufw);
 }
 
@@ -967,7 +969,7 @@ int Hwidmatch::cmp(const Hwidmatch *match2)
 
 int Hwidmatch::isdup(const Hwidmatch *match2,const char *sect1)
 {
-    char sect2[BUFLEN];
+    char sect2[MAX_INF_SECTION_NAME_LENGTH];
     match2->getdrp_drvsection(sect2);
 
     if(getdrp_infcrc()==match2->getdrp_infcrc()&&
@@ -984,13 +986,13 @@ int Hwidmatch::isdrivervalid()
 
 int Hwidmatch::isvalidcat(const State *state)
 {
-    char bufa[BUFLEN];
+    char bufa[8];
     int n=pickcat(state);
     const char *s=getdrp_drvcat(n);
 
     int major,minor;
     state->getWinVer(&major,&minor);
-    if (major == 11) major = 10;    //For the 2022 there is no windows 11 cats
+    if (major == 11) major = 10;    //For the year 2025 there is no windows 11 cats
     wsprintfA(bufa,"2:%d.%d",major,minor);
     if(!*s)return 0;
     return strstr(s,bufa)?1:0;

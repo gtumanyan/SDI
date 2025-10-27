@@ -209,7 +209,7 @@ void Device::printHWIDS(const State *state)
 
 void Device::getClassDesc(wchar_t *bufw)
 {
-    SetupDiGetClassDescription(&DeviceInfoData.ClassGuid,bufw,BUFLEN,nullptr);
+    SetupDiGetClassDescription(&DeviceInfoData.ClassGuid,bufw, MAX_PATH,nullptr);
 }
 
 const wchar_t *Device::getHWIDby(int num,const State *state)
@@ -378,8 +378,8 @@ void Driver::scaninf(State *state,Driverpack *unpacked_drp,int &inf_pos)
         cat=static_cast<ofst>(state->opencatfile(this));
     }
 
-    char sect[BUFLEN];
-    char hwid[BUFLEN];
+    char sect[256];
+    char hwid[MAX_DEVICE_ID_LEN];
     inf_pos=-1;
     wsprintfA(sect,"%ws%ws",state->textas.getw(InfSection),state->textas.getw(InfSectionExt));
     wsprintfA(hwid,"%ws",state->textas.getw(MatchingDeviceId));
@@ -447,13 +447,13 @@ unsigned Driver::calc_score_h(const State *state)const
 
 int Driver::isvalidcat(const State *state)const
 {
-    char bufa[BUFLEN];
+    char bufa[8];
     if(!cat)return 0;
     const char *s=state->textas.get(cat);
 
     int major,minor;
     state->getWinVer(&major,&minor);
-    if (major == 11) major = 10;    //For the 2022 there is no windows 11 cats
+    if (major == 11) major = 10;    //For the 2025 there is no windows 11 cats
     wsprintfA(bufa,"2:%d.%d",major,minor);
     if(!*s)return 0;
     return strstr(s,bufa)?1:0;
@@ -495,7 +495,7 @@ int calc_identifierscore(int dev_pos,int dev_ishw,int inf_pos)
 
 Driver::Driver(State *state,Device *cur_device,HKEY hkey,Driverpack *unpacked_drp)
 {
-    char bufa[BUFLEN];
+    char bufa[10];
     int dev_pos,ishw,inf_pos=-1;
     DriverDate=0;
     DriverVersion=0;
@@ -713,7 +713,7 @@ void State::print()
 
 void State::popup_sysinfo(Canvas &canvas)
 {
-    wchar_t bufw[BUFLEN];
+    wchar_t bufw[97];
     int i;
     int p0=D_X(POPUP_OFSX),p1=D_X(POPUP_OFSX)+10;
 
@@ -894,7 +894,7 @@ int State::save(const wchar_t *filename)
 
 int State::load(const wchar_t *filename)
 {
-    char buf[BUFLEN];
+    char buf[_countof(VER_MARKER)];
     FILE* fd;
     size_t sz;
     int version;
@@ -952,7 +952,7 @@ int State::load(const wchar_t *filename)
 void State::getsysinfo_fast()
 {
     uprintf("State::getsysinfo_fast\n");
-    wchar_t buf[BUFLEN];
+    wchar_t buf[MAX_PATH];
 
     // Battery
     uprintf("State::getsysinfo_fast::GetSystemPowerStatus\n");
@@ -1016,17 +1016,17 @@ void State::getsysinfo_fast()
 
     // Environment
     uprintf("State::getsysinfo_fast::Environment\n");
-    GetEnvironmentVariable(L"windir",buf,BUFLEN);
+    GetEnvironmentVariable(L"windir",buf,sizeof(buf));
     wcscat(buf,L"\\inf\\");
     windir = static_cast<ofst>(textas.strcpyw(buf));
 
     // get the system drive
-    wchar_t systemDrive[BUFLEN]={0};
-    GetEnvironmentVariable(L"SystemDrive",systemDrive,BUFLEN);
+    wchar_t systemDrive[_MAX_DRIVE]={0};
+    GetEnvironmentVariable(L"SystemDrive",systemDrive, sizeof(systemDrive));
     wcscat(systemDrive,L"\\temp");
 
     // temp directory
-    GetEnvironmentVariable(L"TEMP",buf,BUFLEN);
+    GetEnvironmentVariable(L"TEMP",buf,sizeof(buf));
 
     // if the TEMP environment variable is not set then use the system drive
     if(wcslen(buf)==0)
@@ -1038,10 +1038,10 @@ void State::getsysinfo_fast()
     uprintf("State::getsysinfo_fast::Architecture\n");
     architecture=0;
     *buf=0;
-    GetEnvironmentVariable(L"PROCESSOR_ARCHITECTURE",buf,BUFLEN);
+    GetEnvironmentVariable(L"PROCESSOR_ARCHITECTURE",buf,sizeof(buf));
     if(!lstrcmpi(buf,L"AMD64"))architecture=1;
     *buf=0;
-    GetEnvironmentVariable(L"PROCESSOR_ARCHITEW6432",buf,BUFLEN);
+    GetEnvironmentVariable(L"PROCESSOR_ARCHITEW6432",buf, sizeof(buf));
     if(*buf)architecture=1;
 
     fakeOSversion();
@@ -1093,7 +1093,7 @@ void State::scanDevices()
     //log("State::scanDevices\n");
     HDEVINFO dev_info;
     HKEY   hkey;
-    wchar_t buf[BUFLEN];
+    wchar_t buf[255];
     Collection collection{textas.getw(windir),L"",L""};
     Driverpack unpacked_drp{L"",L"windir.7z",&collection};
 
@@ -1179,8 +1179,8 @@ const wchar_t *State::get_winverstr()
 
 size_t State::opencatfile(const Driver *cur_driver)
 {
-    wchar_t filename[BUFLEN];
-    char bufa[BUFLEN];
+    wchar_t filename[FILENAME_MAX];
+    char bufa[32];
     FILE *f;
     *bufa=0;
 

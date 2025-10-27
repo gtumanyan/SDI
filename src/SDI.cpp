@@ -16,6 +16,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include <windows.h>
 #include <shellapi.h>
 #include <strsafe.h>
+#include <cfgmgr32.h>
 #include <dwmapi.h>
 
 //#include "VersionEx.h"		//moved to SDI.h for registry.h
@@ -984,15 +985,15 @@ static BOOL CALLBACK SettingsDialog(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 										else
 												Settings.flags&=~FLAG_ONLYUPDATES;
 
-										GetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR1E),Settings.drp_dir,BUFLEN);
-										GetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR2E),Settings.index_dir,BUFLEN);
-										GetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR3E),Settings.output_dir,BUFLEN);
-										GetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR4E),Settings.data_dir,BUFLEN);
-										GetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR5E),Settings.logO_dir,BUFLEN);
+										GetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR1E),Settings.drp_dir,MAX_PATH);
+										GetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR2E),Settings.index_dir, MAX_PATH);
+										GetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR3E),Settings.output_dir, MAX_PATH);
+										GetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR4E),Settings.data_dir, MAX_PATH);
+										GetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR5E),Settings.logO_dir, MAX_PATH);
 
-										GetWindowText(GetDlgItem(data.pages[3],IDD_P4_CMD1E),Settings.finish,BUFLEN);
-										GetWindowText(GetDlgItem(data.pages[3],IDD_P4_CMD2E),Settings.finish_rb,BUFLEN);
-										GetWindowText(GetDlgItem(data.pages[3],IDD_P4_CMD3E),Settings.finish_upd,BUFLEN);
+										GetWindowText(GetDlgItem(data.pages[3],IDD_P4_CMD1E),Settings.finish,RESTART_MAX_CMD_LINE);
+										GetWindowText(GetDlgItem(data.pages[3],IDD_P4_CMD2E),Settings.finish_rb, RESTART_MAX_CMD_LINE);
+										GetWindowText(GetDlgItem(data.pages[3],IDD_P4_CMD3E),Settings.finish_upd, RESTART_MAX_CMD_LINE);
 
 										if(SendMessage(GetDlgItem(data.pages[3],IDD_P4_CONSL),BM_GETCHECK,0,0))
 										{
@@ -1038,7 +1039,7 @@ void MainWindow_t::snapshot()
 
 void MainWindow_t::extractto()
 {
-    wchar_t dir[BUFLEN];
+    wchar_t dir[MAX_PATH];
     std::wstring path= GetSelfExePathWTemp();
     wcscpy(dir,path.c_str());
 
@@ -1240,8 +1241,8 @@ void MainWindow_t::DownloadedTorrent(int TorrentResults)
     UpdateTorrentItems(Updater->activetorrent);
 
 	// get driver count, index count, command line count
-    wchar_t spec1[BUFLEN];
-    wchar_t spec2[BUFLEN];
+    wchar_t spec1[MAX_PATH];
+    wchar_t spec2[MAX_PATH];
     wcscpy(spec1,Settings.drp_dir);wcscat(spec1,L"\\*.*");
     wcscpy(spec2,Settings.index_dir);wcscat(spec2,L"\\*.*");
     int argc;
@@ -2436,10 +2437,10 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 								int id=wp%100;
 								if(wp>=ID_HWID_WEB)
 								{
-										wchar_t buf[BUFLEN];
-										wchar_t buf2[BUFLEN];
+										wchar_t buf[51 + MAX_DEVICE_ID_LEN];
+										wchar_t buf2[51 + MAX_DEVICE_ID_LEN];
 										const wchar_t *str=manager_g->getHWIDby(id);
-										wsprintf(buf,L"http://catalog.update.microsoft.com/v7/site/search.aspx?q=%s",str);
+										wsprintf(buf,L"https://catalog.update.microsoft.com/Search.aspx?q=%s",str);
 										escapeAmpUrl(buf2,buf);
 										System.run_command(L"open",buf2,SW_SHOW,0);
 

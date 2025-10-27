@@ -71,8 +71,8 @@ enum LOG_VERBOSE
 class Log_t
 {
 private:
-    //wchar_t timestamp[BUFLEN];
-    FILE *logfile=nullptr;
+    wchar_t timestamp[MAX_COMPUTERNAME_LENGTH + 24];
+    //FILE *logfile=nullptr;
     int error_count=0;
     int log_console=0;
     int log_verbose=
@@ -108,11 +108,12 @@ public:
     int get_verbose(){return log_verbose;}
     void set_mode(int a){log_console=a;}
     int getErrorCount(){return error_count;}
-    //wchar_t *getTimestamp(){return timestamp;}
+    wchar_t *getTimestamp(){return timestamp;}
 
     friend class Settings_t;
 };
 extern Log_t Log;
+extern bool gReducedLogging;
 
 // Error handling
 const wchar_t *errno_str();

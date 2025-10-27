@@ -13,21 +13,14 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "com_header.h"
-#include "common.h"
+#include <windows.h>
+#include <ctime>
+#include <cerrno>
+#include <clocale>
+
 #include "logging.h"
 #include "settings.h"
 #include "system.h"
-
-#include <windows.h>
-#include <ctime>
-#ifdef _MSC_VER
-#include <cerrno>
-#include <clocale>
-#endif
-
-// Depend on Win32API
-#include "main.h"
 
 //{ Global variables
 Log_t Log;
@@ -80,10 +73,10 @@ void Timers_t::print()
 
 void Log_t::gen_timestamp()
 {
-    wchar_t pcname[BUFLEN];
+    wchar_t pcname[MAX_COMPUTERNAME_LENGTH + 1];
     time_t rawtime;
     struct tm *ti;
-    DWORD sz=BUFLEN;
+    DWORD sz= MAX_COMPUTERNAME_LENGTH + 1;
 
     GetComputerName(pcname,&sz);
     time(&rawtime);
@@ -96,109 +89,109 @@ void Log_t::gen_timestamp()
              ti->tm_hour,ti->tm_min,ti->tm_sec,pcname);
 }
 
-void Log_t::start(wchar_t *logdir)
-{
-    WStringShort filename;
+//void Log_t::start(wchar_t *logdir)
+//{
+//    WStringShort filename;
+//
+//    if(Settings.flags&FLAG_NOLOGFILE)return;
+//    setlocale(LC_ALL,"");
+//    //system("chcp 1251");
+//
+//    gen_timestamp();
+//
+//    filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
+//    if(!(System.canWriteDirectory(logdir)&&System.canWriteFile(filename.Get(),L"wt")))
+//    {
+//        uprintf("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
+//        GetEnvironmentVariable(L"TEMP",logdir,BUFLEN);
+//        wcscat(logdir,L"\\SDI_logs");
+//        filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
+//    }
+//
+//    logfile=_wfopen(filename.Get(),L"wt");
+//    if(!logfile)
+//    {
+//        uprintf("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
+//        GetEnvironmentVariable(L"TEMP",logdir,BUFLEN);
+//        wcscat(logdir,L"\\SDI_logs");
+//        filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
+//        mkdir_r(logdir);
+//        logfile=_wfopen(filename.Get(),L"wb");
+//    }
+//    if((log_verbose&LOG_VERBOSE_BATCH)==0)
+//        Log.print_file("{start logging\n%s\n\n", _STRG(VERSION_FILEVERSION_LONG));
+//}
+//
+//void Log_t::save()
+//{
+//    if(!logfile)return;
+//    fflush(logfile);
+//}
+//
+//void Log_t::stop()
+//{
+//    if(!logfile)return;
+//    if((log_verbose&LOG_VERBOSE_BATCH)==0)
+//        Log.print_file("}stop logging");
+//    fclose(logfile);
+//}
+//
+//void Log_t::print_file(char const *format,...)
+//{
+//    char buffer[1024*16];
+//
+//    if(!logfile)return;
+//    va_list args;
+//    va_start(args,format);
+//    vsprintf(buffer,format,args);
+//    fputs(buffer,logfile);
+//    if(log_console)fputs(buffer,stdout);
+//    va_end(args);
+//}
 
-    if(Settings.flags&FLAG_NOLOGFILE)return;
-    setlocale(LC_ALL,"");
-    //system("chcp 1251");
+//void Log_t::print_err(char const *format,...)
+//{
+//    char buffer[1024*16];
+//
+//    if((log_verbose&(LOG_VERBOSE_LOG_ERR|LOG_VERBOSE_DEBUG))==0)return;
+//    va_list args;
+//    va_start(args,format);
+//    vsprintf(buffer,format,args);
+//    if(logfile)fputs(buffer,logfile);
+//    fputs(buffer,stdout);
+//    va_end(args);
+//}
 
-    gen_timestamp();
-
-    filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
-    if(!(System.canWriteDirectory(logdir)&&System.canWriteFile(filename.Get(),L"wt")))
-    {
-        logf("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
-        GetEnvironmentVariable(L"TEMP",logdir,BUFLEN);
-        wcscat(logdir,L"\\SDI_logs");
-        filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
-    }
-
-    logfile=_wfopen(filename.Get(),L"wt");
-    if(!logfile)
-    {
-        logf("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
-        GetEnvironmentVariable(L"TEMP",logdir,BUFLEN);
-        wcscat(logdir,L"\\SDI_logs");
-        filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
-        mkdir_r(logdir);
-        logfile=_wfopen(filename.Get(),L"wb");
-    }
-    if((log_verbose&LOG_VERBOSE_BATCH)==0)
-        Log.print_file("{start logging\n%s\n\n", _STRG(VERSION_FILEVERSION_LONG));
-}
-
-void Log_t::save()
-{
-    if(!logfile)return;
-    fflush(logfile);
-}
-
-void Log_t::stop()
-{
-    if(!logfile)return;
-    if((log_verbose&LOG_VERBOSE_BATCH)==0)
-        Log.print_file("}stop logging");
-    fclose(logfile);
-}
-
-void Log_t::print_file(char const *format,...)
-{
-    char buffer[1024*16];
-
-    if(!logfile)return;
-    va_list args;
-    va_start(args,format);
-    vsprintf(buffer,format,args);
-    fputs(buffer,logfile);
-    if(log_console)fputs(buffer,stdout);
-    va_end(args);
-}
-
-void Log_t::print_err(char const *format,...)
-{
-    char buffer[1024*16];
-
-    if((log_verbose&(LOG_VERBOSE_LOG_ERR|LOG_VERBOSE_DEBUG))==0)return;
-    va_list args;
-    va_start(args,format);
-    vsprintf(buffer,format,args);
-    if(logfile)fputs(buffer,logfile);
-    fputs(buffer,stdout);
-    va_end(args);
-}
-
-void Log_t::print_con(char const *format,...)
-{
-    char buffer[1024*8];
-
-    if((log_verbose&(LOG_VERBOSE_LOG_CON|LOG_VERBOSE_DEBUG))==0)return;
-    va_list args;
-    va_start(args,format);
-    wvsprintfA(buffer,format,args);
-    if(logfile)fputs(buffer,logfile);
-    fputs(buffer,stdout);
-    va_end(args);
-}
+//void Log_t::print_con(char const *format,...)
+//{
+//    char buffer[1024*8];
+//
+//    if((log_verbose&(LOG_VERBOSE_LOG_CON|LOG_VERBOSE_DEBUG))==0)return;
+//    va_list args;
+//    va_start(args,format);
+//    wvsprintfA(buffer,format,args);
+//    if(logfile)fputs(buffer,logfile);
+//    fputs(buffer,stdout);
+//    va_end(args);
+//}
 
 void Log_t::print_nul(char const *format,...)
 {
     UNREFERENCED_PARAMETER(format);
 }
 
-void Log_t::print_debug(char const *format,...)
-{
-    char buffer[1024*16];
-
-    if((log_verbose&LOG_VERBOSE_DEBUG)==0)return;
-    va_list args;
-    va_start(args,format);
-    wvsprintfA(buffer,format,args);
-    if(logfile)fputs(buffer,logfile);
-    fputs(buffer,stdout);
-    va_end(args);
-}
+//void Log_t::print_debug(char const *format,...)
+//{
+//    char buffer[1024*16];
+//
+//    if((log_verbose&LOG_VERBOSE_DEBUG)==0)return;
+//    va_list args;
+//    va_start(args,format);
+//    wvsprintfA(buffer,format,args);
+//    if(logfile)fputs(buffer,logfile);
+//    fputs(buffer,stdout);
+//    va_end(args);
+//}
 //}
 
 //{ Error handling
@@ -253,7 +246,7 @@ void Log_t::print_syserr(int r,const wchar_t *s)
     WString buf;
     FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,
         nullptr,r,MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT),buf.GetV(),static_cast<DWORD>(buf.Length()),nullptr);
-    logf("ERROR with %S:[%x]'%S'\n",s,r,buf.Get());
+    uprintf("ERROR with %S:[%x]'%S'\n",s,r,buf.Get());
     error_count++;
 }
 

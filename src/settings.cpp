@@ -13,9 +13,8 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "utils/BaseUtil.h"
-#include "utils/Log.h"
 #include "SDI.h"
+#include "logging.h"
 #include "system.h"
 #include "Settings.h"
 #include "cli.h"
@@ -96,7 +95,7 @@ bool Settings_t::argflg(const wchar_t *s,const wchar_t *cmp,int f)
 
 // Если в комстроке указан действительный путь, установить драйвера из этой папки
 bool Settings_t::install(WCHAR* cmdLine)
-{   
+{
     if (PathFileExists(cmdLine)) {
         wcscpy_s(drpext_dir, cmdLine);
         flags |= FLAG_AUTOCLOSE |
@@ -111,16 +110,16 @@ void Settings_t::parse(const WCHAR* cmdLine,size_t ind) {
     WinVersions winVersions;
 
     uprintf("Args:[%S]\n",cmdLine);
-    
-    
-    
+
+
+
     int nArgs;
-    
+
     WCHAR** argsArr=CommandLineToArgvW(cmdLine,&nArgs);
     for(size_t i=ind;i<static_cast<size_t>(nArgs);i++)
     {
         wchar_t *pr=argsArr[i];
-  
+
 
         if(pr[0]=='/') pr[0]='-';
 
@@ -186,9 +185,9 @@ void Settings_t::parse(const WCHAR* cmdLine,size_t ind) {
         }
         if(!_wcsicmp(pr,L"-install")&&nArgs-i==3)
         {
-            wchar_t buf[BUFLEN];
+            wchar_t buf[MAX_PATH*2 + 15];
             uprintf("Install '%S' '%S'\n",argsArr[i+1],argsArr[i+2]);
-            GetEnvironmentVariable(L"TEMP",buf,BUFLEN);
+            GetEnvironmentVariable(L"TEMP",buf,MAX_PATH);
             wsprintf(extractdir,L"%s\\SDI",buf);
             installmode=MODE_INSTALLING;
             driver_install(argsArr[i+1],argsArr[i+2],&ret_global,&needreboot);
@@ -244,13 +243,13 @@ void Settings_t::parse(const WCHAR* cmdLine,size_t ind) {
         else if( StrStrIW(pr,GFG_DEF))
             continue;
 
-       
+
         else uprintf("Unknown argument '%S'\n",pr);
         if(statemode==STATEMODE_EXIT)break;
     }
 
     Settings.savedscale=Settings.scale;
-    ExpandEnvironmentStrings(logO_dir,log_dir,BUFLEN);
+    ExpandEnvironmentStrings(logO_dir,log_dir,MAX_PATH);
     LocalFree(argsArr);
     if(statemode==STATEMODE_EXIT)return;
 }
@@ -343,11 +342,11 @@ wchar_t *Settings_t::ltrim(wchar_t *s)
 bool Settings_t::loadCFGFile(const wchar_t *FileName,wchar_t *DestStr)
 {
     FILE *f;
-    wchar_t Buff[BUFLEN];
+    wchar_t Buff[MAX_PATH];
 
     *DestStr=0;
 
-    ExpandEnvironmentStringsW(FileName,Buff,BUFLEN);
+    ExpandEnvironmentStringsW(FileName,Buff,MAX_PATH);
     uprintf("Loading %S\n",Buff);
     f=_wfopen(Buff,L"rt");
     if(!f)
@@ -361,8 +360,8 @@ bool Settings_t::loadCFGFile(const wchar_t *FileName,wchar_t *DestStr)
         wcscpy(Buff,ltrim(Buff));       //  trim spaces
         if(*Buff=='#')continue;         // comments
         if(*Buff==';')continue;         // comments
-        if(*Buff=='/')*Buff='-';         // replace / with -
-        if(wcsstr(Buff,L"-?"))continue; // ignore -?
+        if(*Buff=='/')*Buff='-';        // replace / with -
+        if(::wcsstr(Buff,L"-?"))continue; // ignore -?
         if(Buff[wcslen(Buff)-1]=='\n')Buff[wcslen(Buff)-1]='\0';
         if(!*Buff)continue;
 

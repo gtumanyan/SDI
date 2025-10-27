@@ -132,7 +132,6 @@ class Driver
 
 private:
     void read_reg_val(HKEY hkey,State *state,const wchar_t *key,ofst *val);
-		#define BUFLEN 4096
     void scaninf(State *state,Driverpack *unpacked_drp,int &inf_pos);
     int findHWID_in_list(const wchar_t *p,const wchar_t *str);
     void calc_dev_pos(const Device *cur_device,const State *state,int *ishw,int *dev_pos);

@@ -511,9 +511,8 @@ public:
 class WString:public WString_dyn
 {
 		wchar_t buf[MAX_PATH]{};
-		DWORD size = dimof(buf) - 1;
 public:
-		WString(bool debug_=false):WString_dyn(size,buf,debug_){*buf=0;}
+		WString(bool debug_=false):WString_dyn(dimof(buf) - 1,buf,debug_){*buf=0;}
 };
 
 class WStringShort:public WString_dyn

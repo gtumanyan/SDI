@@ -183,10 +183,10 @@ public:
     wchar_t log_dir   [MAX_PATH];
 
     wchar_t state_file[MAX_COMPUTERNAME_LENGTH+32];
-    wchar_t finish    [MAX_PATH];
-    wchar_t finish_upd[MAX_PATH];
-    wchar_t finish_rb [MAX_PATH];
-    wchar_t device_list_filename[MAX_PATH];
+    wchar_t finish    [RESTART_MAX_CMD_LINE];
+    wchar_t finish_upd[RESTART_MAX_CMD_LINE];
+    wchar_t finish_rb [RESTART_MAX_CMD_LINE];
+    wchar_t device_list_filename[FILENAME_MAX];
 
     int flags;
     int statemode;

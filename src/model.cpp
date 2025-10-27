@@ -13,9 +13,8 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "utils/BaseUtil.h"
 #include "SDI.h"
-#include "utils/Log.h"
+#include "logging.h"
 #include "system.h"
 #include "Settings.h"
 #include "indexing.h"
@@ -103,12 +102,12 @@ unsigned int __stdcall Bundle::thread_loadall(void *arg)
 
         if(cancel_update)
         {
-            log("*** CANCEL ***\n\n");
+            uprintfs("*** CANCEL ***\n\n");
             deviceupdate_event->raise();
         }
         else
         {
-            log("*** FINISH primary ***\n\n");
+            uprintfs("*** FINISH primary ***\n\n");
             invaidate_set&=~(INVALIDATE_DEVICES|INVALIDATE_INDICES|INVALIDATE_SYSINFO);
 
             if((Settings.flags&FLAG_NOGUI)&&(Settings.flags&FLAG_AUTOINSTALL)==0)
@@ -126,16 +125,16 @@ unsigned int __stdcall Bundle::thread_loadall(void *arg)
             }
 
             // Save indices, write info, etc
-            log("{2Sync\n");
+            uprintfs("{2Sync\n");
             if(CRITICAL_SECTION_ACTIVE)EnterCriticalSection(&sync);
 
             bundle[bundle_shadow].bundle_lowpriority();
-            log("*** FINISH secondary ***\n\n");
+            uprintfs("*** FINISH secondary ***\n\n");
 
             // Swap display and shadow bundle
             bundle_display^=1;
             bundle_shadow^=1;
-            log("}2Sync\n");
+            uprintfs("}2Sync\n");
             bundle[bundle_shadow].bundle_init();
             PostMessage(MainWindow.hMain,WM_INDEXESSAVED,0,0);
             if(CRITICAL_SECTION_ACTIVE)LeaveCriticalSection(&sync);
@@ -156,13 +155,13 @@ void Bundle::bundle_init()
 
 void Bundle::bundle_prep()
 {
-    log("Bundle::bundle_prep\n");
+    duprintf("Bundle::bundle_prep\n");
     state.getsysinfo_fast();
-    log("Bundle::bundle_prep::complete\n");
+    duprintf("Bundle::bundle_prep::complete\n");
 }
 void Bundle::bundle_load(Bundle *pbundle)
 {
-    log("Bundle::bundle_load\n");
+    duprintf("Bundle::bundle_load\n");
     ThreadAbs *thandle0=CreateThread();
     ThreadAbs *thandle1=CreateThread();
     ThreadAbs *thandle2=CreateThread();
@@ -179,17 +178,17 @@ void Bundle::bundle_load(Bundle *pbundle)
     if((invaidate_set&INVALIDATE_SYSINFO)==0)state.getsysinfo_slow(&pbundle->state);
     if((invaidate_set&INVALIDATE_INDICES)==0)collection=pbundle->collection;
 
-    log("Bundle::bundle_load::thread_scandevices\n");
+    duprintf("Bundle::bundle_load::thread_scandevices\n");
     thandle0->start(&thread_scandevices,&state);
-    log("Bundle::bundle_load::thread_loadindexes\n");
+    duprintf("Bundle::bundle_load::thread_loadindexes\n");
     thandle1->start(&thread_loadindexes,&collection);
-    log("Bundle::bundle_load::thread_getsysinfo\n");
+    duprintf("Bundle::bundle_load::thread_getsysinfo\n");
     thandle2->start(&thread_getsysinfo,&state);
-    log("Bundle::bundle_load::thandle0->join\n");
+    duprintf("Bundle::bundle_load::thandle0->join\n");
     thandle0->join();
-    log("Bundle::bundle_load::thandle1->join\n");
+    duprintf("Bundle::bundle_load::thandle1->join\n");
     thandle1->join();
-    log("Bundle::bundle_load::thandle2->join\n");
+    duprintf("Bundle::bundle_load::thandle2->join\n");
     thandle2->join();
     delete thandle0;
     delete thandle1;
@@ -205,7 +204,7 @@ void Bundle::bundle_load(Bundle *pbundle)
     matcher->populate();
     //Timers.stop(time_test);
 
-    log("Bundle::bundle_load::complete\n");
+    duprintf("Bundle::bundle_load::complete\n");
 }
 
 void Bundle::bundle_lowpriority()
@@ -234,17 +233,17 @@ void Bundle::bundle_lowpriority()
     #endif
 
     collection.save();
-    //Log.gen_timestamp();
+    Log.gen_timestamp();
     WStringShort filename;
-    filename.sprintf(L"%s\\%sstate.snp",Settings.log_dir);
+    filename.sprintf(L"%s\\%sstate.snp",Settings.log_dir,Log.getTimestamp());
     state.save(filename.Get());
 
     if(Settings.flags&COLLECTION_PRINT_INDEX)
     {
-        log("Saving text indices...\n");
+        uprintfs("Saving text indices...\n");
         collection.print_index_hr();
         Settings.flags&=~COLLECTION_PRINT_INDEX;
-        log("DONE\n");
+        uprintfs("DONE\n");
     }
 }
 //}
