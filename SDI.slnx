@@ -1,0 +1,18 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Win32" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path=".vs/SDI.vcxproj" Id="d836a720-0876-4b3a-ba09-1f6727eee5d4">
+    <BuildDependency Project=".vs/install64.vcxproj" />
+    <BuildDependency Project=".vs/libwebp.vcxproj" />
+    <BuildDependency Project=".vs/torrent-rasterbar.vcxproj" />
+  </Project>
+  <Project Path=".vs/install64.vcxproj" Id="4962cb7a-5ac4-4143-bb7b-b94ccd87c6e0">
+    <Build Solution="Debug|Win32" Project="false" />
+  </Project>
+  <Project Path=".vs/libwebp.vcxproj" Id="62bb7cf1-7358-3583-a1c2-97513c0a19cb" />
+
+  <Project Path=".vs/SevenZip.vcxproj" Id="9fe9a4f2-4e31-41ef-8189-167465a02ffd" />
+  <Project Path=".vs/torrent-rasterbar.vcxproj" Id="ba188557-1b9a-3461-ad3f-2009be8c5b71" />
+</Solution>
