@@ -282,6 +282,7 @@ STR_UPD_BTN_THISPC_H          = "Siekiant, kad būtų galima nustatyti, kurių d
 STR_UPD_OPTIONS               = "Galimybės"
 STR_UPD_ONLYUPDATES           = "Nepranešti apie trūkstamus driverpacks"
 STR_UPD_PREALLOCATE						= "Iš anksto priskirti disko vietą visiems failams"
+STR_UPD_PREALLOCATE_H 				= "Iš anksto skirti disko vietą prieš pradedant atsisiuntimą, kad būtų sumažinta fragmentacija"
 STR_UPD_TOTALSIZE             = "Visas atsisiuntimo dydis: %d MB"
 STR_UPD_TOTALAVAIL            = "Iš viso laisvos vietos: %d MB"
 STR_UPD_BTN_OK                = "Gerai"
@@ -309,7 +310,7 @@ STR_UPD_THOUR                 = "valandos"
 STR_UPD_TDAY                  = "dienos"
 STR_UPD_BASEFILES             = "Programos+indeksai"
 STR_UPD_APP                   = "Programa"
-STR_UPD_INDEXES               = "Rodikliai"
+STR_UPD_INDICES               = "Rodikliai"
 STR_UPD_UPDATEHINT1           = "Užuomina"
 STR_UPD_UPDATEHINT2           = "Pirmiausia turite atnaujinti bazę, kad būtų galima naudoti šią funkciją."
 
@@ -388,8 +389,8 @@ STR_OPTION_MAX_UPLOAD         = "Maks. įkėlimo sparta KB/s (0 - neribota)"
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Tvarkyklės"
-STR_OPTION_DIR_INDEXES        = "Indeksai"
-STR_OPTION_DIR_INDEXESH       = "Indeksai (žmogui skaitoma)"
+STR_OPTION_DIR_INDICES        = "Indeksai"
+STR_OPTION_DIR_INDICESH       = "Indeksai (žmogui skaitoma)"
 STR_OPTION_DIR_DATA           = "Temos ir vertimai"
 STR_OPTION_DIR_LOGS           = "Žurnalo failai"
 
@@ -448,7 +449,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Tinklo tvarkyklių paketai ir indeksai"
 STR_USBWIZ_PAGE3_SELECTED     = "Pasirinkti tvarkyklių paketai ir rodyklės"
 STR_USBWIZ_PAGE3_NOPACKS      = "Nėra vairuotojo paketų"
 STR_USBWIZ_PAGE3_ADDPATH      = "Nurodykite papildomą tvarkyklės katalogą"
-STR_USBWIZ_PAGE3_INDEXES      = "Įtraukite internetinius indeksus"
+STR_USBWIZ_PAGE3_INDICES      = "Įtraukite internetinius indeksus"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Aplinka"

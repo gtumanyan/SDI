@@ -1,6 +1,6 @@
 ﻿// send updates to https://t.me/Snappy_Driver_Installer
 
-STR_TRANSLATORS               = "lenochod,Stoker"
+STR_TRANSLATORS               = "lenochod,Stoker,WindR"
 
 STR_LANG_NAME                 = "Čeština"
 STR_LANG_ID                   = "Czech"
@@ -282,6 +282,7 @@ STR_UPD_BTN_THISPC_H          = "Abychom mohli určit, které balíčky ovladač
 STR_UPD_OPTIONS               = "Možnosti"
 STR_UPD_ONLYUPDATES           = "Zobrazit pouze aktualizace, skrýt chybějící balíčky ovladačů"
 STR_UPD_PREALLOCATE						= "Předem přidělte místo na HDD, abyste zabránili fragmentaci"
+STR_UPD_PREALLOCATE_H         = "Před zahájením stahování vyhradí veškeré potřebné místo na disku, aby se minimalizovala fragmentace"
 STR_UPD_TOTALSIZE             = "Celková velikost pro stažení: %d MB"
 STR_UPD_TOTALAVAIL            = "Celkové dostupné místo: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -309,7 +310,7 @@ STR_UPD_THOUR                 = "hodin"
 STR_UPD_TDAY                  = "dní"
 STR_UPD_BASEFILES             = "Aplikace+indexy"
 STR_UPD_APP                   = "Aplikace"
-STR_UPD_INDEXES               = "Indexy"
+STR_UPD_INDICES               = "Indexy"
 STR_UPD_UPDATEHINT1           = "TIP"
 STR_UPD_UPDATEHINT2           = "Chcete-li použít tuto funkci, musíte nejprve aktualizovat základnu."
 
@@ -321,7 +322,7 @@ STR_UPD_AVAIL3                = "Jsou dostupné aktualizace: SDI R%d a %d balí�
 STR_UPD_START                 = "(Klikneme zde pro spuštění stažení)"
 STR_UPD_PROGRES               = "Staženo %s z %s (%d%%)"
 STR_UPD_MODIFY                = "(Klikneme zde pro výběr aktualizací)"
-STR_UPD_CHECKINGFILES         = "Kontrola souborů %s of %s (%d%%)"
+STR_UPD_CHECKINGFILES         = "Kontrola souborů %s z %s (%d%%)"
 
 STR_DWN_DOWNLOADED            = "Staženo"
 STR_DWN_DOWNLOADED_F          = "%s z %s (%d%%)"
@@ -388,8 +389,8 @@ STR_OPTION_MAX_UPLOAD         = "Maximální rychlost odeslání v KB/s (0 - bez
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Ovladače"
-STR_OPTION_DIR_INDEXES        = "Indexy"
-STR_OPTION_DIR_INDEXESH       = "Indexy (čitelné)"
+STR_OPTION_DIR_INDICES        = "Indexy"
+STR_OPTION_DIR_INDICESH       = "Indexy (čitelné)"
 STR_OPTION_DIR_DATA           = "Motivy vzhledu a překlady"
 STR_OPTION_DIR_LOGS           = "Soubory protokolu"
 
@@ -405,6 +406,7 @@ STR_OPTION_CONSOLE            = "Zobrazit okno konzole"
 STR_PATREON1             = "SDI vývojáři programují ve svém volném čase. Pokud se vám aplikace líbí, podpořte nás prosím na Patreonu."
 STR_PATREON2             = "(Klikněte zde pro otevření stránky Patreon)"
 STR_PATREON_H            = ""
+
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Vítejte v Snappy Driver Installer"
@@ -413,7 +415,7 @@ STR_WELCOME_INTRO2            = "Poznámka: Další nástroje hledejte v nabídc
 STR_WELCOME_BUTTON1           = "Stáhnout všechny balíčky ovladačů"
 STR_WELCOME_BUTTON1_DESC      = "Získejte celou kolekci balíčků ovladačů. Jedná se o velký objem dat, stahování může trvat 1-24 hodin v závislosti na dostupnosti a rychlosti Internetu. Po dokončení práce budete mít vše potřebné pro práci v režimu offline. Jste-li technik, je to možnost, kterou uvítáte."
 STR_WELCOME_BUTTON2           = "Stáhněte si pouze síťové ovladače"
-STR_WELCOME_BUTTON2_DESC      = "Získejte nejnovější LAN, WLAN, a Wifi ovladače.To vám zrychlí  online připojení (jedná se o poměrně malý objem dat ke stažení)"
+STR_WELCOME_BUTTON2_DESC      = "Získejte nejnovější LAN, WLAN, a Wi-Fi ovladače.To vám zrychlí  online připojení (jedná se o poměrně malý objem dat ke stažení)"
 STR_WELCOME_BUTTON3           = "Stáhnout pouze indexy"
 STR_WELCOME_BUTTON3_DESC      = "To umožňuje prohledat počítač a zjistit, které ovladače je třeba nainstalovat nebo aktualizovat. Stahování bude trvat jen několik minut, ale pokud je nutné stáhnout požadované balíčky ovladačů, budete potřebovat připojení k Internetu. Jste-li příležitostným uživatelem, můžete tuto možnost použít."
 STR_WELCOME_CLOSE             = "Zavřít"
@@ -448,7 +450,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Balíčky a indexy síťových ovladačů"
 STR_USBWIZ_PAGE3_SELECTED     = "Vybrané balíčky a indexy ovladačů"
 STR_USBWIZ_PAGE3_NOPACKS      = "Žádné balíčky ovladačů"
 STR_USBWIZ_PAGE3_ADDPATH      = "Zadejte další adresář ovladačů"
-STR_USBWIZ_PAGE3_INDEXES      = "Zahrnout online indexy"
+STR_USBWIZ_PAGE3_INDICES      = "Zahrnout online indexy"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Prostředí"
@@ -465,7 +467,7 @@ STR_USBWIZ_PAGE4_EXPERT       = "Povolit expertní režim"
 STR_USBWIZ_PAGE4_NOUPD        = "Nekontrolovat aktualizace"
 STR_USBWIZ_PAGE4_NOSNAP       = "Nevytvářet snímky"
 STR_USBWIZ_PAGE4_NOLOG        = "Nevytvářet log soubory"
-STR_USBWIZ_PAGE4_INCAUTO      = "Zahrnout soubor Autorun. inf a SDI_auto. bat"
+STR_USBWIZ_PAGE4_INCAUTO      = "Zahrnout soubor autorun.inf a SDI_auto. bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "Velikost spustitelného souboru:"
 
 // USB Wizard - page 5

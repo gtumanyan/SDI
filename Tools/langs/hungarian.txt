@@ -1,5 +1,5 @@
-﻿// send updates to thttps://t.me/Snappy_Driver_Installer
-STR_TRANSLATORS               = "LaMoLa"
+﻿// send updates to https://t.me/Snappy_Driver_Installer
+STR_TRANSLATORS               = "LaMoLa, WindR"
 
 STR_LANG_NAME                 = "Magyar"
 STR_LANG_ID                   = "Hungarian"
@@ -38,9 +38,9 @@ STR_TOOLS_H                   = "Gyorsbillentyűk a Windows eszközökhöz"
 STR_OPENLOGS                  = "Naplók megnyitása"
 STR_OPENLOGS_H                = "Nyissa meg a naplót és a pillanatfelvételt tartalmazó mappát.\n\nElküldheti ezeket a fájlokat, ha segítségre lenne szüksége."
 STR_SNAPSHOT                  = "Pillanatfelvétel betöltése..."
-STR_SNAPSHOT_H                = "Egy másik Op.rendszer Pillanatfelvételének betöltése.\n\nPillanatfelvételek automatikusan lettek létrehozva a log mappában. Tartalmazzák az eszközök leírását és a Driver-eket, Windows verziót, akkumlátort és a monitorokat.\n\nPillanatfelvételek nem tartalmaznak infót külsõ rendszeren lévõ Driver-csomagokról.\n\nA betöltött pillanatfelvétel lehetõvé teszi a külsõ rendszer emulálását, de a Driver-ek a helyi Driver-csomagokban lesznek keresve."
+STR_SNAPSHOT_H                = "Egy másik Op.rendszer Pillanatfelvételének betöltése.\n\nPillanatfelvételek automatikusan lettek létrehozva a log mappában. Tartalmazzák az eszközök leírását és a Driver-eket, Windows verziót, akkumlátort és a monitorokat.\n\nPillanatfelvételek nem tartalmaznak infót külső rendszeren lévõ Driver-csomagokról.\n\nA betöltött pillanatfelvétel lehetővé teszi a külső rendszer emulálását, de a Driver-ek a helyi Driver-csomagokban lesznek keresve."
 STR_EXTRACT                   = "Kibontás helye..."
-STR_EXTRACT_H                 = "A kijelölt driverek kicsomagolása egy megadott helyre.\n\nHasználhatja biztonsági mentés létrehozására a jelenlegi Driver-ekbõl választva."
+STR_EXTRACT_H                 = "A kijelölt driverek kicsomagolása egy megadott helyre.\n\nHasználhatja biztonsági mentés létrehozására a jelenlegi Driver-ekből választva."
 STR_DRVDIR                    = "Driver mappa kiválasztása."
 STR_DRVDIR_H                  = "Válasszon másik mappát a Driver-csomagoknak vagy a kicsomagolatlan Drivereknek.\n\nDriverek keresésére alkalmas a Driver CD/DVD is."
 STR_OPTIONS_BTN               = "Beállítások..."
@@ -118,7 +118,7 @@ STR_SYSINF_MONITORS           = "Monitor"
 STR_SYSINF_CM                 = "cm"
 STR_SYSINF_INCH               = "coll"
 STR_SYSINF_WIDE               = "széles képernyõ"
-STR_SYSINF_MISC               = "(Klikk a panelra az Eszközkezelõ megnyitásához)"
+STR_SYSINF_MISC               = "(Klikk a panelra az Eszközkezelő megnyitásához)"
 STR_SYSINF_TYPE               = "Típus"
 STR_SYSINF_LAPTOP             = "Laptop"
 STR_SYSINF_DESKTOP            = "Asztali PC"
@@ -146,7 +146,7 @@ STR_HINT_ID                   = "Azonosító:"
 STR_HINT_INF                  = "Infó.fájl:"
 STR_HINT_SECTION              = "Szekció:"
 STR_HINT_SCORE                = "Besorolás:"
-STR_HINT_SCROLL               = "Vízszintes görgetés az egérgörgõvel"
+STR_HINT_SCROLL 							= "Vízszintes görgetés az egérgörgővel"
 
 // System menu
 STR_SYST_LICENSE              = "Licenc információ"
@@ -177,7 +177,7 @@ STR_EXTRACTFOLDER             = "Adja meg a cél mappát."
 STR_STATUS_NOTPRESENT         = "Az eszköz nem található"
 STR_STATUS_DISABLED           = "Az eszköz letíltva"
 STR_STATUS_DEVPROBLEM         = "Az eszközzel kapcsolatos probléma: %d"
-STR_STATUS_DRVPROBLEM         = "A Driver hibajelezést küldött az eszközrõl"
+STR_STATUS_DRVPROBLEM         = "A Driver hibajelezést küldött az eszközről"
 STR_STATUS_RUNNING            = "Az eszköz használatban"
 STR_STATUS_STOPPED            = "Az eszköz jelenleg leállítva"
 
@@ -190,7 +190,7 @@ STR_STATUS_BETTER_NEW         = "Újabb optimalizált Driver érhetõ el"
 STR_STATUS_SAME_NEW           = "Újabb illesztõprogram érhetõ el"
 STR_STATUS_WORSE_NEW          = "Optimálisnál gyengébb Driver érhetõ el, hiába újabb"
 
-STR_STATUS_BETTER_CUR         = "Több optimális Driver érhetõ el"
+STR_STATUS_BETTER_CUR         = "Több optimális Driver elérhető el"
 STR_STATUS_SAME_CUR           = "Már telepített"
 STR_STATUS_WORSE_CUR          = "Optimálisnál gyengébb"
 
@@ -201,7 +201,7 @@ STR_STATUS_WORSE_OLD          = "Régi Driver és gyengébb az optimálisnál"
 STR_STATUS_DUP                = "(dupla)"
 
 STR_STATUS_NF_MISSING         = "Driver szükséges az eszközhöz, de nem található a Driver-csomagban"
-STR_STATUS_NF_UNKNOWN         = "Az eszköz megfelelõen mûködik, de nem található a Driver-csomagban"
+STR_STATUS_NF_UNKNOWN         = "Az eszköz megfelelően működik, de nem található a Driver-csomagban"
 STR_STATUS_NF_STANDARD        = "Szabványos Driver"
 
 // Virus
@@ -211,7 +211,7 @@ STR_VIRUS_AUTORUN_H           = "AUTORUN.INF fájl található, melyet rosszindu
 STR_VIRUS_RECYCLER            = "Lomtár mappa található a gyökér mappában"
 STR_VIRUS_RECYCLER_H          = "Szokatlan, hogy ehhez a médiához LOMTÁR mappa társuljon. Javasolt a mappa vírusellenõrzése.\n\nHa biztos benne, hogy vírusmentes, akkor hozzon létre egy: not_a_virus.txt nevû fájlt a  mappában."
 STR_VIRUS_HIDDEN              = "Rejtett mappák vannak a Gyökér mappában"
-STR_VIRUS_HIDDEN_H            = "A Gyökér-mappa rejtett almappákat tartalmaz. Vírusok rejtett mappákat hozhatnak létre a jelenlétük elrejtéséhez. Ajánlatos a mappák vírusellenõrzése (lásd a részleteket a naplóban).\n\nHa biztos a tisztaságban, akkor hozzon létre egy megnevezett fájlt"
+STR_VIRUS_HIDDEN_H            = "A Gyökér-mappa rejtett almappákat tartalmaz. Vírusok rejtett mappákat hozhatnak létre a jelenlétük elrejtéséhez. Ajánlatos a mappák vírusellenes (lásd a részleteket a naplóban).\n\nHa biztos a tisztaságban, akkor hozzon létre egy megnevezett fájlt"
 
 // Status
 STR_CLOSE_SNAPSHOT            = "(Klikkeljen ide az emulálás leállításához)"
@@ -228,8 +228,8 @@ STR_INST_REBOOT               = "Sikeresen telepítve (PC újraindítása szüks
 STR_INST_FAILED               = "Telepítési hiba"
 
 STR_INST_INSTALLING           = "Telepítés..."
-STR_INST_COMPLITED            = "A telepítés befejezõdött"
-STR_INST_COMPLITED_RB         = "A telepítés befejezõdött (rendszer újraindítása szükséges)"
+STR_INST_COMPLITED            = "A telepítés befejeződött"
+STR_INST_COMPLITED_RB         = "A telepítés befejeződött (rendszer újraindítása szükséges)"
 STR_INST_CLOSE                = "(Klikkeljen ide a telepített illesztõprogramok elrejtéséhez-bezárásához)"
 
 STR_EXTR_EXTRACTING           = "Kicsomagolás..."
@@ -262,7 +262,7 @@ STR_SYS_WINVER                = "Windows verzió"
 STR_SYS_32                    = "32-bit"
 STR_SYS_64                    = "64-bit"
 STR_SYS_DETECT                = "Érzékeld az operációs rendszer verzióját"
-STR_SYS_DEVICEMNG             = "Eszközkezelõ"
+STR_SYS_DEVICEMNG             = "Eszközkezelő"
 STR_SYS_DISINSTALL            = "Telepítés letiltása"
 STR_SYS_DISRESTPNT            = "Visszaállítási pontok blokkolása"
 
@@ -281,6 +281,7 @@ STR_UPD_BTN_THISPC_H          = "A szükséges Driver-csomagok meghatározása �
 STR_UPD_OPTIONS               = "Beállítások"
 STR_UPD_ONLYUPDATES           = "Ne értesítsen a hiányzó Driver-csomagokról"
 STR_UPD_PREALLOCATE						= "Minden fájl helyének lefoglalása előre"
+STR_UPD_PREALLOCATE_H   			= "A töredezettség minimalizálása érdekében a letöltés megkezdése előtt foglalja le a teljes fájlméretet a lemezen"
 STR_UPD_TOTALSIZE             = "Kijelölt letöltések össz mérete: %d MB"
 STR_UPD_TOTALAVAIL            = "Teljes tárterület: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -308,15 +309,15 @@ STR_UPD_THOUR                 = "óra"
 STR_UPD_TDAY                  = "nap"
 STR_UPD_BASEFILES             = "Alkalmazás + indexek"
 STR_UPD_APP                   = "Alkalmazás"
-STR_UPD_INDEXES               = "Indexek"
+STR_UPD_INDICES               = "Indexek"
 STR_UPD_UPDATEHINT1           = "Utalás"
 STR_UPD_UPDATEHINT2           = "Elõszõr frissítenie kell a szoftvert, hogy ezt a funkciót használhassa."
 
 // Update hint
 STR_UPD_CHECKING              = "Frissítések keresése"
-STR_UPD_AVAIL1          = "Programfrissítés érhető el : SDI R%d"
+STR_UPD_AVAIL1          			= "Programfrissítés érhető el : SDI %d"
 STR_UPD_AVAIL2                = "Driver-frissítés érhető el : %d csomag"
-STR_UPD_AVAIL3          = "Programfrissítés érhető el : SDI R%d, valamint: %d Driver-csomag tölthető le"
+STR_UPD_AVAIL3          			= "Programfrissítés érhető el : SDI %d, valamint: %d Driver-csomag tölthető le"
 STR_UPD_START                 = "(Klikkeljen ide a letöltéshez)"
 STR_UPD_PROGRES               = "%s letöltve >>> %s-ból (%d%%)"
 STR_UPD_MODIFY                = "(Klikkeljen ide a letöltendő frissítések - csomagok kijelöléséhez...)"
@@ -387,8 +388,8 @@ STR_OPTION_MAX_UPLOAD         = "Max.feltöltési sebesség byte/s  (0:korlátla
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Eszközmeghajtók (Drivers)"
-STR_OPTION_DIR_INDEXES        = "Indexek"
-STR_OPTION_DIR_INDEXESH       = "Indexek (olvasható szövegfájl formátumban)"
+STR_OPTION_DIR_INDICES        = "Indexek"
+STR_OPTION_DIR_INDICESH       = "Indexek (olvasható szövegfájl formátumban)"
 STR_OPTION_DIR_DATA           = "Témák és fordítások"
 STR_OPTION_DIR_LOGS           = "Naplófájlok"
 
@@ -447,7 +448,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Hálózati meghajtó csomagok és Indexek"
 STR_USBWIZ_PAGE3_SELECTED     = "Kijelölt Illesztőprogram-csomagok és Indexek"
 STR_USBWIZ_PAGE3_NOPACKS      = "Nincsenek Illesztőprogram-csomagok"
 STR_USBWIZ_PAGE3_ADDPATH      = "További driver könyvtár megadása"
-STR_USBWIZ_PAGE3_INDEXES      = "Online Indexekkel együtt"
+STR_USBWIZ_PAGE3_INDICES      = "Online Indexekkel együtt"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Környezet"

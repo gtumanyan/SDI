@@ -16,8 +16,11 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 // have to link in comctl32
 // and call InitCommonControlsEx
 
-#include "utils/BaseUtil.h"
 #include <windows.h>
+#include <stdio.h>
+#include <iostream>
+#include <fstream>
+
 #include "logging.h"
 
 #include "SDI.h"
@@ -36,10 +39,6 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "indexing.h"
 #include <Shlwapi.h>
 #include "theme.h"
-#include <stdio.h>
-#include <iostream>
-#include <fstream>
-#include "utils/WinUtil.h"
 
 extern HINSTANCE hMainInstance;
 extern USBWizard *USBWiz;
@@ -323,7 +322,7 @@ static void BuildFilesList(HWND hwnd)
     }
 
     // online indexes
-    if(USBWiz->IncludeOnlineIndexes)
+    if(USBWiz->IncludeOnlineIndices)
     {
         Collection *col=manager_g->matcher->getCol();
         std::wstring spec(col->getIndex_bin_dir());
@@ -648,7 +647,7 @@ static LRESULT CALLBACK Page3DlgProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lP
             SetWindowText(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_SELECTED),STR(STR_USBWIZ_PAGE3_SELECTED));
             SetWindowText(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_NOPACKS),STR(STR_USBWIZ_PAGE3_NOPACKS));
             SetWindowText(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_ADDPATH),STR(STR_USBWIZ_PAGE3_ADDPATH));
-            SetWindowText(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_INDEXES),STR(STR_USBWIZ_PAGE3_INDEXES));
+            SetWindowText(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_INDEXES),STR(STR_USBWIZ_PAGE3_INDICES));
             return TRUE;
         }
         case WM_COMMAND:
@@ -679,7 +678,7 @@ static LRESULT CALLBACK Page3DlgProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lP
                 }
                 else if(cid==IDC_USBWIZ_PAGE3_INDEXES)
                 {
-                    USBWiz->IncludeOnlineIndexes=SendMessage(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_INDEXES),BM_GETCHECK,0,0);
+                    USBWiz->IncludeOnlineIndices=SendMessage(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_INDEXES),BM_GETCHECK,0,0);
                     BuildFilesList(hwnd);
                 }
                 else if((cid==IDC_USBWIZ_PAGE3_PATHEDIT)&&(ntc==EN_CHANGE))
@@ -695,7 +694,7 @@ static LRESULT CALLBACK Page3DlgProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lP
                     if(USBWiz->AdditionalPath.size()>0)
                         wcscpy(path,USBWiz->AdditionalPath.c_str());
                     else
-                        wcscpy(path, GetSelfExePathWTemp());
+                        wcscpy(path,System.AppPathW().c_str());
                     if(System.ChooseDir(path,L"Select Additional Path"))
                     {
                         SendMessage(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_PATHEDIT),WM_SETTEXT,0,LPARAM(path));

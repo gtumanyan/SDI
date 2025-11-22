@@ -1,6 +1,6 @@
 ﻿// send updates to https://t.me/Snappy_Driver_Installer
 
-STR_TRANSLATORS               = "Skywalker59, Sokarz, Arzach4"
+STR_TRANSLATORS               = "Skywalker59, Sokarz, Arzach4, WindR"
 
 STR_LANG_NAME                 = "Français"
 STR_LANG_ID                   = "French"
@@ -20,7 +20,7 @@ STR_SELECT_NONE               = "Désélectionner tout"
 STR_SELECT_NONE_H             = "Ctrl+N"
 
 STR_LANG                      = "Langue (Language)"
-STR_LANG_H                    = "choisissez votre langue"
+STR_LANG_H                    = "Choisissez votre langue"
 STR_THEME                     = "Thème"
 STR_THEME_H                   = "Sélectionnez un thème"
 STR_EXPERT                    = "Mode Expert"
@@ -54,7 +54,7 @@ STR_SHOW_MISSING_H            = "Affiche les pilotes des packs pour les périph�
 STR_SHOW_NEWER                = "Plus récents"
 STR_SHOW_NEWER_H              = "Affiche les pilotes des packs qui sont plus récents que ceux actuellement instalés.\n\nNous vous recommandons d'installer ces pilotes."
 STR_SHOW_CURRENT              = "Actuels"
-STR_SHOW_CURRENT_H            = "Affiche les pilote des packs qui correspondent aux pilotes actuellement installés.\n\nNous vous recommandons de ne PAS installer ces pilotes sauf si ceux installés ont été corrompus."
+STR_SHOW_CURRENT_H            = "Affiche les pilotes des packs qui correspondent aux pilotes actuellement installés.\n\nNous vous recommandons de ne PAS installer ces pilotes sauf si ceux installés ont été corrompus."
 STR_SHOW_OLD                  = "Plus anciens"
 STR_SHOW_OLD_H                = "Affiche les pilotes des packs qui sont plus anciens que ceux actuellement installés.\n\nNous vous recommandons de ne PAS installer ces pilotes sauf si vous avez rencontré des problèmes avec les pilotes plus récents."
 STR_SHOW_BETTER               = "Meilleurs"
@@ -69,7 +69,7 @@ STR_SHOW_NF_MISSING_H         = "Affiche les périphériques qui nécessitent un
 STR_SHOW_NF_UNKNOWN           = "Inconnus"
 STR_SHOW_NF_UNKNOWN_H         = "Affiche les pilotes inconnus qui sont installés mais non trouvés dans les packs.\n\nNous vous conseillons de nous informer sur les pilotes manquants afin qu'ils puissent être ajoutés aux packs."
 STR_SHOW_NF_STANDARD          = "Standards"
-STR_SHOW_NF_STANDARD_H        = "Affiche les pilotes standards qui sont installés mais non trouvés dans les packs.\n\nCes pilotes sont généralement installées avec Windows et ne nécessitent pas de mises à jour."
+STR_SHOW_NF_STANDARD_H        = "Affiche les pilotes standards qui sont installés mais non trouvés dans les packs.\n\nCes pilotes sont généralement installés avec Windows et ne nécessitent pas de mises à jour."
 
 STR_SHOW_DISPLAY              = "Afficher"
 STR_SHOW_DISPLAY_H            = "Filtres d'affichage"
@@ -282,6 +282,7 @@ STR_UPD_BTN_THISPC_H          = "Pour définir quels packs sont nécessaire vous
 STR_UPD_OPTIONS               = "Options"
 STR_UPD_ONLYUPDATES           = "Ne pas signaler les packs manquants"
 STR_UPD_PREALLOCATE						= "Préallouer de l'espace disque dur pour éviter la fragmentation"
+STR_UPD_PREALLOCATE_H   			= "Allouer les tailles entières des fichiers sur le disque avant de commencer les téléchargements, afin de minimiser la fragmentation"
 STR_UPD_TOTALSIZE             = "Taille totale du téléchargement: %d Mo"
 STR_UPD_TOTALAVAIL            = "Espace disque disponible: %d MO"
 STR_UPD_BTN_OK                = "OK"
@@ -309,15 +310,15 @@ STR_UPD_THOUR                 = "heures"
 STR_UPD_TDAY                  = "jours"
 STR_UPD_BASEFILES             = "Application+index"
 STR_UPD_APP                   = "Application"
-STR_UPD_INDEXES               = "Index"
+STR_UPD_INDICES               = "Index"
 STR_UPD_UPDATEHINT1           = "Astuce"
 STR_UPD_UPDATEHINT2           = "Vous devez mettre à jour la base avant de pouvoir utiliser cette fonction."
 
 // Update hint
 STR_UPD_CHECKING              = "Vérification des mises à jour"
-STR_UPD_AVAIL1		          = "Mises à jour disponibles: SDI R%d"
+STR_UPD_AVAIL1		          	= "Mises à jour disponibles: SDI %d"
 STR_UPD_AVAIL2                = "Mises à jour disponibles: %d packs de pilotes"
-STR_UPD_AVAIL3				= "Mises à jour disponibles: SDI R%d et %d packs de pilotes"
+STR_UPD_AVAIL3								= "Mises à jour disponibles: SDI %d et %d packs de pilotes"
 STR_UPD_START                 = "(Cliquer ici pour lancer le téléchargement)"
 STR_UPD_PROGRES               = "Téléchargé %s de %s (%d%%)"
 STR_UPD_MODIFY                = "(Cliquer ici pour sélectionner les mises à jour)"
@@ -388,8 +389,8 @@ STR_OPTION_MAX_UPLOAD         = "Vitesse d'émission maximale en Ko/s (0 - illim
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Pilotes"
-STR_OPTION_DIR_INDEXES        = "Index"
-STR_OPTION_DIR_INDEXESH       = "Indexs (lisible en clair)"
+STR_OPTION_DIR_INDICES        = "Index"
+STR_OPTION_DIR_INDICESH       = "Indexs (lisible en clair)"
 STR_OPTION_DIR_DATA           = "Thèmes et traductions"
 STR_OPTION_DIR_LOGS           = "Fichiers log"
 
@@ -448,7 +449,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Packs et index de pilotes réseau"
 STR_USBWIZ_PAGE3_SELECTED     = "Packs de pilotes sélectionnés et index"
 STR_USBWIZ_PAGE3_NOPACKS      = "Pas de packs de pilotes"
 STR_USBWIZ_PAGE3_ADDPATH      = "Spécifiez un répertoire de pilote supplémentaire"
-STR_USBWIZ_PAGE3_INDEXES      = "Inclure les index en ligne"
+STR_USBWIZ_PAGE3_INDICES      = "Inclure les index en ligne"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Environnement"

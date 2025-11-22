@@ -282,6 +282,7 @@ STR_UPD_BTN_THISPC_H          = "あなたが必要とする Driverpacks を判�
 STR_UPD_OPTIONS               = "オプション"
 STR_UPD_ONLYUPDATES           = "存在しない Driverpacks に関する通知はしない"
 STR_UPD_PREALLOCATE						= "すべてのファイルにディスク領域を事前に割り当てる"
+STR_UPD_PREALLOCATE_H = "ダウンロード開始前にディスク上のスペースを割り当てることで、フラグメンテーションを軽減します"
 STR_UPD_TOTALSIZE             = "合計ダウンロードサイズ: %d MB"
 STR_UPD_TOTALAVAIL            = "利用可能な空き領域: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -309,15 +310,15 @@ STR_UPD_THOUR                 = "時間"
 STR_UPD_TDAY                  = "日"
 STR_UPD_BASEFILES             = "アプリケーション+インデックス"
 STR_UPD_APP                   = "アプリケーション"
-STR_UPD_INDEXES               = "インデックス"
+STR_UPD_INDICES               = "インデックス"
 STR_UPD_UPDATEHINT1           = "ヒント"
 STR_UPD_UPDATEHINT2           = "この機能を使用するにはベースの更新が必要です。"
 
 // Update hint
 STR_UPD_CHECKING              = "アップデートの確認"
-STR_UPD_AVAIL1                = "利用可能なアップデート: SDI R%d"
+STR_UPD_AVAIL1                = "利用可能なアップデート: SDI %d"
 STR_UPD_AVAIL2                = "利用可能なアップデート: %d 個の Driverpacks"
-STR_UPD_AVAIL3                = "利用可能なアップデート: SDI R%d と %d 個の Driverpacks"
+STR_UPD_AVAIL3                = "利用可能なアップデート: SDI %d と %d 個の Driverpacks"
 STR_UPD_START                 = "(ここをクリックでダウンロード開始)"
 STR_UPD_PROGRES               = "ダウンロード済 %s / %s (%d%%)"
 STR_UPD_MODIFY                = "(ここをクリックで更新を選択)"
@@ -388,8 +389,8 @@ STR_OPTION_MAX_UPLOAD         = "最大アップロード速度 - bytes/秒 (0: 
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "ドライバー"
-STR_OPTION_DIR_INDEXES        = "インデックス"
-STR_OPTION_DIR_INDEXESH       = "インデックス (判読可能形式)"
+STR_OPTION_DIR_INDICES        = "インデックス"
+STR_OPTION_DIR_INDICESH       = "インデックス (判読可能形式)"
 STR_OPTION_DIR_DATA           = "テーマおよび翻訳"
 STR_OPTION_DIR_LOGS           = "ログ ファイル"
 
@@ -448,7 +449,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "ネットワークドライバパックとイ�
 STR_USBWIZ_PAGE3_SELECTED     = "選択したドライバーパックとインデックス"
 STR_USBWIZ_PAGE3_NOPACKS      = "ドライバーパックなし"
 STR_USBWIZ_PAGE3_ADDPATH      = "追加のドライバディレクトリを指定します"
-STR_USBWIZ_PAGE3_INDEXES      = "オンラインインデックスを含める"
+STR_USBWIZ_PAGE3_INDICES      = "オンラインインデックスを含める"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "環境"

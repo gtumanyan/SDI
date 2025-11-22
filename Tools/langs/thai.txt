@@ -6,10 +6,10 @@ STR_LANG_NAME                 = "ภาษาไทย"
 STR_LANG_ID                   = "Thai"
 STR_LANG_GROUP                = 0x000B // LGRPID_THAI
 STR_LANG_CODE                 = 0x1E
-
+STR_RTL                       = 0
 
 // left panel
-STR_SHOW_SYSINFO              = ""
+STR_SHOW_SYSINFO              = "ข้อมูลระบบ"
 STR_SHOW_SYSINFO_H            = "ข้อมูลระบบ"
 
 STR_INSTALL                   = "ติดตั้ง"
@@ -262,6 +262,7 @@ STR_HINT_DRIVER               = "กดปุ่ม Ctrl เพื่อเป�
 STR_SYS_WINVER                = "รุ่นของ windows"
 STR_SYS_32                    = "32 บิต"
 STR_SYS_64                    = "64 บิต"
+STR_SYS_DETECT                = "ตรวจจับเวอร์ชันของระบบปฏิบัติการ"
 STR_SYS_DEVICEMNG             = "การจัดการอุปกรณ์"
 STR_SYS_DISINSTALL            = "ปิดใช้งานการติดตั้ง"
 STR_SYS_DISRESTPNT            = "ปิดการใช้งานระบบการเรียกคืน"
@@ -280,7 +281,7 @@ STR_UPD_BTN_THISPC            = "สำหรับเครื่องคอ�
 STR_UPD_BTN_THISPC_H          = "เพื่อตรวจสอบว่าอันไหนคือแพ็คไดร์เวอร์ที่คุณต้องการ คุณต้องดาวน์โหลดดัชนีก่อน"
 STR_UPD_OPTIONS               = "ตัวเลือก"
 STR_UPD_ONLYUPDATES           = "ไม่ต้องแจ้งเตือนเกี่ยวกับแพ็คไดร์เวอร์ที่หายไป"
-STR_UPD_PREALLOCATE			= "จัดสรรพื้นที่ hdd ล่วงหน้าเพื่อหลีกเลี่ยงการกระจายตัว"
+STR_UPD_PREALLOCATE						= "จัดสรรพื้นที่ hdd ล่วงหน้าเพื่อหลีกเลี่ยงการกระจายตัว"
 STR_UPD_TOTALSIZE             = "ขนาดการดาวน์โหลดทั้งหมด: %d เมกะไบต์"
 STR_UPD_TOTALAVAIL            = "พื้นที่ที่มีอยู่ทั้งหมด: %d เมกกะไบต์"
 STR_UPD_BTN_OK                = "ตกลง"
@@ -308,7 +309,7 @@ STR_UPD_THOUR                 = "ชั่วโมง"
 STR_UPD_TDAY                  = "วัน"
 STR_UPD_BASEFILES             = "แอพพลิเคชัน+ดัชนี"
 STR_UPD_APP                   = "แอพพลิเคชัน"
-STR_UPD_INDEXES               = "ดัชนี"
+STR_UPD_INDICES               = "ดัชนี"
 STR_UPD_UPDATEHINT1           = "คำแนะนำ"
 STR_UPD_UPDATEHINT2           = "เพื่อใช้คุณลักษณะนี้คุณจะต้องอัพเดทก่อน"
 
@@ -387,8 +388,8 @@ STR_OPTION_MAX_UPLOAD         = "ความเร็วการอัพโ�
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "ไดร์เวอร์"
-STR_OPTION_DIR_INDEXES        = "ดัชนี"
-STR_OPTION_DIR_INDEXESH       = "ดัชนี (มนุษย์สามารถอ่านได้)"
+STR_OPTION_DIR_INDICES        = "ดัชนี"
+STR_OPTION_DIR_INDICESH       = "ดัชนี (มนุษย์สามารถอ่านได้)"
 STR_OPTION_DIR_DATA           = "ธีมและภาษา"
 STR_OPTION_DIR_LOGS           = "ไฟล์ Log"
 
@@ -447,7 +448,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "ชุดไดรเวอร์และด�
 STR_USBWIZ_PAGE3_SELECTED     = "ชุดไดรเวอร์และดัชนีที่เลือก"
 STR_USBWIZ_PAGE3_NOPACKS      = "ไม่มีชุดโปรแกรมควบคุม"
 STR_USBWIZ_PAGE3_ADDPATH      = "ระบุไดเร็กทอรีไดร์เวอร์เพิ่มเติม"
-STR_USBWIZ_PAGE3_INDEXES      = "รวมดัชนีออนไลน์"
+STR_USBWIZ_PAGE3_INDICES      = "รวมดัชนีออนไลน์"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "สิ่งแวดล้อม"

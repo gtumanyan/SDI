@@ -290,7 +290,8 @@ STR_UPD_BTN_THISPC            = "Yalnız bu PK"
 STR_UPD_BTN_THISPC_H          = "Drayverpacda bu PK üçün hansı yenilənmələr var təyin etmək üçün ilk növbədə indeksləri yükləmək lazım."
 STR_UPD_OPTIONS               = "Seçimlər"
 STR_UPD_ONLYUPDATES           = "Olmayan drayverlər haqqında xəbər verməmək"
-STR_UPD_PREALLOCATE						= "Qeyd disk qarşısını almaq üçün parçalanma"
+STR_UPD_PREALLOCATE			  = "Bütün fayllar üçün əvvəlcədən yer ayırmaq"
+STR_UPD_PREALLOCATE_H		  = "Daha çox hissələrə bölünmənin qarşısını almaq üçün diskdə tam fayl ölçüsündə yer ayrılır"
 STR_UPD_TOTALSIZE             = "Yenilənmələrin ümumi həcmi: %d MB"
 STR_UPD_TOTALAVAIL            = "Mövcud boşluq: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -318,7 +319,7 @@ STR_UPD_THOUR                 = "saat"
 STR_UPD_TDAY                  = "gün"
 STR_UPD_BASEFILES             = "Proqram+indekslər"
 STR_UPD_APP                   = "Proqram"
-STR_UPD_INDEXES               = "Yeni packların indeksləri"
+STR_UPD_INDICES               = "Yeni packların indeksləri"
 STR_UPD_UPDATEHINT1           = "Məsləhət"
 STR_UPD_UPDATEHINT2           = "Siz ilk növbədə indekslə olan prıqramı yeniləməlisiz."
 
@@ -397,8 +398,8 @@ STR_OPTION_MAX_UPLOAD         = "Maksimum yükləmə sürəti KB/s (0 - unlimite
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Sürücülər"
-STR_OPTION_DIR_INDEXES        = "İndekslər"
-STR_OPTION_DIR_INDEXESH       = "İndekslər (insan oxunaqlı)"
+STR_OPTION_DIR_INDICES        = "İndekslər"
+STR_OPTION_DIR_INDICESH       = "İndekslər (insan oxunaqlı)"
 STR_OPTION_DIR_DATA           = "Mövzular və tərcümələr"
 STR_OPTION_DIR_LOGS           = "Faylları qeyd edin"
 
@@ -453,7 +454,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Şəbəkə drayver paketləri və indeksləri"
 STR_USBWIZ_PAGE3_SELECTED     = "Qeyd olunmuş drayverlər və indekslər"
 STR_USBWIZ_PAGE3_NOPACKS      = "Drayverlər yoxdur"
 STR_USBWIZ_PAGE3_ADDPATH      = "Əlavə drayver kataloqunu qeyd edin"
-STR_USBWIZ_PAGE3_INDEXES      = "Online-indeksləri yandırmaq"
+STR_USBWIZ_PAGE3_INDICES      = "Online-indeksləri yandırmaq"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Mühit"

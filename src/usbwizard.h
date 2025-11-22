@@ -42,7 +42,7 @@ class USBWizard
         int Themes=0;                              // 0=all, 1=current, 2=default
         std::wstring AdditionalPath;
         bool pathChanged=false;
-        bool IncludeOnlineIndexes=false;
+        bool IncludeOnlineIndices=false;
         bool ExpertMode=false;
         bool NoUpdates=true;
         bool NoSnapshots=false;

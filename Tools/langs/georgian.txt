@@ -281,7 +281,8 @@ STR_UPD_BTN_THISPC            = "ამ კომპიუტერში"
 STR_UPD_BTN_THISPC_H          = "იმისათვის, რომ დადგინდეს, თუ რა დრაივერპაკები შეიცავს განახლება თქვენ კომპიუტერში, თქვენ ჯერ უნდა ჩამოტვირთოთ ინდექსები."
 STR_UPD_OPTIONS               = "Პარამეტრები"
 STR_UPD_ONLYUPDATES           = "გთავაზობთ მხოლოდ დრაივერპაკების განახლებებს"
-STR_UPD_PREALLOCATE						= "წინასწარ გამოყავით HDD სივრცე ფრაგმენტაციის თავიდან ასაცილებლად"
+STR_UPD_PREALLOCATE 					= "დისკის სივრცის გამოყოფა ფრაგმენტაციის თავიდან აცილებისთვის"
+STR_UPD_PREALLOCATE_H 				= "გამოყოს დისკის სივრცე ჩამოტვირთვის დაწყებამდე ფრაგმენტაციის შესამცირებლად"
 STR_UPD_TOTALSIZE             = "განახლებების საერთო მოცულობა: %d მბ"
 STR_UPD_TOTALAVAIL            = "სულ ხელმისაწვდომი სივრცე: %d მბ"
 STR_UPD_BTN_OK                = "OK"
@@ -309,15 +310,15 @@ STR_UPD_THOUR                 = "სთ"
 STR_UPD_TDAY                  = "დკ"
 STR_UPD_BASEFILES             = "პროგრამა+ინდექსები"
 STR_UPD_APP                   = "პროგრამა"
-STR_UPD_INDEXES               = "ახალი პაკების ინდექსები"
+STR_UPD_INDICES               = "ახალი პაკების ინდექსები"
 STR_UPD_UPDATEHINT1           = "შენიშვნა"
 STR_UPD_UPDATEHINT2           = "თქვენ უნდა გააკეთოთ ინდექსიტ პროგრამის განახლება."
 
 // Update hint
 STR_UPD_CHECKING              = "მიმდინარეობს განახლებების შემოწმება"
-STR_UPD_AVAIL1                = "განახლებები ხელმისაწვდომია ინტერნეტიდან: SDI R%d"
+STR_UPD_AVAIL1                = "განახლებები ხელმისაწვდომია ინტერნეტიდან: SDI %d"
 STR_UPD_AVAIL2                = "განახლებები ხელმისაწვდომია ინტერნეტიდან: %d დრაივერპაკები"
-STR_UPD_AVAIL3                = "განახლებები ხელმისაწვდომია ინტერნეტიდან: SDI R%d და %d დრაივერპაკები"
+STR_UPD_AVAIL3                = "განახლებები ხელმისაწვდომია ინტერნეტიდან: SDI %d და %d დრაივერპაკები"
 STR_UPD_START                 = "(დააჭირეთ აქ, რათა დაიწყოს ჩამოტვირთვა)"
 STR_UPD_PROGRES               = "ატვირთულია %s %s დან (%d%%)"
 STR_UPD_MODIFY                = "(დააჭირეთ აქ, რათა აირჩიოთ განახლებები)"
@@ -388,8 +389,8 @@ STR_OPTION_MAX_UPLOAD         = "მაქსიმალური ატვი�
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "დრაივერები"
-STR_OPTION_DIR_INDEXES        = "ინდექსები"
-STR_OPTION_DIR_INDEXESH       = "ინდექსები როგორც ტექსტი"
+STR_OPTION_DIR_INDICES        = "ინდექსები"
+STR_OPTION_DIR_INDICESH       = "ინდექსები როგორც ტექსტი"
 STR_OPTION_DIR_DATA           = "თარგმანები და თემები"
 STR_OPTION_DIR_LOGS           = "ლოგები"
 
@@ -448,7 +449,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "ქსელის დრაივერებ�
 STR_USBWIZ_PAGE3_SELECTED     = "შერჩეული დრაივერების პაკეტები და ინდექსები"
 STR_USBWIZ_PAGE3_NOPACKS      = "მძღოლის პაკეტები არ არის"
 STR_USBWIZ_PAGE3_ADDPATH      = "მიუთითეთ დრაივერის დამატებითი დირექტორია"
-STR_USBWIZ_PAGE3_INDEXES      = "ჩართეთ ონლაინ ინდექსები"
+STR_USBWIZ_PAGE3_INDICES      = "ჩართეთ ონლაინ ინდექსები"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "გარემოს"

@@ -290,7 +290,8 @@ STR_UPD_BTN_THISPC            = "Само за този компютър"
 STR_UPD_BTN_THISPC_H          = "За да определите кои пакети с драйвери са Ви нужни, трябва първо да изтеглите индексите."
 STR_UPD_OPTIONS               = "Настройки"
 STR_UPD_ONLYUPDATES           = "Не ме уведомявай за липсващи пакети с драйвери"
-STR_UPD_PREALLOCATE						= "Предварително разпределете място на твърдия диск, за да избегнете фрагментиране"
+STR_UPD_PREALLOCATE			  = "Преразпредели дисково пространство за всички файлове"
+STR_UPD_PREALLOCATE_H		  = "Задели пълните файлови размери на диск преди започване на изтегляния, да се минимизира фрагментацията"
 STR_UPD_TOTALSIZE             = "Размер на изтеглените данни: %d МБ"
 STR_UPD_TOTALAVAIL            = "Свободно пространство: %d МБ"
 STR_UPD_BTN_OK                = "ОК"
@@ -318,7 +319,7 @@ STR_UPD_THOUR                 = "часа"
 STR_UPD_TDAY                  = "дни"
 STR_UPD_BASEFILES             = "Програма+Индекси"
 STR_UPD_APP                   = "Програма"
-STR_UPD_INDEXES               = "Индекси"
+STR_UPD_INDICES               = "Индекси"
 STR_UPD_UPDATEHINT1           = "Съвет"
 STR_UPD_UPDATEHINT2           = "Трябва да обновите базата от данни преди да използвате тази функция."
 
@@ -397,8 +398,8 @@ STR_OPTION_MAX_UPLOAD         = "Максимална скорост на кач
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Драйвери"
-STR_OPTION_DIR_INDEXES        = "Индекси"
-STR_OPTION_DIR_INDEXESH       = "Индекси (в текстов вид)"
+STR_OPTION_DIR_INDICES        = "Индекси"
+STR_OPTION_DIR_INDICESH       = "Индекси (в текстов вид)"
 STR_OPTION_DIR_DATA           = "Теми и преводи"
 STR_OPTION_DIR_LOGS           = "Дневници"
 
@@ -457,7 +458,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Мрежови пакети с драйвери
 STR_USBWIZ_PAGE3_SELECTED     = "Избраните пакети с драйвери и индекси"
 STR_USBWIZ_PAGE3_NOPACKS      = "Без пакети с драйвери"
 STR_USBWIZ_PAGE3_ADDPATH      = "Посочи допълнителна папка с драйвери"
-STR_USBWIZ_PAGE3_INDEXES      = "Включи индексите от Интернет"
+STR_USBWIZ_PAGE3_INDICES      = "Включи индексите от Интернет"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Среда"

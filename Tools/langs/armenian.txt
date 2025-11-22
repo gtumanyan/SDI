@@ -290,7 +290,8 @@ STR_UPD_BTN_THISPC            = "Տարբերակել միայն նշված հա
 STR_UPD_BTN_THISPC_H          = "Որպեսզի տարբերակեք դրայվերների փաթեթի որ դրայվերներն են անհրաժեշտ այս համակարգչի համար, առաջնահերթ հարկավոր է բեռնել ինդեքսները:"
 STR_UPD_OPTIONS               = "Ընտրանքներ"
 STR_UPD_ONLYUPDATES           = "Չտեղեկացնել բացակայող դրայվերների փաթեթի մասին"
-STR_UPD_PREALLOCATE						= "Առանձնացնել կոշտ սկավառակի տարածություն կանխելու համար մասնատման"
+STR_UPD_PREALLOCATE 					= "Առանձնացնել կոշտ սկավառակի տարածությունը բեկորմտումից կանխելու համար"
+STR_UPD_PREALLOCATE_H 				= "Տեղակայել կոշտ սկավառակի տարածությունը բեռնման բեկորմտումից կանխելու համար"
 STR_UPD_TOTALSIZE             = "Բեռնման գումարային ծավալը. %d МБ"
 STR_UPD_TOTALAVAIL            = "Ընդամենը մնացել է %d MB"
 STR_UPD_BTN_OK                = "Օկ"
@@ -318,7 +319,7 @@ STR_UPD_THOUR                 = "ժամ"
 STR_UPD_TDAY                  = "օր"
 STR_UPD_BASEFILES             = "Ծրագիր+ինդեքսներ"
 STR_UPD_APP                   = "Ծրագիր"
-STR_UPD_INDEXES               = "Ինդեքսներ"
+STR_UPD_INDICES               = "Ինդեքսներ"
 STR_UPD_UPDATEHINT1           = "Ակնարկ"
 STR_UPD_UPDATEHINT2           = "Դուք առաջնահերթ պետք է թարմացնեք բազան, այս հնարավորությունից օգտվելու համար:"
 
@@ -397,8 +398,8 @@ STR_OPTION_MAX_UPLOAD         = "Ներբեռմնան առավելագույն �
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Դրայվերներ"
-STR_OPTION_DIR_INDEXES        = "Ինդեքսներ"
-STR_OPTION_DIR_INDEXESH       = "Ինդեքսները (ընթեռնելի)"
+STR_OPTION_DIR_INDICES        = "Ինդեքսներ"
+STR_OPTION_DIR_INDICESH       = "Ինդեքսները (ընթեռնելի)"
 STR_OPTION_DIR_DATA           = "Երեսարկներ և թարմգանություններ"
 STR_OPTION_DIR_LOGS           = "Տեղեկամատյանի ֆայլեր"
 
@@ -457,7 +458,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Ցանցի վարորդների փաթեթնե�
 STR_USBWIZ_PAGE3_SELECTED     = "Ընտրված վարորդների փաթեթներ և ինդեքսներ"
 STR_USBWIZ_PAGE3_NOPACKS      = "Վարորդների փաթեթներ չկան"
 STR_USBWIZ_PAGE3_ADDPATH      = "Նշեք լրացուցիչ վարորդների գրացուցակը"
-STR_USBWIZ_PAGE3_INDEXES      = "Ներառեք առցանց ինդեքսները"
+STR_USBWIZ_PAGE3_INDICES      = "Ներառեք առցանց ինդեքսները"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "բնապահպանական"

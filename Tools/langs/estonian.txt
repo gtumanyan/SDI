@@ -9,7 +9,7 @@ STR_LANG_CODE                 = 0x25
 STR_RTL                       = 0
 
 // left panel
-STR_SHOW_SYSINFO              = "Süsteemi informatsioon"
+STR_SHOW_SYSINFO              = ""
 STR_SHOW_SYSINFO_H            = "Süsteemi informatsioon"
 
 STR_INSTALL                   = "Paigalda"
@@ -282,6 +282,7 @@ STR_UPD_BTN_THISPC_H          = "Vajalike draiveri kogumikkude kindlaks määram
 STR_UPD_OPTIONS               = "Valikud"
 STR_UPD_ONLYUPDATES           = "Ära näita puuduvaid kogumikke"
 STR_UPD_PREALLOCATE						= "Hõiva ette ketta ruum kõikidele failidele"
+STR_UPD_PREALLOCATE_H 				= "Hõivab täielikult kogu faili mahu enne allalaadimist, et vähendada fragmentatsiooni"
 STR_UPD_TOTALSIZE             = "Allalaadimise suurus: %d MB"
 STR_UPD_TOTALAVAIL            = "Vaba kettaruum: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -309,15 +310,15 @@ STR_UPD_THOUR                 = "tunnid"
 STR_UPD_TDAY                  = "päevad"
 STR_UPD_BASEFILES             = "Programm+Indeksid"
 STR_UPD_APP                   = "Programm"
-STR_UPD_INDEXES               = "Indeksid"
+STR_UPD_INDICES               = "Indeksid"
 STR_UPD_UPDATEHINT1           = "Vihje"
 STR_UPD_UPDATEHINT2           = "Enne tuleb uuendada baas, et kasutada seda sätet."
 
 // Update hint
 STR_UPD_CHECKING              = "Värskenduste kontrollimine"
-STR_UPD_AVAIL1                = "Uuendused on saadaval: SDI R%d"
+STR_UPD_AVAIL1                = "Uuendused on saadaval: SDI %d"
 STR_UPD_AVAIL2                = "Uuendused on saadaval: %d draiveri kogumikku"
-STR_UPD_AVAIL3                = "Uuendused on saadaval: SDI R%d ja %d draiveri kogumikke jaoks"
+STR_UPD_AVAIL3                = "Uuendused on saadaval: SDI %d ja %d draiveri kogumikke jaoks"
 STR_UPD_START                 = "(Vajutage siia, et alustad allalaadimist)"
 STR_UPD_PROGRES               = "Allalaetud %s / %s (%d%%)"
 STR_UPD_MODIFY                = "(Vajutage siia, et valida uuendused)"
@@ -388,8 +389,8 @@ STR_OPTION_MAX_UPLOAD         = "Maksimaalne üleslaadimise kiirus KB/s (0 - pii
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Draiverid"
-STR_OPTION_DIR_INDEXES        = "Indeksid"
-STR_OPTION_DIR_INDEXESH       = "Indeksid (inimloetav)"
+STR_OPTION_DIR_INDICES        = "Indeksid"
+STR_OPTION_DIR_INDICESH       = "Indeksid (inimloetav)"
 STR_OPTION_DIR_DATA           = "Väljanägemine ja keeled"
 STR_OPTION_DIR_LOGS           = "Logi failid"
 
@@ -418,13 +419,13 @@ STR_WELCOME_BUTTON3           = "Ainult indeksite allalaadimine"
 STR_WELCOME_BUTTON3_DESC      = "See võimaldab teil oma arvutit skannida, et näha, milliseid draivereid tuleb installida või uuendada. Allalaadimine võtab aega vaid paar minutit, kuid vajalike draiveripakettide allalaadimiseks on vaja internetiühendust. Kui olete juhuslik kasutaja, siis see on soovitud valik."
 STR_WELCOME_CLOSE             = "Sulge"
 
-// USB Wizard - page 1
+// USB Wizard - Page 1
 STR_USBWIZ_TITLE              = "Loo USB-draiv"
 STR_USBWIZ_SPACEREQ           = "Nõutav ruum:"
 STR_USBWIZ_SPACEAVAIL         = "Saadaval ruumi:"
 STR_USBWIZ_PAGE1_DESC         = "See viisard aitab teil luua kaasaskantava USB-draivi, mis sisaldab Snappy Driver Installer ja valitud faile. N Failid kopeeritakse valitud seadme juurkataloogi. Peaksite veenduma, et seadmel on piisav maht nõutavate failide salvestamiseks. Teile antakse võimalus esmalt seade kustutada."
 
-// USB Wizard - page 2
+// USB Wizard - Page 2
 STR_USBWIZ_PAGE2_TITLE        = "Sihtauto"
 STR_USBWIZ_PAGE2_SUBTITLE     = "Valige eemaldatav draiv."
 STR_USBWIZ_PAGE2_DESC         = "Snappy Driver Installer paigaldatakse valitud eemaldatava draivi juurkataloogi. Sisestage USB-draiv nüüd."
@@ -439,7 +440,7 @@ STR_USBWIZ_PAGE2_DELCONF      = "Kustuta eemaldatav draiv"
 STR_USBWIZ_PAGE2_DELCONF1     = "Olete eemaldamas kõik andmed eemaldatavast draivist"
 STR_USBWIZ_PAGE2_DELCONF2     = "Kas olete kindel, et soovite seda teha?"
 
-// USB Wizard - page 3
+// USB Wizard - Page 3
 STR_USBWIZ_PAGE3_TITLE        = "Juhi pakendid"
 STR_USBWIZ_PAGE3_SUBTITLE     = "Valige, milliste draiveripakettide ja indeksite hulka soovite lisada."
 STR_USBWIZ_PAGE3_SELECT       = "Valige draiveripaketid, et lisada:"
@@ -448,9 +449,9 @@ STR_USBWIZ_PAGE3_NETWORK      = "Võrgu draiveri paketid ja indeksid"
 STR_USBWIZ_PAGE3_SELECTED     = "Valitud juhi paketid ja indeksid"
 STR_USBWIZ_PAGE3_NOPACKS      = "Juhtipakette ei ole"
 STR_USBWIZ_PAGE3_ADDPATH      = "Määrake täiendav draiverikataloog"
-STR_USBWIZ_PAGE3_INDEXES      = "Kaasa online-indeksid"
+STR_USBWIZ_PAGE3_INDICES      = "Kaasa online-indeksid"
 
-// USB Wizard - page 4
+// USB Wizard - Page 4
 STR_USBWIZ_PAGE4_TITLE        = "Keskkond"
 STR_USBWIZ_PAGE4_SUBTITLE     = "Valige muud kaasatavad elemendid."
 STR_USBWIZ_PAGE4_LANGS        = "Keeled"
@@ -468,11 +469,11 @@ STR_USBWIZ_PAGE4_NOLOG        = "Ärge looge logifaile"
 STR_USBWIZ_PAGE4_INCAUTO      = "Kaasa autorun.inf ja SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE      = "Täidetav suurus:"
 
-// USB Wizard - page 5
+// USB Wizard - Page 5
 STR_USBWIZ_PAGE5_TITLE        = "Alustamiseks valmis"
-STR_USBWIZ_PAGE5_DESC         = "Meil on kogu vajalik teave. Kui klõpsate nupule Finish, algab protsess."
+STR_USBWIZ_PAGE5_DESC 				= "Meil on kogu vajalik teave. Kui klõpsate nupule Lõpeta, algab protsess."
 
-// USB Wizard - progress
+// USB Wizard - Progress
 STR_USBWIZ_PROGR_TITLE        = "USB-draivi loomine"
 STR_USBWIZ_PROGR_COPYING      = "Failide kopeerimine"
 STR_USBWIZ_PROGR_DELETING     = "Eemaldatavad failid kustutatakse"

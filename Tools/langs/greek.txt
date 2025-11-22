@@ -282,6 +282,7 @@ STR_UPD_BTN_THISPC_H          = "Για να προσδιορίσει ποιοι
 STR_UPD_OPTIONS               = "Επιλογές"
 STR_UPD_ONLYUPDATES     			= "Προσφέρουν ενημερώσεις μόνο για διαθέσιμα DriverPacks"
 STR_UPD_PREALLOCATE						= "Εκχωρήστε εκ των προτέρων χώρο στον σκληρό δίσκο για να αποφύγετε τον κατακερματισμό"
+STR_UPD_PREALLOCATE_H 				= "Εκχωρεί το πλήρες μέγεθος των αρχείων στον δίσκο πριν από την έναρξη των λήψεων, για να ελαχιστοποιηθεί ο κατακερματισμός"
 STR_UPD_TOTALSIZE             = "Το συνολικο ποσο τον ενημερώσεων: %d MB"
 STR_UPD_TOTALAVAIL            = "Σύνολο διαθέσιμου χώρου: %d MB"
 STR_UPD_BTN_OK                = "ΟΚ"
@@ -309,7 +310,7 @@ STR_UPD_THOUR                 = "ωρες"
 STR_UPD_TDAY                  = "ημέρες"
 STR_UPD_BASEFILES             = "Πρόγραμμα+δείκτες"
 STR_UPD_APP                   = "Πρόγραμμα"
-STR_UPD_INDEXES               = "Δείκτες των νέων πακέτων"
+STR_UPD_INDICES               = "Δείκτες των νέων πακέτων"
 STR_UPD_UPDATEHINT1           = "Συμβουλή"
 STR_UPD_UPDATEHINT2           = "Πρέπει πρώτα να αναβαθμίσετε το πρόγραμμα με τους δείκτες."
 
@@ -388,8 +389,8 @@ STR_OPTION_MAX_UPLOAD         = "Μέγιστη ταχύτητα αποστολ�
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Οι οδηγοί"
-STR_OPTION_DIR_INDEXES        = "Δείκτες των νέων πακέτων"
-STR_OPTION_DIR_INDEXESH       = "Δείκτες ως κείμενο"
+STR_OPTION_DIR_INDICES        = "Δείκτες των νέων πακέτων"
+STR_OPTION_DIR_INDICESH       = "Δείκτες ως κείμενο"
 STR_OPTION_DIR_DATA           = "Θέματα και μεταφράσεις"
 STR_OPTION_DIR_LOGS           = "Αρχεία καταγραφής"
 
@@ -448,7 +449,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Πακέτα προγραμμάτων οδήγ�
 STR_USBWIZ_PAGE3_SELECTED     = "Επιλεγμένα πακέτα προγραμμάτων οδήγησης και ευρετήρια"
 STR_USBWIZ_PAGE3_NOPACKS      = "Δεν υπάρχουν πακέτα προγραμμάτων οδήγησης"
 STR_USBWIZ_PAGE3_ADDPATH      = "Καθορίστε πρόσθετο κατάλογο οδηγών"
-STR_USBWIZ_PAGE3_INDEXES      = "Συμπεριλάβετε online ευρετήρια"
+STR_USBWIZ_PAGE3_INDICES      = "Συμπεριλάβετε online ευρετήρια"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Περιβάλλον"

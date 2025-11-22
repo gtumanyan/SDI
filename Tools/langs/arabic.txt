@@ -281,7 +281,8 @@ STR_UPD_BTN_THISPC            = "هذا الكمبيوتر فقط"
 STR_UPD_BTN_THISPC_H          = "من أجل تحديد أي حزمة تعريفات التي تحتاج إليها، يجب عليك تحميل الفهارس أولا."
 STR_UPD_OPTIONS               = "خيارات"
 STR_UPD_ONLYUPDATES           = "لا تبلغ عن حزمة التعريفات الناقصة"
-STR_UPD_PREALLOCATE						= "قم بتخصيص مساحة HDD مسبقًا لتجنب التجزئة"
+STR_UPD_PREALLOCATE			  = "تخصيص مسبق لمساحة القرص لجميع الملفات"
+STR_UPD_PREALLOCATE_H		  = "تخصيص أحجام الملفات الكاملة على القرص قبل بدء التنزيلات لتقليل التجزئة. مفيد فقط لمحركات الأقراص الصلبة"
 STR_UPD_TOTALSIZE             = "إجمالي حجم التحميل: %d ميجا بايت"
 STR_UPD_TOTALAVAIL            = "إجمالي المساحة المتاحة: %d MB"
 STR_UPD_BTN_OK                = "حسنا"
@@ -309,7 +310,7 @@ STR_UPD_THOUR                 = "ساعات"
 STR_UPD_TDAY                  = "أيام"
 STR_UPD_BASEFILES             = "التطبيق + الفهارس"
 STR_UPD_APP                   = "التطبيق"
-STR_UPD_INDEXES               = "الفهارس"
+STR_UPD_INDICES               = "الفهارس"
 STR_UPD_UPDATEHINT1           = "تلميح"
 STR_UPD_UPDATEHINT2           = "يجب عليك تحديث القاعدة أولاً حتي تتمكن من استخدام هذه الميزة."
 
@@ -388,8 +389,8 @@ STR_OPTION_MAX_UPLOAD         = "أقصى سرعة الرفع في الكيلو 
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "التعريفات"
-STR_OPTION_DIR_INDEXES        = "الفهارس"
-STR_OPTION_DIR_INDEXESH       = "الفهارس (قابل للقراءة-للبشر)"
+STR_OPTION_DIR_INDICES        = "الفهارس"
+STR_OPTION_DIR_INDICESH       = "الفهارس (قابل للقراءة-للبشر)"
 STR_OPTION_DIR_DATA           = "المظاهر و الترجمة"
 STR_OPTION_DIR_LOGS           = "ملفات السجل"
 
@@ -448,7 +449,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "حزم برنامج تشغيل الشبكة و�
 STR_USBWIZ_PAGE3_SELECTED     = "حزم برامج التشغيل المحددة والفهارس"
 STR_USBWIZ_PAGE3_NOPACKS      = "لا توجد حزم برامج تشغيل"
 STR_USBWIZ_PAGE3_ADDPATH      = "حدد دليل برنامج تشغيل إضافي"
-STR_USBWIZ_PAGE3_INDEXES      = "تضمين فهارس عبر الإنترنت"
+STR_USBWIZ_PAGE3_INDICES      = "تضمين فهارس عبر الإنترنت"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "بيئة"

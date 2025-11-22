@@ -1,10 +1,11 @@
-// Please send updates to https://t.me/Snappy_Driver_Installer
+﻿// Please send updates to https://t.me/Snappy_Driver_Installer
 STR_TRANSLATORS         = "BadPointer, Glenn Delahoy, WindR"
 
 STR_LANG_NAME           = "English"
 STR_LANG_ID             = "English"
 STR_LANG_GROUP          = 0x01 // LGRPID_WESTERN_EUROPE
 STR_LANG_CODE           = 0x09
+
 
 // left panel
 STR_SHOW_SYSINFO        = ""
@@ -167,7 +168,6 @@ STR_SYST_DEVICEPRNT     = "Devices and Printers"
 STR_SYST_SYSCONTROL     = "Control Panel"
 STR_SYST_REST           = "System Restore"
 STR_SYST_USBWIZARD      = "Create A USB Drive"
-STR_SYST_TRANSLATE      = "Translation Tool"
 
 // Context menu
 STR_CONT_INSTALL        = "Schedule installation"
@@ -228,12 +228,13 @@ STR_CLOSE_DRPEXT        = "(Click here to return to the default folder)"
 STR_NOUPDATES           = "Drivers are up to date"
 STR_INITIALIZING        = "Initializing..."
 
-// Progressbar
+// Install messages
 STR_INST_EXTRACT        = "Extracting... %d%% (stage 1 of 2)"
 STR_INST_INSTALL        = "Installing... (stage 2 of 2)"
 STR_INST_OK             = "Successfully installed"
 STR_INST_REBOOT         = "Successfully installed (system restart required)"
 STR_INST_FAILED         = "Failed to install, error "
+STR_INST_STOPPING       = "Installation stopped"
 
 STR_INST_INSTALLING     = "Installing... "
 STR_INST_COMPLITED      = "Installation completed"
@@ -244,7 +245,6 @@ STR_EXTR_EXTRACTING     = "Extracting... "
 STR_EXTR_OK             = "Successfully extracted"
 STR_EXTR_FAILED         = "Failed to extract, error "
 
-STR_INST_STOPPING       = "Installation stopped"
 STR_INDEXING            = "Indexing..."
 STR_INDEXLZMA           = "Compressing indexes..."
 STR_OF                  = " of "
@@ -269,6 +269,7 @@ STR_HINT_DRIVER         = "Hold the Ctrl key to compare the installed driver to 
 STR_SYS_WINVER          = "Windows version"
 STR_SYS_32              = "32-bit"
 STR_SYS_64              = "64-bit"
+STR_SYS_DETECT          = "Detect OS version"
 STR_SYS_DEVICEMNG       = "Device Manager"
 STR_SYS_DISINSTALL      = "Disable installation"
 STR_SYS_DISRESTPNT      = "Disable restore points"
@@ -287,7 +288,8 @@ STR_UPD_BTN_THISPC      = "This PC Only"
 STR_UPD_BTN_THISPC_H    = "In order to be able to determine which DriverPacks you need, you have to download indexes first."
 STR_UPD_OPTIONS         = "Options"
 STR_UPD_ONLYUPDATES     = "Show only updates, hide missing DriverPacks"
-STR_UPD_PREALLOCATE		= "Pre-allocate disk space to avoid HDD fragmentation"
+STR_UPD_PREALLOCATE			= "Pre-allocate disk space for all files"
+STR_UPD_PREALLOCATE_H 	= "Allocate full file sizes on disk before starting downloads, to minimize fragmentation"
 STR_UPD_TOTALSIZE       = "Total download size: %d MB"
 STR_UPD_TOTALAVAIL      = "Total available space: %d MB"
 STR_UPD_BTN_OK          = "OK"
@@ -315,7 +317,7 @@ STR_UPD_THOUR           = "hours"
 STR_UPD_TDAY            = "days"
 STR_UPD_BASEFILES       = "Application+indexes"
 STR_UPD_APP             = "Application"
-STR_UPD_INDEXES         = "Indexes"
+STR_UPD_INDICES         = "Indexes"
 STR_UPD_UPDATEHINT1     = "Hint"
 STR_UPD_UPDATEHINT2     = "You must update base first in order to use this feature."
 
@@ -394,8 +396,8 @@ STR_OPTION_MAX_UPLOAD   = "Max upload speed in KB/s (0 - unlimited)"
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS  = "Drivers"
-STR_OPTION_DIR_INDEXES  = "Indexes"
-STR_OPTION_DIR_INDEXESH = "Indexes (human-readable)"
+STR_OPTION_DIR_INDICES  = "Indexes"
+STR_OPTION_DIR_INDICESH = "Indexes (human-readable)"
 STR_OPTION_DIR_DATA     = "Themes and translations"
 STR_OPTION_DIR_LOGS     = "Log files"
 
@@ -420,18 +422,18 @@ STR_WELCOME_INTRO2       = "Note: Look for additional tools on the System Menu a
 STR_WELCOME_BUTTON1      = "Download All DriverPacks"
 STR_WELCOME_BUTTON1_DESC = "Get the entire driver pack collection. This is a big download and will take anywhere from an hour to a day depending on availability and internet speed. When complete, you'll have everything required to work offline. If you're a technician, this is the option you want."
 STR_WELCOME_BUTTON2      = "Download Network Drivers Only"
-STR_WELCOME_BUTTON2_DESC = "Get the latest LAN, WLAN, and Wifi drivers. This allows you to get any PC online quickly and is a relatively small download."
+STR_WELCOME_BUTTON2_DESC = "Get the latest LAN, WLAN, and Wi-Fi drivers. This allows you to get any PC online quickly and is a relatively small download."
 STR_WELCOME_BUTTON3      = "Download Indexes Only"
 STR_WELCOME_BUTTON3_DESC = "This allows you to scan your PC to see which drivers need to be installed or updated. The download will only take a few minutes but you'll need an internet connection when the required DriverPacks need to be downloaded. If you're a casual user, this is the option you want."
 STR_WELCOME_CLOSE        = "Close"
 
-// USB Wizard - page 1
+// USB Wizard - Page 1
 STR_USBWIZ_TITLE         = "Create a USB Drive"
 STR_USBWIZ_SPACEREQ      = "Space Required:"
 STR_USBWIZ_SPACEAVAIL    = "Space Available:"
 STR_USBWIZ_PAGE1_DESC    = "This wizard will help you create a portable USB drive containing Snappy Driver Installer and selected files.\n\nThe files will be copied to the root directory of the selected device. You should ensure the device has sufficient capacity to store the required files. You will be given the option to clear the device first."
 
-// USB Wizard - page 2
+// USB Wizard - Page 2
 STR_USBWIZ_PAGE2_TITLE   = "Target Drive"
 STR_USBWIZ_PAGE2_SUBTITLE= "Select a removable drive."
 STR_USBWIZ_PAGE2_DESC    = "Snappy Driver Installer will be installed into the root directory of the selected removable drive. Insert your USB drive now."
@@ -446,7 +448,7 @@ STR_USBWIZ_PAGE2_DELCONF = "Clear Removable Drive"
 STR_USBWIZ_PAGE2_DELCONF1= "You are about to remove all data from removable drive"
 STR_USBWIZ_PAGE2_DELCONF2= "Are you sure you want to do this?"
 
-// USB Wizard - page 3
+// USB Wizard - Page 3
 STR_USBWIZ_PAGE3_TITLE   = "DriverPacks"
 STR_USBWIZ_PAGE3_SUBTITLE= "Select which DriverPacks and indexes to include."
 STR_USBWIZ_PAGE3_SELECT  = "Select DriverPacks to include:"
@@ -455,9 +457,9 @@ STR_USBWIZ_PAGE3_NETWORK = "Network DriverPacks and indexes"
 STR_USBWIZ_PAGE3_SELECTED= "Selected DriverPacks and indexes"
 STR_USBWIZ_PAGE3_NOPACKS = "No DriverPacks"
 STR_USBWIZ_PAGE3_ADDPATH = "Specify additional driver directory"
-STR_USBWIZ_PAGE3_INDEXES = "Include online indexes"
+STR_USBWIZ_PAGE3_INDICES = "Include online indexes"
 
-// USB Wizard - page 4
+// USB Wizard - Page 4
 STR_USBWIZ_PAGE4_TITLE   = "Environment"
 STR_USBWIZ_PAGE4_SUBTITLE= "Select other items to include."
 STR_USBWIZ_PAGE4_LANGS   = "Languages"
@@ -475,17 +477,11 @@ STR_USBWIZ_PAGE4_NOLOG   = "Don't create log files"
 STR_USBWIZ_PAGE4_INCAUTO = "Include autorun.inf and SDI_auto.bat"
 STR_USBWIZ_PAGE4_EXESIZE = "Executable Size:"
 
-// USB Wizard - page 5
+// USB Wizard - Page 5
 STR_USBWIZ_PAGE5_TITLE   = "Ready To Begin"
 STR_USBWIZ_PAGE5_DESC    = "We have all the information we need. When you click the Finish button the process will begin."
 
-// USB Wizard - progress
+// USB Wizard - Progress
 STR_USBWIZ_PROGR_TITLE    = "Creating USB Drive"
 STR_USBWIZ_PROGR_COPYING  = "Copying files"
 STR_USBWIZ_PROGR_DELETING = "Deleting files from removable drive"
-
-MSG_107	 = "All files"
-# Example: "Opened some_file.txt"
-MSG_215	 = "Opened %s"
-# Example: "Saved sdi.log"
-MSG_216	 = "Saved %s"

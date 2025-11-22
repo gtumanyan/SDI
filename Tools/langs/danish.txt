@@ -1,6 +1,6 @@
 ﻿// send updates to https://t.me/Snappy_Driver_Installer
 
-STR_TRANSLATORS               = "Rudy Alex Kohn / Tskalshoej"
+STR_TRANSLATORS               = "Rudy Alex Kohn / Tskalshoej / WindR"
 
 STR_LANG_NAME                 = "Dansk"
 STR_LANG_ID                   = "Danish"
@@ -281,7 +281,8 @@ STR_UPD_BTN_THISPC            = "Til denne PC"
 STR_UPD_BTN_THISPC_H          = "For at kunne bestemme hvilke driverpakker du behøver, skal du downloade et indeks først."
 STR_UPD_OPTIONS               = "Muligheder"
 STR_UPD_ONLYUPDATES           = "Fortæl mig ikke omkring manglende driverpakker"
-STR_UPD_PREALLOCATE						= "Forallok HDD-plads for at undgå fragmentering"
+STR_UPD_PREALLOCATE						= "Præ-allokér alle filer"
+STR_UPD_PREALLOCATE_H 				= "Allokerer fuld filstørrelse på disken før download påbegyndes, for at minimere fragmentering"
 STR_UPD_TOTALSIZE             = "Total som skal downloades: %d MB"
 STR_UPD_TOTALAVAIL            = "Tilgængeligt plads: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -309,7 +310,7 @@ STR_UPD_THOUR                 = "timer"
 STR_UPD_TDAY                  = "dage"
 STR_UPD_BASEFILES             = "Applikation+Indeks"
 STR_UPD_APP                   = "Program"
-STR_UPD_INDEXES               = "Indeks"
+STR_UPD_INDICES               = "Indeks"
 STR_UPD_UPDATEHINT1           = "Tip"
 STR_UPD_UPDATEHINT2           = "Du skal først opdatere det grundlæggende før du kan bruge denne funktion"
 
@@ -388,8 +389,8 @@ STR_OPTION_MAX_UPLOAD         = "Maksimum upload hastighed i KB/s (0 - uendelig)
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Drivere"
-STR_OPTION_DIR_INDEXES        = "Indekser"
-STR_OPTION_DIR_INDEXESH       = "Indekser (læsbare)"
+STR_OPTION_DIR_INDICES        = "Indekser"
+STR_OPTION_DIR_INDICESH       = "Indekser (læsbare)"
 STR_OPTION_DIR_DATA           = "Temaer og oversætninger"
 STR_OPTION_DIR_LOGS           = "Log filer"
 
@@ -405,6 +406,7 @@ STR_OPTION_CONSOLE            = "Vis konsol vindue"
 STR_PATREON1             = "SDI er udviklet af frivillige. Hvis du kan lide dette software, støt os venligst på Patreon."
 STR_PATREON2             = "(Tryk her for at åbne Patreon siden)"
 STR_PATREON_H            = ""
+
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Velkommen til Snappy Driver Installer"
@@ -413,7 +415,7 @@ STR_WELCOME_INTRO2            = "Bemærk: Se efter ekstra værktøjer på system
 STR_WELCOME_BUTTON1           = "Download alle driverpakker"
 STR_WELCOME_BUTTON1_DESC      = "Få hele driverpakkeindsamlingen. Dette er en stor download og vil tage overalt fra en time til en dag afhængigt af tilgængelighed og internet hastighed. Når du er færdig, har du alt, der kræves for at arbejde offline. Hvis du er en tekniker, er dette den mulighed du ønsker."
 STR_WELCOME_BUTTON2           = "Download kun netværksdrivere"
-STR_WELCOME_BUTTON2_DESC      = "Få de nyeste LAN-, WLAN- og Wifi-drivere. Dette giver dig mulighed for hurtigt at hente enhver pc online og er en relativt lille download."
+STR_WELCOME_BUTTON2_DESC      = "Få de nyeste LAN-, WLAN- og WiFi-drivere. Dette giver dig mulighed for hurtigt at hente enhver pc online og er en relativt lille download."
 STR_WELCOME_BUTTON3           = "Hent kun indekser"
 STR_WELCOME_BUTTON3_DESC      = "Dette giver dig mulighed for at scanne din pc for at se, hvilke drivere der skal installeres eller opdateres. Downloaden tager kun et par minutter, men du skal bruge en internetforbindelse, når de nødvendige driverpakker skal downloades. Hvis du er en afslappet bruger, er dette den mulighed du ønsker."
 STR_WELCOME_CLOSE             = "Luk"
@@ -448,10 +450,10 @@ STR_USBWIZ_PAGE3_NETWORK      = "Netværksdriverpakker og indekser"
 STR_USBWIZ_PAGE3_SELECTED     = "Valgte driverpakker og indekser"
 STR_USBWIZ_PAGE3_NOPACKS      = "Ingen driverpakker"
 STR_USBWIZ_PAGE3_ADDPATH      = "Angiv yderligere drivermappe"
-STR_USBWIZ_PAGE3_INDEXES      = "Inkluder online indekser"
+STR_USBWIZ_PAGE3_INDICES      = "Inkluder online indekser"
 
 // USB Wizard - page 4
-STR_USBWIZ_PAGE4_TITLE        = "Environment"
+STR_USBWIZ_PAGE4_TITLE        = "Miljø"
 STR_USBWIZ_PAGE4_SUBTITLE     = "Vælg andre emner der skal med"
 STR_USBWIZ_PAGE4_LANGS        = "Sprog"
 STR_USBWIZ_PAGE4_ALLLANG      = "Inkl. alle sprog"

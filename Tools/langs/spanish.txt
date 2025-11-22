@@ -282,6 +282,7 @@ STR_UPD_BTN_THISPC_H          = "Para poder determinar qué DriverPacks se neces
 STR_UPD_OPTIONS               = "Opciones"
 STR_UPD_ONLYUPDATES           = "No notificar sobre DriverPacks faltantes"
 STR_UPD_PREALLOCATE						= "Pre-asignar espacio en el disco para todos los archivos"
+STR_UPD_PREALLOCATE_H 				= "Reserva espacio para ficheros de tamaño completo en disco antes de iniciar la descarga, para minimizar la fragmentación"
 STR_UPD_TOTALSIZE             = "Tamaño total de la descarga: %d MB"
 STR_UPD_TOTALAVAIL            = "Espacio total disponible: %d MB"
 STR_UPD_BTN_OK                = "Ok"
@@ -309,15 +310,15 @@ STR_UPD_THOUR                 = "hora(s)"
 STR_UPD_TDAY                  = "día(s)"
 STR_UPD_BASEFILES             = "Aplicación+Índices"
 STR_UPD_APP                   = "Aplicación"
-STR_UPD_INDEXES               = "Índices"
+STR_UPD_INDICES               = "Índices"
 STR_UPD_UPDATEHINT1           = "Sugerencia"
 STR_UPD_UPDATEHINT2           = "Se debe actualizar la base primero para poder utilizar esta función."
 
 // Update hint
 STR_UPD_CHECKING              = "Comprobando actualizaciones"
-STR_UPD_AVAIL1		          = "Actualización disponible: SDI R%d"
+STR_UPD_AVAIL1		          	= "Actualización disponible: SDI %d"
 STR_UPD_AVAIL2                = "Actualizaciones disponibles: %d DriverPack(s)"
-STR_UPD_AVAIL3      	     = "Actualizaciones disponibles: SDI R%d y %d DriverPack(s)"
+STR_UPD_AVAIL3      	     		= "Actualizaciones disponibles: SDI %d y %d DriverPack(s)"
 STR_UPD_START                 = "(Clic aquí para iniciar la descarga)"
 STR_UPD_PROGRES               = "Descargado %s de %s (%d%%)"
 STR_UPD_MODIFY                = "(Clic aquí para seleccionar actualizaciones)"
@@ -388,8 +389,8 @@ STR_OPTION_MAX_UPLOAD         = "Velocidad máxima de subida en KB/s (0: ilimita
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Controladores"
-STR_OPTION_DIR_INDEXES        = "Índices"
-STR_OPTION_DIR_INDEXESH       = "Índices (leíble a simple vista)"
+STR_OPTION_DIR_INDICES        = "Índices"
+STR_OPTION_DIR_INDICESH       = "Índices (leíble a simple vista)"
 STR_OPTION_DIR_DATA           = "Temas y traducciones"
 STR_OPTION_DIR_LOGS           = "Archivos de registro"
 
@@ -448,7 +449,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Paquetes de controladores de red e índices"
 STR_USBWIZ_PAGE3_SELECTED     = "Paquetes de controladores seleccionados e índices"
 STR_USBWIZ_PAGE3_NOPACKS      = "No hay paquetes de controladores"
 STR_USBWIZ_PAGE3_ADDPATH      = "Especifique el directorio del controlador adicional"
-STR_USBWIZ_PAGE3_INDEXES      = "Incluir índices en línea"
+STR_USBWIZ_PAGE3_INDICES      = "Incluir índices en línea"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Ambiente"

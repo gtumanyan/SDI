@@ -26,7 +26,7 @@ STR_THEME_H                   = "Izvēlieties motīvu"
 STR_EXPERT                    = "Eksperta mode"
 STR_EXPERT_H                  = "Ieslēgt eksperta modi.\n\nPadoms: Turiet nospiestu Ctrl, vai probelu virs vadītāja, lai saņemtu papildus informāciju."
 
-STR_REFRESH                   = "atjaunot"
+STR_REFRESH                   = "Atjaunot"
 STR_REFRESH_H                 = "Atsvaidziniet draiveru sarakstu"
 STR_UPDATES                   = "Atjauninājumi"
 STR_UPDATES_H                 = "Izvēlieties atjauninājumu avotu"
@@ -282,6 +282,7 @@ STR_UPD_BTN_THISPC_H          = "Lai noteiktu, kuras vadītāju pakotnes satur j
 STR_UPD_OPTIONS               = "Iespējas"
 STR_UPD_ONLYUPDATES           = "Neinformēt par trūkstošajām vadītāju pakotnēm"
 STR_UPD_PREALLOCATE						= "Rezervēt brīvu vietu uz diska jaunajiem failiem"
+STR_UPD_PREALLOCATE_H 				= "Piešķirt diska vietu pirms lejupielādes sākšanas, lai samazinātu fragmentāciju"
 STR_UPD_TOTALSIZE             = "Atjaunojumu kopējais apjoms: %d MB"
 STR_UPD_TOTALAVAIL            = "Kopējā pieejamā telpa: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -309,7 +310,7 @@ STR_UPD_THOUR                 = "st"
 STR_UPD_TDAY                  = "dienas"
 STR_UPD_BASEFILES             = "Programma+indeksi"
 STR_UPD_APP                   = "Programma"
-STR_UPD_INDEXES               = "Jauno paku indeksi"
+STR_UPD_INDICES               = "Jauno paku indeksi"
 STR_UPD_UPDATEHINT1           = "Ieteikums"
 STR_UPD_UPDATEHINT2           = "Sākumā vajag atjaunot programmu ar indeksiem."
 
@@ -388,8 +389,8 @@ STR_OPTION_MAX_UPLOAD         = "Maksimālais augšupielādes ātrums KB / s (0 
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Autovadītāji"
-STR_OPTION_DIR_INDEXES        = "Indeksi"
-STR_OPTION_DIR_INDEXESH       = "Indeksi (lasāmi cilvēkiem)"
+STR_OPTION_DIR_INDICES        = "Indeksi"
+STR_OPTION_DIR_INDICESH       = "Indeksi (lasāmi cilvēkiem)"
 STR_OPTION_DIR_DATA           = "Motīvi un tulkojumi"
 STR_OPTION_DIR_LOGS           = "Žurnāla faili"
 
@@ -444,7 +445,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Tīkla draiveru pakotnes un indeksi"
 STR_USBWIZ_PAGE3_SELECTED     = "Atlasītie draiveru pakotnes un rādītāji"
 STR_USBWIZ_PAGE3_NOPACKS      = "Nav draiveru paku"
 STR_USBWIZ_PAGE3_ADDPATH      = "Norādiet papildu draiveru direktoriju"
-STR_USBWIZ_PAGE3_INDEXES      = "Include online indexes"
+STR_USBWIZ_PAGE3_INDICES      = "Include online indexes"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Vide"

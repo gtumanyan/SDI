@@ -282,6 +282,7 @@ STR_UPD_BTN_THISPC_H          = "Al fine di determinare quali driver-packs sono 
 STR_UPD_OPTIONS               = "Opzioni"
 STR_UPD_ONLYUPDATES           = "Mostra solo aggiornati, nascondi i driver pack mancanti"
 STR_UPD_PREALLOCATE						= "Prealloca lo spazio su disco per tutti i file"
+STR_UPD_PREALLOCATE_H 				= "Alloca spazio su disco prima di iniziare il download per ridurre la frammentazione"
 STR_UPD_TOTALSIZE             = "Dimensione totale download: %d MB"
 STR_UPD_TOTALAVAIL            = "Spazio Totale Disponibile : %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -309,7 +310,7 @@ STR_UPD_THOUR                 = "ore"
 STR_UPD_TDAY                  = "giorni"
 STR_UPD_BASEFILES             = "Applicazione+indici"
 STR_UPD_APP                   = "Applicazione"
-STR_UPD_INDEXES               = "Indici"
+STR_UPD_INDICES               = "Indici"
 STR_UPD_UPDATEHINT1           = "Suggerimento"
 STR_UPD_UPDATEHINT2           = "E' necessario aggiornare prima il database per poter utilizzare questa funzione."
 
@@ -388,8 +389,8 @@ STR_OPTION_MAX_UPLOAD         = "Massima velocità Upload (KB/s, 0 - illimitata)
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Drivers"
-STR_OPTION_DIR_INDEXES        = "Indici"
-STR_OPTION_DIR_INDEXESH       = "Indici (leggibili)"
+STR_OPTION_DIR_INDICES        = "Indici"
+STR_OPTION_DIR_INDICESH       = "Indici (leggibili)"
 STR_OPTION_DIR_DATA           = "Temi e traduzioni"
 STR_OPTION_DIR_LOGS           = "Files di Log"
 
@@ -448,7 +449,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Pacchetti e indici dei driver di rete"
 STR_USBWIZ_PAGE3_SELECTED     = "Pacchetti e indici di driver selezionati"
 STR_USBWIZ_PAGE3_NOPACKS      = "Nessun pacchetto driver"
 STR_USBWIZ_PAGE3_ADDPATH      = "Specificare la directory driver aggiuntiva"
-STR_USBWIZ_PAGE3_INDEXES      = "Includi indici online"
+STR_USBWIZ_PAGE3_INDICES      = "Includi indici online"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Ambiente"

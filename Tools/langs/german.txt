@@ -282,6 +282,7 @@ STR_UPD_BTN_THISPC_H          = "Zum Bestimmen der erforderlichen Treiberpakete,
 STR_UPD_OPTIONS               = "Optionen"
 STR_UPD_ONLYUPDATES           = "Nur Aktualisierungen ohne fehlende Pakete anzeigen"
 STR_UPD_PREALLOCATE						= "Allen Dateien Speicherplatz im Vorhinein zuweisen"
+STR_UPD_PREALLOCATE_H         = "Reserviert die vollständige Dateigröße auf der Festplatte vor dem Start des Downloads, um die Fragmentierung zu minimieren"
 STR_UPD_TOTALSIZE             = "Gesamte Herunterladegröße: %d MB"
 STR_UPD_TOTALAVAIL            = "Verfügbare Speicherkapazität: %d MB"
 STR_UPD_BTN_OK                = "OK"
@@ -309,7 +310,7 @@ STR_UPD_THOUR                 = "Stunden"
 STR_UPD_TDAY                  = "Tage"
 STR_UPD_BASEFILES             = "Anwendung+Indizes"
 STR_UPD_APP                   = "Anwendung"
-STR_UPD_INDEXES               = "Indizes"
+STR_UPD_INDICES               = "Indizes"
 STR_UPD_UPDATEHINT1           = "Hinweis"
 STR_UPD_UPDATEHINT2           = "Die Basis muss aktualisiert werden, bevor diese Funktion angewendet werden kann."
 
@@ -388,8 +389,8 @@ STR_OPTION_MAX_UPLOAD         = "Max. Hochladerate in KB/s (0:unbegrenzt)"
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Treiber"
-STR_OPTION_DIR_INDEXES        = "Indizes"
-STR_OPTION_DIR_INDEXESH       = "Indizes (menschenlesbar)"
+STR_OPTION_DIR_INDICES        = "Indizes"
+STR_OPTION_DIR_INDICESH       = "Indizes (menschenlesbar)"
 STR_OPTION_DIR_DATA           = "Oberflächendesigns (Themen) und Sprachdateien"
 STR_OPTION_DIR_LOGS           = "Protokolldateien"
 
@@ -448,7 +449,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Nur Netzwerktreiberpakete und Indizes"
 STR_USBWIZ_PAGE3_SELECTED     = "Ausgewählte Treiberpakete und Indizes"
 STR_USBWIZ_PAGE3_NOPACKS      = "Keine Treiberpakete"
 STR_USBWIZ_PAGE3_ADDPATH      = "Geben Sie ein zusätzliches Treiberverzeichnis an"
-STR_USBWIZ_PAGE3_INDEXES      = "Online-Indizes einbeziehen"
+STR_USBWIZ_PAGE3_INDICES      = "Online-Indizes einbeziehen"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Umgebung"
