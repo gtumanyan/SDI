@@ -1,0 +1,53 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: cl.exe build active file",
+            "command": "cl.exe",
+            "args": [
+                "/Zi",
+                "/EHsc",
+                "/nologo",
+                "/std:c++latest",
+                "/DUNICODE",
+                "/D_UNICODE",
+                "/DNOMINMAX",
+                "/I${workspaceFolder}\\src",
+                "/I${workspaceFolder}\\ext\\SevenZip\\C",
+                "/I${workspaceFolder}\\ext\\boost",
+                "/I${workspaceFolder}\\ext\\libtorrent\\include",
+                "/I${workspaceFolder}\\ext\\libwebp\\src",
+                "/Fe${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "${file}"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "group": "build",
+            "detail": "Build with include paths matching Visual Studio configuration"
+        },
+        {
+            "label": "build-dbg-64",
+            "type": "shell",
+            "command": "msbuild",
+            "args": [
+                "${workspaceFolder}\\SDI.sln",
+                "/property:GenerateFullPaths=true",
+                "/t:SDI",
+                "/property:Configuration=Debug",
+                "/property:Platform=x64",
+                "/m",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
