@@ -299,7 +299,10 @@ void VaultImp::loadFromRes(int resId) {
 		parse();
 		for(size_t i=0;i<num;i++)
 				if(entry[i].init<1)
-        uprintf("ERROR in vault_loadfromres: not initialized '%S'\n",entry[i].name);
+				{
+						entry[i].value=0;
+						entry[i].init=1;
+				}
 }
 
 VaultImp::VaultImp(entry_t *entryv,size_t numv,int resv,int elem_id_,const wchar_t *folder_):
