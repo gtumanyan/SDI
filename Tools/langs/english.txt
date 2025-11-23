@@ -317,7 +317,7 @@ STR_UPD_THOUR           = "hours"
 STR_UPD_TDAY            = "days"
 STR_UPD_BASEFILES       = "Application+indices"
 STR_UPD_APP             = "Application"
-STR_UPD_INDicES         = "Indices"
+STR_UPD_INDICES         = "Indices"
 STR_UPD_UPDATEHINT1     = "Hint"
 STR_UPD_UPDATEHINT2     = "You must update base first in order to use this feature."
 
