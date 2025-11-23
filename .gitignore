@@ -39,6 +39,7 @@ ExportedObj/
 *.userprefs
 
 .vs
+.vscode/db/
 *.vcxproj.filters
 *.bsc
 drivers/
