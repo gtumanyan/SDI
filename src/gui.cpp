@@ -15,11 +15,12 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <windows.h>
 #include <windowsx.h>
+#include <CommCtrl.h>
 
 #include "SDI.h"
 #include "system.h"
 #include "Settings.h"
-#include "VersionEx.h"
+#include "Version.h"
 #include "manager.h"
 #include "theme.h"
 #include "gui.h"
@@ -48,7 +49,7 @@ int cbw, ddw, ddbh = 0, bh = 0;
  *    is 10, -4 will allocate 4/10*80 = 32 bars (32%) for OP progress
  */
 static int nb_slots[OP_MAX];
-static float slot_end[OP_MAX+1];	// shifted +1 so that we can subtract 1 to OP indexes
+static float slot_end[OP_MAX+1];	// shifted +1 so that we can subtract 1 to OP indices
 static float previous_end;
 
 // Move a control along the Y axis

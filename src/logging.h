@@ -21,7 +21,7 @@ enum TIMER
 {
     time_total,
     time_startup,
-    time_indexes,
+    time_indices,
     time_devicescan,
     time_chkupdate,
     time_indexsave,
@@ -72,7 +72,7 @@ class Log_t
 {
 private:
     wchar_t timestamp[MAX_COMPUTERNAME_LENGTH + 24];
-    //FILE *logfile=nullptr;
+    FILE *logfile=nullptr;
     int error_count=0;
     int log_console=0;
     int log_verbose=

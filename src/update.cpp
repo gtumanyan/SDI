@@ -22,6 +22,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 #include <windows.h>
+#include <CommCtrl.h>
 #include <direct.h> // for _mkdir and _getcwd
 #include <iostream>
 
@@ -29,12 +30,8 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "libtorrent/session.hpp"
 #include "libtorrent/alert_types.hpp"
 
-#include "utils/BaseUtil.h"
-#include "utils/HttpUtil.h"
-#include "utils/WinUtil.h"
-#include "utils/FileUtil.h"
-
 #include "resource.h"
+#include "msapi_utf8.h"
 #include "theme.h"
 #include "draw.h"
 
@@ -51,7 +48,7 @@ using namespace lt;
 
 #include "Update.h"
 
-#include "utils/Log.h"
+#include "logging.h"
 #include "Version.h"
 
 #define SMOOTHING_FACTOR 0.005
@@ -159,13 +156,13 @@ public:
 
 		void DownloadAll();
 		void DownloadNetwork();
-		void DownloadIndexes();
+		void DownloadIndices();
 		void StartSeedingDrivers();
 		void StopSeedingDrivers();
 
 		int scriptInitUpdates(int torrentport);
 		int scriptDownloadApp();
-		int scriptDownloadIndexes();
+		int scriptDownloadIndices();
 		int scriptDownloadDrivers(std::wstring mode);
 		int scriptDownloadEverything();
 		int scriptDoDownload();
@@ -493,13 +490,13 @@ void UpdateDialog_t::setCheckboxes()
 		using namespace lt;
 
 		// The app and indices
-		int baseChecked=0,indexesChecked=0;
+		int baseChecked=0,indicesChecked=0;
 		std::shared_ptr<const lt::torrent_info> ti = gH.torrent_file();
 		for(lt::file_index_t i(0); i < file_index_t(ti->num_files()); ++i)
 		if(gH.file_priority(i) == low_priority)
 		{
 				if(StrStrIA(gH.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
-						indexesChecked=1;
+						indicesChecked=1;
 				else
 						baseChecked=1;
 		}
@@ -515,7 +512,7 @@ void UpdateDialog_t::setCheckboxes()
             type_item* ItemData = (type_item*)item.lParam;
 
             if (ItemData->DefaultSort == -2)val = baseChecked;
-            if (ItemData->DefaultSort == -1)val = indexesChecked;
+            if (ItemData->DefaultSort == -1)val = indicesChecked;
             // Set file mark in list according to file download priority
             if (ItemData->DefaultSort >= 0) val = gH.file_priority(file_index_t{ ItemData->DefaultSort }).operator uint8_t();
 
@@ -534,7 +531,7 @@ void UpdateDialog_t::setPriorities()
 
 
 		// Set priorities for driverpacks
-		download_priority_t base_pri=dont_download, indexes_pri=dont_download;
+		download_priority_t base_pri=dont_download, indices_pri=dont_download;
 		for(int i=0;i<ListView.GetItemCount();i++)
 		{
 				// get each list view item
@@ -549,7 +546,7 @@ void UpdateDialog_t::setPriorities()
 				// app priority will be 2 if checked
 				if(ItemData->DefaultSort==-2)base_pri=val? default_priority :dont_download;
 				// index priority will be 2 if checked
-				if(ItemData->DefaultSort==-1)indexes_pri=val? default_priority : dont_download;
+				if(ItemData->DefaultSort==-1)indices_pri=val? default_priority : dont_download;
 				// driver priority will be 1 if checked
 				if(ItemData->DefaultSort >= 0)
                     gH.file_priority(static_cast<file_index_t>(ItemData->DefaultSort),low_priority);
@@ -558,7 +555,7 @@ void UpdateDialog_t::setPriorities()
 		// Set priorities for any torrent file that's not a driver
 		for(lt::file_index_t i(0); static_cast<int>(i) <Updater->numfiles; ++i)
 		if(!StrStrIA(gH.torrent_file()->files().file_path(i).c_str(),"drivers\\"))
-				gH.file_priority(i,StrStrIA(gH.torrent_file()->files().file_path(i).c_str(),"indexes\\")?indexes_pri:base_pri);
+				gH.file_priority(i,StrStrIA(gH.torrent_file()->files().file_path(i).c_str(),"indexes\\")?indices_pri:base_pri);
 }
 
 LRESULT CALLBACK UpdateDialog_t::NewButtonProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
@@ -786,7 +783,7 @@ int UpdateDialog_t::populate(int update,bool clearlist)
 		Updater->numfiles=ti->num_files();
 
 		// Calculate size and progress for the app and indices
-		bool missingindexes=false;
+		bool missingIndices=false;
 		int newver=0;
 		__int64 basesize=0,basedownloaded=0;
 		__int64 indexsize=0,indexdownloaded=0;
@@ -810,7 +807,7 @@ int UpdateDialog_t::populate(int update,bool clearlist)
 						strsub(buf,L"indexes\\SDI",Settings.index_dir);
 						if (!System.FileExists(buf))
 						{
-								missingindexes = true;
+								missingIndices = true;
 								//struct _wfinddata_t index_file;
 								//intptr_t hFile;
 								//// Find old index file
@@ -873,20 +870,20 @@ int UpdateDialog_t::populate(int update,bool clearlist)
 		}
 
 		// Add indices to the list
-		if(missingindexes&&ListView.IsVisible())
+		if(missingIndices&&ListView.IsVisible())
 		{
 				// the data item
 				type_item *ItemData=new type_item;
 				lvI.lParam=(LPARAM)ItemData;
 				ItemData->DefaultSort=-1;
-				wcscpy(ItemData->ItemName,STR(STR_UPD_INDEXES));
+				wcscpy(ItemData->ItemName,STR(STR_UPD_INDICES));
 				ItemData->SizeMB=indexsize/1024/1024;
 				ItemData->Percent=indexdownloaded*100/indexsize;
 				ItemData->VersionNew=0;
 				ItemData->VersionCurrent=0;
 				wcscpy(ItemData->ForThisPC,STR(STR_UPD_YES));
 				// the list item
-				lvI.pszText=const_cast<wchar_t *>(STR(STR_UPD_INDEXES));
+				lvI.pszText=const_cast<wchar_t *>(STR(STR_UPD_INDICES));
 				if(!update)row=ListView.InsertItem(&lvI);
 				wsprintf(buf,L"%d %s",(int)(indexsize/1024/1024),STR(STR_UPD_MB));
 				ListView.SetItemTextUpdate(row,1,buf);
@@ -1187,21 +1184,15 @@ void UpdaterImp::moveNewFiles()
 				{
 						// Move file
 						uprintf("Move new file: %S\n",filenamefull_dst);
-						if(!MoveFileEx(filenamefull_src,filenamefull_dst,MOVEFILE_REPLACE_EXISTING||
-																														 MOVEFILE_COPY_ALLOWED||
-																														 MOVEFILE_WRITE_THROUGH))
-								//Log.print_syserr(GetLastError(),L"MoveFileEx()");
-                            LogLastError();
-
+						if(!MoveFileEx(filenamefull_src,filenamefull_dst,MOVEFILE_REPLACE_EXISTING||MOVEFILE_COPY_ALLOWED||MOVEFILE_WRITE_THROUGH)) 			
+							uprintf("  Could not rename %s to %s: %s", filenamefull_src, filenamefull_dst, WindowsErrorString());
 				}
 				// if not perform a copy / delete
 				else
 				{
 						uprintf("Copy new file: %S\n",filenamefull_dst);
-                        if (!CopyFileExW(filenamefull_src, filenamefull_dst, nullptr, nullptr, nullptr, 0)) {
-                            //uprintf(GetLastError(),L"CopyFileExW()");
-                            LogLastError();
-                        }
+                        if (!CopyFileExW(filenamefull_src, filenamefull_dst, nullptr, nullptr, nullptr, 0)) 				
+							uprintf("Failed to copy file: %s", WindowsErrorString());
 						else if(System.FileExists(filenamefull_dst))
 								System.deletefile(filenamefull_src);
 				}
@@ -1365,8 +1356,16 @@ UpdaterImp::~UpdaterImp()
 		}
 }
 
+static __inline BOOL is_WOW64(void)
+{
+	BOOL ret = FALSE;
+	IsWow64Process(GetCurrentProcess(), &ret);
+	return ret;
+}
+
 int UpdaterImp::downloadTorrent() try
 {
+	char default_agent[64];
 	// checking for updates
 		manager_g->itembar_settext(SLOT_DOWNLOAD,1,STR(STR_UPD_CHECKING),0,0,0);
 
@@ -1385,7 +1384,10 @@ int UpdaterImp::downloadTorrent() try
 		// Settings
 		mSettingsPack.set_int(settings_pack::choking_algorithm, settings_pack::rate_based_choker);
 
-		mSettingsPack.set_str(lt::settings_pack::user_agent, _STRG(VERSION_FILEVERSION_LONG));
+		static_sprintf(default_agent, APPLICATION_NAME "/%d.%d.%d (Windows NT %lu.%lu%s)",
+			VERSION_FILEVERSION_NUM,
+			WindowsVersion.Major, WindowsVersion.Minor, is_WOW64() ? "; WOW64" : "");
+		mSettingsPack.set_str(lt::settings_pack::user_agent, default_agent);
 		mSettingsPack.set_int(settings_pack::alert_mask
 		, lt::alert_category::error
 		//| lt::alert_category::peer
@@ -1407,7 +1409,7 @@ int UpdaterImp::downloadTorrent() try
         // download the torrent file to feed to the libtorrent
         uprintf("Starting to download '%s'\n", active_torrent_url);
 				char tmp[MAX_PATH];
-        bool ok = DownloadToFileOrBufferEx(active_torrent_url, save_path, _STRG(VERSION_FILEVERSION_LONG), NULL, hMainDialog, FALSE);
+        bool ok = DownloadToFileOrBufferEx(active_torrent_url, save_path, default_agent, NULL, hMainDialog, FALSE);
         uprintf("HttpGetToFile(): ok=%d, downloaded to '%s'\n", (int)ok, save_path);
 
 		p.save_path = save_path;
@@ -1578,7 +1580,7 @@ int UpdaterImp::scriptDownloadApp()
 		return scriptDoDownload();
 }
 
-int UpdaterImp::scriptDownloadIndexes()
+int UpdaterImp::scriptDownloadIndices()
 {
 		if((Settings.flags&FLAG_UPDATESOK)==0)
 		{
@@ -1779,7 +1781,7 @@ void UpdaterImp::DownloadNetwork()
 		Updater->resumeDownloading();
 }
 
-void UpdaterImp::DownloadIndexes()
+void UpdaterImp::DownloadIndices()
 {
 		for(lt::file_index_t i(0); static_cast<int>(i) < Updater->numfiles; ++i)
 				if(StrStrIA(gH.torrent_file()->files().file_path(i).c_str(),"indexes\\"))
@@ -1926,7 +1928,7 @@ unsigned int __stdcall UpdaterImp::thread_download(void *arg)
 						ses->pop_alerts(&alerts);
 						for (auto a : alerts)
 						{
-								if (!gReducedLogging) continue;
+                    if(Log.isAllowed(LOG_VERBOSE_TORRENT))
 								uprintf("Torrent: %s | %s\n", a->what(), a->message().c_str());
 						}
 
@@ -2047,36 +2049,64 @@ void UpdaterImp::set_torrent_params()
 }
 
 void UpdaterImp::OpenDialog(){UpdateDialog.openDialog();}
-
-// the assumption is that this is a portable version downloaded to temp directory
-// we should copy ourselves over the existing file, launch ourselves and
-// tell our new copy to delete ourselves
-void UpdateSelfTo(const char* path) {
-    ReportIf(!path);
-    if (!file::Exists(path)) {
-        uprintf("UpdateSelfTo: failed because destination doesn't exist\n");
-        return;
-    }
-
-    auto sleepMs = gCli->sleepMs;
-    uprintf("UpdateSelfTo: '%s', sleep for %d ms\n", path, sleepMs);
-    // sleeping for a bit to make sure that the program that launched us
-    // had time to exit so that we can overwrite it
-    ::Sleep(gCli->sleepMs);
-
-    TempStr srcPath = GetSelfExePathTemp();
-    bool ok = file::Copy(path, srcPath, false);
-    // TODO: maybe retry if copy fails under the theory that the file
-    // might be temporarily locked
-    if (!ok) {
-        uprintf("UpdateSelfTo: failed to copy self to file\n");
-        return;
-    }
-    uprintf("UpdateSelfTo: copied self to file\n");
-
-    TempStr args = str::FormatTemp(R"(-sleep-ms 500 -delete-file "%s")", srcPath);
-    CreateProcessHelper(path, args);
-}
+//
+//// the assumption is that this is a portable version downloaded to temp directory
+//// we should copy ourselves over the existing file, launch ourselves and
+//// tell our new copy to delete ourselves
+//void UpdateSelfTo(const char* file) {
+//	HANDLE hFile = INVALID_HANDLE_VALUE;
+//	
+//	assert(url != NULL);
+//	
+//	if (file== NULL) {
+//		uprintf("Could not get save path");
+//		return;
+//	}
+//	hFile = CreateFileU(file, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+//	if (hFile == INVALID_HANDLE_VALUE) {
+//		uprintf("Unable to create file '%s': %s", PathFindFileNameU(file), WindowsErrorString());
+//		return;
+//	}
+//	if (!WriteFile(hFile, buf, buf_len, &ret, NULL)) {
+//		uprintf("Error writing file '%s': %s", PathFindFileNameU(file), WindowsErrorString());
+//		ret = 0;
+//		goto out;
+//	}
+//    TempStr srcPath = GetSelfExePathTemp();
+//    bool ok = file::Copy(file, srcPath, false);
+//    // TODO: maybe retry if copy fails under the theory that the file
+//    // might be temporarily locked
+//    if (!ok) {
+//        uprintf("UpdateSelfTo: failed to copy self to file\n");
+//        return;
+//    }
+//    uprintf("UpdateSelfTo: copied self to file\n");
+//
+//    TempStr args = str::FormatTemp(R"(-sleep-ms 500 -delete-file "%s")", srcPath);
+//    CreateProcessHelper(path, args);
+//out:
+//	error_code = GetLastError();
+//	if (hFile != INVALID_HANDLE_VALUE) {
+//		// Force a flush - May help with the PKI API trying to process downloaded updates too early...
+//		FlushFileBuffers(hFile);
+//		CloseHandle(hFile);
+//	}
+//	if (!r) {
+//		if (file != NULL)
+//			DeleteFileU(file);
+//		if (buffer != NULL)
+//			safe_free(*buffer);
+//	}
+//	if (hRequest)
+//		InternetCloseHandle(hRequest);
+//	if (hConnection)
+//		InternetCloseHandle(hConnection);
+//	if (hSession)
+//		InternetCloseHandle(hSession);
+//
+//	SetLastError(error_code);
+//	return r ? size : 0;
+//}
 
 //}
 #else

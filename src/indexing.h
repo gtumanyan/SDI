@@ -148,7 +148,7 @@ public:
     void setRange(const sect_data_t *lnk);
 };
 
-// Indexes
+// Indices
 class data_inffile_t // 132
 {
     ofst infpath;
@@ -229,7 +229,7 @@ class Collection
 private:
     int  scanfolder_count(const wchar_t *path);
     void scanfolder(const wchar_t *path,void *arg);
-    void loadOnlineIndexes();
+    void loadOnlineIndices();
 
 public:
     const wchar_t *getDriverpack_dir()const{return driverpack_dir;}

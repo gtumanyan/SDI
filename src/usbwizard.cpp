@@ -222,7 +222,7 @@ static void BuildFilesList(HWND hwnd)
     // driver packs option
     switch(USBWiz->DriverPackOption)
     {
-        // all driver packs and indexes
+        // all driver packs and indices
         case 0:
         {
             // iterate active driver packs
@@ -246,7 +246,7 @@ static void BuildFilesList(HWND hwnd)
             break;
         }
 
-        // network driver packs and indexes
+        // network driver packs and indices
         case 1:
         {
             // iterate active driver packs
@@ -277,7 +277,7 @@ static void BuildFilesList(HWND hwnd)
             break;
         }
 
-        // selected driver packs and indexes
+        // selected driver packs and indices
         case 2:
         {
             // iterate active driver packs
@@ -321,7 +321,7 @@ static void BuildFilesList(HWND hwnd)
         USBWiz->AddDirectory(USBWiz->AdditionalPath,L"\\drivers\\"+d);
     }
 
-    // online indexes
+    // online indices
     if(USBWiz->IncludeOnlineIndices)
     {
         Collection *col=manager_g->matcher->getCol();
@@ -647,7 +647,7 @@ static LRESULT CALLBACK Page3DlgProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lP
             SetWindowText(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_SELECTED),STR(STR_USBWIZ_PAGE3_SELECTED));
             SetWindowText(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_NOPACKS),STR(STR_USBWIZ_PAGE3_NOPACKS));
             SetWindowText(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_ADDPATH),STR(STR_USBWIZ_PAGE3_ADDPATH));
-            SetWindowText(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_INDEXES),STR(STR_USBWIZ_PAGE3_INDICES));
+            SetWindowText(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_INDICES),STR(STR_USBWIZ_PAGE3_INDICES));
             return TRUE;
         }
         case WM_COMMAND:
@@ -676,9 +676,9 @@ static LRESULT CALLBACK Page3DlgProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lP
                     USBWiz->DriverPackOption=3;
                     BuildFilesList(hwnd);
                 }
-                else if(cid==IDC_USBWIZ_PAGE3_INDEXES)
+                else if(cid==IDC_USBWIZ_PAGE3_INDICES)
                 {
-                    USBWiz->IncludeOnlineIndices=SendMessage(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_INDEXES),BM_GETCHECK,0,0);
+                    USBWiz->IncludeOnlineIndices=SendMessage(GetDlgItem(hwnd,IDC_USBWIZ_PAGE3_INDICES),BM_GETCHECK,0,0);
                     BuildFilesList(hwnd);
                 }
                 else if((cid==IDC_USBWIZ_PAGE3_PATHEDIT)&&(ntc==EN_CHANGE))

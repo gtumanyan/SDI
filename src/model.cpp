@@ -46,7 +46,7 @@ unsigned int __stdcall Bundle::thread_scandevices(void *arg)
     return 0;
 }
 
-unsigned int __stdcall Bundle::thread_loadindexes(void *arg)
+unsigned int __stdcall Bundle::thread_loadindices(void *arg)
 {
     Collection *collection=static_cast<Collection *>(arg);
 
@@ -136,7 +136,7 @@ unsigned int __stdcall Bundle::thread_loadall(void *arg)
             bundle_shadow^=1;
             uprintfs("}2Sync\n");
             bundle[bundle_shadow].bundle_init();
-            PostMessage(MainWindow.hMain,WM_INDEXESSAVED,0,0);
+            PostMessage(MainWindow.hMain,WM_INDICESSAVED,0,0);
             if(CRITICAL_SECTION_ACTIVE)LeaveCriticalSection(&sync);
         }
     }
@@ -180,8 +180,8 @@ void Bundle::bundle_load(Bundle *pbundle)
 
     duprintf("Bundle::bundle_load::thread_scandevices\n");
     thandle0->start(&thread_scandevices,&state);
-    duprintf("Bundle::bundle_load::thread_loadindexes\n");
-    thandle1->start(&thread_loadindexes,&collection);
+    duprintf("Bundle::bundle_load::thread_loadindices\n");
+    thandle1->start(&thread_loadindices,&collection);
     duprintf("Bundle::bundle_load::thread_getsysinfo\n");
     thandle2->start(&thread_getsysinfo,&state);
     duprintf("Bundle::bundle_load::thandle0->join\n");

@@ -14,19 +14,21 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 //#define MERGE_FINDER
+#include <Shlwapi.h>
+
 #include <7z.h>
 #include <7zCrc.h>
 #include <7zFile.h>
 #include <Lzma86.h>
 
-#include "utils/BaseUtil.h"
 #include "SDI.h"
-#include "utils/log.h"
+#include "logging.h"
 #include "system.h"
 #include "Settings.h"
 #include "matcher.h"
 #include "indexing.h"
 #include "manager.h"
+#include "Version.h"
 
 //#ifdef _MSC_VER
 //#include <process.h>
@@ -231,7 +233,7 @@ void Parser::subStr() {
     std::string out;
     const char *cur=strBeg;
     bool substituted = false;
-    
+
     while (cur < strEnd) {
         const char* next = std::find(cur, strEnd, '%');
         out.append(cur, next);
@@ -533,7 +535,7 @@ void Collection::scanfolder(const wchar_t *path,void *arg)
     FindClose(hFind);
 }
 
-void Collection::loadOnlineIndexes()
+void Collection::loadOnlineIndices()
 {
     // load online indices for DriverPacks
     // that is missing
@@ -588,7 +590,7 @@ void Collection::populate()
     uprintfs("Collection::populate\n");
     Driverpack *unpacked_drp;
 
-    //Timers.start(time_indexes);
+    //Timers.start(time_indices);
 
     driverpack_list.reserve(drp_count+1+300); // TODO
     driverpack_list.push_back(Driverpack(driverpack_dir,L"unpacked.7z",this));
@@ -647,8 +649,8 @@ void Collection::populate()
         delete cons[i];
     }
 
-    uprintfs("Collection::populate::loadOnlineIndexes\n");
-    loadOnlineIndexes();
+    uprintfs("Collection::populate::loadOnlineIndices\n");
+    loadOnlineIndices();
 
     uprintfs("Collection::populate::itembar\n");
     manager_g->itembar_setactive(SLOT_INDEXING,0);
@@ -677,7 +679,7 @@ void Collection::populate()
     Settings.flags&=~COLLECTION_FORCE_REINDEXING;
     //log("Collection::populate::driverpack_list.shrink_to_fit\n");
     driverpack_list.shrink_to_fit();
-    //Timers.stop(time_indexes);
+    //Timers.stop(time_indices);
     uprintfs("Collection::populate::Done\n");
 }
 
@@ -751,7 +753,7 @@ void Collection::save()
 
 void Collection::printstats()
 {
-    if(gReducedLogging)return;
+    if(Log.isHidden(LOG_VERBOSE_DRP))return;
 
     size_t sum=0;
     uprintfs("DriverPacks\n");
@@ -945,14 +947,14 @@ int Merger::checkfolders(const std::wstring &dir1,const std::wstring &dir2,int s
         for(auto it2=range2.first;it2!=range2.second;it2++)
         {
             Filedata *d2=&it2->second;
-            //Log.print_con("* %ws,%ws\n",it2->second.getStr(),dir2);
+            //vvuprintf("* %ws,%ws\n",it2->second.getStr(),dir2);
             if(d2->str==dir2)
             {
                 if(d1->size==d2->size&&d1->crc==d2->crc)
                     sizecom+=d1->size;
                 else
                     sizedif+=d1->size;
-                //Log.print_con("* %ws\n",d1->getStr());
+                //vvuprintf("* %ws\n",d1->getStr());
 
             }
         }
@@ -966,7 +968,7 @@ int Merger::checkfolders(const std::wstring &dir1,const std::wstring &dir2,int s
             dir1new.resize(dir1new.rfind(L"/"));
             dir2new.resize(dir2new.rfind(L"/"));
             checkfolders(dir1new,dir2new,0);
-            //Log.print_con("{%ws},{%ws}\n",dir1.c_str(),dir1new.c_str());
+            //vvuprintf("{%ws},{%ws}\n",dir1.c_str(),dir1new.c_str());
         }
         return -1;
     }
@@ -978,11 +980,11 @@ int Merger::checkfolders(const std::wstring &dir1,const std::wstring &dir2,int s
         //int sz=-1;
         if(sz<0)return -1;
         sizecom+=sz;
-        //Log.print_con("# %ws\n",it2->second.c_str());
+        //vvuprintf("# %ws\n",it2->second.c_str());
     }
 
     if(sizedif)return -1;
-    //if(sub==0&&sizecom)Log.print_con("\n%d,%d\n%ws\n%ws\n",sizecom,sizedif,dir1.c_str(),dir2.c_str());
+    //if(sub==0&&sizecom)vvuprintf("\n%d,%d\n%ws\n%ws\n",sizecom,sizedif,dir1.c_str(),dir2.c_str());
 
     if(sub==0&&sizecom>0)
     {
@@ -1078,7 +1080,7 @@ int Merger::combine(std::wstring dir1,std::wstring dir2,int sz)
 
 void Merger::find_dups()
 {
-    Log.print_con("{");
+    vvuprintf("{");
     for(unsigned i=0;i<db->NumFiles;i++)
     {
         std::wstring filename,filepath,subdir1,subdir2;
@@ -1097,7 +1099,7 @@ void Merger::find_dups()
             if(d->checkCRC(CRC)&&d->checksize(sz)&&d->checkself(filepath.c_str()))
             if(merged.find(d->getStr())==merged.end())
             {
-                //Log.print_con(".");
+                //vvuprintf(".");
                 int szcom=checkfolders(filepath,d->str,0);
 /*                if(szcom>1024*1024)
                 {
@@ -1109,7 +1111,7 @@ void Merger::find_dups()
             }
         }
     }
-    Log.print_con("}\n");
+    vvuprintf("}\n");
 }
 #endif
 
@@ -1230,14 +1232,14 @@ int Driverpack::genindex()
             if(_wcsicmp(fullname+namelen,L".inf")==0||
                 _wcsicmp(fullname+namelen,L".cat")==0)
             {
-                //Log.print_con("{");
+                //vvuprintf("{");
 
             tryagain:
                 res=SzArEx_Extract(&db,&lookStream.vt,i,
                                    &blockIndex,&outBuffer,&outBufferSize,
                                    &offset,&outSizeProcessed,
                                    &allocImp,&allocTempImp);
-                //Log.print_con("}");
+                //vvuprintf("}");
                 if(res==SZ_ERROR_MEM)
                 {
                     uprintf("ERROR with %S:%d\n",getFilename(),res);
@@ -1373,7 +1375,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
     Parser parse_info{this,string_list,inffull.Get()};
     Parser parse_info2{this,string_list,inffull.Get()};
     Parser parse_info3{this,string_list,inffull.Get()};
-    //Log.print_con("%S%S\n",drpdir,inffilename);
+    //vvuprintf("%S%S\n",drpdir,inffilename);
 
     // Populate sections
     while(p<strend)
@@ -1420,7 +1422,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
                     strtolower(p,sectnmend-p);
                     auto a=section_list.insert({std::string(p,sectnmend-p),sect_data_t(p2,inf_base+inf_len)});
                     lnk_s2=&a->second;
-                    //Log.print_con("  %8d,%8d '%s' \n",strlink.ofs,strlink.len,std::string(p,sectnmend-p).c_str());
+                    //vvuprintf("  %8d,%8d '%s' \n",strlink.ofs,strlink.len,std::string(p,sectnmend-p).c_str());
                 }
                 p=p2;
                 break;
@@ -1449,7 +1451,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
             {
                 parse_info.readStr(&s2b,&s2e);
                 strtolower(s1b,s1e-s1b);
-                //Log.print_con("%s,%d,%d: tolower '%.10s'\n",line,s2b,s2e-s2b,s2b);
+                //vvuprintf("%s,%d,%d: tolower '%.10s'\n",line,s2b,s2e-s2b,s2b);
                 string_list.insert({std::string(s1b,s1e-s1b),std::string(s2b,s2e-s2b)});
             }
         }
@@ -1471,7 +1473,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
         while(parse_info.parseItem())
         {
             parse_info.readStr(&s1b,&s1e);
-            //Log.print_con("%s,%d,%d: tolower '%.10s'\n",line,s1b,s1e,s1b);
+            //vvuprintf("%s,%d,%d: tolower '%.10s'\n",line,s1b,s1e,s1b);
             strtolower(s1b,s1e-s1b);
 
             int i;
@@ -1770,7 +1772,7 @@ unsigned int __stdcall Driverpack::indexinf_thread(void *arg)
                 t.drp->genhashes();
                 t.drp->text_ind.shrink();
                 last=System.GetTickCountWr();
-                //Log.print_con("Trm %ws\n",data.drp->getFilename());
+                //vvuprintf("Trm %ws\n",data.drp->getFilename());
                 delete data.drp->objs_new;
                 break;
             }
@@ -1784,9 +1786,9 @@ unsigned int __stdcall Driverpack::indexinf_thread(void *arg)
             delete[] t.adr;
             last=System.GetTickCountWr();
         }
-        //Log.print_con("Fin %ws\n",data.drp->getFilename());
+        //vvuprintf("Fin %ws\n",data.drp->getFilename());
     }
-    //Log.print_con("Starved for %ld\n",tm);
+    //vvuprintf("Starved for %ld\n",tm);
     return 0;
 }
 
@@ -2153,7 +2155,7 @@ void Driverpack::parsecat(wchar_t const *pathinf,wchar_t const *inffilename,cons
         wsprintfA(filename,"%ws%ws",pathinf,inffilename);
         strtolower(filename,strlen(filename));
         cat_list.insert({filename,static_cast<ofst>(text_ind.memcpyz_dup(bufa,strlen(bufa)))});
-        //Log.print_con("(%s)\n##%s\n",filename,bufa);
+        //vvuprintf("(%s)\n##%s\n",filename,bufa);
     }
     else
     {

@@ -46,8 +46,8 @@ Task-oriented
 SDI2.cfg
 ------------
 -drp_dir:<dir>    Path to driverpacks.
--index_dir:<dir>  Path to indexes.
--output_dir:<dir> Path to indexes in human-readable format.
+-index_dir:<dir>  Path to indices.
+-output_dir:<dir> Path to indices in human-readable format.
 -data_dir:<dir>   Path to translations and themes.
 -log_dir:<dir>    Path to logs and snapshots.
 -lang:<name>      Current interface language.
@@ -103,7 +103,7 @@ Autoinstall
 -finishrb_cmd:<cmd>  Specifies a command executed upon completion of
                      driver installation when reboot is required.
 -extractdir:<dir>    Path to TEMP.
--keepunpackedindex   Prevents updating of indexes for unpacked drivers.
+-keepunpackedindex   Prevents updating of indices for unpacked drivers.
 -keeptempfiles       Keep temp files.
 
 -----
@@ -114,7 +114,7 @@ Debug
 -disableinstall   Suppresses driver installation and creation of a
                   restore point.
 -reindex          Forces reindexing of all driverpacks.
--index_hr         Creates indexes in human-readable format.
+-index_hr         Creates indices in human-readable format.
 
 -------
 Verbose

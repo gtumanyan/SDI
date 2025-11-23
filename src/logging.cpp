@@ -18,9 +18,11 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include <cerrno>
 #include <clocale>
 
+#include "SDI.h"
 #include "logging.h"
 #include "settings.h"
 #include "system.h"
+#include "version.h"
 
 //{ Global variables
 Log_t Log;
@@ -58,17 +60,17 @@ void Timers_t::stoponce(int a,int b)
 void Timers_t::print()
 {
     if(Log.isHidden(LOG_VERBOSE_TIMES))return;
-    Log.print_con("Times\n");
-    Log.print_con("  devicescan: %7ld (%d errors)\n",timers[time_devicescan],Log.getErrorCount());
-    Log.print_con("  indexes:    %7ld\n",timers[time_indexes]);
-    Log.print_con("  sysinfo:    %7ld\n",timers[time_sysinfo]);
-    Log.print_con("  matcher:    %7ld\n",timers[time_matcher]);
-    Log.print_con("  chkupdate:  %7ld\n",timers[time_chkupdate]);
-    Log.print_con("  startup:    %7ld (%ld)\n",timers[time_startup],timers[time_startup]-timers[time_devicescan]-timers[time_indexes]-timers[time_matcher]-timers[time_sysinfo]);
-    Log.print_con("  indexsave:  %7ld\n",timers[time_indexsave]);
-    Log.print_con("  indexprint: %7ld\n",timers[time_indexprint]);
-    Log.print_con("  total:      %7ld\n",System.GetTickCountWr()-timers[time_total]);
-    Log.print_con("  test:       %7ld\n",timers[time_test]);
+    vvuprintf("Times\n");
+    vvuprintf("  devicescan: %7ld (%d errors)\n",timers[time_devicescan],Log.getErrorCount());
+    vvuprintf("  indices:    %7ld\n",timers[time_indices]);
+    vvuprintf("  sysinfo:    %7ld\n",timers[time_sysinfo]);
+    vvuprintf("  matcher:    %7ld\n",timers[time_matcher]);
+    vvuprintf("  chkupdate:  %7ld\n",timers[time_chkupdate]);
+    vvuprintf("  startup:    %7ld (%ld)\n",timers[time_startup],timers[time_startup]-timers[time_devicescan]-timers[time_indices]-timers[time_matcher]-timers[time_sysinfo]);
+    vvuprintf("  indexsave:  %7ld\n",timers[time_indexsave]);
+    vvuprintf("  indexprint: %7ld\n",timers[time_indexprint]);
+    vvuprintf("  total:      %7ld\n",System.GetTickCountWr()-timers[time_total]);
+    vvuprintf("  test:       %7ld\n",timers[time_test]);
 }
 
 void Log_t::gen_timestamp()
@@ -89,38 +91,38 @@ void Log_t::gen_timestamp()
              ti->tm_hour,ti->tm_min,ti->tm_sec,pcname);
 }
 
-//void Log_t::start(wchar_t *logdir)
-//{
-//    WStringShort filename;
-//
-//    if(Settings.flags&FLAG_NOLOGFILE)return;
-//    setlocale(LC_ALL,"");
-//    //system("chcp 1251");
-//
-//    gen_timestamp();
-//
-//    filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
-//    if(!(System.canWriteDirectory(logdir)&&System.canWriteFile(filename.Get(),L"wt")))
-//    {
-//        uprintf("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
-//        GetEnvironmentVariable(L"TEMP",logdir,BUFLEN);
-//        wcscat(logdir,L"\\SDI_logs");
-//        filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
-//    }
-//
-//    logfile=_wfopen(filename.Get(),L"wt");
-//    if(!logfile)
-//    {
-//        uprintf("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
-//        GetEnvironmentVariable(L"TEMP",logdir,BUFLEN);
-//        wcscat(logdir,L"\\SDI_logs");
-//        filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
-//        mkdir_r(logdir);
-//        logfile=_wfopen(filename.Get(),L"wb");
-//    }
-//    if((log_verbose&LOG_VERBOSE_BATCH)==0)
-//        Log.print_file("{start logging\n%s\n\n", _STRG(VERSION_FILEVERSION_LONG));
-//}
+void Log_t::start(wchar_t *logdir)
+{
+    WStringShort filename;
+
+    if(Settings.flags&FLAG_NOLOGFILE)return;
+    setlocale(LC_ALL,"");
+    //system("chcp 1251");
+
+    gen_timestamp();
+
+    filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
+    if(!(System.canWriteDirectory(logdir)&&System.canWriteFile(filename.Get(),L"wt")))
+    {
+        uprintf("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
+        GetEnvironmentVariable(L"TEMP",logdir,MAX_PATH);
+        wcscat(logdir,L"\\SDI_logs");
+        filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
+    }
+
+    logfile=_wfopen(filename.Get(),L"wt");
+    if(!logfile)
+    {
+        uprintf("ERROR in log_start(): Write-protected,'%S'\n",filename.Get());
+        GetEnvironmentVariable(L"TEMP",logdir,MAX_PATH);
+        wcscat(logdir,L"\\SDI_logs");
+        filename.sprintf(L"%s\\%slog.txt",logdir,timestamp);
+        mkdir_r(logdir);
+        logfile=_wfopen(filename.Get(),L"wb");
+    }
+    if((log_verbose&LOG_VERBOSE_BATCH)==0)
+        Log.print_file("{start logging\n%s\n\n", VERSION_FILEVERSION_LONG);
+}
 //
 //void Log_t::save()
 //{
@@ -128,26 +130,26 @@ void Log_t::gen_timestamp()
 //    fflush(logfile);
 //}
 //
-//void Log_t::stop()
-//{
-//    if(!logfile)return;
-//    if((log_verbose&LOG_VERBOSE_BATCH)==0)
-//        Log.print_file("}stop logging");
-//    fclose(logfile);
-//}
-//
-//void Log_t::print_file(char const *format,...)
-//{
-//    char buffer[1024*16];
-//
-//    if(!logfile)return;
-//    va_list args;
-//    va_start(args,format);
-//    vsprintf(buffer,format,args);
-//    fputs(buffer,logfile);
-//    if(log_console)fputs(buffer,stdout);
-//    va_end(args);
-//}
+void Log_t::stop()
+{
+    if(!logfile)return;
+    if((log_verbose&LOG_VERBOSE_BATCH)==0)
+        Log.print_file("}stop logging");
+    fclose(logfile);
+}
+
+void Log_t::print_file(char const *format,...)
+{
+    char buffer[1024*16];
+
+    if(!logfile)return;
+    va_list args;
+    va_start(args,format);
+    vsprintf(buffer,format,args);
+    fputs(buffer,logfile);
+    if(log_console)fputs(buffer,stdout);
+    va_end(args);
+}
 
 //void Log_t::print_err(char const *format,...)
 //{
@@ -296,8 +298,8 @@ void Log_t::print_syserr(int r,const wchar_t *s)
 //    myterminate();
 //}
 //
-//void start_exception_handlers()        //In the current Microsoft implementation of C++ exception handling, 
-//{                                      // unexpected calls terminate by default and is never called by the exception-handling run-time library. 
+//void start_exception_handlers()        //In the current Microsoft implementation of C++ exception handling,
+//{                                      // unexpected calls terminate by default and is never called by the exception-handling run-time library.
 //    std::set_unexpected(myunexpected); //  There is no particular advantage to calling unexpected rather than term`inate.
 //    std::set_terminate(myterminate);
 //}
@@ -314,12 +316,12 @@ void* operator new(size_t size, const char* file, int line)
 {
     try
     {
-        //Log.print_con("File '%s',Line %d,Size %d\n",file,line,size);
+        //vvuprintf("File '%s',Line %d,Size %d\n",file,line,size);
         return new char[size];
     }
     catch(...)
     {
-        Log.print_con("File '%s',Line %d,Size %d\n",file,line,size);
+        vvuprintf("File '%s',Line %d,Size %d\n",file,line,size);
         throw;
     }
 }
@@ -327,12 +329,12 @@ void* operator new[](size_t size, const char* file, int line)
 {
     try
     {
-        //Log.print_con("File '%s',Line %d,Size %d\n",file,line,size);
+        //vvuprintf("File '%s',Line %d,Size %d\n",file,line,size);
         return new char[size];
     }
     catch(...)
     {
-        Log.print_con("File '%s',Line %d,Size %d\n",file,line,size);
+        vvuprintf("File '%s',Line %d,Size %d\n",file,line,size);
         throw;
     }
 }

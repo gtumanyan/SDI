@@ -132,9 +132,9 @@ BEGIN
     GROUPBOX        "",0,5,5,236,190
     LTEXT           "Drivers",IDD_P3_DIR1,15,20,218,14
     EDITTEXT        IDD_P3_DIR1E,15,30,210,14,ES_AUTOHSCROLL
-    LTEXT           "Indexes",IDD_P3_DIR2,15,56,218,14
+    LTEXT           "Indices",IDD_P3_DIR2,15,56,218,14
     EDITTEXT        IDD_P3_DIR2E,15,66,210,14,ES_AUTOHSCROLL
-    LTEXT           "Indexes (human-readable)",IDD_P3_DIR3,15,92,218,14
+    LTEXT           "Indices (human-readable)",IDD_P3_DIR3,15,92,218,14
     EDITTEXT        IDD_P3_DIR3E,15,102,210,14,ES_AUTOHSCROLL
     LTEXT           "Data",IDD_P3_DIR4,15,128,218,14
     EDITTEXT        IDD_P3_DIR4E,15,138,210,14,ES_AUTOHSCROLL

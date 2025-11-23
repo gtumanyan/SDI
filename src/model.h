@@ -32,7 +32,7 @@ class Bundle
 
 private:
     static unsigned int __stdcall thread_scandevices(void *arg);
-    static unsigned int __stdcall thread_loadindexes(void *arg);
+    static unsigned int __stdcall thread_loadindices(void *arg);
     static unsigned int __stdcall thread_getsysinfo(void *arg);
 
 public:

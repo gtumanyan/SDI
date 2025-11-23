@@ -67,13 +67,13 @@ public:
     virtual void OpenDialog()=0;
     virtual void DownloadAll()=0;
     virtual void DownloadNetwork()=0;
-    virtual void DownloadIndexes()=0;
+    virtual void DownloadIndices()=0;
     virtual void StartSeedingDrivers()=0;
     virtual void StopSeedingDrivers()=0;
 
     virtual int scriptInitUpdates(int torrentport)=0;
     virtual int scriptDownloadApp()=0;
-    virtual int scriptDownloadIndexes()=0;
+    virtual int scriptDownloadIndices()=0;
     virtual int scriptDownloadDrivers(std::wstring mode)=0;
     virtual int scriptDownloadEverything()=0;
     virtual int scriptDoDownload()=0;
