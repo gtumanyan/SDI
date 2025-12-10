@@ -14,6 +14,7 @@ jobs:
         uses: microsoft/setup-msbuild@v2
         with:
           msbuild-architecture: x64
+          vs-prerelease: true
       - id: set_version
         name: Set version
         run: |
