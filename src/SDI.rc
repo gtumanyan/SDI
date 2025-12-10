@@ -293,7 +293,7 @@ IDR_LOGO                100                     "..\\res\\logo.webp"
 
 IDR_BOOSTY              100                     "..\\res\\boosty.webp"
 
-IDR_LICENSE             100                     "..\\res\\LICENSE.txt"
+IDR_LICENSE             100                     "..\\LICENSE"
 
 IDR_THEME               100                     "..\\Tools\\Themes\\Win11Dark.txt"
 
