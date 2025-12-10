@@ -1,6 +1,6 @@
 // encoding: UTF-8
 
-#include "versionex.h"
+#include "version.h"
 
 #ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
@@ -28,8 +28,8 @@ BEGIN
       VALUE "FileDescription",  APPLICATION_NAME
       VALUE "InternalName",     APPLICATION_NAME
       VALUE "ProductName",      APPLICATION_NAME
-      VALUE "FileVersion",      _STRG(VERSION_FILEVERSION)
-      VALUE "ProductVersion",   _STRG(VERSION_FILEVERSION)
+      VALUE "FileVersion",      VERSION_FILEVERSION_SHORT
+      VALUE "ProductVersion",   VERSION_FILEVERSION_SHORT
       VALUE "LegalCopyright",   VERSION_LEGALCOPYRIGHT
       VALUE "OriginalFilename", APPLICATION_NAME ".exe"
     END

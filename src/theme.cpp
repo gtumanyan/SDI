@@ -17,8 +17,8 @@ along with Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <windows.h>
 #include <memory>
+#include <shlwapi.h>
 
-#include "utils/BaseUtil.h"
 #include "themelist.h"
 #include "Settings.h"
 #include "SDI.h"
@@ -269,21 +269,9 @@ void VaultImp::loadFromFile(const wchar_t *filename)
 
 void VaultImp::loadFromRes(int resId) {
     HRSRC resSrc = FindResourceW(nullptr, MAKEINTRESOURCE(resId), (wchar_t*)RESFILE);
-    ReportIf(!resSrc);
-    if (!resSrc) {
-        return ;
-    }
-				 HGLOBAL hRsrcMem = LoadResource(nullptr, resSrc);
-    ReportIf(!hRsrcMem);
-    if (!hRsrcMem) {
-        return ;
-    }
+	HGLOBAL hRsrcMem = LoadResource(nullptr, resSrc);
     DWORD size = SizeofResource(nullptr, resSrc);
     const char* resData = (const char*)LockResource(hRsrcMem);
-    ReportIf(!resData);
-    if (!resData) {
-        return ;
-    }
     datav_ptr.reset(new wchar_t[size+1]);
     wchar_t *datav=datav_ptr.get();
     UnlockResource(res);

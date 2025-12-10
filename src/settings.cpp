@@ -223,7 +223,7 @@ void Settings_t::parse(const WCHAR* cmdLine,size_t ind) {
         if(argflg(pr,L"-delextrainfs",   FLAG_DELEXTRAINFS))continue;
 
         if(argstr(pr,L"-ls:",            state_file)){ statemode=STATEMODE_EMUL;;continue; }
-        if(argflg(pr,L"-verbose:",       gReducedLogging=false))continue;
+        if(argint(pr,L"-verbose:",       &Log.log_verbose))continue;
         if(argflg(pr,L"-nologfile",      FLAG_NOLOGFILE))continue;
         if(argflg(pr,L"-nosnapshot",     FLAG_NOSNAPSHOT))continue;
         if(argflg(pr,L"-nostamp",        FLAG_NOSTAMP))continue;
@@ -242,7 +242,6 @@ void Settings_t::parse(const WCHAR* cmdLine,size_t ind) {
             Parse_HWID_installed_swith(pr);
         else if( StrStrIW(pr,GFG_DEF))
             continue;
-
 
         else uprintf("Unknown argument '%S'\n",pr);
         if(statemode==STATEMODE_EXIT)break;
@@ -294,7 +293,7 @@ void Settings_t::save()
 
 void Settings_t::loginfo()
 {
-    if(!gReducedLogging)
+    if(Log.isAllowed(LOG_VERBOSE_ARGS))
     {
         uprintfs("Settings\n");
         uprintf("  drp_dir='%S'\n",drp_dir);

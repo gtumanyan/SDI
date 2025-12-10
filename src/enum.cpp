@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -16,14 +16,17 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include <windows.h>
 
 #include "SDI.h"
+#include "logging.h"
+#include "Version.h"
 #include "system.h"
 #include "Settings.h"
 #include "indexing.h"
+#include "msapi_utf8.h"
 #include "theme.h"
 #include "gui.h"
 #include "draw.h"
-#include "VersionEx.h"
 
+#include "platform.version.hpp"
 
 #include "Lzma86.h"
 #include "device.h"
@@ -240,14 +243,14 @@ const wchar_t *Device::getHWIDby(int num,const State *state)
 }
 
 Device::Device(State *state):
-driVERSION_INDEX(-1),Devicedesc(0),HardwareID(0),CompatibleIDs(0),Driver(0),
+driver_index(-1),Devicedesc(0),HardwareID(0),CompatibleIDs(0),Driver(0),
         Mfg(0),FriendlyName(0),Capabilities(0),ConfigFlags(0),
         InstanceId(0),status(0),problem(0),ret(0)
 {
     wchar_t buf[86];
 
     //wsprintf(buf,L"%S",ex.GetHWID());
-    //Log.print_con("Fake '%S'\n",buf);
+    //vvuprintf("Fake '%S'\n",buf);
     buf[wcslen(buf)+2]=0;
     problem=2;
     HardwareID=static_cast<ofst>(state->textas.t_memcpy((char *)buf,wcslen(buf)*2+4));
@@ -262,7 +265,7 @@ Device::Device(HDEVINFO hDevInfo,State *state,int i)
     memset(&DeviceInfoData,0,sizeof(SP_DEVINFO_DATA));
     DeviceInfoData.cbSize=sizeof(SP_DEVINFO_DATA);
 
-    driVERSION_INDEX=-1;
+    driver_index=-1;
     if(!SetupDiEnumDeviceInfo(hDevInfo,i,DeviceInfoDataloc))
     {
         ret=GetLastError();
@@ -333,7 +336,7 @@ void Driver::scaninf(State *state,Driverpack *unpacked_drp,int &inf_pos)
     if(got!=inf_list->end())
     {
         infdata_t *infdata=&got->second;
-        uprintf("Matched HWID '%S' %d,%d,%d,%d\n",fnm_hwid.Get(),infdata->feature,infdata->catalogfile,infdata->cat,infdata->inf_pos);
+        //uprintf("Matched HWID '%S' %d,%d,%d,%d\n",fnm_hwid.Get(),infdata->feature,infdata->catalogfile,infdata->cat,infdata->inf_pos);
         feature=infdata->feature;
         catalogfile=infdata->catalogfile;
         cat=infdata->cat;
@@ -348,14 +351,14 @@ void Driver::scaninf(State *state,Driverpack *unpacked_drp,int &inf_pos)
         cat=infdata->cat;
         catalogfile=infdata->catalogfile;
         start_index=infdata->start_index;
-        uprintf("Matched inf  '%S',%d,%d\n",filename.Get(),cat,catalogfile);
+        //uprintf("Matched inf  '%S',%d,%d\n",filename.Get(),cat,catalogfile);
     }
     else
     {
         FILE *f;
         size_t len;
 
-        uprintf("Reading '%S' for (%S)\n",filename.Get(),state->textas.get(MatchingDeviceId));
+        //uprintf("Reading '%S' for (%S)\n",filename.Get(),state->textas.get(MatchingDeviceId));
         f=_wfopen(filename.Get(),L"rb");
         if(!f)
         {
@@ -453,10 +456,19 @@ int Driver::isvalidcat(const State *state)const
 
     int major,minor;
     state->getWinVer(&major,&minor);
-    if (major == 11) major = 10;    //For the 2025 there is no windows 11 cats
     wsprintfA(bufa,"2:%d.%d",major,minor);
     if(!*s)return 0;
-    return strstr(s,bufa)?1:0;
+    int res=strstr(s,bufa)?1:0;
+
+    // windows 11 - this assumes 2:10.0 is valid for win11
+    // because all drivers that claim to target win11 still quote 2:10.0 in the catalog
+    // see also matcher.cpp line 1231
+    if(res==0&&major==11&&minor==0)
+    {
+        wsprintfA(bufa,"2:%d.%d",10,0);
+        res=strstr(s,bufa)?1:0;
+    }
+    return res;
 }
 
 void Driver::print(const State *state)const
@@ -465,8 +477,8 @@ void Driver::print(const State *state)const
     WStringShort date;
     WStringShort vers;
 
-    version.str_date(date);
-    version.str_version(vers);
+    Version.str_date(date);
+    Version.str_version(vers);
     uprintf("  Name:     %S\n",txt->getw(DriverDesc));
     uprintf("  Provider: %S\n",txt->getw(ProviderName));
     uprintf("  Date:     %S\n",date.Get());
@@ -474,8 +486,10 @@ void Driver::print(const State *state)const
     uprintf("  HWID:     %S\n",txt->getw(MatchingDeviceId));
     uprintf("  Inf:      %S%S, %S%S\n",txt->getw(state->getWindir()),txt->getw(InfPath),txt->getw(InfSection),txt->getw(InfSectionExt));
     uprintf("  Score:    %08X %04x\n",calc_score_h(state),identifierscore);
-    uprintf("  Sign:     '%s'(%d)\n",txt->get(cat),catalogfile);
-    uprintf("  Filter:   \"%S\"=a,%S\n",txt->getw(DriverDesc),txt->getw(MatchingDeviceId));
+    uprintf("  Signat:	 '%s'(%d)\n",txt->get(cat),catalogfile);
+
+    if(Log.isAllowed(LOG_VERBOSE_BATCH))
+        Log.print_file("  Filter:   \"%S\"=a,%S\n",txt->getw(DriverDesc),txt->getw(MatchingDeviceId));
 }
 
 int calc_identifierscore(int dev_pos,int dev_ishw,int inf_pos)
@@ -495,7 +509,7 @@ int calc_identifierscore(int dev_pos,int dev_ishw,int inf_pos)
 
 Driver::Driver(State *state,Device *cur_device,HKEY hkey,Driverpack *unpacked_drp)
 {
-    char bufa[10];
+    char bufa[16];
     int dev_pos,ishw,inf_pos=-1;
     DriverDate=0;
     DriverVersion=0;
@@ -541,6 +555,7 @@ void State::fakeOSversion()
     if(Settings.virtual_arch_type==32)architecture=0;
     if(Settings.virtual_arch_type==64)architecture=1;
     // virtual_os_version holds the index into the versions array+ID_OS_ITEMS
+    // eg Windows 10 = 15+1000
     if(Settings.virtual_os_version)
     {
         int ver=winVersions.GetEntry(Settings.virtual_os_version-ID_OS_ITEMS);
@@ -582,7 +597,7 @@ const wchar_t *State::getModel()
     return s;
 }
 
-int State::getPlatformProductType()
+int State::getPlatformProductType() const
 {
     return platform.wProductType;
 }
@@ -608,7 +623,7 @@ State::State():
     memset(this,0,sizeof(state_m_t));
     revision= VERSION_REV;
 
-    //Log.print_con("sizeof(Device)=%d\nsizeof(Driver)=%d\n\n",sizeof(Device),sizeof(Driver));
+    //vvuprintf("sizeof(Device)=%d\nsizeof(Driver)=%d\n\n",sizeof(Device),sizeof(Driver));
 }
 
 void State::print()
@@ -617,18 +632,18 @@ void State::print()
     wchar_t *buf;
     SYSTEM_POWER_STATUS *batteryloc;
 
-   /* if(Log.isAllowed(LOG_VERBOSE_SYSINFO|LOG_VERBOSE_BATCH))
+    if(Log.isAllowed(LOG_VERBOSE_SYSINFO|LOG_VERBOSE_BATCH))
     {
-   */  uprintf("%S (%d.%d.%d), ",get_winverstr(),platform.dwMajorVersion,platform.dwMinorVersion,platform.dwBuildNumber);
+       uprintf("%S (%d.%d.%d), ",get_winverstr(),platform.dwMajorVersion,platform.dwMinorVersion,platform.dwBuildNumber);
        uprintf("%s\n",architecture?"64-bit":"32-bit");
        uprintf("%s, ",isLaptop?"Laptop":"Desktop");
        uprintf("Product='%S', ",textas.getw(product));
        uprintf("Model='%S', ",textas.get(model));
        uprintf("Manuf='%S'\n",textas.get(manuf));
-    //}else
-    /*if(Log.isAllowed(LOG_VERBOSE_SYSINFO))
+    }else
+    if(Log.isAllowed(LOG_VERBOSE_SYSINFO))
     {
-    */ uprintf("Windows\n");
+       uprintf("Windows\n");
        uprintf("  Version:     %S (%d.%d.%d)\n",get_winverstr(),platform.dwMajorVersion,platform.dwMinorVersion,platform.dwBuildNumber);
        uprintf("  PlatformId:  %d\n",platform.dwPlatformId);
        uprintf("  Update:      %S\n",platform.szCSDVersion);
@@ -677,12 +692,12 @@ void State::print()
            uprintf("  FullLifeTime: %d mins\n",batteryloc->BatteryFullLifeTime/60);
 
        buf=textas.getwV(monitors);
-       uprintf("\nMonitors\n");
+       vvuprintf("\nMonitors\n");
        for(i=0;i<buf[0];i++)
         {
             int x=buf[1+i*2];
             int y=buf[2+i*2];
-            uprintf("  %dcmx%dcm (%.1fin)\t%.3f %s\n",x,y,sqrt(x*x+y*y)/2.54,(double)y/x,iswide(x,y)?"wide":"");
+            uprintf("  %d cm x %d cm (%.1f\")\t%.3f %s\n",x,y,sqrt(x*x+y*y)/2.54,(double)y/x,iswide(x,y)?"wide":"");
         }
 
        uprintf("\nMisc\n");
@@ -690,9 +705,9 @@ void State::print()
        uprintf("  Locale:      %X\n",locale);
        uprintf("  CPU_Arch:    %s\n",architecture?"64-bit":"32-bit");
        uprintf("\n");
-    //}
+    }
 
-    //if(Log.isAllowed(LOG_VERBOSE_DEVICES))
+    if(Log.isAllowed(LOG_VERBOSE_DEVICES))
     for(auto &cur_device:Devices_list)
     {
         cur_device.print(this);
@@ -707,7 +722,7 @@ void State::print()
         uprintf("\n\n");
     }
 
-    //Log.print_con("State: %d+%d+%d*%d+%d*%d\n",sizeof(State),textas.getSize(),Devices_list.size(),sizeof(Device),Drivers_list.size(),sizeof(Driver));
+    //vvuprintf("State: %d+%d+%d*%d+%d*%d\n",sizeof(State),textas.getSize(),Devices_list.size(),sizeof(Device),Drivers_list.size(),sizeof(Driver));
     //log_file("Errors: %d\n",error_count);
 }
 
@@ -810,10 +825,17 @@ void State::contextmenu2(int x,int y)
 {
     HMENU hPopupMenu=CreatePopupMenu();
     HMENU hSub1=CreatePopupMenu();
+
     // find the version array index for the current platform
-    int ver=platform.dwMinorVersion+10*platform.dwMajorVersion;
-    bool serv=platform.wProductType==2||platform.wProductType==3;
-    int veridx=winVersions.GetVersionIndex(ver,serv);
+    // start with the selected virtual os
+    int veridx = Settings.virtual_os_version-ID_OS_ITEMS;
+    // no virtual os selected
+    if(veridx<0)
+    {
+        int ver=platform.dwMinorVersion+10*platform.dwMajorVersion;
+        bool serv=platform.wProductType==2||platform.wProductType==3;
+        veridx=winVersions.GetVersionIndex(ver,serv);
+    }
 
     // create a menu item for each entry in the version array
     // and checkmark the current platform
@@ -828,6 +850,7 @@ void State::contextmenu2(int x,int y)
     InsertMenu(hPopupMenu,i++,MF_BYPOSITION|MF_STRING|MF_POPUP,(UINT_PTR)hSub1,STR(STR_SYS_WINVER));
     InsertMenu(hPopupMenu,i++,MF_BYPOSITION|MF_STRING|(architecture==0?MF_CHECKED:0),ID_EMU_32,STR(STR_SYS_32));
     InsertMenu(hPopupMenu,i++,MF_BYPOSITION|MF_STRING|(architecture==1?MF_CHECKED:0),ID_EMU_64,STR(STR_SYS_64));
+    InsertMenu(hPopupMenu,i++,MF_BYPOSITION|MF_STRING,ID_DETECT_OS,STR(STR_SYS_DETECT));
     InsertMenu(hPopupMenu,i++,MF_BYPOSITION|MF_SEPARATOR,0,nullptr);
     InsertMenu(hPopupMenu,i++,MF_BYPOSITION|MF_STRING,ID_DEVICEMNG,STR(STR_SYS_DEVICEMNG));
     InsertMenu(hPopupMenu,i++,MF_BYPOSITION|MF_SEPARATOR,0,nullptr);
@@ -945,68 +968,56 @@ int State::load(const wchar_t *filename)
     fakeOSversion();
 
     fclose(fd);
-    uprintf("OK\n");
+    vuprintf("OK\n");
     return 1;
 }
 
 void State::getsysinfo_fast()
 {
-    uprintf("State::getsysinfo_fast\n");
-    wchar_t buf[MAX_PATH];
+    duprintf("State::getsysinfo_fast\n");
+    char buf[MAX_PATH];
 
     // Battery
-    uprintf("State::getsysinfo_fast::GetSystemPowerStatus\n");
-    battery=static_cast<ofst>(textas.alloc(sizeof(SYSTEM_POWER_STATUS)));
-    SYSTEM_POWER_STATUS *batteryloc=(SYSTEM_POWER_STATUS *)(textas.get(battery));
+    duprintf("State::getsysinfo_fast::GetSystemPowerStatus\n");
+    battery = static_cast<ofst>(textas.alloc(sizeof(SYSTEM_POWER_STATUS)));
+    SYSTEM_POWER_STATUS* batteryloc = (SYSTEM_POWER_STATUS*)(textas.get(battery));
     GetSystemPowerStatus(batteryloc);
 
     // Monitors
-    uprintf("State::getsysinfo_fast::Monitors\n");
+    duprintf("State::getsysinfo_fast::Monitors\n");
     DISPLAY_DEVICE DispDev;
-    memset(&DispDev,0,sizeof(DispDev));
-    DispDev.cb=sizeof(DispDev);
-    buf[0]=0;
-    int i=0;
-    while(EnumDisplayDevices(nullptr,i,&DispDev,0))
+    memset(&DispDev, 0, sizeof(DispDev));
+    DispDev.cb = sizeof(DispDev);
+    buf[0] = 0;
+    int i = 0;
+    while (EnumDisplayDevices(nullptr, i, &DispDev, 0))
     {
-        int x,y;
-        GetMonitorSizeFromEDID(DispDev.DeviceName,&x,&y);
-        if(x&&y)
+        int x, y;
+        GetMonitorSizeFromEDID(DispDev.DeviceName, &x, &y);
+        if (x && y)
         {
-            buf[buf[0]*2+1]=(short)x;
-            buf[buf[0]*2+2]=(short)y;
+            buf[buf[0] * 2 + 1] = (short)x;
+            buf[buf[0] * 2 + 2] = (short)y;
             buf[0]++;
         }
         i++;
     }
-    monitors=static_cast<ofst>(textas.t_memcpy((char *)buf,(1+buf[0]*2)*2));
+    monitors = static_cast<ofst>(textas.t_memcpy((char*)buf, (1 + buf[0] * 2) * 2));
 
     // Windows version
-    uprintf("State::getsysinfo_fast::Windows\n");
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable:4996)  // 'GetVersionEx': was declared deprecated
-#endif
-     //platform.dwOSVersionInfoSize=sizeof(OSVERSIONINFOEX);
-     OSVERSIONINFO WinVer;
-     WinVer.dwOSVersionInfoSize = sizeof(WinVer);
-     //if(!(GetVersionEx((OSVERSIONINFO*)&platform)))
-     GetVersionEx(&WinVer);
-    // {
-    //    platform.dwOSVersionInfoSize=sizeof(OSVERSIONINFO);
-    //    if(!GetVersionEx((OSVERSIONINFO*)&platform))
-    //        .print_syserr(GetLastError(),L"GetVersionEx()");
-    //}
+    duprintf("State::getsysinfo_fast::Windows\n");
 
-    // Windows 11
-    //wsprintf(buf,L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion");
-    //int ret=RegOpenKeyEx(HKEY_LOCAL_MACHINE,buf,0,KEY_QUERY_VALUE,&hkey);
-    if(WinVer.dwMajorVersion > 10 || WinVer.dwMajorVersion == 10 && WinVer.dwBuildNumber >= 22000)
-        {
-            // major version
-            // only change if windows 11 detected
-            platform.dwMajorVersion=(DWORD)11;
-        }
+    const auto Info = get_os_version();
+
+    // build number
+    platform.dwBuildNumber = Info.dwBuildNumber;
+    // major version
+    platform.dwMajorVersion = Info.dwMajorVersion;
+    // minor version
+    platform.dwMinorVersion = Info.dwMinorVersion;
+    platform.wProductType = Info.wProductType;
+
+    vuprintf("Windows v%d.%d.%d\n",platform.dwMajorVersion,platform.dwMinorVersion,platform.dwBuildNumber);
 
 
     locale=GetUserDefaultLCID();
@@ -1016,32 +1027,28 @@ void State::getsysinfo_fast()
 
     // Environment
     uprintf("State::getsysinfo_fast::Environment\n");
-    GetEnvironmentVariable(L"windir",buf,sizeof(buf));
-    wcscat(buf,L"\\inf\\");
-    windir = static_cast<ofst>(textas.strcpyw(buf));
+    GetSystemWindowsDirectoryA(buf,sizeof(buf));
+    strcat(buf,"\\inf\\");
+    windir = static_cast<ofst>(textas.strcpy(buf));
 
-    // get the system drive
-    wchar_t systemDrive[_MAX_DRIVE]={0};
-    GetEnvironmentVariable(L"SystemDrive",systemDrive, sizeof(systemDrive));
-    wcscat(systemDrive,L"\\temp");
-
-    // temp directory
-    GetEnvironmentVariable(L"TEMP",buf,sizeof(buf));
-
-    // if the TEMP environment variable is not set then use the system drive
-    if(wcslen(buf)==0)
-        wcscpy(buf,systemDrive);
-
-    temp=static_cast<ofst>(textas.strcpyw(buf));
+      // temp directory
+    if (GetTempPathU(sizeof(buf),buf) == 0) {
+        uprintf("Could not get temp directory: %s", WindowsErrorString());
+     // get the system drive
+        GetEnvironmentVariableA("SystemDrive",buf, sizeof(buf));
+     // if the TEMP environment variable is not set then use the system drive
+        strcat(buf, "\\temp");
+    }
+    temp=static_cast<ofst>(textas.strcpy(buf));
 
     // 64-bit detection
     uprintf("State::getsysinfo_fast::Architecture\n");
     architecture=0;
     *buf=0;
-    GetEnvironmentVariable(L"PROCESSOR_ARCHITECTURE",buf,sizeof(buf));
-    if(!lstrcmpi(buf,L"AMD64"))architecture=1;
+    GetEnvironmentVariableA("PROCESSOR_ARCHITECTURE",buf,sizeof(buf));
+    if(!_strcmpi(buf,"AMD64"))architecture=1;
     *buf=0;
-    GetEnvironmentVariable(L"PROCESSOR_ARCHITEW6432",buf, sizeof(buf));
+    GetEnvironmentVariableA("PROCESSOR_ARCHITEW6432",buf, sizeof(buf));
     if(*buf)architecture=1;
 
     fakeOSversion();
@@ -1206,7 +1213,7 @@ size_t State::opencatfile(const Driver *cur_driver)
 
     if(*bufa)
     {
-        //Log.print_con("'%s'\n",bufa);
+        //vvuprintf("'%s'\n",bufa);
         return textas.strcpy(bufa);
     }
     return 0;
@@ -1383,8 +1390,9 @@ int iswide(int x,int y)
 }
 //}
 
-// https://msdn.microsoft.com/en-au/library/windows/desktop/ms724832(v=vs.85).aspx
-const VER_STRUCT WinVersions::_versions[17]={{50, false,L"Windows 2000"},
+// https://learn.microsoft.com/en-us/windows/win32/sysinfo/operating-system-version
+// see also enum.h
+const VER_STRUCT WinVersions::_versions[19]={{50, false,L"Windows 2000"},
                                              {51, false,L"Windows XP"},
                                              {52, false,L"Windows XP 64"},
                                              {52, true, L"Windows Server 2003"},
@@ -1397,10 +1405,12 @@ const VER_STRUCT WinVersions::_versions[17]={{50, false,L"Windows 2000"},
                                              {62, false,L"Windows 8"},
                                              {63, true, L"Windows Server 2012 R2"},
                                              {63, false,L"Windows 8.1"},
-                                             {64, false,L"Windows 10 Tech Preview"},
                                              {100,true, L"Windows Server 2016"},
+                                             {100,true, L"Windows Server 2019"},
+                                             {100,true, L"Windows Server 2022"},
                                              {100,false,L"Windows 10"},
-                                             {110,false,L"Windows 11"}};
+                                             {110,false,L"Windows 11"},
+                                             {110,true, L"Windows Server 2025"} };
 int WinVersions::GetEntry(int num)
 {
     // returns a version number

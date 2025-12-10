@@ -15,6 +15,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <windows.h>
 #include <SRRestorePtAPI.h> // for RestorePoint
+#include <shlwapi.h>
 
 #include "SDI.h"
 #include "cli.h"
@@ -70,7 +71,7 @@ long long ar_total,ar_proceed;
 int instflag;
 size_t itembar_act;
 int needreboot=0;
-wchar_t extractdir[MAX_PATH + 1];
+wchar_t extractdir[MAX_PATH];
 
 volatile int Autoclicker_t::clicker_flag;
 Autoclicker_t Autoclicker;

@@ -59,7 +59,7 @@ struct SP_DEVINFO_DATA_32
 // Device
 class Device
 {
-    int driVERSION_INDEX;
+    int driver_index;
 
     ofst Devicedesc;
     ofst HardwareID;
@@ -81,8 +81,8 @@ private:
     void read_device_property(HDEVINFO hDevInfo,State *state,int id,ofst *val);
 
 public:
-    void setDriverIndex(int v){driVERSION_INDEX=v;}
-    int  getDriverIndex()const{return driVERSION_INDEX;}
+    void setDriverIndex(int v){driver_index=v;}
+    int  getDriverIndex()const{return driver_index;}
     ofst getHardwareID()const{return HardwareID;}
     ofst getCompatibleIDs()const{return CompatibleIDs;}
     ofst getFriendlyName()const{return FriendlyName;}
@@ -103,7 +103,7 @@ public:
     //Device(Device &&)=default;
     Device(HDEVINFO hDevInfo,State *state,int i);
     Device(State *state);
-    Device():driVERSION_INDEX(-1),Devicedesc(0),HardwareID(0),CompatibleIDs(0),Driver(0),
+    Device():driver_index(-1),Devicedesc(0),HardwareID(0),CompatibleIDs(0),Driver(0),
         Mfg(0),FriendlyName(0),Capabilities(0),ConfigFlags(0),
         InstanceId(0),status(0),problem(0),ret(0),DeviceInfoData(){}
 
@@ -166,7 +166,7 @@ public:
 // State (POD)
 class state_m_t
 {
-    OSVERSIONINFOEX platform;
+    OSVERSIONINFOEXW platform;
     int locale;
     int architecture;
 
@@ -196,7 +196,7 @@ struct VER_STRUCT
 };
 class WinVersions
 {
-    static const VER_STRUCT _versions[17];
+    static const VER_STRUCT _versions[19];
     const wchar_t* UnknownOS=L"Unknown OS";
 public:
     int GetEntry(int num);                             // returns entry version number
@@ -259,7 +259,7 @@ public:
     const wchar_t *getProduct();
     const wchar_t *getManuf();
     const wchar_t *getModel();
-    int getPlatformProductType();
+    int getPlatformProductType() const;
 
     State();
     void print();

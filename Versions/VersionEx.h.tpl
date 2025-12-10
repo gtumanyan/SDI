@@ -16,5 +16,3 @@
 #define SZIP_VER $7ZVER$
 #define VERSION_PATCH $VERPATCH$
 #define VERSION_COMMIT_ID $COMMITID$
-
-#include "Version.h"

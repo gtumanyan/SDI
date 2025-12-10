@@ -135,6 +135,7 @@ public:
     virtual void SetTextColor(int color)=0;
     virtual void SetFont(wFont *font)=0;
     virtual void DrawTextXY(int x,int y,const wchar_t *buf)=0;
+    virtual void DrawTextXYEx(int x,int y,const wchar_t *buf,int size)=0;
     virtual void DrawTextRect(const wchar_t *bufw,RECT_WR *rect,int flags=0)=0;
     virtual void CalcBoundingBox(const wchar_t *str,RECT_WR *rect)=0;
     virtual int  GetTextExtent(const wchar_t *str)=0;

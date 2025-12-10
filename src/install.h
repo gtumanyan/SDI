@@ -21,7 +21,7 @@ extern long long ar_total,ar_proceed;
 extern int instflag;
 extern size_t itembar_act;
 extern int needreboot;
-extern wchar_t extractdir[MAX_PATH + 1];
+extern wchar_t extractdir[MAX_PATH];
 
 extern volatile int installupdate_exitflag;
 extern Event *installupdate_event;

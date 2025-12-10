@@ -214,7 +214,10 @@ void Bundle::bundle_lowpriority()
 
     MainWindow.redrawmainwnd();
 
+    // write the driver packs stats to the log file
     collection.printstats();
+
+    // write machine/environment/device info to the log file
     state.print();
     matcher->print();
     manager_g->print_hr();

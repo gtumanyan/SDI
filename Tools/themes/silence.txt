@@ -1,0 +1,334 @@
+/////////////////////////////////////////////////////////////
+// Author: 	Silence	
+// Contact: 	destructivesilence96@gmail.com
+/////////////////////////////////////////////////////////////
+
+
+THEME_NAME			= "Silence"
+
+
+///////////////	ПАЛИТРА
+// 0x93F258	Зелёный мягкий (для текста)
+// 0xDFB8FC	Розовый мягкий (для текста)
+// 0xFCB8C0	Фиолетовый мягкий (для текста)
+// 0xf76356	Фиолетовый насыщенный
+// 0xDA9F9C	Фиолетовый бледный
+// 0x2A1711	Фиолетовый тёмный
+// 0x00FFFF	Жёлтый (для диагностики)
+// 0x57504b	Серый (обводка)
+// 0x41281C	Синий тёмный (заполнение)
+// 0x593726	Синий тёмный (обводка)
+
+
+/////////////// Основное окно
+MAINWND_TEXT_COLOR			= 0xffffff
+MAINWND_WX					= 1280
+MAINWND_WY					= 720
+MAINWND_MINX				= 1280
+MAINWND_MINY				= 720
+MAINWND_INSIDE_COLOR			= 0xFF000000
+//MAINWND_OUTLINE_COLOR		= 0xff00FC
+MAINWND_BITMAP_FILENAME		= "silence\main.webp"
+MAINWND_BITMAP_ANCHOR			= top_left
+MAINWND_BITMAP_FILL			= center
+
+
+////////////////////// Шрифт
+FONT_NAME					= "Calibri"
+FONT_SIZE					= 16
+
+
+/////////////// Фон панелей
+PANEL_INSIDE_COLOR			= 0xFF000000	// Цвета в порядке BGR + прозрачность
+PANEL_OUTLINE_ROUND			= 0
+PANEL_OUTLINE_WIDTH			= 0
+PANEL_OUTLINE_COLOR			= 0xAD7C78
+PANEL_BITMAP_FILENAME			= "silence\semi.webp"
+PANEL_BITMAP_FILL			= hstr_vstr
+
+
+/////////////// Панель информации о системе
+PANEL1_OFSX				= 209
+PANEL1_OFSY				= 10
+PANEL1_WX					= -620
+
+
+/////////////// Ненужная панель, скрыта слева от логотипа
+PANEL2_OFSX				= -1
+PANEL2_OFSY				= -1
+PANEL2_WX					= -1
+PANEL2_WY					= -1
+PANEL2_INSIDE_COLOR			= 0x00FFFF
+PANEL2_OUTLINE_WIDTH			= 0
+PANEL2_BITMAP_FILENAME		= ""
+
+
+/////////////// Панель языка, темы, режима эксперта
+PANEL3_OFSY				= -140
+PANEL3_WX					= 188
+PANEL3_WY					= 20
+
+
+/////////////// Действия
+PANEL4_OFSY				= 183
+
+
+/////////////// Нашлись в драйверпаках
+PANEL5_OFSY				= 275
+
+
+/////////////// Нет в драйверпаках
+PANEL6_OFSY				= 430
+
+
+/////////////// Скрытая панель
+PANEL7_OFSY				= 600
+
+
+/////////////// Версия SDI
+PANEL8_OFSX				= 10
+PANEL8_OFSY				= -30
+PANEL8_BITMAP_FILENAME		= ""
+
+
+/////////////// Кнопка "Установить"
+PANEL9_OFSX				= -172
+PANEL9_OFSY				= 10
+PANEL9_WX					= 165
+PANEL9_WY					= 61
+PANEL9_OUTLINE_ROUND			= 0
+PANEL9_OUTLINE_ROUND_H		= 0
+PANEL9_OUTLINE_WIDTH			= 0
+PANEL9_BITMAP_FILENAME		= "silence\semi25.webp"
+
+
+/////////////// Кнопка "Выделить всё"
+PANEL10_OFSX				= -337
+PANEL10_OFSY				= 10
+PANEL10_WX					= 160
+PANEL10_WY					= 26
+PANEL10_OUTLINE_WIDTH			= 0
+PANEL10_BITMAP_FILENAME		= "silence\semi25.webp"
+
+
+/////////////// Кнопка "Снять выделение"
+PANEL11_OFSX				= PANEL10_OFSX
+PANEL11_OFSY				= 46
+PANEL11_WX					= PANEL10_WX
+PANEL11_WY					= PANEL10_WY
+PANEL11_OUTLINE_WIDTH			= 0
+PANEL11_BITMAP_FILENAME		= "silence\semi25.webp"
+
+
+/////////////// Панель "Опции"
+PANEL12_OFSX				= -614
+PANEL12_OFSY				= 10
+PANEL12_WX					= 272
+PANEL12_WY					= PANEL_WY
+
+
+/////////////// Логотип
+PANEL13_OFSX				= 13
+PANEL13_OFSY				= 13
+PANEL13_WX					= 180
+PANEL13_WY					= 150
+PANEL13_INSIDE_COLOR			= 0xFF000000
+PANEL13_OUTLINE_COLOR			= 0xFF000000
+PANEL13_OUTLINE_WIDTH			= 0
+PANEL13_BITMAP_FILENAME		= "silence\ico1.webp"
+
+
+/////////////// Чекбоксы
+CHKBOX_TEXT_COLOR			= 0xFFFFFF
+CHKBOX_TEXT_COLOR_H			= 0xFCB8C0
+BUTTON_BITMAP_CHECKED			= "silence\checked.webp"
+BUTTON_BITMAP_CHECKED_H		= "silence\checked.webp"
+BUTTON_BITMAP_UNCHECKED		= "silence\unchecked.webp"
+BUTTON_BITMAP_UNCHECKED_H		= "silence\unchecked.webp"
+
+
+/////////////// Активные кнопки (Действия + Установить + Выделения)
+BUTTON_OUTLINE_WIDTH			= 0
+BUTTON_OUTLINE_ROUND			= 0
+BUTTON_OUTLINE_WIDTH_H		= 0
+BUTTON_OUTLINE_ROUND_H		= 0
+BUTTON_INSIDE_COLOR			= 0xFF000000
+BUTTON_INSIDE_COLOR_H			= 0xFF000000
+BUTTON_OUTLINE_COLOR			= 0xFF000000
+BUTTON_OUTLINE_COLOR_H		= 0xFF000000
+BUTTON_BITMAP_FILENAME		= ""
+BUTTON_BITMAP_FILENAME_H		= "silence\semi25.webp"
+BUTTON_BITMAP_ANCHOR			= top_left
+BUTTON_BITMAP_FILL			= center
+BUTTON_BITMAP_ANCHOR_H		= top_left
+BUTTON_BITMAP_FILL_H			= center
+
+
+/////////////// Блок списка драйверов
+DRVLIST_OFSX				= 210
+DRVLIST_OFSY				= 85
+DRVLIST_WX					= -7
+DRVLIST_WY					= -7
+DRVLIST_INSIDE_COLOR			= 0xFF000000
+DRVLIST_OUTLINE_COLOR			= 0xAD7C78
+DRVLIST_OUTLINE_WIDTH			= 0
+DRVLIST_OUTLINE_ROUND			= 0
+DRVLIST_BITMAP_FILENAME		= "silence\semi.webp"
+DRVLIST_BITMAP_FILL			= hstr_vstr
+
+
+/////////////// Конкретный драйвер
+DRVITEM_OUTLINE_WIDTH			= 0
+DRVITEM_OUTLINE_WIDTH_H		= 0
+DRVITEM_OUTLINE_COLOR			= 0xDA9F9C
+DRVITEM_OUTLINE_COLOR_H		= 0x57504b
+DRVITEM_OUTLINE_ROUND			= 0
+DRVITEM_OUTLINE_ROUND_H		= 0
+DRVITEM_INSIDE_COLOR			= 0xFF000000
+DRVITEM_INSIDE_COLOR_H		= 0xFF000000
+DRVITEM_BITMAP_FILENAME		= "silence\semi.webp"		// Вызывает баг с фоном у названия архива
+DRVITEM_BITMAP_FILENAME_H		= "silence\semi25.webp"
+DRVITEM_BITMAP_FILL			= hstr_vstr
+DRVITEM_BITMAP_FILL_H			= hstr_vstr
+
+
+/////////////// ЕСТЬ В ДРАЙВЕРПАКЕ
+// P*	
+// B*	Better	- Доступно обновление (более подходящее)
+// S*	Same		- Уже установлен в системе
+// W*	Worse		- Доступно обновление (более подходящее, но старее)
+
+// *N	New		- Новые
+// *C	Current	- Актуальное
+// *O	Old		- Старые
+
+DRVITEM_TEXT1_COLOR			= 0xFFFFFF
+DRVITEM_TEXT2_COLOR			= 0x93F258
+
+// NEW - Новые
+DRVITEM_TEXT1_COLOR_PN		= 0xFFFFFF
+DRVITEM_TEXT2_COLOR_PN		= 0xFCB8C0		// Имя архива
+DRVITEM_TEXT2_COLOR_BN		= 0xFCB8C0
+DRVITEM_TEXT2_COLOR_SN		= 0x93F258
+DRVITEM_TEXT2_COLOR_WN		= 0xFFdfc7
+
+// CURRENT - Актуальные
+DRVITEM_TEXT2_COLOR_PС		= 0x00FFFF
+DRVITEM_TEXT2_COLOR_BC		= 0xFCB8C0		// Доступно обновление (более подходящее)
+DRVITEM_TEXT2_COLOR_SC		= 0x93F258		// Уже установлен в системе
+DRVITEM_TEXT2_COLOR_WC		= 0x00FFFF
+
+// OLD - Старые
+DRVITEM_TEXT2_COLOR_PO		= 0xFFFFFF
+DRVITEM_TEXT2_COLOR_BO		= 0xFFFFFF
+DRVITEM_TEXT2_COLOR_SO		= 0xFFFFFF
+DRVITEM_TEXT2_COLOR_WO		= 0xDFB8FC
+
+// INVALID - Не подходящие
+DRVITEM_TEXT2_COLOR_IN		= 0xDFB8FC
+
+
+/////////////// НЕТ В ДРАЙВЕРПАКАХ
+
+// MS - Не установленные
+DRVITEM_TEXT2_COLOR_MS		= 0xFFFFFF
+
+// NU - Неизвестные
+DRVITEM_TEXT1_COLOR_NU		= 0xFFFFFF
+DRVITEM_TEXT2_COLOR_NU		= 0xDFB8FC
+DRVITEM_INSIDE_COLOR_NU		= 0xFF000000
+DRVITEM_INSIDE_COLOR_NU_H		= 0xFF000000
+
+// NS - Стандартные
+DRVITEM_TEXT1_COLOR_NS		= 0xFFFFFF
+DRVITEM_TEXT2_COLOR_NS		= 0x93F258
+DRVITEM_INSIDE_COLOR_NS		= 0xFF000000
+DRVITEM_INSIDE_COLOR_NS_H		= 0xFF000000
+
+
+/////////////// Всплывающее окно
+//POPUP_BITMAP_FILENAME		= "silence\main.webp"
+//POPUP_BITMAP_FILL			= hstr_vstr
+POPUP_TRANSPARENCY			= 245
+POPUP_TEXT_COLOR				= 0xFFFFFF
+POPUP_INSIDE_COLOR			= 0x41281C
+//POPUP_OUTLINE_COLOR			= 0x593726	
+//POPUP_WX					= 450
+//POPUP_WY					= 13
+//POPUP_FONT_SIZE			= 13
+
+
+/////////////// Всплывающее окно, сравнение
+//POPUP_HWID_COLOR			= 0x6331de
+POPUP_CMP_BETTER_COLOR		= 0x93F258
+POPUP_CMP_INVALID_COLOR		= 0xDFB8FC
+
+
+/////////////// Popup, driver list
+//POPUP_LST_BETTER_COLOR   	= 0x008000
+//POPUP_LST_WORSE_COLOR    	= 0x0000a3
+//POPUP_LST_INVALID_COLOR  	= 0xf4f4f4
+//POPUP_LST_SELECTED_COLOR 	= 0xffffff
+
+
+/////////////// Шкала прогресса (active)
+PROGR_INSIDE_COLOR			= 0x41281C
+PROGR_TEXT_COLOR				= 0xFFFFFF
+PROGR_OUTLINE_WIDTH			= 0
+PROGR_OUTLINE_ROUND			= 0
+
+
+/////////////// Установка завершена
+DRVITEM_INSIDE_COLOR_D1		= 0x41281C
+DRVITEM_INSIDE_COLOR_D1_H		= 0x41281C
+DRVITEM_TEXT1_COLOR_D1		= 0xFFFFFF
+DRVITEM_TEXT2_COLOR_D1		= 0xDA9F9C
+DRVITEM_OUTLINE_COLOR_D1    	= 0x593726
+DRVITEM_OUTLINE_COLOR_D1_H  	= 0x593726
+DRVITEM_OUTLINE_WIDTH_D1		= 1
+DRVITEM_OUTLINE_WIDTH_D1_H		= 1
+
+
+/////////////// Установка завершена (требуется перезагрузка)
+DRVITEM_INSIDE_COLOR_D2		= 0x41281C
+DRVITEM_INSIDE_COLOR_D2_H		= 0x41281C
+DRVITEM_OUTLINE_COLOR_D2    	= 0x593726
+DRVITEM_OUTLINE_COLOR_D2_H  	= 0x593726
+DRVITEM_OUTLINE_WIDTH_D2		= 1
+DRVITEM_OUTLINE_WIDTH_D2_H		= 1
+DRVITEM_TEXT1_COLOR_D2		= 0xFFFFFF
+DRVITEM_TEXT2_COLOR_D2		= 0xDA9F9C
+
+
+/////////////// Ошибка установки драйвера
+DRVITEM_INSIDE_COLOR_DE     	= 0xDFB8FC
+
+
+/////////////// Драйверы в актуальном состоянии && Доступны обновления из интернета
+DRVITEM_INSIDE_COLOR_IU		= 0x41281C
+DRVITEM_INSIDE_COLOR_IU_H   	= 0x41281C
+DRVITEM_OUTLINE_COLOR_IU    	= 0x593726
+DRVITEM_OUTLINE_COLOR_IU_H  	= 0x593726
+DRVITEM_OUTLINE_WIDTH_IU		= 1
+DRVITEM_OUTLINE_WIDTH_IU_H		= 1
+DRVITEM_TEXT1_COLOR_IU		= 0xFFFFFF
+DRVITEM_TEXT2_COLOR_IU		= 0x93F258
+
+
+/////////////// Иконка выпадающего списка
+//ITEM_CHECKBOX_SIZE       	= 24
+ITEM_EXPAND_UP				= "silence\spoiler.webp"
+ITEM_EXPAND_UP_H				= "silence\spoiler.webp"
+ITEM_EXPAND_DOWN				= "silence\spoiler.webp"
+ITEM_EXPAND_DOWN_H			= "silence\spoiler.webp"
+
+
+/////////////// Patreon
+DRVITEM_INSIDE_COLOR_PT     	= 0x41281C
+DRVITEM_INSIDE_COLOR_PT_H   	= 0x41281C
+DRVITEM_OUTLINE_COLOR_PT    	= 0x593726
+DRVITEM_OUTLINE_COLOR_PT_H  	= 0x593726
+DRVITEM_OUTLINE_WIDTH_PT		= 1
+DRVITEM_OUTLINE_WIDTH_PT_H		= 1
+DRVITEM_TEXT1_COLOR_PT      	= 0xFFFFFF
+DRVITEM_TEXT2_COLOR_PT      	= 0xDA9F9C

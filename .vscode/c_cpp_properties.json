@@ -1,31 +1,29 @@
 {
-    "configurations": [
-        {
-            "name": "Win32",
-            "includePath": [
-                "${workspaceFolder}/src",
-                "${workspaceFolder}/ext/SevenZip/C",
-                "${workspaceFolder}/ext/boost",
-                "${workspaceFolder}/ext/libtorrent/include"
-            ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_WIN32",
-		"NOMINMAX",
-		"BOOST_ALL_NO_LIB",
-                "_WIN32_WINNT=0x0a00"
-            ],
-            "windowsSdkVersion": "10.0.26100.0",
-            "intelliSenseMode": "msvc-x64",
-            "browse": {
-                "path": [],
-                "limitSymbolsToIncludedHeaders": false,
-                "databaseFilename": "${workspaceRoot}/.vscode/db/intellisense.db"
-            },
-            "cppStandard": "c++26",
-            "cStandard": "c23"
-        }
-    ],
-    "version": 4
+  "configurations": [
+    {
+      "name": "windows-gcc-x64",
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "defines": [
+        "_DEBUG",
+        "UNICODE",
+        "_WIN32",
+        "NOMINMAX",
+        "BOOST_ALL_NO_LIB",
+        "_WIN32_WINNT=0x0a00"
+      ],
+      "windowsSdkVersion": "10.0.26100.0",
+      "intelliSenseMode": "windows-gcc-x64",
+      "browse": {
+        "path": [],
+        "limitSymbolsToIncludedHeaders": false,
+        "databaseFilename": "${workspaceRoot}/.vscode/db/intellisense.db"
+      },
+      "cppStandard": "${default}",
+      "cStandard": "${default}",
+      "compilerPath": "gcc"
+    }
+  ],
+  "version": 4
 }

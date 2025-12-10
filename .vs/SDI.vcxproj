@@ -134,7 +134,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
-	  <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <ExternalTemplatesDiagnostics>true</ExternalTemplatesDiagnostics>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -232,17 +232,20 @@
     <ClCompile Include="..\src\matcher.cpp" />
     <ClCompile Include="..\src\model.cpp" />
     <ClCompile Include="..\src\net.cpp" />
+    <ClCompile Include="..\src\platform.version.cpp" />
     <ClCompile Include="..\src\Settings.cpp" />
     <ClCompile Include="..\src\script.cpp" />
     <ClCompile Include="..\src\SDI.cpp" />
     <ClCompile Include="..\src\stdfn.cpp" />
     <ClCompile Include="..\src\stdio.cpp" />
     <ClCompile Include="..\src\stdlg.cpp" />
+    <ClCompile Include="..\src\string_utils.cpp" />
     <ClCompile Include="..\src\system.cpp" />
     <ClCompile Include="..\src\theme.cpp" />
     <ClCompile Include="..\src\themelist.cpp" />
     <ClCompile Include="..\src\update.cpp" />
     <ClCompile Include="..\src\usbwizard.cpp" />
+    <ClCompile Include="sdiversion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\7zip.h" />
@@ -250,7 +253,9 @@
     <ClInclude Include="..\src\localization.h" />
     <ClInclude Include="..\src\logging.h" />
     <ClInclude Include="..\src\msapi_utf8.h" />
+    <ClInclude Include="..\src\platform.version.hpp" />
     <ClInclude Include="..\src\registry.h" />
+    <ClInclude Include="..\src\string_utils.hpp" />
     <ClInclude Include="..\src\theme_imp.h" />
     <ClInclude Include="..\src\wizards.h" />
     <ClInclude Include="..\src\cli.h" />
@@ -273,6 +278,7 @@
     <ClInclude Include="..\src\SDI.h" />
     <ClInclude Include="..\src\Version.h" />
     <ClInclude Include="..\src\VersionEx.h" />
+    <ClInclude Include="sdiversion.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\install64.exe" />

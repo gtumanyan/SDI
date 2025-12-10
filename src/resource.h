@@ -840,7 +840,7 @@
 #define VK_F7                           0x76
 #define VK_F8                           0x77
 #define VK_F9                           0x78
-#define IDI_ICON                        120
+#define IDR_MAINWND                        120
 #define LANG_YI                         0x78
 #define VK_F10                          0x79
 #define VK_F11                          0x7A

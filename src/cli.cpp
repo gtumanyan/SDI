@@ -13,9 +13,8 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "utils/BaseUtil.h"
-#include "utils/Log.h"
 #include "SDI.h"
+#include "logging.h"
 #include "system.h"
 #include "Settings.h"
 #include "cli.h"

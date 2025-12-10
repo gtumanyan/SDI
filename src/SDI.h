@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Snappy Driver Installer.
 
 Snappy Driver Installer is free software: you can redistribute it and/or modify
@@ -12,16 +12,20 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more d
 You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 #include <windows.h>
 #include <unordered_map>
 #include <string>
 #include <vector>
 
-#include "utils/BaseUtil.h"
-#include "VersionEx.h"
 #include "draw.h"
 
+// Disable some VS Code Analysis warnings
+#pragma warning(disable: 4996)		// Ignore deprecated
+
 #pragma once
+
+typedef unsigned ofst;
 
 /* Convenient to have around */
 #define KB                          1024LL
@@ -40,7 +44,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #define safe_free(p) do { free((void*)p); p = NULL; } while(0)
 static __inline void safe_strcp(char* dst, const size_t dst_max, const char* src, const size_t count) {
 	memmove(dst, src, (std::min)(count, dst_max));
-	if (dst != NULL) dst[std::min(count, dst_max) - 1] = 0;
+	if (dst != NULL) dst[(std::min)(count, dst_max) - 1] = 0;
 }
 #define safe_strcpy(dst, dst_max, src) safe_strcp(dst, dst_max, src, safe_strlen(src) + 1)
 #define static_strcpy(dst, src) safe_strcpy(dst, sizeof(dst), src)
@@ -65,6 +69,9 @@ extern class Popup_t *Popup;
 
 extern void uprintf(const char *format, ...);
 extern void uprintfs(const char *str);
+extern void wuprintf(const wchar_t* format, ...);
+#define vuprintf(...) do { if (Log.get_verbose()) uprintf(__VA_ARGS__); } while(0)
+#define vvuprintf(...) do { if (Log.get_verbose() > 1) uprintf(__VA_ARGS__); } while(0)
 #ifdef _DEBUG
 #define duprintf uprintf
 #else
@@ -78,7 +85,7 @@ enum MessagesWND {
     WM_UPDATETHEME     = WM_APP+3,
     WM_SEEDING         = WM_APP+4,
     WM_TORRENT         = WM_APP+5,
-    WM_INDEXESSAVED    = WM_APP+6,
+    WM_INDICESSAVED    = WM_APP+6,
 		UM_PROGRESS_INIT,
 		UM_RESIZE_BUTTONS
 };
@@ -485,68 +492,6 @@ void setMirroringEdit(HWND hwnd);
 // GUI
 BOOL CALLBACK WelcomeCallback(HWND hwnd,UINT Message,WPARAM wParam,LPARAM lParam);
 
-class WString_dyn
-{
-protected:
-		wchar_t *buf_dyn=nullptr;
-		wchar_t *buf_cur;
-		size_t len;
-		bool debug;
-
-public:
-		WString_dyn(size_t sz,wchar_t *buf,bool debug_=true):buf_cur(buf),len(sz),debug(debug_){}
-		virtual ~WString_dyn(){delete[] buf_dyn;}
-		void Resize(size_t size);
-
-		void sprintf(const wchar_t *format,...);
-        void vsprintf(const wchar_t *format,va_list args);
-		void append(const wchar_t *str);
-		void strcpy(const wchar_t *Str);
-
-		wchar_t *GetV()const{return buf_cur;}
-		const wchar_t *Get()const{return buf_cur;}
-		size_t Length()const{return len;}
-};
-
-class WString:public WString_dyn
-{
-		wchar_t buf[MAX_PATH]{};
-public:
-		WString(bool debug_=false):WString_dyn(dimof(buf) - 1,buf,debug_){*buf=0;}
-};
-
-class WStringShort:public WString_dyn
-{
-		const static int size=128;
-		wchar_t buf[size];
-public:
-		WStringShort(bool debug_=false):WString_dyn(size,buf,debug_){*buf=0;}
-};
-
-// Version
-class Version
-{
-		int d,m,y;
-		int v1,v2,v3,v4;
-
-public:
-		int  setDate(int d_,int m_,int y_);
-		void setVersion(int v1_,int v2_,int v3_,int v4_);
-		void setInvalid(){y=v1=-1;}
-		int  GetV1()const{return v1;}
-		void str_date(WStringShort &buf,bool invariant=false)const;
-		void str_version(WStringShort &buf)const;
-
-		Version():d(0),m(0),y(0),v1(-2),v2(0),v3(0),v4(0){}
-		Version(int d1,int m1,int y1):d(d1),m(m1),y(y1),v1(-2),v2(0),v3(0),v4(0){}
-
-		friend class datum;
-		friend int cmpdate(const Version *t1,const Version *t2);
-		friend int cmpversion(const Version *t1,const Version *t2);
-};
-int cmpdate(const Version *t1,const Version *t2);
-int cmpversion(const Version *t1,const Version *t2);
-
 // Txt
 class Txt
 {
@@ -554,12 +499,12 @@ class Txt
 		loadable_vector<char> text;
 
 public:
-		size_t getSize()const{return text.size();}
-		const char *get(uint offset)const{return &text[offset];}
-		char *getV(uint offset)const{ return const_cast<char *>(&text[offset]); }
-		const wchar_t *getw(uint offset)const{ return reinterpret_cast<const wchar_t *>(&text[offset]); }
-		wchar_t *getwV(uint offset)const{ return const_cast<wchar_t *>(reinterpret_cast<const wchar_t *>(&text[offset])); }
-		const wchar_t *getw2(uint offset)const{ return reinterpret_cast<const wchar_t *>(&text[offset-(text[0]?2:0)]); }
+    size_t getSize()const{return text.size();}
+    const char *get(ofst offset)const{return &text[offset];}
+    char *getV(ofst offset)const{ return const_cast<char *>(&text[offset]); }
+    const wchar_t *getw(ofst offset)const{ return reinterpret_cast<const wchar_t *>(&text[offset]); }
+    wchar_t *getwV(ofst offset)const{ return const_cast<wchar_t *>(reinterpret_cast<const wchar_t *>(&text[offset])); }
+    const wchar_t *getw2(ofst offset)const{ return reinterpret_cast<const wchar_t *>(&text[offset-(text[0]?2:0)]); }
 
 		size_t strcpy(const char *mem);
 		size_t strcpyw(const wchar_t *mem);
@@ -598,7 +543,7 @@ class Hashtable
 		loadable_vector<Hashitem> items;
 
 public:
-	uint getSize()const{ return static_cast<uint>(items.size()); }
+	ofst getSize()const{ return static_cast<ofst>(items.size()); }
 
 		static unsigned gethashcode(const char *s,size_t sz);
 		void reset(size_t size);

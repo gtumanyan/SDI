@@ -10,138 +10,223 @@
 // MinGW doesn't yet know these (from wldp.h)
 typedef enum WLDP_WINDOWS_LOCKDOWN_MODE
 {
-		WLDP_WINDOWS_LOCKDOWN_MODE_UNLOCKED = 0,
-		WLDP_WINDOWS_LOCKDOWN_MODE_TRIAL,
-		WLDP_WINDOWS_LOCKDOWN_MODE_LOCKED,
-		WLDP_WINDOWS_LOCKDOWN_MODE_MAX,
+	WLDP_WINDOWS_LOCKDOWN_MODE_UNLOCKED = 0,
+	WLDP_WINDOWS_LOCKDOWN_MODE_TRIAL,
+	WLDP_WINDOWS_LOCKDOWN_MODE_LOCKED,
+	WLDP_WINDOWS_LOCKDOWN_MODE_MAX,
 } WLDP_WINDOWS_LOCKDOWN_MODE, * PWLDP_WINDOWS_LOCKDOWN_MODE;
 
 windows_version_t WindowsVersion = { 0 };
 
 static const char* GetEdition(DWORD ProductType)
 {
-	static char unknown_edition_str[64];
+	static char unknown_edition_str[22];
 
 	// From: https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getproductinfo
 	// These values can be found in the winnt.h header.
 	switch (ProductType) {
-	case 0x00000000: return "";	//  Undefined
-	case 0x00000001: return "Ultimate";
-	case 0x00000002: return "Home Basic";
-	case 0x00000003: return "Home Premium";
-	case 0x00000004: return "Enterprise";
-	case 0x00000005: return "Home Basic N";
-	case 0x00000006: return "Business";
-	case 0x00000007: return "Server Standard";
-	case 0x00000008: return "Server Datacenter";
-	case 0x00000009: return "Smallbusiness Server";
-	case 0x0000000A: return "Server Enterprise";
-	case 0x0000000B: return "Starter";
-	case 0x0000000C: return "Server Datacenter (Core)";
-	case 0x0000000D: return "Server Standard (Core)";
-	case 0x0000000E: return "Server Enterprise (Core)";
-	case 0x00000010: return "Business N";
-	case 0x00000011: return "Web Server";
-	case 0x00000012: return "HPC Edition";
-	case 0x00000013: return "Storage Server (Essentials)";
-	case 0x0000001A: return "Home Premium N";
-	case 0x0000001B: return "Enterprise N";
-	case 0x0000001C: return "Ultimate N";
-	case 0x00000022: return "Home Server";
-	case 0x00000024: return "Server Standard without Hyper-V";
-	case 0x00000025: return "Server Datacenter without Hyper-V";
-	case 0x00000026: return "Server Enterprise without Hyper-V";
-	case 0x00000027: return "Server Datacenter without Hyper-V (Core)";
-	case 0x00000028: return "Server Standard without Hyper-V (Core)";
-	case 0x00000029: return "Server Enterprise without Hyper-V (Core)";
-	case 0x0000002A: return "Hyper-V Server";
-	case 0x0000002F: return "Starter N";
-	case 0x00000030: return "Pro";
-	case 0x00000031: return "Pro N";
-	case 0x00000034: return "Server Solutions Premium";
-	case 0x00000035: return "Server Solutions Premium (Core)";
-	case 0x00000040: return "Server Hyper Core V";
-	case 0x00000042: return "Starter E";
-	case 0x00000043: return "Home Basic E";
-	case 0x00000044: return "Premium E";
-	case 0x00000045: return "Pro E";
-	case 0x00000046: return "Enterprise E";
-	case 0x00000047: return "Ultimate E";
-	case 0x00000048: return "Enterprise (Eval)";
-	case 0x0000004F: return "Server Standard (Eval)";
-	case 0x00000050: return "Server Datacenter (Eval)";
-	case 0x00000054: return "Enterprise N (Eval)";
-	case 0x00000057: return "Thin PC";
-	case 0x00000058: case 0x00000059: case 0x0000005A: case 0x0000005B: case 0x0000005C: return "Embedded";
-	case 0x00000062: return "Home N";
-	case 0x00000063: return "Home China";
-	case 0x00000064: return "Home Single Language";
-	case 0x00000065: return "Home";
-	case 0x00000067: return "Pro with Media Center";
-	case 0x00000069: case 0x0000006A: case 0x0000006B: case 0x0000006C: return "Embedded";
-	case 0x0000006F: return "Home Connected";
-	case 0x00000070: return "Pro Student";
-	case 0x00000071: return "Home Connected N";
-	case 0x00000072: return "Pro Student N";
-	case 0x00000073: return "Home Connected Single Language";
-	case 0x00000074: return "Home Connected China";
-	case 0x00000079: return "Education";
-	case 0x0000007A: return "Education N";
-	case 0x0000007D: return "Enterprise LTSB";
-	case 0x0000007E: return "Enterprise LTSB N";
-	case 0x0000007F: return "Pro S";
-	case 0x00000080: return "Pro S N";
-	case 0x00000081: return "Enterprise LTSB (Eval)";
-	case 0x00000082: return "Enterprise LTSB N (Eval)";
-	case 0x0000008A: return "Pro Single Language";
-	case 0x0000008B: return "Pro China";
-	case 0x0000008C: return "Enterprise Subscription";
-	case 0x0000008D: return "Enterprise Subscription N";
-	case 0x00000091: return "Server Datacenter SA (Core)";
-	case 0x00000092: return "Server Standard SA (Core)";
-	case 0x00000095: return "Utility VM";
-	case 0x000000A1: return "Pro for Workstations";
-	case 0x000000A2: return "Pro for Workstations N";
-	case 0x000000A4: return "Pro for Education";
-	case 0x000000A5: return "Pro for Education N";
-	case 0x000000AB: return "Enterprise G";	// I swear Microsoft are just making up editions...
-	case 0x000000AC: return "Enterprise G N";
-	case 0x000000B2: return "Cloud";
-	case 0x000000B3: return "Cloud N";
-	case 0x000000B6: return "Home OS";
-	case 0x000000B7: case 0x000000CB: return "Cloud E";
-	case 0x000000B9: return "IoT OS";
-	case 0x000000BA: case 0x000000CA: return "Cloud E N";
-	case 0x000000BB: return "IoT Edge OS";
-	case 0x000000BC: return "IoT Enterprise";
-	case 0x000000BD: return "Lite";
-	case 0x000000BF: return "IoT Enterprise S";
-	case 0x000000C0: case 0x000000C2: case 0x000000C3: case 0x000000C4: case 0x000000C5: case 0x000000C6: return "XBox";
-	case 0x000000C7: case 0x000000C8: case 0x00000196: case 0x00000197: case 0x00000198: return "Azure Server";
-	case 0xABCDABCD: return "(Unlicensed)";
+	case PRODUCT_UNDEFINED:                              return	"";	//  Undefined
+	case PRODUCT_ULTIMATE:                               return "Ultimate";
+	case PRODUCT_HOME_BASIC:                             return "Home Basic";
+	case PRODUCT_HOME_PREMIUM:                           return "Home Premium";
+	case PRODUCT_ENTERPRISE:                             return "Enterprise";
+	case PRODUCT_HOME_BASIC_N:                           return "Home Basic N";
+	case PRODUCT_BUSINESS:                               return "Business";
+	case PRODUCT_STANDARD_SERVER:                        return "Server Standard";
+	case PRODUCT_DATACENTER_SERVER:                      return "Server Datacenter (full installation)";
+	case PRODUCT_SMALLBUSINESS_SERVER:                   return "Small Business  Server";
+	case PRODUCT_ENTERPRISE_SERVER:                      return "Server Enterprise (full installation)";
+	case PRODUCT_STARTER:                                return "Starter";
+	case PRODUCT_DATACENTER_SERVER_CORE:                 return "Server Datacenter (Core)";
+	case PRODUCT_STANDARD_SERVER_CORE:                   return "Server Standard (Core)";
+	case PRODUCT_ENTERPRISE_SERVER_CORE:                 return "Server Enterprise (Core)";
+	case PRODUCT_BUSINESS_N:                             return "Business N";
+	case PRODUCT_WEB_SERVER:                             return "Web Server";
+	case PRODUCT_CLUSTER_SERVER:                         return "Server Hyper Core";
+	case PRODUCT_HOME_SERVER:                            return "Home Server";
+	case PRODUCT_STORAGE_EXPRESS_SERVER:                 return "Storage Server Express";
+	case PRODUCT_STORAGE_STANDARD_SERVER:                return "Storage Server Standard";
+	case PRODUCT_STORAGE_WORKGROUP_SERVER:               return "Storage Server Workgroup";
+	case PRODUCT_STORAGE_ENTERPRISE_SERVER:              return "Storage Server Enterprise";
+	case PRODUCT_SERVER_FOR_SMALLBUSINESS:               return "Windows Server 2008 for Windows Essential Server Solutions";
+	case PRODUCT_SMALLBUSINESS_SERVER_PREMIUM:           return "Small Business Server Premium";
+	case PRODUCT_HOME_PREMIUM_N:                         return "Home Premium N";
+	case PRODUCT_ENTERPRISE_N:                           return "Enterprise N";
+	case PRODUCT_ULTIMATE_N:                             return "Ultimate N";
+	case PRODUCT_WEB_SERVER_CORE:                        return "Web Server (core installation)";
+	case PRODUCT_MEDIUMBUSINESS_SERVER_MANAGEMENT:       return "Windows Essential Business Server Management Server";
+	case PRODUCT_MEDIUMBUSINESS_SERVER_SECURITY:         return "Windows Essential Business Server Security Server";
+	case PRODUCT_MEDIUMBUSINESS_SERVER_MESSAGING:        return "Windows Essential Business Server Messaging Server";
+	case PRODUCT_SERVER_FOUNDATION:                      return "Server Foundation";
+	case PRODUCT_HOME_PREMIUM_SERVER:                    return "Home Server";
+	case PRODUCT_SERVER_FOR_SMALLBUSINESS_V:             return "Windows Server 2008 without Hyper-V for Windows Essential Server Solutions";
+	case PRODUCT_STANDARD_SERVER_V:                      return "Server Standard without Hyper-V";
+	case PRODUCT_DATACENTER_SERVER_V:                    return "Server Datacenter without Hyper-V";
+	case PRODUCT_ENTERPRISE_SERVER_V:                    return "Server Enterprise without Hyper-V";
+	case PRODUCT_DATACENTER_SERVER_CORE_V:               return "Server Datacenter without Hyper-V (Core)";
+	case PRODUCT_STANDARD_SERVER_CORE_V:                 return "Server Standard without Hyper-V (Core)";
+	case PRODUCT_ENTERPRISE_SERVER_CORE_V:               return "Server Enterprise without Hyper-V (Core)";
+	case PRODUCT_HYPERV:                                 return "Hyper-V Server";
+	case PRODUCT_STORAGE_EXPRESS_SERVER_CORE:            return "Storage Server Express (core installation)";
+	case PRODUCT_STORAGE_STANDARD_SERVER_CORE:           return "Storage Server Standard (core installation)";
+    case PRODUCT_STORAGE_WORKGROUP_SERVER_CORE:          return "Storage Server Workgroup (core installation)";
+    case PRODUCT_STORAGE_ENTERPRISE_SERVER_CORE:         return "Storage Server Enterprise (core installation)";
+	case PRODUCT_STARTER_N:                              return "Starter N";
+	case PRODUCT_PROFESSIONAL:                           return "Pro";
+	case PRODUCT_PROFESSIONAL_N:                         return "Pro N";
+    case PRODUCT_SB_SOLUTION_SERVER:                     return "Windows Small Business Server 2011 Essentials";
+    case PRODUCT_SERVER_FOR_SB_SOLUTIONS:                return "Server For SB Solutions";
+	case PRODUCT_STANDARD_SERVER_SOLUTIONS:              return "Server Solutions Premium";
+	case PRODUCT_STANDARD_SERVER_SOLUTIONS_CORE:         return "Server Solutions Premium (Core)";
+    case PRODUCT_SB_SOLUTION_SERVER_EM:                  return "Server For SB Solutions EM";
+    case PRODUCT_SERVER_FOR_SB_SOLUTIONS_EM:             return "Server For SB Solutions EM";
+    case PRODUCT_SOLUTION_EMBEDDEDSERVER:                return "Windows MultiPoint Server";
+	case PRODUCT_SOLUTION_EMBEDDEDSERVER_CORE:           return "Solution Embedded Server (core installation)";
+    case PRODUCT_PROFESSIONAL_EMBEDDED:                  return "Professional Embedded";
+    case PRODUCT_ESSENTIALBUSINESS_SERVER_MGMT:          return " Essential Server Solution Management";
+    case PRODUCT_ESSENTIALBUSINESS_SERVER_ADDL:       	 return " Essential Server Solution Additional";
+    case PRODUCT_ESSENTIALBUSINESS_SERVER_MGMTSVC:    	 return " Essential Server Solution Management SVC";
+    case PRODUCT_ESSENTIALBUSINESS_SERVER_ADDLSVC:    	 return " Essential Server Solution Additional SVC";
+    case PRODUCT_SMALLBUSINESS_SERVER_PREMIUM_CORE:   	 return " Small Business Server Premium (core installation)";
+	case PRODUCT_CLUSTER_SERVER_V:                       return "Server Hyper Core V";
+    case PRODUCT_EMBEDDED:                            	 return " Embedded";
+	case PRODUCT_STARTER_E:                              return "Starter E";
+	case PRODUCT_HOME_BASIC_E:                           return "Home Basic E";
+	case PRODUCT_HOME_PREMIUM_E:                         return "Premium E";
+	case PRODUCT_PROFESSIONAL_E:                         return "Pro E";
+	case PRODUCT_ENTERPRISE_E:                           return "Enterprise E";
+	case PRODUCT_ULTIMATE_E:                             return "Ultimate E";
+	case PRODUCT_ENTERPRISE_EVALUATION:                  return "Enterprise (Eval)";
+    case PRODUCT_MULTIPOINT_STANDARD_SERVER:          	 return  "MultiPoint Server Standard";
+    case PRODUCT_MULTIPOINT_PREMIUM_SERVER:           	 return "MultiPoint Server Premium";
+	case PRODUCT_STANDARD_EVALUATION_SERVER:             return "Server Standard (Eval)";
+	case PRODUCT_DATACENTER_EVALUATION_SERVER:           return "Server Datacenter (Eval)";
+	case PRODUCT_ENTERPRISE_N_EVALUATION:                return "Enterprise N (Eval)";
+    case PRODUCT_EMBEDDED_AUTOMOTIVE:                 	 return" Embedded Automotive";
+    case PRODUCT_EMBEDDED_INDUSTRY_A:                 	 return " Embedded Industry A";
+	case PRODUCT_THINPC:                                 return "Thin PC";
+    case PRODUCT_EMBEDDED_A:                          	 return " Embedded A";
+    case PRODUCT_EMBEDDED_INDUSTRY:                   	 return " Embedded Industry";
+    case PRODUCT_EMBEDDED_E:                          	 return " Embedded E";
+    case PRODUCT_EMBEDDED_INDUSTRY_E:                 	 return " Embedded Industry E";
+    case PRODUCT_EMBEDDED_INDUSTRY_A_E:               	 return " Embedded Industry A E";
+    case PRODUCT_STORAGE_WORKGROUP_EVALUATION_SERVER: 	 return " Storage Server Workgroup (evaluation installation)";
+    case PRODUCT_STORAGE_STANDARD_EVALUATION_SERVER:  	 return " Storage Server Standard (evaluation installation)";
+    case PRODUCT_CORE_ARM:                            	 return " RT";
+	case PRODUCT_CORE_N:                                 return "Home N";
+	case PRODUCT_CORE_COUNTRYSPECIFIC:                   return "Home China";
+	case PRODUCT_CORE_SINGLELANGUAGE:                    return "Home Single Language";
+	case PRODUCT_CORE:                                   return "Home";
+	case PRODUCT_PROFESSIONAL_WMC:                       return "Pro with Media Center";
+    case PRODUCT_EMBEDDED_INDUSTRY_EVAL:              	 return "Embedded Industry (evaluation installation)";
+    case PRODUCT_EMBEDDED_INDUSTRY_E_EVAL:            	 return " Embedded Industry E (evaluation installation)";
+    case PRODUCT_EMBEDDED_EVAL:                       	 return " Embedded (evaluation installation)";
+    case PRODUCT_EMBEDDED_E_EVAL:                     	 return  "Embedded E (evaluation installation)";
+    case PRODUCT_NANO_SERVER:                         	 return "Nano Server";
+    case PRODUCT_CLOUD_STORAGE_SERVER:                	 return " Server Could Storage";
+	case PRODUCT_CORE_CONNECTED:                         return "Home Connected";
+	case PRODUCT_PROFESSIONAL_STUDENT:                   return "Pro Student";
+	case PRODUCT_CORE_CONNECTED_N:                       return "Home Connected N";
+	case PRODUCT_PROFESSIONAL_STUDENT_N:                 return "Pro Student N";
+	case PRODUCT_CORE_CONNECTED_SINGLELANGUAGE:          return "Home Connected Single Language";
+	case PRODUCT_CORE_CONNECTED_COUNTRYSPECIFIC:         return "Home Connected China";
+    case PRODUCT_CONNECTED_CAR:                       	 return " Connected Car";
+    case PRODUCT_INDUSTRY_HANDHELD:                   	 return " Industry Handheld";
+    case PRODUCT_PPI_PRO:                             	 return " PPI Pro";
+    case PRODUCT_ARM64_SERVER:                        	 return " ARM64 Server";
+	case PRODUCT_EDUCATION:                              return "Education";
+	case PRODUCT_EDUCATION_N:                            return "Education N";
+    case PRODUCT_IOTUAP:                              	 return " IoT Core";
+    case PRODUCT_CLOUD_HOST_INFRASTRUCTURE_SERVER:    	 return " Cloud Host Infrastructure Server";
+	case PRODUCT_ENTERPRISE_S:                           return "Enterprise LTSB";
+	case PRODUCT_ENTERPRISE_S_N:                         return "Enterprise LTSB N";
+	case PRODUCT_PROFESSIONAL_S:                         return "Pro S";
+	case PRODUCT_PROFESSIONAL_S_N:                       return "Pro S N";
+	case PRODUCT_ENTERPRISE_S_EVALUATION:                return "Enterprise LTSB (Eval)";
+	case PRODUCT_ENTERPRISE_S_N_EVALUATION:              return "Enterprise LTSB N (Eval)";
+    case PRODUCT_HOLOGRAPHIC:                         	 return " Holographic";
+    case PRODUCT_HOLOGRAPHIC_BUSINESS:                	 return "HOLOGRAPHIC BUSINESS";
+	case PRODUCT_PRO_SINGLE_LANGUAGE:                    return "Pro Single Language";
+	case PRODUCT_PRO_CHINA:                              return "Pro China";
+	case PRODUCT_ENTERPRISE_SUBSCRIPTION:                return "Enterprise Subscription";
+	case PRODUCT_ENTERPRISE_SUBSCRIPTION_N:              return "Enterprise Subscription N";
+    case PRODUCT_DATACENTER_NANO_SERVER:              	 return " Datacenter Nano Server";
+    case PRODUCT_STANDARD_NANO_SERVER:                	 return " Standard Nano Server";
+	case PRODUCT_DATACENTER_A_SERVER_CORE:               return "Server Datacenter SA (Core)";
+	case PRODUCT_STANDARD_A_SERVER_CORE:                 return "Server Standard SA (Core)";
+    case PRODUCT_DATACENTER_WS_SERVER_CORE:           	 return " Datacenter WS Server Core";
+    case PRODUCT_STANDARD_WS_SERVER_CORE:             	 return " Standard WS Server Core";
+	case PRODUCT_UTILITY_VM:                             return "Utility VM";
+    case PRODUCT_DATACENTER_EVALUATION_SERVER_CORE:   	 return " Datacenter_evaluation_server_core";
+    case PRODUCT_STANDARD_EVALUATION_SERVER_CORE:     	 return " Standard Evaluation Server Core";
+	case PRODUCT_PRO_WORKSTATION:                        return "Pro for Workstations";
+	case PRODUCT_PRO_WORKSTATION_N:                      return "Pro for Workstations N";
+	case PRODUCT_PRO_FOR_EDUCATION:                      return "Pro for Education";
+	case PRODUCT_PRO_FOR_EDUCATION_N:                    return "Pro for Education N";
+    case PRODUCT_AZURE_SERVER_CORE:                      return " Azure Server Core";
+    case PRODUCT_AZURE_NANO_SERVER:                   	 return " Azure Nano Server";
+	case PRODUCT_ENTERPRISEG:                            return "Enterprise G";
+	case PRODUCT_ENTERPRISEGN:                           return "Enterprise G N";
+    case PRODUCT_SERVERRDSH:                          	 return " Server RDSH";
+	case PRODUCT_CLOUD:                                  return "Cloud";
+	case PRODUCT_CLOUDN:                                 return "Cloud N";
+    case PRODUCT_HUBOS:                                	 return "Windows 10 S (Hub OS)";
+	case PRODUCT_ONECOREUPDATEOS:                        return "Home OS";
+	case PRODUCT_CLOUDE:                                 return "Cloud E";
+	case PRODUCT_IOTOS:                                  return "IoT OS";
+	case PRODUCT_CLOUDEN:                                return "Cloud E N";
+	case PRODUCT_IOTEDGEOS:                              return "IoT Edge OS";
+	case PRODUCT_IOTENTERPRISE:                          return "IoT Enterprise";
+	case PRODUCT_LITE:                                   return "Lite";
+	case PRODUCT_IOTENTERPRISES:                         return "IoT Enterprise S";
+	case PRODUCT_XBOX_SYSTEMOS:                          return "XBox";
+	case PRODUCT_XBOX_GAMEOS:                            return "Xbox OS";
+	case PRODUCT_XBOX_ERAOS:                             return "Xbox Era OS";
+	case PRODUCT_XBOX_DURANGOHOSTOS:                     return "Xbox Durango Host OS";
+	case PRODUCT_XBOX_SCARLETTHOSTOS:                    return "Xbox Scarlett Host OS";
+	case PRODUCT_XBOX_KEYSTONE:                          return "Xbox Keystone";
+	case PRODUCT_AZURE_SERVER_CLOUDHOST:                 return "Azure Stack HCI Cloud Host";
+	case PRODUCT_AZURE_SERVER_CLOUDMOS:                  return "Azure Stack HCI Cloud MOS";
+	case PRODUCT_CLOUDEDITIONN:                          return "Windows Cloud Edition N";
+	case PRODUCT_CLOUDEDITION:                           return "Windows Cloud Edition";
+	case PRODUCT_VALIDATION:                             return "Windows Validation OS";
+	case PRODUCT_IOTENTERPRISESK:                        return "Windows IoT Enterprise LTSC";
+	case PRODUCT_IOTENTERPRISEK:                         return "Windows IoT Enterprise";
+	case PRODUCT_IOTENTERPRISESEVAL:                     return "Windows IoT Enterprise S (Evaluation)";
+	case PRODUCT_AZURE_SERVER_AGENTBRIDGE:               return "Azure Stack HCI Agent Bridge";
+	case PRODUCT_AZURE_SERVER_NANOHOST:                  return "Azure Stack HCI Nano Host";
+	case PRODUCT_WNC:                                    return "Windows National Cloud";
+	case PRODUCT_AZURESTACKHCI_SERVER_CORE:              return "Azure Stack HCI";
+	case PRODUCT_DATACENTER_SERVER_AZURE_EDITION:        return "Windows Server Datacenter Azure Edition";
+	case PRODUCT_DATACENTER_SERVER_CORE_AZURE_EDITION:   return "Windows Server Datacenter Azure Edition (Server Core)";
+	case PRODUCT_DATACENTER_WS_SERVER_CORE_AZURE_EDITION:return "Windows Server Datacenter Azure Edition with Desktop Experience (Server Core)";
+
+
+	case PRODUCT_UNLICENSED:                             return "(Unlicensed)";
 	default:
 		static_sprintf(unknown_edition_str, "(Unknown Edition 0x%02X)", (uint32_t)ProductType);
-		return unknown_edition_str;
+                                                         return unknown_edition_str;
 	}
 }
 
 PF_TYPE_DECL(WINAPI, HRESULT, WldpQueryWindowsLockdownMode, (PWLDP_WINDOWS_LOCKDOWN_MODE));
 BOOL isSMode(void)
 {
-		BOOL r = FALSE;
-		WLDP_WINDOWS_LOCKDOWN_MODE mode;
-		HRESULT hr = pfWldpQueryWindowsLockdownMode(&mode);
-		PF_INIT_OR_OUT(WldpQueryWindowsLockdownMode, Wldp);
+	BOOL r = FALSE;
+	WLDP_WINDOWS_LOCKDOWN_MODE mode;
+	HRESULT hr = pfWldpQueryWindowsLockdownMode(&mode);
+	PF_INIT_OR_OUT(WldpQueryWindowsLockdownMode, Wldp);
 
-		if (hr != S_OK) {
-				SetLastError((DWORD)hr);
-				uprintf("Could not detect S Mode: %s", WindowsErrorString());
-	} else {
-				r = (mode != WLDP_WINDOWS_LOCKDOWN_MODE_UNLOCKED);
-		}
+	if (hr != S_OK) {
+		SetLastError((DWORD)hr);
+		uprintf("Could not detect S Mode: %s", WindowsErrorString());
+	}
+	else {
+		r = (mode != WLDP_WINDOWS_LOCKDOWN_MODE_UNLOCKED);
+	}
 
 out:
-		return r;
+	return r;
 }
 
 /*
@@ -153,7 +238,7 @@ void GetWindowsVersion(windows_version_t* windows_version)
 	DWORD dwProductType = 0;
 	const char* w = NULL;
 	const char* arch_name;
-	char *vptr;
+	char* vptr;
 	size_t vlen;
 	DWORD major = 0, minor = 0;
 	USHORT ProcessMachine = IMAGE_FILE_MACHINE_UNKNOWN, NativeMachine = IMAGE_FILE_MACHINE_UNKNOWN;
@@ -168,10 +253,10 @@ void GetWindowsVersion(windows_version_t* windows_version)
 
 	memset(&vi, 0, sizeof(vi));
 	vi.dwOSVersionInfoSize = sizeof(vi);
-	if (!GetVersionExA((OSVERSIONINFOA *)&vi)) {
+	if (!GetVersionExA((OSVERSIONINFOA*)&vi)) {
 		memset(&vi, 0, sizeof(vi));
 		vi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOA);
-		if (!GetVersionExA((OSVERSIONINFOA *)&vi))
+		if (!GetVersionExA((OSVERSIONINFOA*)&vi))
 			return;
 	}
 
@@ -225,7 +310,7 @@ void GetWindowsVersion(windows_version_t* windows_version)
 				break;
 			case WINDOWS_10_PREVIEW1: w = (ws ? "10 (Preview 1)" : "Server 10 (Preview 1)");
 				break;
-			// Starting with Windows 10 Preview 2, the major is the same as the public-facing version
+				// Starting with Windows 10 Preview 2, the major is the same as the public-facing version
 			case WINDOWS_10:
 				if (vi.dwBuildNumber < 20000) {
 					w = (ws ? "10" : ((vi.dwBuildNumber < 17763) ? "Server 2016" : "Server 2019"));
@@ -250,7 +335,8 @@ void GetWindowsVersion(windows_version_t* windows_version)
 
 	if ((pfIsWow64Process2 != NULL) && pfIsWow64Process2(GetCurrentProcess(), &ProcessMachine, &NativeMachine)) {
 		windows_version->Arch = NativeMachine;
-	} else {
+	}
+	else {
 		// Assume same arch as the app
 		windows_version->Arch = GetApplicationArch();
 		// Fix the Arch if we have a 32-bit app running under WOW64
@@ -332,7 +418,8 @@ static PSID GetSID(void) {
 		if (!ConvertSidToStringSidA(tu->User.Sid, &psid_string)) {
 			uprintf("Unable to convert SID to string: %s", WindowsErrorString());
 			ret = NULL;
-		} else {
+		}
+		else {
 			if (!ConvertStringSidToSidA(psid_string, &ret)) {
 				uprintf("Unable to convert string back to SID: %s", WindowsErrorString());
 				ret = NULL;
@@ -340,7 +427,8 @@ static PSID GetSID(void) {
 			// MUST use LocalFree()
 			LocalFree(psid_string);
 		}
-	} else {
+	}
+	else {
 		ret = NULL;
 		uprintf("GetTokenInformation (real) failed: %s", WindowsErrorString());
 	}
@@ -350,7 +438,7 @@ static PSID GetSID(void) {
 
 BOOL FileIO(enum file_io_type io_type, char* path, char** buffer, DWORD* size)
 {
-	SECURITY_ATTRIBUTES s_attr, *sa = NULL;
+	SECURITY_ATTRIBUTES s_attr, * sa = NULL;
 	SECURITY_DESCRIPTOR s_desc;
 	const LARGE_INTEGER liZero = { .QuadPart = 0ULL };
 	PSID sid = NULL;
@@ -361,14 +449,15 @@ BOOL FileIO(enum file_io_type io_type, char* path, char** buffer, DWORD* size)
 
 	// Change the owner from admin to regular user
 	sid = GetSID();
-	if ( (sid != NULL)
-	  && InitializeSecurityDescriptor(&s_desc, SECURITY_DESCRIPTOR_REVISION)
-	  && SetSecurityDescriptorOwner(&s_desc, sid, FALSE) ) {
+	if ((sid != NULL)
+		&& InitializeSecurityDescriptor(&s_desc, SECURITY_DESCRIPTOR_REVISION)
+		&& SetSecurityDescriptorOwner(&s_desc, sid, FALSE)) {
 		s_attr.nLength = sizeof(SECURITY_ATTRIBUTES);
 		s_attr.bInheritHandle = FALSE;
 		s_attr.lpSecurityDescriptor = &s_desc;
 		sa = &s_attr;
-	} else {
+	}
+	else {
 		uprintf("Could not set security descriptor: %s", WindowsErrorString());
 	}
 
@@ -470,8 +559,9 @@ uint8_t* GetResource(HMODULE module, char* name, char* type, const char* desc, D
 		memcpy(p, LockResource(res_handle), std::min(res_len, *len));
 		if (res_len > *len)
 			uprintf("WARNING: Resource '%s' was truncated by %d bytes!", desc, res_len - *len);
-	} else {
-			p = (uint8_t*)LockResource(res_handle);
+	}
+	else {
+		p = (uint8_t*)LockResource(res_handle);
 	}
 	*len = res_len;
 
@@ -479,8 +569,8 @@ out:
 	return p;
 }
 
-static BOOL CALLBACK EnumFontFamExProc(const LOGFONTA *lpelfe,
-	const TEXTMETRICA *lpntme, DWORD FontType, LPARAM lParam)
+static BOOL CALLBACK EnumFontFamExProc(const LOGFONTA* lpelfe,
+	const TEXTMETRICA* lpntme, DWORD FontType, LPARAM lParam)
 {
 	return TRUE;
 }

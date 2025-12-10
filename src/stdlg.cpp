@@ -214,32 +214,32 @@ BOOL CALLBACK WelcomeCallback(HWND hDlg,UINT msg,WPARAM wParam,LPARAM lParam)
 		case WM_INITDIALOG:
 				SetDarkModeForDlg(hDlg);
 				WCHAR wch[1024];
-#if defined(VERSION_BUILD_TOOL_BUILD)
+			#if defined(VERSION_BUILD_TOOL_BUILD)
 						wsprintf(wch, L"Compiled on " "Oct 19 2024" L" with %s %d.%02d.%05d.%d" L"WebP " L"v1.3.2" L", " L"LibTorrent " L"v2.0.11" L", " L"7zip " L"v23.01", VERSION_BUILD_TOOL_NAME,
-                VERSION_BUILD_TOOL_MAJOR, VERSION_BUILD_TOOL_MINOR, VERSION_BUILD_TOOL_PATCH, VERSION_BUILD_TOOL_BUILD);
-#else
-            wsprintf(wch, VERSION_BUILD_INFO_FORMAT, VERSION_BUILD_TOOL_NAME,
-                VERSION_BUILD_TOOL_MAJOR, VERSION_BUILD_TOOL_MINOR, VERSION_BUILD_TOOL_PATCH);
-#endif
-				SetWindowText(GetDlgItem(hDlg,IDD_WELC_TITLE),STR(STR_WELCOME_TITLE));
-        SetWindowText(GetDlgItem(hDlg, IDC_VERSION), _W(_STRG(VERSION_FILEVERSION_LONG)));
-        SetWindowText(GetDlgItem(hDlg, IDC_BUILD_INFO), wch);
-        SetWindowText(GetDlgItem(hDlg,IDC_COPYRIGHT), _W(VERSION_LEGALCOPYRIGHT));
-        SetWindowText(GetDlgItem(hDlg, IDC_WEBLINK), _W(VERSION_WEBPAGEDISPLAY));
-        SetWindowText(GetDlgItem(hDlg, IDC_SUPPORTLINK), STR(STR_BOOSTY1));
-        SetWindowText(GetDlgItem(hDlg,IDD_WELC_SUBTITLE),STR(STR_WELCOME_SUBTITLE));
-        SetWindowText(GetDlgItem(hDlg,IDD_WELC_INTRO),STR(STR_WELCOME_INTRO));
-				SetWindowText(GetDlgItem(hDlg,IDD_WELC_INTRO2),STR(STR_WELCOME_INTRO2));
-				SetWindowText(GetDlgItem(hDlg,IDD_WELC_BUTTON1),STR(STR_WELCOME_BUTTON1));
-				SetWindowText(GetDlgItem(hDlg,IDD_WELC_BUTTON1_DESC),STR(STR_WELCOME_BUTTON1_DESC));
-				SetWindowText(GetDlgItem(hDlg,IDD_WELC_BUTTON2),STR(STR_WELCOME_BUTTON2));
-				SetWindowText(GetDlgItem(hDlg,IDD_WELC_BUTTON2_DESC),STR(STR_WELCOME_BUTTON2_DESC));
-				SetWindowText(GetDlgItem(hDlg,IDD_WELC_BUTTON3),STR(STR_WELCOME_BUTTON3));
-				SetWindowText(GetDlgItem(hDlg,IDD_WELC_BUTTON3_DESC),STR(STR_WELCOME_BUTTON3_DESC));
-				SetWindowText(GetDlgItem(hDlg,IDD_WELC_CLOSE),STR(STR_WELCOME_CLOSE));
-				// set focus to first button
-				SetFocus(GetDlgItem(hDlg,IDD_WELC_BUTTON1));
-				return TRUE;
+							VERSION_BUILD_TOOL_MAJOR, VERSION_BUILD_TOOL_MINOR, VERSION_BUILD_TOOL_PATCH, VERSION_BUILD_TOOL_BUILD);
+			#else
+				wsprintf(wch, VERSION_BUILD_INFO_FORMAT, VERSION_BUILD_TOOL_NAME,
+					VERSION_BUILD_TOOL_MAJOR, VERSION_BUILD_TOOL_MINOR, VERSION_BUILD_TOOL_PATCH);
+			#endif
+			SetWindowText(GetDlgItem(hDlg,IDD_WELC_TITLE),STR(STR_WELCOME_TITLE));
+			SetWindowText(GetDlgItem(hDlg, IDC_VERSION), VERSION_FILEVERSION_LONG);
+			SetWindowText(GetDlgItem(hDlg, IDC_BUILD_INFO), wch);
+			SetWindowText(GetDlgItem(hDlg, IDC_COPYRIGHT), VERSION_LEGALCOPYRIGHT);
+			SetWindowText(GetDlgItem(hDlg, IDC_WEBLINK), VERSION_WEBPAGEDISPLAY);
+			SetWindowText(GetDlgItem(hDlg, IDC_SUPPORTLINK), STR(STR_BOOSTY1));
+			SetWindowText(GetDlgItem(hDlg,IDD_WELC_SUBTITLE),STR(STR_WELCOME_SUBTITLE));
+			SetWindowText(GetDlgItem(hDlg,IDD_WELC_INTRO),STR(STR_WELCOME_INTRO));
+			SetWindowText(GetDlgItem(hDlg,IDD_WELC_INTRO2),STR(STR_WELCOME_INTRO2));
+			SetWindowText(GetDlgItem(hDlg,IDD_WELC_BUTTON1),STR(STR_WELCOME_BUTTON1));
+			SetWindowText(GetDlgItem(hDlg,IDD_WELC_BUTTON1_DESC),STR(STR_WELCOME_BUTTON1_DESC));
+			SetWindowText(GetDlgItem(hDlg,IDD_WELC_BUTTON2),STR(STR_WELCOME_BUTTON2));
+			SetWindowText(GetDlgItem(hDlg,IDD_WELC_BUTTON2_DESC),STR(STR_WELCOME_BUTTON2_DESC));
+			SetWindowText(GetDlgItem(hDlg,IDD_WELC_BUTTON3),STR(STR_WELCOME_BUTTON3));
+			SetWindowText(GetDlgItem(hDlg,IDD_WELC_BUTTON3_DESC),STR(STR_WELCOME_BUTTON3_DESC));
+			SetWindowText(GetDlgItem(hDlg,IDD_WELC_CLOSE),STR(STR_WELCOME_CLOSE));
+			// set focus to first button
+			SetFocus(GetDlgItem(hDlg,IDD_WELC_BUTTON1));
+			return TRUE;
 
 		case WM_SETCURSOR:
 				// 2 hyperlinks
@@ -278,13 +278,13 @@ BOOL CALLBACK WelcomeCallback(HWND hDlg,UINT msg,WPARAM wParam,LPARAM lParam)
 								// download indices only
 								EndDialog(hDlg,wParam);
 								Settings.flags&=~FLAG_AUTOUPDATE;
-								Updater->DownloadIndexes();
+								Updater->DownloadIndices();
 								return TRUE;
 						case IDC_WEBLINK:
-                            ShellExecute(hDlg, L"open", _W(VERSION_WEBPAGEDISPLAY), NULL, NULL, SW_SHOWNORMAL);
+                            ShellExecute(hDlg, L"open", VERSION_WEBPAGEDISPLAY, NULL, NULL, SW_SHOWNORMAL);
                             break;
 						case IDC_SUPPORTLINK:
-                            ShellExecute(hDlg, L"open", _W(WEB_BOOSTYPAGE), NULL, NULL, SW_SHOWNORMAL);
+                            ShellExecute(hDlg, L"open", WEB_BOOSTYPAGE, NULL, NULL, SW_SHOWNORMAL);
                             break;
 						default:
 								break;
@@ -355,14 +355,14 @@ INT_PTR CALLBACK AboutDlgProc(HWND hwnd, UINT umsg, WPARAM wParam, LPARAM lParam
         wsprintf(wch, VERSION_BUILD_INFO_FORMAT, VERSION_BUILD_TOOL_NAME,
             VERSION_BUILD_TOOL_MAJOR, VERSION_BUILD_TOOL_MINOR, VERSION_BUILD_TOOL_PATCH);
 #endif
-        SetDlgItemText(hwnd, IDC_VERSION, _W(_STRG(VERSION_FILEVERSION_LONG)));
-				SetDlgItemText(hwnd, IDC_BUILD_INFO, wch);
-				SetDlgItemText(hwnd, IDC_COPYRIGHT, _W(VERSION_LEGALCOPYRIGHT));
-        SetDlgItemText(hwnd, IDC_WEBLINK, _W(VERSION_WEBPAGEDISPLAY));
+        SetDlgItemText(hwnd, IDC_VERSION, VERSION_FILEVERSION_LONG);
+		SetDlgItemText(hwnd, IDC_BUILD_INFO, wch);
+		SetDlgItemText(hwnd, IDC_COPYRIGHT, VERSION_LEGALCOPYRIGHT);
+        SetDlgItemText(hwnd, IDC_WEBLINK, VERSION_WEBPAGEDISPLAY);
         SetDlgItemText(hwnd, IDC_SUPPORTLINK, STR(STR_BOOSTY1));
-				SetDlgItemText(hwnd, IDC_WEBP_VERSION, VERSION_WEBP);
-				SetDlgItemText(hwnd, IDC_TORR_VERSION, VERSION_LIBTORRENT);
-				SetDlgItemText(hwnd, IDC_7ZIP_VERSION, VERSION_7ZIP);
+		SetDlgItemText(hwnd, IDC_WEBP_VERSION, VERSION_WEBP);
+		SetDlgItemText(hwnd, IDC_TORR_VERSION, VERSION_LIBTORRENT);
+		SetDlgItemText(hwnd, IDC_7ZIP_VERSION, VERSION_7ZIP);
 
 		//CenterDlgInParent(hwnd);
 		}
@@ -389,9 +389,9 @@ INT_PTR CALLBACK AboutDlgProc(HWND hwnd, UINT umsg, WPARAM wParam, LPARAM lParam
                 EndDialog(hwnd,wParam);
                 break;
 						case IDC_WEBLINK:
-								ShellExecuteW(hwnd, L"open", _W(VERSION_WEBPAGEDISPLAY), NULL, NULL, SW_SHOWNORMAL);
+								ShellExecuteW(hwnd, L"open", VERSION_WEBPAGEDISPLAY, NULL, NULL, SW_SHOWNORMAL);
 						case IDC_SUPPORTLINK:
-								ShellExecuteW(hwnd, L"open", _W(WEB_BOOSTYPAGE),NULL, NULL, SW_SHOWNORMAL);
+								ShellExecuteW(hwnd, L"open", WEB_BOOSTYPAGE,NULL, NULL, SW_SHOWNORMAL);
 			break;
 		}
 		return TRUE;

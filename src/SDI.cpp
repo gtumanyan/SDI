@@ -13,6 +13,7 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <algorithm>
 #include <windows.h>
 #include <shellapi.h>
 #include <strsafe.h>
@@ -20,13 +21,14 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include <dwmapi.h>
 
 //#include "VersionEx.h"		//moved to SDI.h for registry.h
+#include "Version.h"
 #include "SDI.h"
+#include "logging.h"
 #include "system.h"
 #include "msapi_utf8.h"
 #include "resource.h"
 #include "Settings.h"
 #include "darkmode.h"
-#include "utils/WinUtil.h"
 
 #include "7zip.h"
 #include "cli.h"
@@ -38,6 +40,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "draw.h"   // non-portable
 #include "theme.h"
 #include "update.h"
+#include "enum.h"   // non-portable
 #include "usbwizard.h"
 
 #include "model.h"
@@ -75,6 +78,7 @@ int manager_active=0;
 int bundle_display=1;
 int bundle_shadow=0;
 bool emptydrp;
+WinVersions winVersions;
 HMENU pSysMenu,ToolsMenu,UpdatesMenu;
 int pSysMenuCount=0;
 TORRENT_SELECTION_MODE TorrentSelectionMode=TSM_NONE;
@@ -264,7 +268,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     // MAIN GUI LOOP
     MainWindow.MainLoop(nShowCmd);
 
-		// Wait till the device scan thread is finished
+	// Wait till the device scan thread is finished
     if(MainWindow.hMain)deviceupdate_exitflag=1;
     deviceupdate_event->raise();
     thr->join();
@@ -295,7 +299,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		}
 		CoUninitialize();
 		//safe_closehandle(mutex);	# TODO
-		uprintf("*** " APPNAME " exit ***\n");
+		uprintf("*** " APPLICATION_NAME " exit ***\n");
 #ifdef _CRTDBG_MAP_ALLOC
 		_CrtDumpMemoryLeaks();
 #endif
@@ -395,7 +399,7 @@ void MainWindow_t::MainLoop(int nShowCmd) {
     wcex.cbSize=         sizeof(WNDCLASSEX);
     wcex.lpfnWndProc=    WndProcMainCallback;
     wcex.hInstance=      hMainInstance;
-    wcex.hIcon=          LoadIcon(hMainInstance,MAKEINTRESOURCE(IDI_ICON));
+    wcex.hIcon=          LoadIcon(hMainInstance,MAKEINTRESOURCE(IDR_MAINWND));
     wcex.hCursor=        LoadCursor(nullptr,IDC_ARROW);
     wcex.lpszClassName=  classMain;
 		// For the extended translucent frame to be visible, we need black background.
@@ -422,16 +426,15 @@ void MainWindow_t::MainLoop(int nShowCmd) {
     wcex.lpszClassName=classField;
     if(!RegisterClassEx(&wcex))
     {
-				uprintf("ERROR in gui(): failed to register '%S' class\n",wcex.lpszClassName);
+		uprintf("ERROR in gui(): failed to register '%S' class\n",wcex.lpszClassName);
         System.UnregisterClass_log(classMain,L"gui",L"classMain");
         System.UnregisterClass_log(classPopup,L"gui",L"classPopup");
         return;
     }
 
     // Main windows
-		hMain = CreateWindowExW(WS_EX_LAYERED,
-                        classMain,
-						APPLICATION_NAME,
+
+	hMain = CreateWindowEx(WS_EX_LAYERED,classMain, VERSION_FILEVERSION_LONG,
                         WS_OVERLAPPEDWINDOW|WS_CLIPCHILDREN,
                         CW_USEDEFAULT,CW_USEDEFAULT,D(MAINWND_WX),D(MAINWND_WY),
                         nullptr,nullptr,hMainInstance,nullptr);
@@ -450,7 +453,7 @@ void MainWindow_t::MainLoop(int nShowCmd) {
     {
         /*int f;
         f=lang_enum(hLang,L"langs",manager_g->matcher->state->locale);
-        Log.print_con("lang %d\n",f);
+        vvuprintf("lang %d\n",f);
         lang_set(f);*/
 
         //if(MessageBox(0,STR(STR_UPD_DIALOG_MSG),STR(STR_UPD_DIALOG_TITLE),MB_YESNO|MB_ICONQUESTION)==IDYES)
@@ -850,8 +853,8 @@ static BOOL CALLBACK SettingsDialog(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 								SetWindowText(GetDlgItem(data.pages[1],IDPREALLOCATE),STR(STR_UPD_PREALLOCATE));
 
 								SetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR1),STR(STR_OPTION_DIR_DRIVERS));
-								SetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR2),STR(STR_OPTION_DIR_INDEXES));
-								SetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR3),STR(STR_OPTION_DIR_INDEXESH));
+								SetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR2),STR(STR_OPTION_DIR_INDICES));
+								SetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR3),STR(STR_OPTION_DIR_INDICESH));
 								SetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR4),STR(STR_OPTION_DIR_DATA));
 								SetWindowText(GetDlgItem(data.pages[2],IDD_P3_DIR5),STR(STR_OPTION_DIR_LOGS));
 
@@ -1040,7 +1043,7 @@ void MainWindow_t::snapshot()
 void MainWindow_t::extractto()
 {
     wchar_t dir[MAX_PATH];
-    std::wstring path= GetSelfExePathWTemp();
+    std::wstring path=System.AppPathW();
     wcscpy(dir,path.c_str());
 
     if(System.ChooseDir(dir,STR(STR_EXTRACTFOLDER)))
@@ -1256,7 +1259,7 @@ void MainWindow_t::DownloadedTorrent(int TorrentResults)
     if(TorrentSelectionMode==TSM_AUTO)
 	{
         // just finished downloading the first torrent after startup
-        // if there are no drivers and no indexes
+        // if there are no drivers and no indices
         // and no command line then show the welcome screen
         if(!System.FileExists2(spec1)&&!System.FileExists2(spec2)&&(argc<2))
         {
@@ -1368,109 +1371,6 @@ void MainWindow_t::arrowsAdvance(int v)
 }
 //}
 
-//{ Version
-int Version::setDate(int d_,int m_,int y_)
-{
-		d=d_;
-		m=m_;
-		y=y_;
-
-		int flag=0;
-		if(y<100)y+=1900;
-		if(y<1990)flag=1;
-		if(y>2015)flag=2;
-		switch(m)
-		{
-				case 1:case 3:case 5:case 7:case 8:case 10:case 12:
-						if(d<1||d>31)flag=3;
-						break;
-				case 4:case 6:case 9:case 11:
-						if(d<1||d>30)flag=4;
-						break;
-				case 2:
-						if(d<1||d>((((y%4==0)&&(y%100))||(y%400==0))?29:28))flag=5;
-						break;
-				default:
-						flag=6;
-		}
-		return flag;
-}
-
-void Version::setVersion(int v1_,int v2_,int v3_,int v4_)
-{
-		v1=v1_;
-		v2=v2_;
-		v3=v3_;
-		v4=v4_;
-}
-
-void Version::str_date(WStringShort &buf,bool invariant)const
-{
-		SYSTEMTIME tm;
-		FILETIME ft;
-
-		memset(&tm,0,sizeof(SYSTEMTIME));
-		tm.wDay=(WORD)d;
-		tm.wMonth=(WORD)m;
-		tm.wYear=(WORD)y;
-		SystemTimeToFileTime(&tm,&ft);
-		int r=FileTimeToSystemTime(&ft,&tm);
-
-		if(y<1000||!r)
-				buf.sprintf(STR(STR_HINT_UNKNOWN));
-		else if(invariant)
-				buf.sprintf(L"%02d/%02d/%d",m,d,y);
-		else
-				GetDateFormat(invariant?LOCALE_INVARIANT:manager_g->getlocale(),0,&tm,nullptr,buf.GetV(),static_cast<int>(buf.Length()));
-}
-
-void Version::str_version(WStringShort &buf)const
-{
-		if(v1<0)
-				buf.sprintf(STR(STR_HINT_UNKNOWN));
-		else
-				buf.sprintf(L"%d.%d.%d.%d",v1,v2,v3,v4);
-}
-
-int cmpdate(const Version *t1,const Version *t2)
-{
-		int res;
-
-		if(Settings.flags&FLAG_FILTERSP&&t2->y<1000)return 0;
-
-		res=t1->y-t2->y;
-		if(res)return res;
-
-		res=t1->m-t2->m;
-		if(res)return res;
-
-		res=t1->d-t2->d;
-		if(res)return res;
-
-		return 0;
-}
-
-int cmpversion(const Version *t1,const Version *t2)
-{
-		int res;
-
-		if(Settings.flags&FLAG_FILTERSP&&t2->v1<0)return 0;
-
-		res=t1->v1-t2->v1;
-		if(res)return res;
-
-		res=t1->v2-t2->v2;
-		if(res)return res;
-
-		res=t1->v3-t2->v3;
-		if(res)return res;
-
-		res=t1->v4-t2->v4;
-		if(res)return res;
-
-		return 0;
-}
-//}
 
 //{ Txt
 size_t Txt::strcpy(const char *str)
@@ -1912,7 +1812,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 								DownloadedTorrent(lParam);
 								break;
 						}
-				case WM_INDEXESSAVED:
+				case WM_INDICESSAVED:
 						{
 								break;
 						}
@@ -1970,9 +1870,9 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 										wpos->y=rect.top;
 										wpos->cx=rect.right-wpos->x;
 										wpos->cy=rect.bottom-wpos->y;
-										//Log.print_con("%d,%d,%d,%d\n",rect.left,rect.top,rect.right,rect.bottom);
+										//vvuprintf("%d,%d,%d,%d\n",rect.left,rect.top,rect.right,rect.bottom);
 										Settings.scale=750*256/wpos->cy;
-										//Log.print_con("(%d,%d,%d)\n",wpos->cx,wpos->cy,Settings.scale);
+										//vvuprintf("(%d,%d,%d)\n",wpos->cx,wpos->cy,Settings.scale);
 										MainWindow.theme_refresh(0);
 									}
 						}
@@ -2413,9 +2313,15 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 										invalidate(INVALIDATE_SYSINFO|INVALIDATE_MANAGER);
 										break;
 
-								case ID_DIS_INSTALL:
-										Settings.flags^=FLAG_DISABLEINSTALL;
-										break;
+                case ID_DETECT_OS:
+                    Settings.virtual_os_version=0;
+                    Settings.virtual_arch_type=0;
+                    invalidate(INVALIDATE_SYSINFO|INVALIDATE_MANAGER);
+                    break;
+
+                case ID_DIS_INSTALL:
+                    Settings.flags^=FLAG_DISABLEINSTALL;
+                    break;
 
 								case ID_DIS_RESTPNT:
 										Settings.flags^=FLAG_NORESTOREPOINT;
@@ -2423,26 +2329,27 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 										manager_g->set_rstpnt(0);
 										break;
 
-								default:
-										break;
-						}
-						// select a virtual OS from the menu
-						if(wp>=ID_OS_ITEMS&&wp<ID_OS_ITEMS+WinVersions::Count())
-						{
-								Settings.virtual_os_version=wp;
-								invalidate(INVALIDATE_SYSINFO|INVALIDATE_MANAGER);
-						}
-						if(wp>=ID_HWID_CLIP&&wp<=ID_HWID_WEB+100)
-						{
-								int id=wp%100;
-								if(wp>=ID_HWID_WEB)
-								{
-										wchar_t buf[51 + MAX_DEVICE_ID_LEN];
-										wchar_t buf2[51 + MAX_DEVICE_ID_LEN];
-										const wchar_t *str=manager_g->getHWIDby(id);
-										wsprintf(buf,L"https://catalog.update.microsoft.com/Search.aspx?q=%s",str);
-										escapeAmpUrl(buf2,buf);
-										System.run_command(L"open",buf2,SW_SHOW,0);
+                default:
+                    break;
+            }
+            // select a virtual OS from the menu
+            if(wp>=ID_OS_ITEMS&&wp<ID_OS_ITEMS+winVersions.Count())
+            {
+                vuprintf("Virtual OS Version: %S\n\n",winVersions.GetEntryW(wp-ID_OS_ITEMS));
+                Settings.virtual_os_version=wp;
+                invalidate(INVALIDATE_SYSINFO|INVALIDATE_MANAGER);
+            }
+            if(wp>=ID_HWID_CLIP&&wp<=ID_HWID_WEB+100)
+            {
+                int id=wp%100;
+                if(wp>=ID_HWID_WEB)
+                {
+                    wchar_t buf[MAX_DEVICE_ID_LEN+51];
+                    wchar_t buf2[sizeof(buf)+20];
+                    const wchar_t *str=manager_g->getHWIDby(id);
+                    wsprintf(buf,L"https://catalog.update.microsoft.com/search.aspx?q=%s",str);
+                    escapeAmpUrl(buf2,buf);
+                    System.run_command(L"open",buf2,SW_SHOW,0);
 
 								}
 								else
@@ -2528,7 +2435,7 @@ void InstallCommand::LeftClick(bool)
     if(installmode==MODE_NONE)
     {
         if((Settings.flags&FLAG_EXTRACTONLY)==0)
-        wsprintf(extractdir,L"%s\\SDIO",manager_g->getState()->textas.getw(manager_g->getState()->getTemp()));
+        wsprintf(extractdir,L"%s\\SDI",manager_g->getState()->textas.getw(manager_g->getState()->getTemp()));
         manager_g->install(INSTALLDRIVERS);
     }
 }
@@ -2647,7 +2554,7 @@ LRESULT MainWindow_t::WndProcField(HWND hwnd,UINT message,WPARAM wParam,LPARAM l
                 if(wParam&MK_SHIFT&&installmode==MODE_NONE)
                 {
                     if((Settings.flags&FLAG_EXTRACTONLY)==0)
-                    wsprintf(extractdir,L"%s\\SDIO",manager_g->getState()->textas.getw(manager_g->getState()->getTemp()));
+                    wsprintf(extractdir,L"%s\\SDI",manager_g->getState()->textas.getw(manager_g->getState()->getTemp()));
                     manager_g->install(INSTALLDRIVERS);
                 }
                 redrawfield();
@@ -2732,115 +2639,7 @@ LRESULT MainWindow_t::WndProcField(HWND hwnd,UINT message,WPARAM wParam,LPARAM l
     checktimer(L"List",timer,message);
     return 0;
 }
-//{ Strings
-void WString_dyn::Resize(size_t size)
-{
-		duprintf("Resize to %d->",len);
-		len=size+1;
-		// Выделяем новый буфер (+1 для '\0')
-		buf_dyn=new wchar_t[len];
-		if (buf_cur)
-				StringCchCopy(buf_dyn, len, buf_cur);
-		else
-				buf_dyn[0] = L'\0';
 
-		buf_cur=buf_dyn;
-		duprintf("%d\n",len);
-}
-
-void WString_dyn::sprintf(const wchar_t *format,...)
-{
-		va_list args;
-		va_start(args,format);
-		vsprintf(format,args);
-		va_end(args);
-}
-void WString_dyn::vsprintf(const wchar_t *format,va_list args)
-{
-    unsigned r=System._vscwprintf_dll(format,args)+1;
-    if(r>len)
-        Resize(r);
-    r=vswprintf_s(buf_cur,len,format,args);
-    //duprintf("%d,(%S),[%S]\n",r,format,buf_cur);
-}
-
-void WString_dyn::append(const wchar_t *str)
-{
-		size_t sz=wcslen(buf_cur)+wcslen(str)+1;
-		if(sz>len)Resize(sz);
-#ifdef _MSC_VER
-		wcscat_s(buf_cur,len,str);
-#else
-		wcscat(buf_cur,str);
-#endif
-}
-
-void WString_dyn::strcpy(const wchar_t *Str)
-{
-    if (Str == NULL)
-        Str = L"";
-
-		size_t sz=wcslen(Str)+1;
-		if(sz>len)Resize(sz);
-		wcscpy(buf_cur,Str);
-}
-
-void strsub(wchar_t *str,const wchar_t *pattern,const wchar_t *rep)
-{
-		wchar_t *s;
-
-		s=StrStrIW(str,pattern);
-		if(s)
-		{
-				wchar_t buf[MAX_PATH];
-				wcscpy(buf,s);
-				wcscpy(s,rep);
-				wcscpy(s+wcslen(rep),buf+wcslen(pattern));
-		}
-}
-
-void strtoupper(const char *s1,size_t len)
-{
-		char *s=const_cast<char *>(s1);
-		while(len--)
-		{
-				*s=static_cast<char>(toupper(*s));
-				s++;
-		}
-}
-
-void strtolower(const char *s1,size_t len)
-{
-		char *s=const_cast<char *>(s1);
-		if(len)
-		while(len--)
-		{
-				*s=static_cast<char>(tolower(*s));
-				s++;
-		}
-}
-
-size_t unicode2ansi(const unsigned char *s,char *out,size_t size)
-{
-    size_t ret;
-    int flag;
-    size/=2;
-    /*if(!out)Log.log_err("Error out:\n");
-    if(!s)Log.log_err("Error in:\n");
-    if(size<0)Log.log_err("Error size:\n");*/
-    ret=WideCharToMultiByte(CP_ACP,0,(wchar_t *)(s+(s[0]==0xFF?2:0)),(int)(size-(s[0]==0xFF?1:0)),out,(int)size,nullptr,&flag);
-    if(!ret)LogLastError();
-    out[size]=0;
-    return ret;
-}
-
-int _wtoi_my(const wchar_t *str)
-{
-		int val;
-		swscanf(str,L"%d",&val);
-		return val;
-}
-//}
 
 void MainWindow_t::lang_refresh()
 {

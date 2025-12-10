@@ -13,10 +13,9 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "utils/BaseUtil.h"
 #include "SDI.h"
 
-#include "utils/log.h"
+#include "logging.h"
 
 #include <comdef.h>         // for _bstr_t
 #include <WbemIdl.h>        // for IWbemLocator

@@ -106,6 +106,7 @@ enum GUI_ID
     ID_SYSCONTROL      =54,
     ID_SYSREST         =55,
     ID_SYSPROPS_ADV    =57,
+    ID_DETECT_OS       =58,
 
     ID_HWID_CLIP      =100,
     ID_HWID_WEB       =200,
@@ -165,7 +166,7 @@ enum FLAG
     FLAG_HIDEBOOSTY             = 0x10000000,
     FLAG_NOSTOP                 = 0x20000000,
     FLAG_KEEPSEEDING            = 0x40000000,
-    FLAG_SCRIPTMODE             = 0x80000000    
+    FLAG_SCRIPTMODE             = 0x80000000
 };
 
 class Settings_t

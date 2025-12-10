@@ -1,7 +1,10 @@
+#include <windows.h>
+#include <wininet.h>
 #include <netlistmgr.h>
 #include <assert.h>
 
 #include "SDI.h"
+#include "VersionEx.h"
 #include "resource.h"
 #include "msapi_utf8.h"
 
@@ -85,7 +88,7 @@ static HINTERNET GetInternetSession(const char* user_agent, BOOL bRetry)
 		SetLastError(ERROR_INTERNET_DISCONNECTED);
 		goto out;
 	}
-	static_sprintf(default_agent, APPNAME "/%d.%d.%d (Windows NT %lu.%lu%s)",
+	static_sprintf(default_agent, APPLICATION_NAME "/%d.%d.%d (Windows NT %lu.%lu%s)",
 		SDI_version[0], SDI_version[1], SDI_version[2],
 		WindowsVersion.Major, WindowsVersion.Minor, is_WOW64() ? "; WOW64" : "");
 	hSession = InternetOpenA((user_agent == NULL) ? default_agent : user_agent,

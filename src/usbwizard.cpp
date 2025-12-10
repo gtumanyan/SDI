@@ -984,7 +984,7 @@ bool USBWizard::doWizard()
     psh.hwndParent=MainWindow.hMain;
     psh.nPages=5;
     psh.nStartPage=0;
-    psh.pszIcon=MAKEINTRESOURCE(IDI_ICON);
+    psh.pszIcon=MAKEINTRESOURCE(IDR_MAINWND);
     psh.pszbmWatermark=MAKEINTRESOURCE(IDB_WATERMARK);
     psh.ppsp=(LPCPROPSHEETPAGE)&psp;
     psh.pfnCallback=nullptr;

@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <shellapi.h>
+#include <shlwapi.h>
 
 #pragma once
 #if defined(_MSC_VER)
@@ -231,6 +232,39 @@ static __inline const char* PathFindFileNameU(const char* szPath)
 	return &szPath[i];
 }
 
+static __inline DWORD GetTempPathU(DWORD nBufferLength, char* lpBuffer)
+{
+	DWORD ret = 0, err = ERROR_INVALID_DATA;
+	// coverity[returned_null]
+	walloc(lpBuffer, nBufferLength);
+	ret = GetTempPathW(nBufferLength, wlpBuffer);
+	err = GetLastError();
+	if ((ret != 0) && ((ret = wchar_to_utf8_no_alloc(wlpBuffer, lpBuffer, nBufferLength)) == 0)) {
+		err = GetLastError();
+	}
+	wfree(lpBuffer);
+	SetLastError(err);
+	return ret;
+}
+
+static __inline DWORD GetTempFileNameU(char* lpPathName, char* lpPrefixString, UINT uUnique, char* lpTempFileName)
+{
+	DWORD ret = 0, err = ERROR_INVALID_DATA;
+	wconvert(lpPathName);
+	wconvert(lpPrefixString);
+	// coverity[returned_null]
+	walloc(lpTempFileName, MAX_PATH);
+	ret = GetTempFileNameW(wlpPathName, wlpPrefixString, uUnique, wlpTempFileName);
+	err = GetLastError();
+	if ((ret != 0) && ((ret = wchar_to_utf8_no_alloc(wlpTempFileName, lpTempFileName, MAX_PATH)) == 0)) {
+		err = GetLastError();
+	}
+	wfree(lpTempFileName);
+	wfree(lpPrefixString);
+	wfree(lpPathName);
+	SetLastError(err);
+	return ret;
+}
 
 #ifdef __cplusplus
 }

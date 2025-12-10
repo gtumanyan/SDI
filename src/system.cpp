@@ -34,7 +34,6 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "tchar.h"
 
 #include "system_imp.h"
-#include "utils/WinUtil.h"
 
 
 typedef BOOL (WINAPI *PFN_SETRESTOREPTW)(PRESTOREPOINTINFOW pRestorePtSpec,PSTATEMGRSTATUS pSMgrStatus);
@@ -56,7 +55,7 @@ static BOOL CALLBACK EnumLanguageGroupsProc(
 		UNREFERENCED_PARAMETER(dwFlags);
 
 		LGRPID* plLang=(LGRPID*)(lParam);
-		//Log.print_con("lang %d,%ws,%ws,%d\n",LanguageGroup,lpLanguageGroupString,lpLanguageGroupNameString,dwFlags);
+		//uprintf("lang %d,%ws,%ws,%d\n",LanguageGroup,lpLanguageGroupString,lpLanguageGroupNameString,dwFlags);
 		if(*plLang==LanguageGroup)
 		{
 				*plLang=0;
@@ -128,7 +127,7 @@ bool SystemImp::ChooseFile(wchar_t *filename,const wchar_t *strlist,const wchar_
 		ofn.lpstrDefExt=ext;
 		ofn.lpstrFile  =filename;
 		ofn.Flags      =OFN_FILEMUSTEXIST|OFN_HIDEREADONLY|OFN_PATHMUSTEXIST|OFN_NOCHANGEDIR;
-		std::wstring initPath= GetSelfExePathWTemp();
+		std::wstring initPath=System.AppPathW();
 		ofn.lpstrInitialDir=initPath.c_str();
 
 		if(GetOpenFileName(&ofn))return true;
@@ -409,7 +408,7 @@ bool SystemImp::canWriteFile(const wchar_t *path,const wchar_t *mode)
 				err = _wfopen_s(&stream, path, mode);
 				if (err)
 				{
-						uprintf("Error %d The file %S was not opened\n",err,path);
+						uprintf("Error %d while waiting for file %S to be opened",err,path);
 						return(false);
 				}
 				// Close stream if it isn't NULL
@@ -552,10 +551,27 @@ std::string SystemImp::wtoa (const std::wstring& wstr)
 	 return (std::string(wstr.begin(), wstr.end()));
 }
 
+std::wstring SystemImp::AppPathW()
+{
+    std::wstring path;
+    std::wstring long_path;
+    path.resize(MAX_PATH, 0);
+    auto path_size(GetModuleFileNameW(nullptr, &path.front(), MAX_PATH));
+    path.resize(path_size);
+
+    int length=GetLongPathNameW(path.c_str(),nullptr,0);
+    wchar_t* buffer = new wchar_t[length];
+    length = GetLongPathNameW(path.c_str(), buffer, length);
+    long_path=std::wstring(buffer);
+    long_path=long_path.substr(0,long_path.find_last_of(L"\\/"));
+
+    return long_path;
+}
+
 std::string SystemImp::AppPathS()
 {
-		auto path= GetSelfExePathWTemp();
-		return ToUtf8Temp(path);
+    std::wstring path=AppPathW();
+    return wtoa(path);
 }
 
 // ToDo: Replace with UpdateSelfTo
@@ -605,19 +621,29 @@ int SystemImp::getcurver(const char *ptr)
 		// driver pack in my list
 		WStringShort bffw;
 
-		bffw.sprintf(L"%S",ptr);
-		wchar_t *s=bffw.GetV();
-		while(*s)
-		{
-				if(*s=='_'&&s[1]>='0'&&s[1]<='9')
-				{
-						*s=0;
-						s=const_cast<wchar_t *>(manager_g->matcher->finddrp(bffw.Get()));
-						if(!s)return 0;
-						while(*s)
-						{
-								if(*s==L'_'&&s[1]>=L'0'&&s[1]<=L'9')
-										return _wtoi_my(s+1);
+    // ensure manager_g init has been run before this
+    if(manager_g->matcher==nullptr)
+    {
+        uprintfs("Script Error : INIT has not been called.\n");
+        return 0;
+    }
+
+    bffw.sprintf(L"%S",ptr);
+    wchar_t *s=bffw.GetV();
+    while(*s)
+    {
+        // look for the version portion of the file name - ie _25081
+        if(*s=='_'&&s[1]>='0'&&s[1]<='9')
+        {
+            // truncate the version portion from the file name in bffw
+            *s=0;
+            // see if i have any version of this file name
+            s=const_cast<wchar_t *>(manager_g->matcher->finddrp(bffw.Get()));
+            if(!s)return 0;
+            while(*s)
+            {
+                if(*s==L'_'&&s[1]>=L'0'&&s[1]<=L'9')
+                    return _wtoi_my(s+1);
 
 								s++;
 						}
@@ -921,8 +947,8 @@ void SystemImp::benchmark()
 		tm2=GetTickCountWr();
 		for(i=0;i<1024*1024;i++)sprintf(buf,"Test str %ws",L"wchar str");
 		tm2=GetTickCountWr()-tm2;
-		Log.print_con("%c wsprintfA \t%ld\n",tm1<tm2?'+':' ',tm1);
-		Log.print_con("%c sprintf   \t%ld\n\n",tm1>tm2?'+':' ',tm2);
+		uprintf("%c wsprintfA \t%ld\n",tm1<tm2?'+':' ',tm1);
+		uprintf("%c sprintf   \t%ld\n\n",tm1>tm2?'+':' ',tm2);
 
 		tm1=GetTickCountWr();
 		for(i=0;i<1024*1024;i++)wsprintfW(bufw,L"Test str %s",L"wchar str");
@@ -930,8 +956,8 @@ void SystemImp::benchmark()
 		tm2=GetTickCountWr();
 		for(i=0;i<1024*1024;i++)swprintf(bufw,L"Test str %s",L"wchar str");
 		tm2=GetTickCountWr()-tm2;
-		Log.print_con("%c wsprintfW \t%ld\n",tm1<tm2?'+':' ',tm1);
-		Log.print_con("%c swprintf  \t%ld\n\n",tm1>tm2?'+':' ',tm2);
+		uprintf("%c wsprintfW \t%ld\n",tm1<tm2?'+':' ',tm1);
+		uprintf("%c swprintf  \t%ld\n\n",tm1>tm2?'+':' ',tm2);
 
 		tm1=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)_strcmpi("Test str %ws","wchar str");
@@ -939,8 +965,8 @@ void SystemImp::benchmark()
 		tm2=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)strcmpi("Test str %ws","wchar str");
 		tm2=GetTickCountWr()-tm2;
-		Log.print_con("%c _strcmpi \t%ld\n",tm1<tm2?'+':' ',tm1);
-		Log.print_con("%c strcmpi  \t%ld\n\n",tm1>tm2?'+':' ',tm2);
+		uprintf("%c _strcmpi \t%ld\n",tm1<tm2?'+':' ',tm1);
+		uprintf("%c strcmpi  \t%ld\n\n",tm1>tm2?'+':' ',tm2);
 
 		tm1=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)strcasecmp("Test str %ws","wchar str");
@@ -948,8 +974,8 @@ void SystemImp::benchmark()
 		tm2=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)strcmpi("Test str %ws","wchar str");
 		tm2=GetTickCountWr()-tm2;
-		Log.print_con("%c strcasecmp \t%ld\n",tm1<tm2?'+':' ',tm1);
-		Log.print_con("%c strcmpi  \t%ld\n\n",tm1>tm2?'+':' ',tm2);
+		uprintf("%c strcasecmp \t%ld\n",tm1<tm2?'+':' ',tm1);
+		uprintf("%c strcmpi  \t%ld\n\n",tm1>tm2?'+':' ',tm2);
 
 		tm1=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)StrCmpIW(L"Test str %ws",L"wchar str");
@@ -957,8 +983,8 @@ void SystemImp::benchmark()
 		tm2=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)wcsicmp(L"Test str %ws",L"wchar str");
 		tm2=GetTickCountWr()-tm2;
-		Log.print_con("%c StrCmpIW \t%ld\n",tm1<tm2?'+':' ',tm1);
-		Log.print_con("%c wcsicmp  \t%ld\n\n",tm1>tm2?'+':' ',tm2);
+		uprintf("%c StrCmpIW \t%ld\n",tm1<tm2?'+':' ',tm1);
+		uprintf("%c wcsicmp  \t%ld\n\n",tm1>tm2?'+':' ',tm2);
 
 		tm1=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)StrCmpIA("Test str %ws","wchar str");
@@ -966,8 +992,8 @@ void SystemImp::benchmark()
 		tm2=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)strcmpi("Test str %ws","wchar str");
 		tm2=GetTickCountWr()-tm2;
-		Log.print_con("%c StrCmpIA \t%ld\n",tm1<tm2?'+':' ',tm1);
-		Log.print_con("%c strcmpi  \t%ld\n\n",tm1>tm2?'+':' ',tm2);
+		uprintf("%c StrCmpIA \t%ld\n",tm1<tm2?'+':' ',tm1);
+		uprintf("%c strcmpi  \t%ld\n\n",tm1>tm2?'+':' ',tm2);
 
 		tm1=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)StrCmpW(L"Test str %ws",bufw); // StrCmpW == lstrcmp
@@ -975,8 +1001,8 @@ void SystemImp::benchmark()
 		tm2=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)wcscmp(L"Test str %ws",bufw);
 		tm2=GetTickCountWr()-tm2;
-		Log.print_con("%c StrCmpW \t%ld\n",tm1<tm2?'+':' ',tm1);
-		Log.print_con("%c wcscmp  \t%ld\n\n",tm1>tm2?'+':' ',tm2);
+		uprintf("%c StrCmpW \t%ld\n",tm1<tm2?'+':' ',tm1);
+		uprintf("%c wcscmp  \t%ld\n\n",tm1>tm2?'+':' ',tm2);
 
 		tm1=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)a=StrCmpA("Test str %ws",buf);
@@ -984,8 +1010,8 @@ void SystemImp::benchmark()
 		tm2=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)a=strcmp("Test str %ws",buf);
 		tm2=GetTickCountWr()-tm2;
-		Log.print_con("%c StrCmpA \t%ld\n",tm1<tm2?'+':' ',tm1);
-		Log.print_con("%c strcmp \t%ld\n\n",tm1>tm2?'+':' ',tm2);
+		uprintf("%c StrCmpA \t%ld\n",tm1<tm2?'+':' ',tm1);
+		uprintf("%c strcmp \t%ld\n\n",tm1>tm2?'+':' ',tm2);
 
 		tm1=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)StrStrA("Test str %ws",buf);
@@ -993,8 +1019,8 @@ void SystemImp::benchmark()
 		tm2=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)strstr("Test str %ws","Test str %ws");
 		tm2=GetTickCountWr()-tm2;
-		Log.print_con("%c StrStrA \t%ld\n",tm1<tm2?'+':' ',tm1);
-		Log.print_con("%c strstr \t%ld\n\n",tm1>tm2?'+':' ',tm2);
+		uprintf("%c StrStrA \t%ld\n",tm1<tm2?'+':' ',tm1);
+		uprintf("%c strstr \t%ld\n\n",tm1>tm2?'+':' ',tm2);
 
 		tm1=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)StrStrW(L"Test str %ws",bufw);
@@ -1002,8 +1028,8 @@ void SystemImp::benchmark()
 		tm2=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)wcsstr(L"Test str %ws",bufw);
 		tm2=GetTickCountWr()-tm2;
-		Log.print_con("%c StrStrW \t%ld\n",tm1<tm2?'+':' ',tm1);
-		Log.print_con("%c wcsstr  \t%ld\n\n",tm1>tm2?'+':' ',tm2);
+		uprintf("%c StrStrW \t%ld\n",tm1<tm2?'+':' ',tm1);
+		uprintf("%c wcsstr  \t%ld\n\n",tm1>tm2?'+':' ',tm2);
 
 		tm1=GetTickCountWr();
 		for(i=0;i<1024*1024*5*2;i++)lstrlenA(buf);
@@ -1011,8 +1037,8 @@ void SystemImp::benchmark()
 		tm2=GetTickCountWr();
 		for(i=0;i<1024*1024*5*2;i++)strlen(buf);
 		tm2=GetTickCountWr()-tm2;
-		Log.print_con("%c lstrlenA \t%ld\n",tm1<tm2?'+':' ',tm1);
-		Log.print_con("%c strlen   \t%ld\n\n",tm1>tm2?'+':' ',tm2);
+		uprintf("%c lstrlenA \t%ld\n",tm1<tm2?'+':' ',tm1);
+		uprintf("%c strlen   \t%ld\n\n",tm1>tm2?'+':' ',tm2);
 
 		tm1=GetTickCountWr();
 		for(i=0;i<1024*1024*5*2;i++)lstrlenW(bufw);
@@ -1020,8 +1046,8 @@ void SystemImp::benchmark()
 		tm2=GetTickCountWr();
 		for(i=0;i<1024*1024*5*2;i++)wcslen(bufw);
 		tm2=GetTickCountWr()-tm2;
-		Log.print_con("%c lstrlenW \t%ld\n",tm1<tm2?'+':' ',tm1);
-		Log.print_con("%c wcslen   \t%ld\n\n",tm1>tm2?'+':' ',tm2);
+		uprintf("%c lstrlenW \t%ld\n",tm1<tm2?'+':' ',tm1);
+		uprintf("%c wcslen   \t%ld\n\n",tm1>tm2?'+':' ',tm2);
 
 		tm1=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)StrCpyA(buf,"Test str %ws");
@@ -1029,8 +1055,8 @@ void SystemImp::benchmark()
 		tm2=GetTickCountWr();
 		for(i=0;i<1024*1024*5;i++)strcpy(buf,"Test str %ws");
 		tm2=GetTickCountWr()-tm2;
-		Log.print_con("%c StrCpyA \t%ld\n",tm1<tm2?'+':' ',tm1);
-		Log.print_con("%c strcpy \t%ld\n\n",tm1>tm2?'+':' ',tm2);
+		uprintf("%c StrCpyA \t%ld\n",tm1<tm2?'+':' ',tm1);
+		uprintf("%c strcpy \t%ld\n\n",tm1>tm2?'+':' ',tm2);
 }
 #endif
 //}

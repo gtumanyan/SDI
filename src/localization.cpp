@@ -1,6 +1,7 @@
-#include "SDI.h"
-#include <stdio.h>
+#include <windows.h>
+#include <commctrl.h>
 
+#include "SDI.h"
 #include "resource.h"
 #include "msapi_utf8.h"
 

@@ -22,7 +22,6 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include <webp/decode.h>
 
 #include "SDI.h"
-#include "utils\baseutil.h"
 #include "system.h"
 #include "Settings.h"
 #include "gui.h"
@@ -410,7 +409,7 @@ CanvasImp::~CanvasImp()
 
 		if(bitmap)
 		{
-				//r=(int)SelectObject(hdcBitmap,oldbitmap);
+				//r=(int)SelectObject(hdc,oldbitmap);
 				//if(!r)Log.log_err("ERROR in canvas_free(): failed SelectObject\n");
 				int r=DeleteObject(bitmap);
 				if(!r)uprintf("ERROR in canvas_free(): failed DeleteObject\n");
@@ -478,6 +477,25 @@ void CanvasImp::end()
 void CanvasImp::DrawTextXY(int x1,int y1,LPCTSTR buf)
 {
 		TextOut(hdc,x1,y1,buf,static_cast<int>(wcslen(buf)));
+}
+
+void CanvasImp::DrawTextXYEx(int x1,int y1,LPCTSTR buf,int size)
+{
+    // draw text with a different font size
+    LOGFONT lf;
+    // get the current font metrics
+    HGDIOBJ oldFont=GetCurrentObject(hdc, OBJ_FONT);
+    GetObject(oldFont, sizeof(LOGFONT), &lf);
+    // set the new size
+    lf.lfHeight=-MulDiv(size, GetDeviceCaps(hdc,LOGPIXELSY),72);
+    // apply the new font
+    HGDIOBJ newFont=CreateFontIndirect(&lf);
+    oldFont=SelectObject(hdc,newFont);
+    // draw the text
+    TextOut(hdc,x1,y1,buf,static_cast<int>(wcslen(buf)));
+    // revert to previous font
+    SelectObject(hdc,oldFont);
+    DeleteObject(newFont);
 }
 
 void CanvasImp::SetTextColor(int color)

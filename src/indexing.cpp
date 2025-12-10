@@ -23,6 +23,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "SDI.h"
 #include "logging.h"
+#include "string_utils.hpp"
 #include "system.h"
 #include "Settings.h"
 #include "matcher.h"
@@ -611,6 +612,12 @@ void Collection::populate()
     if(drp_count&&num_thr>1)num_thr=1;
     #endif
 
+    if(num_thr>1)
+    {
+        num_thr-=1;
+        num_thr_1-=1;
+    }
+
     uprintf("Collection::populate::num_thr::%d\n",num_thr);
 
     drplist_t queuedriverpack;
@@ -758,8 +765,18 @@ void Collection::printstats()
     size_t sum=0;
     uprintfs("DriverPacks\n");
     for(auto &drp:driverpack_list)
+    {
+        size_t siz=drp.printstats();
+        // looking for possible corrupted indexes
+        if(siz==0)
+        {
+            wchar_t buf1[FILENAME_MAX];
+            drp.getindexfilename(index_bin_dir,L"bin",buf1);
+            if(wcsstr(buf1, L"unpacked.bin") == NULL)
+                uprintf("Index corrupted %S\n",buf1);
+        }
         sum+=drp.printstats();
-
+    }
     uprintf("  Sum: %d\n\n",sum);
 }
 
@@ -2001,9 +2018,12 @@ void Driverpack::print_index_hr()
     f=_wfopen(filename,L"wt");
 
     uprintf("Saving %S\n",filename);
+    // first line: driver pack name (num inf files)
     fwprintf(f,L"%s\\%s (%d inf files)\n",getPath(),getFilename(),static_cast<int>(n));
+    // iterate inf files
     for(inffile_index=0;inffile_index<n;inffile_index++)
     {
+        // inf file line: path and file name (num bytes)
         d_i=&inffile[inffile_index];
         fprintf(f,"  %s%s (%d bytes)\n",text_ind.get(d_i->infpath),text_ind.get(d_i->inffilename),d_i->infsize);
         for(i=0;i<(int)n;i++)if(i!=(int)inffile_index&&d_i->infcrc==inffile[i].infcrc)
@@ -2018,7 +2038,6 @@ void Driverpack::print_index_hr()
             if(d_i->fields[i])
             {
                 fprintf(f,"    %-28s%s\n", table_version[i].s,text_ind.get(d_i->fields[i]));
-                uprintf("Saving cat version %s\n", text_ind.get(d_i->cats[i]));
                 if(d_i->cats[i])fprintf(f,"      %s\n",text_ind.get(d_i->cats[i]));
             }
 
@@ -2053,6 +2072,8 @@ void Driverpack::print_index_hr()
                                     //fprintf(f,"*%s\n",get_manufacturer(&hwidmatch));
                                     //get_section(&hwidmatch,buf+500);
                                     //fprintf(f,"*%s,%s\n",buf+1000,buf+500);
+
+                                    // counting the number of each target os
                                     if(i>=0)cnts[i]++;
                                     if(pos==0&&i<0)plain++;
 
@@ -2076,10 +2097,10 @@ void Driverpack::print_index_hr()
             else if(manuf_index!=manuf_index_last)break;
 
         fprintf(f,"  Decors:\n");
-        fprintf(f,"    %-21s%-d\n","plain",plain);
+        fprintf(f,"    %-25s%d\n","plain",plain);
         for(i=0;i<NUM_DECS;i++)
         {
-            if(cnts[i]>=0)fprintf(f,"    %-21s%-d\n",nts[i],cnts[i]);
+            if(cnts[i]>=0)fprintf(f,"    %-25s%d\n",nts[i],cnts[i]);
         }
         fprintf(f,"\n");
     }

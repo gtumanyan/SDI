@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SDI.h"
-
+#include "versionEx.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -48,7 +48,7 @@ static __inline BOOL _GetRegistryKey(HKEY key_root, const char* key_name, DWORD 
 			hSoftware = NULL;
 			goto out;
 		}
-		if (RegCreateKeyEx(hSoftware, APPLICATION_NAME, 0, NULL, 0,
+		if (RegCreateKeyExA(hSoftware, APPLICATION_NAME, 0, NULL, 0,
 			KEY_SET_VALUE | KEY_QUERY_VALUE | KEY_CREATE_SUB_KEY, NULL, &hApp, &dwDisp) != ERROR_SUCCESS) {
 			hApp = NULL;
 			goto out;
