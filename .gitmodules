@@ -1,6 +1,7 @@
 [submodule "ext/libwebp"]
 	path = ext/libwebp
 	url = https://github.com/webmproject/libwebp.git
+		branch = main
 [submodule "ext/boost"]
 	path = ext/boost
 	url = https://github.com/boostorg/boost.git
