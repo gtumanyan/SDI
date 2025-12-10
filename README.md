@@ -1,14 +1,12 @@
 <div align="center">
   <p>
-    <img src="https://github.com/gtumanyan/SDI/raw/master/.github/logo.webp" alt="Логотип SDI" width="200" />
+    <img src="https://github.com/gtumanyan/SDI/raw/dev/.github/logo.webp" alt="Логотип SDI" width="200" />
   </p>
   <h1>SDI is a Snappy Driver Installer</h1>
   <p>
     <a href="https://github.com/gtumanyan/SDI"><img src="https://img.shields.io/github/languages/code-size/gtumanyan/SDI" alt="GitHub code size in bytes"/></a>
   </p>
 </div>
-
-![SDI Logo](.github/logo128.jpg)
 
 Snappy Driver Installer is a portable Windows tool to install and update device drivers. 
 
@@ -39,3 +37,4 @@ build by yourself
 ## Donations
 
 <a href="https://boosty.to/snappydriverinstaller/donate"><img src="https://boosty.to/favicon.png" width='40'></a>  <a href="bitcoin:bc1q4tkryu9gff0p6wfggrl9f7a0hlkk6rup0jfqle?message=support%20SDI"><img src=https://bitcoin.org/favicon.png  alt="BTC" width='40'/>
+
