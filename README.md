@@ -1,15 +1,11 @@
-<div align="center">
-  <p>
-    <img src="https://github.com/gtumanyan/SDI/raw/dev/.github/logo.webp" alt="Логотип SDI" width="200" />
-  </p>
-  <h1>SDI is a Snappy Driver Installer</h1>
-  <p>
-    <a href="https://github.com/gtumanyan/SDI/blob/dev/res/LICENSE.txt"><img src="https://img.shields.io/github/license/gtumanyan/SDI" alt="License" /></a>
-    <a href="https://github.com/gtumanyan/SDI"><img src="https://img.shields.io/github/languages/code-size/gtumanyan/SDI" alt="GitHub code size in bytes"/></a>
-  </p>
-</div>
+   
+  # SDI is a Snappy Driver Installer
+  
+  <img width="200" src="https://github.com/gtumanyan/SDI/raw/dev/.github/logo.webp" alt="Логотип SDI"  />
+  
+  [![Code Size](https://img.shields.io/github/languages/code-size/gtumanyan/SDI)](https://github.com/gtumanyan/SDI)[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/gtumanyan/SDI)  ![Telegram Badge](https://telegram-badge.vercel.app/api/telegram-badge?channelId=@Snappy_Driver_Installer)
 
-Snappy Driver Installer is a portable Windows tool to install and update device drivers. 
+A portable Windows tool to install and update device drivers. 
 
 It can be used offline to install drivers where Internet isn't available. 
 
@@ -38,4 +34,5 @@ build by yourself
 ## Donations
 
 <a href="https://boosty.to/snappydriverinstaller/donate"><img src="https://boosty.to/favicon.png" width='40'></a>  <a href="bitcoin:bc1q4tkryu9gff0p6wfggrl9f7a0hlkk6rup0jfqle?message=support%20SDI"><img src=https://bitcoin.org/favicon.png  alt="BTC" width='40'/>
+
 
