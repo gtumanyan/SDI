@@ -1,7 +1,22 @@
-# SDI is a Snappy Driver Installer
+<div align="center">
+  <p>
+    <img src="https://github.com/gtumanyan/SDI/raw/master/.github/logo.webp" alt="Логотип SDI" width="200" />
+  </p>
+  <h1>SDI is a Snappy Driver Installer</h1>
+  <p>
+    <a href="https://github.com/gtumanyan/SDI"><img src="https://img.shields.io/github/languages/code-size/gtumanyan/SDI" alt="GitHub code size in bytes"/></a>
+  </p>
+</div>
 
 ![SDI Logo](.github/logo128.jpg)
 
+Snappy Driver Installer is a portable Windows tool to install and update device drivers. 
+
+It can be used offline to install drivers where Internet isn't available. 
+
+The perfect technicians tool.
+
+---
 ## Features
 
 Check out [Documentation](https://github.com/gtumanyan/SDI/blob/dev/Docs/refmanual.pdf)
@@ -16,8 +31,8 @@ Follow [guide](https://github.com/gtumanyan/SDI/blob/dev/Docs/building-win-x64.m
 build by yourself
 
 ## Libraries used
-
-- [7-Zip](https://sourceforge.net/projects/sevenzip)
+- [7-Zip](https://github.com/ozone10/7zip-Dark7zip)
+- [Boost](https://github.com/boostorg/boost)
 - [Libtorrent](https://github.com/arvidn/libtorrent)
 - [Libwebp](https://github.com/webmproject/libwebp)
 
