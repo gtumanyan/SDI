@@ -212,7 +212,6 @@ END
 
 1                       RT_MANIFEST             "..\\res\\SDI.manifest"
 
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // DESIGNINFO
@@ -266,7 +265,6 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // Icon
@@ -274,31 +272,11 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON                ICON                    "../res/SDI.ico"
+IDR_MAINWND                ICON                    "../res/SDI.ico"
 
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// AFX_DIALOG_LAYOUT
-//
-
-IDD_WELCOME AFX_DIALOG_LAYOUT
-BEGIN
-    0
-END
-
-IDD_LOG AFX_DIALOG_LAYOUT
-BEGIN
-    0
-END
-
-IDD_LICENSE AFX_DIALOG_LAYOUT
-BEGIN
-    0
-END
 
 
-/////////////////////////////////////////////////////////////////////////////
 //
 // 100
 //
@@ -315,7 +293,7 @@ IDR_LOGO                100                     "..\\res\\logo.webp"
 
 IDR_BOOSTY              100                     "..\\res\\boosty.webp"
 
-IDR_LICENSE             100                     "..\\res\\gpl-3.0.txt"
+IDR_LICENSE             100                     "..\\res\\LICENSE.txt"
 
 IDR_THEME               100                     "..\\Tools\\Themes\\Win11Dark.txt"
 
