@@ -1,6 +1,9 @@
 defaults:
   run:
     shell: cmd
+env:
+  BUILD_CONFIGURATION: Release
+  SOLUTION_FILE_PATH: ./SDI.slnx
 jobs:
   VS2026-Build:
     runs-on: windows-latest
