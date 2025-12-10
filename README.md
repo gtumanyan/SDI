@@ -4,7 +4,7 @@
   </p>
   <h1>SDI is a Snappy Driver Installer</h1>
   <p>
-    <a href="https://github.com/romanvht/ByeByeDPI/blob/master/res/LICENSE.txt"><img src="https://img.shields.io/github/license/gtumanyan/SDI" alt="License" /></a>
+    <a href="https://github.com/gtumanyan/SDI/blob/dev/res/LICENSE.txt"><img src="https://img.shields.io/github/license/gtumanyan/SDI" alt="License" /></a>
     <a href="https://github.com/gtumanyan/SDI"><img src="https://img.shields.io/github/languages/code-size/gtumanyan/SDI" alt="GitHub code size in bytes"/></a>
   </p>
 </div>
