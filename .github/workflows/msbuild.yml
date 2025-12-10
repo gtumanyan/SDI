@@ -33,13 +33,6 @@ jobs:
             ./*.pdb
     strategy:
       matrix:
-        include:
-          - arch: amd64_x86
-            platform: x86
-            platform_sln: Win32
-          - arch: amd64
-            platform: x64
-            platform_sln: x64
         TARGET_PLATFORM:
           - x64
           - x86
