@@ -20,6 +20,9 @@ jobs:
         run: |
           git submodule update --init ext/libwebp ext/libtorrent
           git submodule update --init ext/boost
+          # Initialize libtorrent's nested submodules (try_signal is required for build)
+          cd ext/libtorrent
+          git submodule update --init deps/try_signal
       - name: Initialize required Boost libraries
         run: |
           cd ext/boost
@@ -27,7 +30,7 @@ jobs:
           git submodule update --init tools/build tools/boost_install tools/cmake
           # Core libraries required by libtorrent
           $libs = @(
-            'libs/config', 'libs/headers', 'libs/assert', 'libs/core',
+            'libs/config', 'libs/crc', 'libs/headers', 'libs/assert', 'libs/core',
             'libs/asio', 'libs/optional', 'libs/variant', 'libs/multiprecision',
             'libs/logic', 'libs/range', 'libs/utility', 'libs/smart_ptr', 'libs/date_time',
             'libs/functional', 'libs/pool', 'libs/multi_index', 'libs/intrusive', 'libs/predef',
@@ -39,7 +42,7 @@ jobs:
             'libs/array', 'libs/container_hash', 'libs/describe', 'libs/mp11', 'libs/align',
             'libs/typeof', 'libs/function', 'libs/concept_check', 'libs/conversion',
             'libs/regex', 'libs/tokenizer', 'libs/lexical_cast', 'libs/container',
-            'libs/exception', 'libs/algorithm', 'libs/function_types'
+            'libs/exception', 'libs/algorithm', 'libs/function_types', 'libs/type_index'
           )
           git submodule update --init $libs
       - name: Generate Boost headers
