@@ -47,6 +47,9 @@ indexes/
 /make_portable_*
 update/
 
+# IntelliJ
+.idea/
+
 ### changes by Version.ps1 script ###
 /Versions/build.txt
 /Versions/day.txt
