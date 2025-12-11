@@ -1,7 +1,6 @@
    
-  # SDI is a Snappy Driver Installer
-  
-  <img align='right' src='../.github/logo.webp' width="220" alt="Логотип SDI" />
+  # SDI is a Snappy Driver Installer  
+  <img align=right src=../.github/logo.webp width=220 alt=SDI logo />
    
 
 A portable Windows tool to install and update device drivers. 
