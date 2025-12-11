@@ -9,8 +9,10 @@ It can be used offline to install drivers where Internet isn't available.
 
 The perfect technicians tool.
 
- [![Code Size](https://img.shields.io/github/languages/code-size/gtumanyan/SDI)](https://github.com/gtumanyan/SDI)[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/gtumanyan/SDI)  ![Telegram Badge](https://telegram-badge.vercel.app/api/telegram-badge?channelId=@Snappy_Driver_Installer&label=Follow)
----
+ [![Code Size](https://img.shields.io/github/languages/code-size/gtumanyan/SDI)](https://github.com/gtumanyan/SDI)
+ [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/gtumanyan/SDI)  
+ ![Telegram Badge](https://telegram-badge.vercel.app/api/telegram-badge?channelId=@Snappy_Driver_Installer&label=Follow)
+
 ## Features
 
 Check out [Documentation](https://github.com/gtumanyan/SDI/blob/dev/Docs/refmanual.pdf)
