@@ -23,8 +23,8 @@ jobs:
       - name: Initialize required Boost libraries
         run: |
           cd ext/boost
-          # Initialize Boost.Build tools first (required for bootstrap.bat)
-          git submodule update --init tools/build
+          # Initialize Boost.Build tools first (required for bootstrap.bat and b2 headers)
+          git submodule update --init tools/build tools/boost_install tools/cmake
           # Core libraries required by libtorrent
           $libs = @(
             'libs/config', 'libs/headers', 'libs/assert', 'libs/core',
