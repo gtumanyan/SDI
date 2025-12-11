@@ -34,6 +34,7 @@ build by yourself
 
 ## Donations
 
-<a href="https://boosty.to/snappydriverinstaller/donate"><img src="https://boosty.to/favicon.png" width='40'></a>  <a href="bitcoin:bc1q4tkryu9gff0p6wfggrl9f7a0hlkk6rup0jfqle?message=support%20SDI"><img src=https://bitcoin.org/favicon.png  alt="BTC" width='40'/>
+<a href="https://boosty.to/snappydriverinstaller/donate"><img src="https://boosty.to/favicon.png" width='40'></a>  
+<a href="bitcoin:bc1q4tkryu9gff0p6wfggrl9f7a0hlkk6rup0jfqle?message=support%20SDI"><img src=https://bitcoin.org/favicon.png  alt="BTC" width='40'/>
 
 
