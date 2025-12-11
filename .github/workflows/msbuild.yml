@@ -3,7 +3,7 @@ concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}-${{ github.event_name }}
 defaults:
   run:
-    shell: cmd
+    shell: pwsh
 env:
   BUILD_CONFIGURATION: Release
   SOLUTION_FILE_PATH: ./SDI.slnx
@@ -15,10 +15,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.1
         with:
-         submodules: recursive
-      - name: Generate Boost headers
+         submodules: false
+      - name: Initialize submodules
+        run: |
+          git submodule update --init ext/libwebp ext/libtorrent
+          git submodule update --init ext/boost
+      - name: Initialize required Boost libraries
         run: |
           cd ext/boost
+          # Core libraries required by libtorrent
+          $libs = @(
+            'libs/config', 'libs/headers', 'libs/assert', 'libs/core',
+            'libs/asio', 'libs/optional', 'libs/variant', 'libs/multiprecision',
+            'libs/logic', 'libs/range', 'libs/utility', 'libs/smart_ptr', 'libs/date_time',
+            'libs/functional', 'libs/pool', 'libs/multi_index', 'libs/intrusive', 'libs/predef',
+            # Dependencies of above
+            'libs/throw_exception', 'libs/static_assert', 'libs/type_traits', 'libs/mpl',
+            'libs/preprocessor', 'libs/move', 'libs/winapi', 'libs/iterator', 'libs/tuple',
+            'libs/bind', 'libs/io', 'libs/numeric/conversion', 'libs/integer', 'libs/detail',
+            'libs/array', 'libs/container_hash', 'libs/describe', 'libs/mp11', 'libs/align',
+            'libs/typeof', 'libs/function', 'libs/concept_check', 'libs/conversion',
+            'libs/regex', 'libs/tokenizer', 'libs/lexical_cast', 'libs/container',
+            'libs/exception', 'libs/algorithm'
+          )
+          git submodule update --init $libs
+      - name: Generate Boost headers
+        run: |
+          # cd ext/boost
           .\bootstrap.bat
           .\b2 headers
       - name: Add MSBuild to PATH
@@ -29,7 +52,7 @@ jobs:
       - id: set_version
         name: Set version
         run: |
-          CALL "Version.cmd" (ALPHA)
+          .\Version.cmd (ALPHA)
       - name: Build
         run: |
           msbuild ${{ env.SOLUTION_FILE_PATH }} /m /p:Configuration=${{ env.BUILD_CONFIGURATION }},Platform=${{ matrix.TARGET_PLATFORM }},ForceImportBeforeCppTargets=%GITHUB_WORKSPACE%\.vs\Generate.PDB.props
