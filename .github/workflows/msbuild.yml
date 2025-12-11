@@ -12,10 +12,15 @@ jobs:
     continue-on-error: false
     runs-on: windows-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
         with:
          submodules: recursive
+      - name: Generate Boost headers
+        run: |
+          cd ext/boost
+          .\bootstrap.bat
+          .\b2 headers
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v2
         with:
