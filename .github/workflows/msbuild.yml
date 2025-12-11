@@ -15,8 +15,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
-          fetch-depth: 1
-          submodules: true
+         fetch-depth: 0
+        fetch-tags: true
+        submodules: true
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v2
         with:
