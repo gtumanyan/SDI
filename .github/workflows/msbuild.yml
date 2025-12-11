@@ -28,7 +28,7 @@ jobs:
       - name: Build
         run: |
           msbuild ${{ env.SOLUTION_FILE_PATH }} /m /p:Configuration=${{ env.BUILD_CONFIGURATION }},Platform=${{ matrix.TARGET_PLATFORM }},ForceImportBeforeCppTargets=%GITHUB_WORKSPACE%\.vs\Generate.PDB.props
-      - continue-on-error: true
+      - continue-on-error: false
         if: ${{ github.event_name == 'push' }}
         name: Upload artifacts
         uses: actions/upload-artifact@v5

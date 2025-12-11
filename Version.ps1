@@ -83,7 +83,7 @@ try
 	$TorrentVer = ((Get-Content "ext\libtorrent\Makefile"-TotalCount 1) -split '=')[1]
 	DebugOutput("Libtorrent	$TorrentVer")
 	if (!$TorrentVer) { $TorrentVer = "0.0.0" }
-	$BoostVer = (Get-Content "ext\boost\libs\msm\doc\modules\ROOT\pages\version-history.adoc"-TotalCount 1).Substring(18,6)
+	if ((Get-Content "ext\boost\CMakeLists.txt" -TotalCount 13)[-1] -match 'VERSION\s+([\d.]+)') { $BoostVer = $Matches[1] }
 	if (!$BoostVer) { $BoostVer = "0.0.0" }
 	DebugOutput("Boost		$BoostVer")
 	if ((Get-Content "ext\SevenZip\C\7zVersion.h"-TotalCount 4)[-1]-match '[\d.]+')
