@@ -10,14 +10,12 @@ env:
 jobs:
   VS2026-Build:
     continue-on-error: false
-    name: Build
     runs-on: windows-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
           fetch-depth: 1
-          filter: tree:0
           submodules: true
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v2
