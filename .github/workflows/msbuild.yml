@@ -54,7 +54,7 @@ jobs:
       - id: set_version
         name: Set version
         run: |
-          .\Version.cmd (ALPHA)
+          .\Version.cmd "(ALPHA)"
       - name: Build
         run: |
           msbuild ${{ env.SOLUTION_FILE_PATH }} /m /p:Configuration=${{ env.BUILD_CONFIGURATION }},Platform=${{ matrix.TARGET_PLATFORM }},ForceImportBeforeCppTargets=%GITHUB_WORKSPACE%\.vs\Generate.PDB.props
