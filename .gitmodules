@@ -9,3 +9,4 @@
 [submodule "ext/libtorrent"]
 	path = ext/libtorrent
 	url = https://github.com/arvidn/libtorrent.git
+	branch = RC_2_0
