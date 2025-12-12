@@ -12,11 +12,14 @@ Choose an empty folder for the future build, for example, **D:\\SDI**.
 
 ## Clone source code and prepare libraries
 
-Open Project with **Visual Studio 2026** and Clone a repository. You may use [Initial setup script](/scripts/setup.ps1) if you don't have git or the latest Visual Studio installed. 
+Open Project with **Visual Studio 2026** and Clone a repository. You may use [Initial setup script](/scripts/setup.ps1) if you don't have git or the latest Visual Studio installed.
 
-* Clone and update submodules with git submodule update --init --recursive
-* Bootstrap Boost with `ext/boost/bootstrap.bat`
-* Build Boost using `b2 --build-type=complete --with-thread --with-chrono --with-date_time address-model=64`
+* Clone and update submodules: `git submodule update --init --recursive`
+* Open the **x64 Native Tools Command Prompt for VS 2026** (search in Start menu for "Developer Command Prompt").
+* `cd ext/boost`
+* Bootstrap Boost: `bootstrap`
+  * If **"Unknown toolset: vcunk"** error: `bootstrap msvc`
+* Generate Boost headers (required for libtorrent): `b2 headers`
 
 ## Build the project
 
