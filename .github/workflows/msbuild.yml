@@ -15,11 +15,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.1
         with:
-         submodules: false
+          submodules: false
       - name: Initialize submodules
         run: |
-          git submodule update --init ext/libwebp ext/libtorrent
-          git submodule update --init ext/boost
+          git submodule update --init ext/libwebp ext/libtorrent ext/boost
           # Initialize libtorrent's nested submodules (try_signal is required for build)
           cd ext/libtorrent
           git submodule update --init deps/try_signal
@@ -27,7 +26,7 @@ jobs:
         run: |
           cd ext/boost
           # Initialize Boost.Build tools first (required for bootstrap.bat and b2 headers)
-          git submodule update --init tools/build tools/boost_install tools/cmake
+          git submodule update --init tools/build tools/boost_install
           # Core libraries required by libtorrent
           $libs = @(
             'libs/config', 'libs/crc', 'libs/headers', 'libs/assert', 'libs/core',

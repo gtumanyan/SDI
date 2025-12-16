@@ -12,7 +12,7 @@ Choose an empty folder for the future build, for example, **D:\\SDI**.
 
 ## Clone source code and prepare libraries
 
-Open Project with **Visual Studio 2026** and Clone a repository. You may use [Initial setup script](/scripts/setup.ps1) if you don't have git or the latest Visual Studio installed.
+Open Project with **Visual Studio 2026** and Clone a repository. You may run [Initial setup script](/scripts/setup.ps1) if you don't have git or the latest Visual Studio installed. The script downloads only required boost libraries reducing the boost footprint drastically.
 
 * Clone and update submodules: `git submodule update --init --recursive`
 * Open the **x64 Native Tools Command Prompt for VS 2026** (search in Start menu for "Developer Command Prompt").
