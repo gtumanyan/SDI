@@ -13,6 +13,7 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+// ReSharper disable once CppMissingIncludeGuard
 #include <windows.h>
 #include <unordered_map>
 #include <string>
@@ -41,16 +42,16 @@ typedef unsigned ofst;
 #define UBUFFER_SIZE                4096
 #define IGNORE_RETVAL(expr)         do { (void)(expr); } while(0)
 
-#define safe_free(p) do { free((void*)p); p = NULL; } while(0)
+#define safe_free(p) do { free((void*)(p)); (p) = NULL; } while(0)
 static __inline void safe_strcp(char* dst, const size_t dst_max, const char* src, const size_t count) {
 	memmove(dst, src, (std::min)(count, dst_max));
-	if (dst != NULL) dst[(std::min)(count, dst_max) - 1] = 0;
+	if (dst != nullptr) dst[(std::min)(count, dst_max) - 1] = 0;
 }
 #define safe_strcpy(dst, dst_max, src) safe_strcp(dst, dst_max, src, safe_strlen(src) + 1)
 #define static_strcpy(dst, src) safe_strcpy(dst, sizeof(dst), src)
-#define safe_closehandle(h) do { if ((h != INVALID_HANDLE_VALUE) && (h != NULL)) { CloseHandle(h); h = INVALID_HANDLE_VALUE; } } while(0)
-#define safe_release_dc(hDlg, hDC) do { if ((hDC != INVALID_HANDLE_VALUE) && (hDC != NULL)) { ReleaseDC(hDlg, hDC); hDC = NULL; } } while(0)
-#define safe_delete_object(hObj) do { if (hObj != NULL) { DeleteObject(hObj); hObj = NULL; } } while(0)
+#define safe_closehandle(h) do { if (((h) != INVALID_HANDLE_VALUE) && ((h) != NULL)) { CloseHandle(h); (h) = INVALID_HANDLE_VALUE; } } while(0)
+#define safe_release_dc(hDlg, hDC) do { if (((hDC) != INVALID_HANDLE_VALUE) && ((hDC) != NULL)) { ReleaseDC(hDlg, hDC); (hDC) = NULL; } } while(0)
+#define safe_delete_object(hObj) do { if ((hObj) != NULL) { DeleteObject(hObj); (hObj) = NULL; } } while(0)
 #define safe_sprintf(dst, count, ...) do { size_t _count = count; char* _dst = dst; _snprintf_s(_dst, _count, _TRUNCATE, __VA_ARGS__); \
 	if (_dst != NULL) _dst[(_count) - 1] = 0; } while(0)
 #define static_sprintf(dst, ...) safe_sprintf(dst, sizeof(dst), __VA_ARGS__)
@@ -143,9 +144,8 @@ typedef struct ext_t {
 	const char** description;
 } ext_t;
 
-
 #ifndef __VA_GROUP__
-#define __VA_GROUP__(...)  __VA_ARGS__
+#define VA_GROUP_(...)  __VA_ARGS__
 #endif
 #define EXT_X(prefix, ...) const char* _##prefix##_x[] = { __VA_ARGS__ }
 #define EXT_D(prefix, ...) const char* _##prefix##_d[] = { __VA_ARGS__ }
@@ -195,17 +195,17 @@ static __inline const char* GetArchName(USHORT uArch)
 }
 
 /* Windows versions */
-enum WindowsVersion {
+enum WindowsVersion : std::uint16_t {
 		WINDOWS_UNDEFINED = 0,
 		WINDOWS_XP = 0x51,
 		WINDOWS_2003 = 0x52,		// Also XP_64
 		WINDOWS_VISTA = 0x60,		// Also Server 2008
-		WINDOWS_7 = 0x61,		// Also Server 2008_R2
-		WINDOWS_8 = 0x62,		// Also Server 2012
-		WINDOWS_8_1 = 0x63,		// Also Server 2012_R2
+		WINDOWS_7 = 0x61,			// Also Server 2008_R2
+		WINDOWS_8 = 0x62,			// Also Server 2012
+		WINDOWS_8_1 = 0x63,			// Also Server 2012_R2
 		WINDOWS_10_PREVIEW1 = 0x64,
-		WINDOWS_10 = 0xA0,		// Also Server 2016, also Server 2019
-		WINDOWS_11 = 0xB0,		// Also Server 2022
+		WINDOWS_10 = 0xA0,			// Also Server 2016, also Server 2019
+		WINDOWS_11 = 0xB0,			// Also Server 2022
 		WINDOWS_MAX = 0xFFFF,
 };
 
@@ -222,14 +222,13 @@ typedef struct {
 		DWORD Minor;
 		DWORD BuildNumber;
 		DWORD Ubr;
-		DWORD Edition;
+		BYTE  Edition;
+		char VersionStr[129];
 		USHORT Arch;
-		char VersionStr[128];
 } windows_version_t;
 
 // kb panels
-enum KB_ID
-{
+enum KB_ID : BYTE {
     KB_NONE           =  0,
     KB_FIELD          =  1,
     KB_LANG           =  2,
@@ -244,8 +243,7 @@ enum KB_ID
 };
 
 // Mouse state
-enum MOUSE_STATE
-{
+enum MOUSE_STATE : BYTE {
     MOUSE_NONE         = 0,
     MOUSE_CLICK        = 1,
     MOUSE_MOVE         = 2,
@@ -253,8 +251,7 @@ enum MOUSE_STATE
 };
 
 // Popup window
-enum FLOATING_TYPE
-{
+enum FLOATING_TYPE : BYTE {
     FLOATING_NONE       =0,
     FLOATING_TOOLTIP    =1,
     FLOATING_SYSINFO    =2,
@@ -266,8 +263,7 @@ enum FLOATING_TYPE
 
 
 // torrents
-enum TORRENT_SELECTION_MODE
-{
+enum TORRENT_SELECTION_MODE : BYTE {
     TSM_NONE           = 0,
     TSM_AUTO           = 1
 };
@@ -296,14 +292,14 @@ extern char ubuffer[UBUFFER_SIZE];
 /*
  * Shared prototypes
  */
-extern void GetWindowsVersion(windows_version_t* WindowsVersion);
+extern void GetWindowsVersion(windows_version_t* windows_version);
 extern const char* WindowsErrorString(void);
 extern void PrintStatusInfo(BOOL info, BOOL debug, unsigned int duration, int msg_id, ...);
 #define PrintStatus(...) PrintStatusInfo(FALSE, FALSE, __VA_ARGS__)
 #define PrintInfo(...) PrintStatusInfo(TRUE, FALSE, __VA_ARGS__)
 extern void _UpdateProgressWithInfo(int op, int msg, uint64_t processed, uint64_t total, BOOL force);
 #define UpdateProgressWithInfo(op, msg, processed, total) _UpdateProgressWithInfo(op, msg, processed, total, FALSE)
-#define UpdateProgressWithInfoInit(hProgressDialog, bNoAltMode) UpdateProgressWithInfo(OP_INIT, (int)bNoAltMode, (uint64_t)(uintptr_t)hProgressDialog, 0);
+#define UpdateProgressWithInfoInit(hProgressDialog, bNoAltMode) UpdateProgressWithInfo(OP_INIT, (int)(bNoAltMode), (uint64_t)(uintptr_t)(hProgressDialog), 0);
 extern char* SizeToHumanReadable(uint64_t size, BOOL copy_to_log, BOOL fake_units);
 extern INT_PTR MyDialogBox(HINSTANCE hInstance, int Dialog_ID, HWND hWndParent, DLGPROC lpDialogFunc);
 extern void ResizeMoveCtrl(HWND hDlg, HWND hCtrl, int dx, int dy, int dw, int dh, float scale);
@@ -323,10 +319,10 @@ extern void setMirroring(HWND hwnd);
 template <class T>
 char *vector_save(std::vector<T> *v,char *p)
 {
-		size_t used=v->size()*sizeof(T);
-		size_t val=v->size();
+		const size_t used=v->size()*sizeof(T);
+		const size_t val=v->size();
 
-		int *pi=reinterpret_cast<int *>(p);
+		auto pi=reinterpret_cast<int *>(p);
 		*pi++=static_cast<int>(used);p+=sizeof(int);
 		*pi++=static_cast<int>(val);p+=sizeof(int);
 		memcpy(p,&v->front(),used);p+=used;
@@ -338,7 +334,7 @@ char *vector_load(std::vector<T> *v,char *p)
 {
 		size_t sz=0,num=0;
 
-		int *pi=reinterpret_cast<int *>(p);
+		auto pi=reinterpret_cast<int *>(p);
 		sz=*pi++;p+=sizeof(int);
 		num=*pi++;p+=sizeof(int);
 		if(!num)num=sz;
@@ -360,7 +356,7 @@ void strsub(wchar_t *str,const wchar_t *pattern,const wchar_t *rep);
 void strtoupper(const char *s,size_t len);
 void strtolower(const char *s,size_t len);
 size_t unicode2ansi(const unsigned char *s,char *out,size_t size);
-int _wtoi_my(const wchar_t *str);
+int wtoi_my(const wchar_t *str);
 
 // Popup
 class Popup_t
@@ -384,11 +380,11 @@ public:
     void popup_resize(int x, int y);
     void onHover();
     void onLeave();
-    void setMirroring();
-    void setTransparency();
-    void getPos(long int* x, long int* y);
+    void setMirroring() const;
+    void setTransparency() const;
+    void getPos(long int* x, long int* y) const;
 
-    int  getShift() { return horiz_sh; }
+    int  getShift() const { return horiz_sh; }
     void AddShift(int v);
 
     wFont* hFontP;
@@ -442,34 +438,34 @@ private:
     LRESULT WndProcCommon(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam);
     LRESULT MainCallback(HWND,UINT,WPARAM,LPARAM);
     LRESULT WndProcField(HWND,UINT,WPARAM,LPARAM);
-    void AddMenuItem(HMENU parent,UINT mask,UINT id,UINT type,UINT state,HMENU hSubMenu,wchar_t* typedata);
-    void ModifyMenuItem(HMENU parent, UINT mask,UINT id,UINT state,wchar_t* typedata);
+    static void AddMenuItem(HMENU parent,UINT mask,UINT id,UINT type,UINT state,HMENU hSubMenu,wchar_t* typedata);
+    static void ModifyMenuItem(HMENU parent, UINT mask,UINT id,UINT state,wchar_t* typedata);
 
 public:
-    void MainLoop(int nCmd);
-    void LoadMenuItems();
-    void lang_refresh();
-    void theme_refresh(int shift);
-    void redrawfield();
-    void redrawmainwnd();
+    void MainLoop(int nShowCmd);
+    void LoadMenuItems() const;
+    void lang_refresh() const;
+    void theme_refresh(int shift) const;
+    void redrawfield() const;
+    void redrawmainwnd() const;
 
-    void tabadvance(int v);
+    void tabadvance(int v) const;
     void arrowsAdvance(int v);
 
     // Commands
-    void snapshot();
-    void extractto();
-    void selectDrpDir();
+    static void snapshot();
+    static void extractto();
+    static void selectDrpDir();
 
     // Scrollbar
     void setscrollrange(int y);
-    int  getscrollpos();
-    void setscrollpos(int pos);
+    int  getscrollpos() const;
+    void setscrollpos(int pos) const;
 
-    void ShowProgressInTaskbar(bool show,long long complited=0,long long total=0);
-    void DownloadedTorrent(int TorrentResults);
-    void ResetUpdater(int activetorrent=1);
-    void UpdateTorrentItems(int activetorrent);
+    void ShowProgressInTaskbar(bool show,ULONGLONG completed=0,ULONGLONG total=0) const;
+    static void DownloadedTorrent(int TorrentResults);
+    static void ResetUpdater(int activetorrent=1);
+    static void UpdateTorrentItems(int activetorrent);
 
     MainWindow_t();
     ~MainWindow_t();
@@ -491,6 +487,7 @@ void setMirroringEdit(HWND hwnd);
 
 // GUI
 BOOL CALLBACK WelcomeCallback(HWND hwnd,UINT Message,WPARAM wParam,LPARAM lParam);
+INT_PTR CALLBACK LicenseCallback(HWND hwnd,UINT Message,WPARAM wParam,LPARAM lParam);
 
 // Txt
 class Txt
@@ -506,8 +503,8 @@ public:
     wchar_t *getwV(ofst offset)const{ return const_cast<wchar_t *>(reinterpret_cast<const wchar_t *>(&text[offset])); }
     const wchar_t *getw2(ofst offset)const{ return reinterpret_cast<const wchar_t *>(&text[offset-(text[0]?2:0)]); }
 
-		size_t strcpy(const char *mem);
-		size_t strcpyw(const wchar_t *mem);
+		size_t strcpy(const char *str);
+		size_t strcpyw(const wchar_t *str);
 		size_t t_memcpy(const char *mem,size_t sz);
 		size_t t_memcpyz(const char *mem,size_t sz);
 		size_t memcpyz_dup(const char *mem,size_t sz);
@@ -543,14 +540,14 @@ class Hashtable
 		loadable_vector<Hashitem> items;
 
 public:
-	ofst getSize()const{ return static_cast<ofst>(items.size()); }
+	ofst getSize()const{ return items.size(); }
 
 		static unsigned gethashcode(const char *s,size_t sz);
 		void reset(size_t size);
 		char *savedata(char *p);
 		char *loaddata(char *p);
 		void additem(int key,int value);
-		int  find(int vl,int *isfound);
+		int  find(int key,int *isfound);
 		int  findnext(int *isfound);
 };
 
@@ -580,7 +577,7 @@ void split(const std::wstring &s, wchar_t delim, Out result)
 		ss.str(s);
 		std::wstring item;
 		while (std::getline(ss, item, delim)) {
-				*(result++) = item;
+				*result++ = item;
 		}
 }
 std::vector<std::wstring> split(const std::wstring& s, wchar_t delim);
@@ -591,25 +588,25 @@ extern uint16_t OpenedLibrariesHandleSize;
 #define         OPENED_LIBRARIES_VARS HMODULE OpenedLibrariesHandle[MAX_LIBRARY_HANDLES]; uint16_t OpenedLibrariesHandleSize = 0
 #define         CLOSE_OPENED_LIBRARIES while(OpenedLibrariesHandleSize > 0) FreeLibrary(OpenedLibrariesHandle[--OpenedLibrariesHandleSize])
 static __inline HMODULE GetLibraryHandle(const char* szLibraryName) {
-		HMODULE h = NULL;
-		wchar_t* wszLibraryName = NULL;
+		HMODULE h = nullptr;
+		wchar_t* wszLibraryName = nullptr;
 		int size;
-		if (szLibraryName == NULL || szLibraryName[0] == 0)
+		if (szLibraryName == nullptr || szLibraryName[0] == 0)
 				goto out;
-		size = MultiByteToWideChar(CP_UTF8, 0, szLibraryName, -1, NULL, 0);
-		if ((size <= 1) || ((wszLibraryName = (wchar_t*)calloc(size, sizeof(wchar_t))) == NULL) ||
-				(MultiByteToWideChar(CP_UTF8, 0, szLibraryName, -1, wszLibraryName, size) != size))
+		size = MultiByteToWideChar(CP_UTF8, 0, szLibraryName, -1, nullptr, 0);
+		if (size <= 1 || (wszLibraryName = (wchar_t*)calloc(size, sizeof(wchar_t))) == nullptr ||
+				MultiByteToWideChar(CP_UTF8, 0, szLibraryName, -1, wszLibraryName, size) != size)
 				goto out;
 		// If the library is already opened, just return a handle (that doesn't need to be freed)
-		if ((h = GetModuleHandleW(wszLibraryName)) != NULL)
+		if ((h = GetModuleHandleW(wszLibraryName)) != nullptr)
 				goto out;
 		// Sanity check
 		if (OpenedLibrariesHandleSize >= MAX_LIBRARY_HANDLES) {
 				uprintf("Error: MAX_LIBRARY_HANDLES is too small\n");
 				goto out;
 		}
-		h = LoadLibraryExW(wszLibraryName, NULL, LOAD_LIBRARY_SEARCH_SYSTEM32);
-		if (h != NULL)
+		h = LoadLibraryExW(wszLibraryName, nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
+		if (h != nullptr)
 				OpenedLibrariesHandle[OpenedLibrariesHandleSize++] = h;
 		else
 				uprintf("Unable to load '%S.dll': %s", wszLibraryName, WindowsErrorString());
@@ -629,7 +626,7 @@ out:
 	if ((pf##proc == NULL) && (NT_SUCCESS(status))) status = STATUS_PROCEDURE_NOT_FOUND; } while(0)
 #if defined(_MSC_VER)
 #define TRY_AND_HANDLE(exception, TRY_CODE, EXCEPTION_CODE) __try TRY_CODE   \
-	__except (GetExceptionCode() == exception ? EXCEPTION_EXECUTE_HANDLER :  \
+	__except (GetExceptionCode() == (exception) ? EXCEPTION_EXECUTE_HANDLER :  \
 			  EXCEPTION_CONTINUE_SEARCH) EXCEPTION_CODE
 #else
 // NB: Eventually we may try __try1 and __except1 from MinGW...

@@ -13,9 +13,10 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <unordered_map>
-
 #pragma once
+
+#include "Version.h"
+#include <optional>
 
 // Declarations
 class Manager;
@@ -23,7 +24,6 @@ class State;
 class Device;
 class infdata_t;
 class Canvas;
-class Version;
 class Driverpack;
 
 typedef std::unordered_map <std::wstring,infdata_t> inflist_tp;
@@ -59,7 +59,7 @@ struct SP_DEVINFO_DATA_32
 // Device
 class Device
 {
-    int driver_index;
+    std::optional<size_t> driver_index;
 
     ofst Devicedesc;
     ofst HardwareID;
@@ -77,12 +77,13 @@ class Device
     SP_DEVINFO_DATA_32 DeviceInfoData;     // ClassGuid,DevInst
 
 private:
-    void print_guid(const GUID *g);
+    static void print_guid(const GUID *g);
     void read_device_property(HDEVINFO hDevInfo,State *state,int id,ofst *val);
 
 public:
-    void setDriverIndex(int v){driver_index=v;}
-    int  getDriverIndex()const{return driver_index;}
+    void setDriverIndex(size_t v){driver_index=v;}
+    bool hasDriver()const{return driver_index.has_value();}
+    size_t getDriverIndex()const{return driver_index.value();}
     ofst getHardwareID()const{return HardwareID;}
     ofst getCompatibleIDs()const{return CompatibleIDs;}
     ofst getFriendlyName()const{return FriendlyName;}
@@ -92,18 +93,18 @@ public:
     ofst getRet()const{return ret;}
     ofst getProblem()const{return problem;}
 
-    int  print_status();
-    void print(const State *state);
-    void printHWIDS(const State *state);
-    const wchar_t *getHWIDby(int num,const State *state);
-    void getClassDesc(wchar_t *str);
+    int  print_status() const;
+    void print(const State *state) const;
+    void printHWIDS(const State *state) const;
+    const wchar_t *getHWIDby(int num,const State *state) const;
+    void getClassDesc(wchar_t *str) const;
 
     //Device(const Device &)=delete;
     //Device &operator=(const Device &)=delete;
     //Device(Device &&)=default;
     Device(HDEVINFO hDevInfo,State *state,int i);
     Device(State *state);
-    Device():driver_index(-1),Devicedesc(0),HardwareID(0),CompatibleIDs(0),Driver(0),
+    Device():driver_index(std::nullopt),Devicedesc(0),HardwareID(0),CompatibleIDs(0),Driver(0),
         Mfg(0),FriendlyName(0),Capabilities(0),ConfigFlags(0),
         InstanceId(0),status(0),problem(0),ret(0),DeviceInfoData(){}
 
@@ -131,10 +132,10 @@ class Driver
     int identifierscore;
 
 private:
-    void read_reg_val(HKEY hkey,State *state,const wchar_t *key,ofst *val);
+    static void read_reg_val(HKEY hkey,State *state,const wchar_t *key,ofst *val);
     void scaninf(State *state,Driverpack *unpacked_drp,int &inf_pos);
-    int findHWID_in_list(const wchar_t *p,const wchar_t *str);
-    void calc_dev_pos(const Device *cur_device,const State *state,int *ishw,int *dev_pos);
+    static int findHWID_in_list(const wchar_t *p,const wchar_t *str);
+    void calc_dev_pos(const Device *cur_device,const State *state,int *ishw,int *dev_pos) const;
 
 public:
     ofst getProviderName()const{return ProviderName;}
@@ -194,16 +195,17 @@ struct VER_STRUCT
     bool server;
     const wchar_t* vers;
 };
+
 class WinVersions
 {
     static const VER_STRUCT _versions[19];
     const wchar_t* UnknownOS=L"Unknown OS";
 public:
-    int GetEntry(int num);                             // returns entry version number
-    const wchar_t* GetEntryW(int num);                 // returns entry version string
-    bool GetEntryServer(int num);                      // returns entry server
-    int GetVersionIndex(int vernum,bool server);       // find the matching entry
-    const wchar_t* GetVersion(int vernum,bool server); // find the matching entry
+    static int GetEntry(int num);                           // returns entry version number
+    const wchar_t* GetEntryW(int num) const;				// returns entry version string
+    static bool GetEntryServer(int num);                    // returns entry server
+    static int GetVersionIndex(int vernum,bool server);     // find the matching entry
+    const wchar_t* GetVersion(int vernum,bool server) const;// find the matching entry
     static int Count();
 };
 
@@ -242,7 +244,7 @@ public:
     int isLaptop;
 
 private:
-    int getbaseboard(WStringShort &manuf,WStringShort &model,WStringShort &product,WStringShort &cs_manuf,WStringShort &cs_model,int *type);
+    static int getbaseboard(WStringShort &manuf,WStringShort &model,WStringShort &product,WStringShort &cs_manuf,WStringShort &cs_model,int *type);
     void fakeOSversion();
 
 public:
@@ -253,18 +255,18 @@ public:
     void getWinVer(int *major,int *minor)const;
     const wchar_t *get_szCSDVersion()const{return platform.szCSDVersion;}
     std::vector<Device> *getDevices_list(){return &Devices_list;}
-    const Driver *getCurrentDriver(const Device *dev)const{return (dev->getDriverIndex()>=0)?&Drivers_list[dev->getDriverIndex()]:nullptr;}
+    const Driver *getCurrentDriver(const Device *dev)const{return dev->hasDriver()?&Drivers_list[dev->getDriverIndex()]:nullptr;}
     WinVersions winVersions;
 
-    const wchar_t *getProduct();
-    const wchar_t *getManuf();
-    const wchar_t *getModel();
+    const wchar_t *getProduct() const;
+    const wchar_t *getManuf() const;
+    const wchar_t *getModel() const;
     int getPlatformProductType() const;
 
     State();
     void print();
     void popup_sysinfo(Canvas &canvas);
-    void contextmenu2(int x,int y);
+    void contextmenu2(int x,int y) const;
 
     int save(const wchar_t *filename);
     int  load(const wchar_t *filename);
@@ -274,9 +276,9 @@ public:
     void scanDevices();
     void init();
 
-    const wchar_t *get_winverstr();
+    const wchar_t *get_winverstr() const;
     size_t opencatfile(const Driver *cur_driver);
-    void genmarker(); // in matcher.cpp
+    void genmarker() const; // in matcher.cpp
     void isnotebook_a();
 };
 

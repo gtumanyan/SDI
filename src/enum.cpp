@@ -16,6 +16,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include <windows.h>
 
 #include "SDI.h"
+#include "string_utils.hpp"
 #include "logging.h"
 #include "Version.h"
 #include "system.h"
@@ -26,11 +27,10 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "gui.h"
 #include "draw.h"
 
-#include "platform.version.hpp"
-
 #include "Lzma86.h"
 #include "device.h"
 #include "enum.h"
+
 
 //{ Global variables
 
@@ -77,29 +77,29 @@ void Device::print_guid(const GUID *g)
 {
     WString buffer;
 
-    if(!SetupDiGetClassDescription(g,buffer.GetV(),static_cast<DWORD>(buffer.Length()),nullptr))
+    if(!SetupDiGetClassDescription(g,buffer.GetV(),buffer.Length(),nullptr))
     {
         uprintf("%08lX-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X",g->Data1,g->Data2,g->Data3,
             g->Data4[0],g->Data4[1],
             g->Data4[2],g->Data4[3],g->Data4[4],
             g->Data4[5],g->Data4[6],g->Data4[7]);
 
-        DWORD err =GetLastError();
+        const DWORD err =GetLastError();
         if(err!=0xE0000206)uprintf("SetupDiGetClassDescription failed: %s", WindowsErrorString());
     }
     uprintf("%S",buffer.Get());
 }
 
-void Device::read_device_property(HDEVINFO hDevInfo,State *state,int id,ofst *val)
+void Device::read_device_property(const HDEVINFO hDevInfo,State *state, const int id,ofst *val)
 {
     DWORD buffersize=0;
     DWORD data_type=0;
     PBYTE p;
-    auto DeviceInfoDataloc=(SP_DEVINFO_DATA *)&DeviceInfoData;
+    const auto DeviceInfoDataloc=(SP_DEVINFO_DATA *)&DeviceInfoData;
 
     *val=0;
     if(!SetupDiGetDeviceRegistryProperty(hDevInfo,DeviceInfoDataloc,id,&data_type,nullptr,0,&buffersize)) {
-        DWORD ret_er=GetLastError();
+        const DWORD ret_er=GetLastError();
         if(ret_er==ERROR_INVALID_DATA)return;
         if(ret_er!=ERROR_INSUFFICIENT_BUFFER) {
             uprintf("Property %d",id);
@@ -114,8 +114,8 @@ void Device::read_device_property(HDEVINFO hDevInfo,State *state,int id,ofst *va
     }
     else
     {
-        *val=static_cast<ofst>(state->textas.alloc(buffersize));
-        p=(PBYTE)(state->textas.get(*val));
+        *val=state->textas.alloc(buffersize);
+        p=(PBYTE)state->textas.get(*val);
         *p=0;
     }
     if(!SetupDiGetDeviceRegistryProperty(hDevInfo,DeviceInfoDataloc,id,&data_type,p,buffersize,&buffersize))
@@ -126,20 +126,20 @@ void Device::read_device_property(HDEVINFO hDevInfo,State *state,int id,ofst *va
     }
 }
 
-int Device::print_status()
+int Device::print_status() const
 {
     int isPhantom=0;
 
     if(ret!=CR_SUCCESS)
     {
-        if((ret==CR_NO_SUCH_DEVINST)||(ret==CR_NO_SUCH_VALUE))isPhantom=1;
+        if(ret==CR_NO_SUCH_DEVINST||ret==CR_NO_SUCH_VALUE)isPhantom=1;
     }
 
     if(isPhantom)
         return 0;
     else
     {
-        if((status&DN_HAS_PROBLEM)&&problem==CM_PROB_DISABLED)
+        if(status&DN_HAS_PROBLEM&&problem==CM_PROB_DISABLED)
             return 1;
         else
         {
@@ -155,7 +155,7 @@ int Device::print_status()
     }
 }
 
-void Device::print(const State *state)
+void Device::print(const State *state) const
 {
     static const char *devicestatus_str[]=
     {
@@ -181,7 +181,7 @@ void Device::print(const State *state)
     uprintf("  Capabilities:\t%d\n",Capabilities);
 }
 
-void Device::printHWIDS(const State *state)
+void Device::printHWIDS(const State *state) const
 {
     if(HardwareID)
     {
@@ -210,12 +210,12 @@ void Device::printHWIDS(const State *state)
     }
 }
 
-void Device::getClassDesc(wchar_t *bufw)
+void Device::getClassDesc(wchar_t *bufw) const
 {
     SetupDiGetClassDescription(&DeviceInfoData.ClassGuid,bufw, MAX_PATH,nullptr);
 }
 
-const wchar_t *Device::getHWIDby(int num,const State *state)
+const wchar_t *Device::getHWIDby(int num,const State *state) const
 {
     int i=0;
 
@@ -243,7 +243,7 @@ const wchar_t *Device::getHWIDby(int num,const State *state)
 }
 
 Device::Device(State *state):
-driver_index(-1),Devicedesc(0),HardwareID(0),CompatibleIDs(0),Driver(0),
+driver_index(std::nullopt),Devicedesc(0),HardwareID(0),CompatibleIDs(0),Driver(0),
         Mfg(0),FriendlyName(0),Capabilities(0),ConfigFlags(0),
         InstanceId(0),status(0),problem(0),ret(0)
 {
@@ -253,7 +253,7 @@ driver_index(-1),Devicedesc(0),HardwareID(0),CompatibleIDs(0),Driver(0),
     //vvuprintf("Fake '%S'\n",buf);
     buf[wcslen(buf)+2]=0;
     problem=2;
-    HardwareID=static_cast<ofst>(state->textas.t_memcpy((char *)buf,wcslen(buf)*2+4));
+    HardwareID=state->textas.t_memcpy((char *)buf,wcslen(buf)*2+4);
 }
 
 Device::Device(HDEVINFO hDevInfo,State *state,int i)
@@ -265,7 +265,7 @@ Device::Device(HDEVINFO hDevInfo,State *state,int i)
     memset(&DeviceInfoData,0,sizeof(SP_DEVINFO_DATA));
     DeviceInfoData.cbSize=sizeof(SP_DEVINFO_DATA);
 
-    driver_index=-1;
+    driver_index=std::nullopt;
     if(!SetupDiEnumDeviceInfo(hDevInfo,i,DeviceInfoDataloc))
     {
         ret=GetLastError();
@@ -273,7 +273,7 @@ Device::Device(HDEVINFO hDevInfo,State *state,int i)
     }
 
     SetupDiGetDeviceInstanceId(hDevInfo,DeviceInfoDataloc,nullptr,0,&buffersize);
-    InstanceId=static_cast<ofst>(state->textas.alloc(buffersize));
+    InstanceId=state->textas.alloc(buffersize);
     SetupDiGetDeviceInstanceId(hDevInfo,DeviceInfoDataloc,const_cast<wchar_t *>(state->textas.getw(InstanceId)),buffersize,nullptr);
 
     read_device_property(hDevInfo,state,SPDRP_DEVICEDESC,    &Devicedesc);
@@ -307,7 +307,7 @@ void Driver::read_reg_val(HKEY hkey,State *state,const wchar_t *key,ofst *val)
         	return;
     	  }
 
-        *val=static_cast<ofst>(state->textas.alloc(dwSize));
+        *val=state->textas.alloc(dwSize);
         r=RegQueryValueEx(hkey,key,nullptr,&dwType,(unsigned char*)state->textas.get(*val),&dwSize);
         if(r!=ERROR_SUCCESS)
         {
@@ -318,7 +318,7 @@ void Driver::read_reg_val(HKEY hkey,State *state,const wchar_t *key,ofst *val)
 
 void Driver::scaninf(State *state,Driverpack *unpacked_drp,int &inf_pos)
 {
-    auto inf_list=&state->inf_list_new;
+    const auto inf_list=&state->inf_list_new;
     unsigned start_index=0;
 
     if(Settings.flags&FLAG_FAILSAFE)
@@ -335,7 +335,7 @@ void Driver::scaninf(State *state,Driverpack *unpacked_drp,int &inf_pos)
     auto got=inf_list->find(std::wstring(fnm_hwid.Get()));
     if(got!=inf_list->end())
     {
-        infdata_t *infdata=&got->second;
+        const infdata_t *infdata=&got->second;
         //uprintf("Matched HWID '%S' %d,%d,%d,%d\n",fnm_hwid.Get(),infdata->feature,infdata->catalogfile,infdata->cat,infdata->inf_pos);
         feature=infdata->feature;
         catalogfile=infdata->catalogfile;
@@ -347,7 +347,7 @@ void Driver::scaninf(State *state,Driverpack *unpacked_drp,int &inf_pos)
     got = inf_list->find(std::wstring(filename.Get()));
     if(got!=inf_list->end())
     {
-        infdata_t *infdata=&got->second;
+        const infdata_t *infdata=&got->second;
         cat=infdata->cat;
         catalogfile=infdata->catalogfile;
         start_index=infdata->start_index;
@@ -368,7 +368,7 @@ void Driver::scaninf(State *state,Driverpack *unpacked_drp,int &inf_pos)
         _fseeki64(f,0,SEEK_END);
         len=static_cast<size_t>(_ftelli64(f));
         _fseeki64(f,0,SEEK_SET);
-        std::unique_ptr<char[]> buft(new char[len]);
+        const std::unique_ptr<char[]> buft(new char[len]);
         fread(buft.get(),len,1,f);
         fclose(f);
 
@@ -378,7 +378,7 @@ void Driver::scaninf(State *state,Driverpack *unpacked_drp,int &inf_pos)
             unpacked_drp->indexinf(state->textas.getw(state->getWindir()),state->textas.getw(InfPath),buft.get(),len);
         }
 
-        cat=static_cast<ofst>(state->opencatfile(this));
+        cat=state->opencatfile(this);
     }
 
     char sect[256];
@@ -405,7 +405,7 @@ int Driver::findHWID_in_list(const wchar_t *p,const wchar_t *str)
     return -1;
 }
 
-void Driver::calc_dev_pos(const Device *cur_device,const State *state,int *ishw,int *dev_pos)
+void Driver::calc_dev_pos(const Device *cur_device,const State *state,int *ishw,int *dev_pos) const
 {
     *ishw=1;
     *dev_pos=findHWID_in_list(state->textas.getw(cur_device->getHardwareID()),state->textas.getw(MatchingDeviceId));
@@ -477,8 +477,8 @@ void Driver::print(const State *state)const
     WStringShort date;
     WStringShort vers;
 
-    Version.str_date(date);
-    Version.str_version(vers);
+    version.str_date(date);
+    version.str_version(vers);
     uprintf("  Name:     %S\n",txt->getw(DriverDesc));
     uprintf("  Provider: %S\n",txt->getw(ProviderName));
     uprintf("  Date:     %S\n",date.Get());
@@ -558,8 +558,8 @@ void State::fakeOSversion()
     // eg Windows 10 = 15+1000
     if(Settings.virtual_os_version)
     {
-        int ver=winVersions.GetEntry(Settings.virtual_os_version-ID_OS_ITEMS);
-        bool serv=winVersions.GetEntryServer(Settings.virtual_os_version-ID_OS_ITEMS);
+        const int ver= WinVersions::GetEntry(Settings.virtual_os_version-ID_OS_ITEMS);
+        const bool serv= WinVersions::GetEntryServer(Settings.virtual_os_version-ID_OS_ITEMS);
         platform.dwMajorVersion=ver/10;
         platform.dwMinorVersion=ver%10;
         if(serv)platform.wProductType=3;
@@ -573,7 +573,7 @@ void State::getWinVer(int *major,int *minor)const
     *minor=platform.dwMinorVersion;
 }
 
-const wchar_t *State::getProduct()
+const wchar_t *State::getProduct() const
 {
     const wchar_t *s=textas.getw(product);
 
@@ -581,7 +581,7 @@ const wchar_t *State::getProduct()
     return s;
 }
 
-const wchar_t *State::getManuf()
+const wchar_t *State::getManuf() const
 {
     const wchar_t *s=textas.getw(manuf);
 
@@ -589,7 +589,7 @@ const wchar_t *State::getManuf()
     return s;
 }
 
-const wchar_t *State::getModel()
+const wchar_t *State::getModel() const
 {
     const wchar_t *s=textas.getw(model);
 
@@ -666,7 +666,7 @@ void State::print()
        uprintf("  Chassis:     %d\n",ChassisType);
 
        uprintf("\nBattery\n");
-       batteryloc=(SYSTEM_POWER_STATUS *)(textas.get(battery));
+       batteryloc=(SYSTEM_POWER_STATUS *)textas.get(battery);
        uprintf("  AC_Status:   ");
        switch(batteryloc->ACLineStatus)
         {
@@ -695,8 +695,8 @@ void State::print()
        vvuprintf("\nMonitors\n");
        for(i=0;i<buf[0];i++)
         {
-            int x=buf[1+i*2];
-            int y=buf[2+i*2];
+            const int x=buf[1+i*2];
+            const int y=buf[2+i*2];
             uprintf("  %d cm x %d cm (%.1f\")\t%.3f %s\n",x,y,sqrt(x*x+y*y)/2.54,(double)y/x,iswide(x,y)?"wide":"");
         }
 
@@ -713,7 +713,7 @@ void State::print()
         cur_device.print(this);
 
         uprintf("DriverInfo\n");
-        if(cur_device.getDriverIndex()>=0)
+        if(cur_device.hasDriver())
             Drivers_list[cur_device.getDriverIndex()].print(this);
         else
             uprintf("  NoDriver\n");
@@ -765,7 +765,7 @@ void State::popup_sysinfo(Canvas &canvas)
     td.ret();
     td.TextOutBold(STR(STR_SYSINF_BATTERY));
     td.ret_ofs(10);
-    SYSTEM_POWER_STATUS *battery_loc=(SYSTEM_POWER_STATUS *)(textas.get(battery));
+    const auto battery_loc=(SYSTEM_POWER_STATUS *)textas.get(battery);
     switch(battery_loc->ACLineStatus)
     {
         case 0:wcscpy(bufw,STR(STR_SYSINF_OFFLINE));break;
@@ -792,7 +792,7 @@ void State::popup_sysinfo(Canvas &canvas)
     if(battery_loc->BatteryFullLifeTime!=static_cast<DWORD>(-1))
         td.TextOutSF(STR(STR_SYSINF_FULLLIFETIME),L"%d %s",battery_loc->BatteryFullLifeTime/60,STR(STR_SYSINF_MINS));
 
-    wchar_t *buf=textas.getwV(monitors);
+    const wchar_t *buf=textas.getwV(monitors);
     td.ret();
     td.TextOutBold(STR(STR_SYSINF_MONITORS));
     td.ret_ofs(10);
@@ -818,12 +818,12 @@ void State::popup_sysinfo(Canvas &canvas)
     td.TextOutF(D_C(POPUP_CMP_BETTER_COLOR),STR(STR_SYSINF_MISC));
     td.ret_ofs(10);
     td.shift_l();
-    Popup->popup_resize((td.getMaxsz()+POPUP_SYSINFO_OFS+p0+p1),td.getY()+D_X(POPUP_OFSY));
+    Popup->popup_resize(td.getMaxsz()+POPUP_SYSINFO_OFS+p0+p1,td.getY()+D_X(POPUP_OFSY));
 }
 
-void State::contextmenu2(int x,int y)
+void State::contextmenu2(int x,int y) const
 {
-    HMENU hPopupMenu=CreatePopupMenu();
+    const HMENU hPopupMenu=CreatePopupMenu();
     HMENU hSub1=CreatePopupMenu();
 
     // find the version array index for the current platform
@@ -832,14 +832,14 @@ void State::contextmenu2(int x,int y)
     // no virtual os selected
     if(veridx<0)
     {
-        int ver=platform.dwMinorVersion+10*platform.dwMajorVersion;
-        bool serv=platform.wProductType==2||platform.wProductType==3;
-        veridx=winVersions.GetVersionIndex(ver,serv);
+        const int ver=platform.dwMinorVersion+10*platform.dwMajorVersion;
+        const bool serv=platform.wProductType==2||platform.wProductType==3;
+        veridx= WinVersions::GetVersionIndex(ver,serv);
     }
 
     // create a menu item for each entry in the version array
     // and checkmark the current platform
-    for(int i=0;i<winVersions.Count();i++)
+    for(int i=0;i< WinVersions::Count();i++)
     {
         // storing the version array index in the id of the menu item
         InsertMenu(hSub1,i,MF_BYPOSITION|MF_STRING|(i==veridx?MF_CHECKED:0),
@@ -854,8 +854,8 @@ void State::contextmenu2(int x,int y)
     InsertMenu(hPopupMenu,i++,MF_BYPOSITION|MF_SEPARATOR,0,nullptr);
     InsertMenu(hPopupMenu,i++,MF_BYPOSITION|MF_STRING,ID_DEVICEMNG,STR(STR_SYS_DEVICEMNG));
     InsertMenu(hPopupMenu,i++,MF_BYPOSITION|MF_SEPARATOR,0,nullptr);
-    InsertMenu(hPopupMenu,i++,MF_BYPOSITION|MF_STRING|((Settings.flags&FLAG_DISABLEINSTALL)?MF_CHECKED:0),ID_DIS_INSTALL,STR(STR_SYS_DISINSTALL));
-    InsertMenu(hPopupMenu,i++,MF_BYPOSITION|MF_STRING|((Settings.flags&FLAG_NORESTOREPOINT)?MF_CHECKED:0),ID_DIS_RESTPNT,STR(STR_SYS_DISRESTPNT));
+    InsertMenu(hPopupMenu,i++,MF_BYPOSITION|MF_STRING|(Settings.flags&FLAG_DISABLEINSTALL?MF_CHECKED:0),ID_DIS_INSTALL,STR(STR_SYS_DISINSTALL));
+    InsertMenu(hPopupMenu,i++,MF_BYPOSITION|MF_STRING|(Settings.flags&FLAG_NORESTOREPOINT?MF_CHECKED:0),ID_DIS_RESTPNT,STR(STR_SYS_DISRESTPNT));
 
     RECT rect;
     SetForegroundWindow(MainWindow.hMain);
@@ -868,17 +868,17 @@ int State::save(const wchar_t *filename)
 {
     FILE* fd;
     size_t sz;
-    int version=VERSION_STATE;
+    const int version=VERSION_STATE;
 
     if(Settings.flags&FLAG_NOSNAPSHOT)return 0;
     uprintf("Saving state in '%S'...",filename);
-    if(!System.canWriteFile(filename,L"wb"))
+    if(!SystemImp::canWriteFile(filename,L"wb"))
     {
         uprintf("Error: Can't write '%s'", filename);
         return 1;
     }
     fd=_wfopen(filename,L"wb");
-    if(fd == NULL)
+    if(fd == nullptr)
     {
         uprintf("Error: Can't create '%s'",filename);
         return 1;
@@ -891,7 +891,7 @@ int State::save(const wchar_t *filename)
         textas.getSize()+
         2*3*sizeof(int);  // 3 heaps
 
-    std::unique_ptr<char[]> mem(new char[sz]);
+    const std::unique_ptr<char[]> mem(new char[sz]);
     char *p=mem.get();
 
     fwrite(VER_MARKER,3,1,fd);
@@ -904,7 +904,7 @@ int State::save(const wchar_t *filename)
 
     //if(1)
     {
-        std::unique_ptr<char[]> mem_pack(new char[sz]);
+        const std::unique_ptr<char[]> mem_pack(new char[sz]);
         sz=encode(mem_pack.get(),sz,mem.get(),sz);
         fwrite(mem_pack.get(),sz,1,fd);
     }
@@ -924,7 +924,7 @@ int State::load(const wchar_t *filename)
 
     uprintf("Loading state from %S...",filename);
     fd=_wfopen(filename,L"rb");
-    if(fd==NULL) {
+    if(fd== nullptr) {
         uprintf("Error: Can't open file '%s'", filename);
         return 0;
     }
@@ -948,7 +948,7 @@ int State::load(const wchar_t *filename)
         return 0;
     }
 
-    std::unique_ptr<char[]> mem(new char[sz]);
+    const std::unique_ptr<char[]> mem(new char[sz]);
     char *p=mem.get();
     fread(mem.get(),sz,1,fd);
 
@@ -956,7 +956,7 @@ int State::load(const wchar_t *filename)
     UInt64 val;
     Lzma86_GetUnpackSize((Byte *)p,sz,&val);
     sz_unpack=(size_t)val;
-    std::unique_ptr<char[]> mem_unpack(new char[sz_unpack]);
+    const std::unique_ptr<char[]> mem_unpack(new char[sz_unpack]);
     decode(mem_unpack.get(),sz_unpack,mem.get(),sz);
     p=mem_unpack.get();
 
@@ -974,19 +974,18 @@ int State::load(const wchar_t *filename)
 
 void State::getsysinfo_fast()
 {
-    duprintf("State::getsysinfo_fast\n");
+    // duprintf("State::getsysinfo_fast");
     char buf[MAX_PATH];
 
     // Battery
-    duprintf("State::getsysinfo_fast::GetSystemPowerStatus\n");
-    battery = static_cast<ofst>(textas.alloc(sizeof(SYSTEM_POWER_STATUS)));
-    SYSTEM_POWER_STATUS* batteryloc = (SYSTEM_POWER_STATUS*)(textas.get(battery));
+    // duprintf("State::getsysinfo_fast::GetSystemPowerStatus");
+    battery = textas.alloc(sizeof(SYSTEM_POWER_STATUS));
+    const auto batteryloc = (SYSTEM_POWER_STATUS*)textas.get(battery);
     GetSystemPowerStatus(batteryloc);
 
     // Monitors
-    duprintf("State::getsysinfo_fast::Monitors\n");
-    DISPLAY_DEVICE DispDev;
-    memset(&DispDev, 0, sizeof(DispDev));
+    // duprintf("State::getsysinfo_fast::Monitors");
+    DISPLAY_DEVICE DispDev = {};
     DispDev.cb = sizeof(DispDev);
     buf[0] = 0;
     int i = 0;
@@ -996,40 +995,34 @@ void State::getsysinfo_fast()
         GetMonitorSizeFromEDID(DispDev.DeviceName, &x, &y);
         if (x && y)
         {
-            buf[buf[0] * 2 + 1] = (short)x;
-            buf[buf[0] * 2 + 2] = (short)y;
+            buf[buf[0] * 2 + 1] = static_cast<short>(x);
+            buf[buf[0] * 2 + 2] = static_cast<short>(y);
             buf[0]++;
         }
         i++;
     }
-    monitors = static_cast<ofst>(textas.t_memcpy((char*)buf, (1 + buf[0] * 2) * 2));
+    monitors = textas.t_memcpy(buf, (1 + buf[0] * 2) * 2);
 
     // Windows version
-    duprintf("State::getsysinfo_fast::Windows\n");
-
-    const auto Info = get_os_version();
+    GetWindowsVersion(&WindowsVersion);
 
     // build number
-    platform.dwBuildNumber = Info.dwBuildNumber;
+    platform.dwBuildNumber = WindowsVersion.BuildNumber;
     // major version
-    platform.dwMajorVersion = Info.dwMajorVersion;
+    platform.dwMajorVersion = WindowsVersion.Major;
     // minor version
-    platform.dwMinorVersion = Info.dwMinorVersion;
-    platform.wProductType = Info.wProductType;
+    platform.dwMinorVersion = WindowsVersion.Minor;
+    platform.wProductType = WindowsVersion.Edition;
 
-    vuprintf("Windows v%d.%d.%d\n",platform.dwMajorVersion,platform.dwMinorVersion,platform.dwBuildNumber);
-
+    vuprintf(WindowsVersion.VersionStr);
 
     locale=GetUserDefaultLCID();
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
 
     // Environment
     uprintf("State::getsysinfo_fast::Environment\n");
     GetSystemWindowsDirectoryA(buf,sizeof(buf));
     strcat(buf,"\\inf\\");
-    windir = static_cast<ofst>(textas.strcpy(buf));
+    windir = textas.strcpy(buf);
 
       // temp directory
     if (GetTempPathU(sizeof(buf),buf) == 0) {
@@ -1039,7 +1032,7 @@ void State::getsysinfo_fast()
      // if the TEMP environment variable is not set then use the system drive
         strcat(buf, "\\temp");
     }
-    temp=static_cast<ofst>(textas.strcpy(buf));
+    temp=textas.strcpy(buf);
 
     // 64-bit detection
     uprintf("State::getsysinfo_fast::Architecture\n");
@@ -1068,11 +1061,11 @@ void State::getsysinfo_slow()
     uprintf("State::getsysinfo_slow1::getbaseboard\n");
     getbaseboard(smanuf,smodel,sproduct,scs_manuf,scs_model,&ChassisType);
 
-    manuf=static_cast<ofst>(textas.strcpyw(smanuf.Get()));
-    product=static_cast<ofst>(textas.strcpyw(sproduct.Get()));
-    model=static_cast<ofst>(textas.strcpyw(smodel.Get()));
-    cs_manuf=static_cast<ofst>(textas.strcpyw(scs_manuf.Get()));
-    cs_model=static_cast<ofst>(textas.strcpyw(scs_model.Get()));
+    manuf=textas.strcpyw(smanuf.Get());
+    product=textas.strcpyw(sproduct.Get());
+    model=textas.strcpyw(smodel.Get());
+    cs_manuf=textas.strcpyw(scs_manuf.Get());
+    cs_model=textas.strcpyw(scs_model.Get());
 
     uprintf("State::getsysinfo_slow1::getbaseboard::manuf::%S\n",smanuf.Get());
     uprintf("State::getsysinfo_slow1::getbaseboard::product::%S\n",sproduct.Get());
@@ -1088,11 +1081,11 @@ void State::getsysinfo_slow(const State *prev)
 {
     uprintf("State::getsysinfo_slow2\n");
     //Timers.reset(time_sysinfo);
-    manuf=static_cast<ofst>(textas.strcpyw(prev->textas.getw(prev->manuf)));
-    product=static_cast<ofst>(textas.strcpyw(prev->textas.getw(prev->product)));
-    model=static_cast<ofst>(textas.strcpyw(prev->textas.getw(prev->model)));
-    cs_manuf=static_cast<ofst>(textas.strcpyw(prev->textas.getw(prev->cs_manuf)));
-    cs_model=static_cast<ofst>(textas.strcpyw(prev->textas.getw(prev->cs_model)));
+    manuf=textas.strcpyw(prev->textas.getw(prev->manuf));
+    product=textas.strcpyw(prev->textas.getw(prev->product));
+    model=textas.strcpyw(prev->textas.getw(prev->model));
+    cs_manuf=textas.strcpyw(prev->textas.getw(prev->cs_manuf));
+    cs_model=textas.strcpyw(prev->textas.getw(prev->cs_model));
 }
 
 void State::scanDevices()
@@ -1118,7 +1111,7 @@ void State::scanDevices()
     for(unsigned i=0;;i++)
     {
         // Device
-        Devices_list.emplace_back((Device(dev_info,this,i)));
+        Devices_list.emplace_back(Device(dev_info,this,i));
         Device *cur_device=&Devices_list.back();
 
         int ret=cur_device->getRet();
@@ -1160,7 +1153,7 @@ void State::scanDevices()
         uprintf("State::scanDevices::SetupDiDestroyDeviceInfoList::Success");
     else
     {
-        DWORD error=GetLastError();
+        const DWORD error=GetLastError();
         uprintf("State::scanDevices::SetupDiDestroyDeviceInfoList::Error:%d",error);
     }
     //Timers.stop(time_devicescan);
@@ -1175,12 +1168,12 @@ void State::init()
     textas.reset(2);
 }
 
-const wchar_t *State::get_winverstr()
+const wchar_t *State::get_winverstr() const
 {
     // retrieve the version string for the current platform
     int ver=platform.dwMinorVersion;
     ver+=10*platform.dwMajorVersion;
-    bool serv=platform.wProductType==2||platform.wProductType==3;
+    const bool serv=platform.wProductType==2||platform.wProductType==3;
     return winVersions.GetVersion(ver,serv);
 }
 
@@ -1202,9 +1195,9 @@ size_t State::opencatfile(const Driver *cur_driver)
     if(f)
     {
         _fseeki64(f,0,SEEK_END);
-        size_t len=static_cast<size_t>(_ftelli64(f));
+        const size_t len=static_cast<size_t>(_ftelli64(f));
         _fseeki64(f,0,SEEK_SET);
-        std::unique_ptr<char[]> buft(new char[len]);
+        const std::unique_ptr<char[]> buft(new char[len]);
         fread(buft.get(),len,1,f);
         fclose(f);
 
@@ -1242,7 +1235,7 @@ void State::isnotebook_a()
     SYSTEM_POWER_STATUS *batteryloc;
 
     buf=textas.getw(monitors);
-    batteryloc=(SYSTEM_POWER_STATUS *)(textas.get(battery));
+    batteryloc=(SYSTEM_POWER_STATUS *)textas.get(battery);
 
     if(ChassisType==3)
     {
@@ -1257,9 +1250,9 @@ void State::isnotebook_a()
 
     for(i=0;i<buf[0];i++)
     {
-        int x=buf[1+i*2];
-        int y=buf[2+i*2];
-        int diag=static_cast<int>(sqrt(x*x+y*y)/2.54);
+        const int x=buf[1+i*2];
+        const int y=buf[2+i*2];
+        const int diag=static_cast<int>(sqrt(x*x+y*y)/2.54);
 
         if(diag<min_v||(diag==min_v&&iswide(x,y)))
         {
@@ -1323,7 +1316,7 @@ int GetMonitorSizeFromEDID(const wchar_t* adapterName,int *Width,int *Height)
     {
         wchar_t model[18];
         wchar_t* s=wcschr(ddMon.DeviceID,L'\\')+1;
-        size_t len=wcschr(s,L'\\')-s;
+        const size_t len=wcschr(s,L'\\')-s;
         wcsncpy(model,s,len);
         model[len]=0;
 
@@ -1354,11 +1347,11 @@ int GetMonitorSizeFromEDID(const wchar_t* adapterName,int *Width,int *Height)
                                 size=256;
                                 if(RegQueryValueEx(hKey3,L"EDID",nullptr,nullptr,(LPBYTE)&EDID,&size)==ERROR_SUCCESS)
                                 {
-                                    DWORD p=8;
+                                    const DWORD p=8;
                                     wchar_t model2[9];
 
-                                    char byte1=EDID[p];
-                                    char byte2=EDID[p+1];
+                                    const char byte1=EDID[p];
+                                    const char byte2=EDID[p+1];
                                     model2[0]=((byte1&0x7C)>>2)+64;
                                     model2[1]=((byte1&3)<<3)+((byte2&0xE0)>>5)+64;
                                     model2[2]=(byte2&0x1F)+64;
@@ -1386,7 +1379,7 @@ int GetMonitorSizeFromEDID(const wchar_t* adapterName,int *Width,int *Height)
 
 int iswide(int x,int y)
 {
-    return (static_cast<double>(y)/x)>1.35?1:0;
+    return static_cast<double>(y)/x>1.35?1:0;
 }
 //}
 
@@ -1419,7 +1412,7 @@ int WinVersions::GetEntry(int num)
     else
         return -1;
 }
-const wchar_t* WinVersions::GetEntryW(int num)
+const wchar_t* WinVersions::GetEntryW(int num) const
 {
     // returns a version string
     if(num>=0&&num<Count())
@@ -1443,7 +1436,7 @@ int WinVersions::GetVersionIndex(int vernum,bool server)
             return i;
     return -1;
 }
-const wchar_t* WinVersions::GetVersion(int vernum,bool server)
+const wchar_t* WinVersions::GetVersion(int vernum,bool server) const
 {
     // find the matching entry and return it's version string
     for(int i=0;i<Count();i++)
