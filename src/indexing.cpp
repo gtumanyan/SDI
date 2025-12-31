@@ -15,6 +15,9 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 //#define MERGE_FINDER
 #include <Shlwapi.h>
+#include <atomic>
+#include <mutex>
+#include <queue>
 
 #include <7z.h>
 #include <7zCrc.h>
@@ -22,23 +25,16 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include <Lzma86.h>
 
 #include "SDI.h"
+#include "Settings.h"
+#include "Version.h"
+#include "indexing.h"
 #include "logging.h"
+#include "manager.h"
+#include "matcher.h"
 #include "string_utils.hpp"
 #include "system.h"
-#include "Settings.h"
-#include "matcher.h"
-#include "indexing.h"
-#include "manager.h"
-#include "Version.h"
 
-//#ifdef _MSC_VER
-//#include <process.h>
-//#endif
-
-// Depend on Win32API
 #include "enum.h"
-
-#include <queue>
 
 #define kInputBufSize ((size_t)1 << 18)
 
@@ -88,15 +84,14 @@ class concurrent_queue
     concurrent_queue &operator = (const concurrent_queue&)=delete;
 
 private:
-    std::queue<Data> the_queue;
-    mutable boost::mutex the_mutex;
+    std::queue<Data>   the_queue;
+    mutable std::mutex the_mutex;
     HANDLE notification;
-    int num;
+    std::atomic<int> num;
 
 public:
-    concurrent_queue()
+    concurrent_queue() : num(0)
     {
-        num=0;
         notification=CreateEvent(nullptr,0,0,nullptr);
     }
 
@@ -105,25 +100,39 @@ public:
         CloseHandle(notification);
     }
 
-    void push(Data const& data)
+    bool push(const Data& data, int max_size = 250)
     {
-        #ifndef _WIN64
-        while(num>250)
+    #ifndef _WIN64
+        // Bounded queue semantics on 32-bit builds: fail fast instead of
+        // blocking indefinitely when the queue is "full".
+        const int current = num.load(std::memory_order_relaxed);
+        if (current >= max_size)
         {
-            uprintfs("The queue is full. Waiting...\n");
-            Sleep(100);
+            uprintf("The queue is full (%d items). Dropping item.\n", current);
+            return false;
         }
-        #endif
-        boost::mutex::scoped_lock lock(the_mutex);
-        the_queue.push(data);
-        num++;
-        lock.unlock();
+    #endif
+
+        {
+            std::lock_guard<std::mutex> lock(the_mutex);
+    #ifndef _WIN64
+            if (num >= max_size)
+            {
+                // Re-check under the lock to avoid race with other producers.
+                uprintf("The queue is full (%d items) after locking. Dropping item.\n", num.load());
+                return false;
+            }
+    #endif
+            the_queue.push(data);
+            num.fetch_add(1, std::memory_order_release);
+        }
         SetEvent(notification);
+        return true;
     }
 
     void wait_and_pop(Data& popped_value)
     {
-        boost::mutex::scoped_lock lock(the_mutex);
+        std::unique_lock<std::mutex> lock(the_mutex);
 
         while(the_queue.empty())
         {
@@ -143,7 +152,7 @@ void mySzFree(ISzAllocPtr p,void *address)
 {
     UNREFERENCED_PARAMETER(p);
 
-    delete[](char*)(address);
+    delete[](char*)address;
 }
 
 void findosattr(char *bufa,const char *adr,size_t len)
@@ -157,7 +166,7 @@ void findosattr(char *bufa,const char *adr,size_t len)
     {
         if(*p=='O'&&!memcmp(p,osatt,10))
         {
-            int ofs=(p[19]=='2'||p[19]=='1')?1:0;
+            const int ofs=p[19]=='2'||p[19]=='1'?1:0;
             if(!*bufa || bufal < wcslen((wchar_t *)(p+18+ofs)))
             {
                 wsprintfA(bufa,"%ws",p+18+ofs);
@@ -221,7 +230,7 @@ void Parser::subStr() {
         if(vers_len<0)vers_len=0;
 
         strtolower(v1b,vers_len);
-        auto rr=string_list->find(std::string(v1b,vers_len));
+        const auto rr=string_list->find(std::string(v1b,vers_len));
         if(rr!=string_list->end()) {
             current_subst = rr->second; // сохраняем в string
             strBeg=current_subst.c_str();
@@ -368,7 +377,7 @@ int Parser::parseField()
 
 int Parser::readNumber()
 {
-    int n=atoi(strBeg);
+    const int n=atoi(strBeg);
 
     while(strBeg<strEnd&&*strBeg>='0'&&*strBeg<='9')strBeg++;
     if(strBeg<strEnd)strBeg++;
@@ -395,23 +404,23 @@ int Parser::readHex()
 int Parser::readDate(Version *t)
 {
     while(strBeg<strEnd&&!(*strBeg>='0'&&*strBeg<='9'))strBeg++;
-    int m=readNumber();
-    int d=readNumber();
-    int y=readNumber();
+    const int m=readNumber();
+    const int d=readNumber();
+    const int y=readNumber();
     return t->setDate(d,m,y);
 
 }
 
 void Parser::readVersion(Version *t)
 {
-    int v1=readNumber();
-    int v2=readNumber();
-    int v3=readNumber();
-    int v4=readNumber();
+    const int v1=readNumber();
+    const int v2=readNumber();
+    const int v3=readNumber();
+    const int v4=readNumber();
     t->setVersion(v1,v2,v3,v4);
 }
 
-void Parser::readStr(const char **vb,const char **ve)
+void Parser::readStr(const char **vb,const char **ve) const
 {
     *vb=strBeg;
     *ve=strEnd;
@@ -446,7 +455,7 @@ int Collection::scanfolder_count(const wchar_t *path)
     WStringShort buf;
     buf.sprintf(L"%s\\*.*",path);
     WIN32_FIND_DATA FindFileData;
-    HANDLE hFind=FindFirstFile(buf.Get(),&FindFileData);
+    const HANDLE hFind=FindFirstFile(buf.Get(),&FindFileData);
     while(FindNextFile(hFind,&FindFileData)!=0)
     {
         if(FindFileData.dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY)
@@ -466,7 +475,7 @@ int Collection::scanfolder_count(const wchar_t *path)
                 {
                     if(Settings.flags&(FLAG_AUTOINSTALL|FLAG_NOGUI))break;
                     buf.sprintf(L" /c del \"%s\\%s*.7z\" /Q /F",driverpack_dir,olddrps[i]);
-                    System.run_command(L"cmd",buf.Get(),SW_HIDE,1);
+                    SystemImp::run_command(L"cmd",buf.Get(),SW_HIDE,1);
                     break;
                 }
             if(i==6&&_wcsicmp(FindFileData.cFileName+len-3,L".7z")==0)
@@ -485,8 +494,8 @@ void Collection::scanfolder(const wchar_t *path,void *arg)
     WStringShort buf;
     buf.sprintf(L"%s\\*.*",path);
     WIN32_FIND_DATA FindFileData;
-    HANDLE hFind=FindFirstFile(buf.Get(),&FindFileData);
-    size_t pathlen=wcslen(driverpack_dir)+1;
+    const HANDLE hFind=FindFirstFile(buf.Get(),&FindFileData);
+    const size_t pathlen=wcslen(driverpack_dir)+1;
 
     while(FindNextFile(hFind,&FindFileData)!=0)
     {
@@ -516,7 +525,7 @@ void Collection::scanfolder(const wchar_t *path,void *arg)
                     _fseeki64(f,0,SEEK_END);
                     len=static_cast<size_t>(_ftelli64(f));
                     _fseeki64(f,0,SEEK_SET);
-                    char *buft=new char[len];
+                    const auto buft=new char[len];
                     fread(buft,len,1,f);
                     fclose(f);
                     buf.sprintf(L"%s\\",path+pathlen);
@@ -543,7 +552,7 @@ void Collection::loadOnlineIndices()
     WStringShort buf;;
     buf.sprintf(L"%s\\_*.*",index_bin_dir);
     WIN32_FIND_DATA FindFileData;
-    HANDLE hFind=FindFirstFile(buf.Get(),&FindFileData);
+    const HANDLE hFind=FindFirstFile(buf.Get(),&FindFileData);
 
     while(FindNextFile(hFind,&FindFileData)!=0)
     {
@@ -552,8 +561,8 @@ void Collection::loadOnlineIndices()
         wcscpy(filename+wcslen(FindFileData.cFileName)-3,L"7z");
 
         buf.sprintf(L"drivers\\%ws",filename);
-        (buf.GetV())[8]=L'D';
-        if(System.FileExists(buf.Get()))
+        buf.GetV()[8]=L'D';
+        if(SystemImp::FileExists(buf.Get()))
         {
             uprintf("Skip %S\n",buf.Get());
             continue;
@@ -600,7 +609,7 @@ void Collection::populate()
     if(Settings.flags&FLAG_KEEPUNPACKINDEX)loaded_unpacked=unpacked_drp->loadindex();
     drp_count=scanfolder_count(driverpack_dir);
 
-    if((Settings.flags&FLAG_KEEPUNPACKINDEX)&&!loaded_unpacked)
+    if(Settings.flags&FLAG_KEEPUNPACKINDEX&&!loaded_unpacked)
         manager_g->itembar_settext(SLOT_INDEXING,1,L"Unpacked",1,++drp_count,0);
 
 //{thread
@@ -618,30 +627,30 @@ void Collection::populate()
         num_thr_1-=1;
     }
 
-    uprintf("Collection::populate::num_thr::%d\n",num_thr);
+    // vvuprintf("Collection::populate::num_thr::%d\n",num_thr);
 
     drplist_t queuedriverpack;
-    std::vector<ThreadAbs*> cons;
+    std::vector<Thread*> cons;
     for(UInt32 i=0;i<num_thr;i++)
     {
-        //uprintf("Collection::populate::ThreadAbs::%d\n",i);
-        cons.push_back(CreateThread());
+        //uprintf("Collection::populate::Thread::%d\n",i);
+        cons.push_back(new Thread());
         cons[i]->start(&Driverpack::loaddrp_thread,&queuedriverpack);
     }
 
-    uprintf("Collection::populate::num_thr_1::%d\n",num_thr_1);
-    std::vector<ThreadAbs*> thr;
+    // uprintf("Collection::populate::num_thr_1::%d\n",num_thr_1);
+    std::vector<Thread*> thr;
     for(UInt32 i=0;i<num_thr_1;i++)
     {
-        uprintf("Collection::populate::ThreadAbs1::%d\n",i);
-        thr.push_back(CreateThread());
+        // uprintf("Collection::populate::Thread1::%d\n",i);
+        thr.push_back(new Thread());
         thr[i]->start(&Driverpack::indexinf_thread,&queuedriverpack1);
     }
 //}thread
 
     drp_cur=1;
 
-    uprintf("Collection::populate::scanfolder::%S\n",driverpack_dir);
+    // uprintf("Collection::populate::scanfolder::%S\n",driverpack_dir);
     scanfolder(driverpack_dir,&queuedriverpack);
     for(UInt32 i=0;i<num_thr;i++)
     {
@@ -693,7 +702,7 @@ void Collection::populate()
 void Collection::save()
 {
     if(*Settings.drpext_dir)return;
-    if(!System.canWriteDirectory(index_bin_dir))
+    if(!SystemImp::canWriteDirectory(index_bin_dir))
     {
         uprintf("ERROR in collection_save(): Write-protected,'%S'\n",index_bin_dir);
         return;
@@ -709,11 +718,11 @@ void Collection::save()
         if(driverpack.getType()==DRIVERPACK_TYPE_PENDING_SAVE)count_++;
 
     if(count_)uprintfs("Saving indices...\n");
-    std::vector<ThreadAbs *> thr;
+    std::vector<Thread *> thr;
     drplist_t queuedriverpack_loc;
     for(UInt32 i=0;i<num_cores;i++)
     {
-        thr.push_back(CreateThread());
+        thr.push_back(new Thread());
         thr[i]->start(&Driverpack::savedrp_thread,&queuedriverpack_loc);
     }
     for(auto &driverpack:driverpack_list)
@@ -734,7 +743,7 @@ void Collection::save()
     WStringShort filename;
     WStringShort buf;
     buf.sprintf(L"%ws\\*.*",index_bin_dir);
-    HANDLE hFind=FindFirstFile(buf.Get(),&FindFileData);
+    const HANDLE hFind=FindFirstFile(buf.Get(),&FindFileData);
     while(FindNextFile(hFind,&FindFileData)!=0)
     {
         if(!(FindFileData.dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY))
@@ -758,7 +767,7 @@ void Collection::save()
     //Timers.stop(time_indexsave);
 }
 
-void Collection::printstats()
+void Collection::printstats() const
 {
     if(Log.isHidden(LOG_VERBOSE_DRP))return;
 
@@ -766,13 +775,13 @@ void Collection::printstats()
     uprintfs("DriverPacks\n");
     for(auto &drp:driverpack_list)
     {
-        size_t siz=drp.printstats();
+        const size_t siz=drp.printstats();
         // looking for possible corrupted indexes
         if(siz==0)
         {
             wchar_t buf1[FILENAME_MAX];
             drp.getindexfilename(index_bin_dir,L"bin",buf1);
-            if(wcsstr(buf1, L"unpacked.bin") == NULL)
+            if(wcsstr(buf1, L"unpacked.bin") == nullptr)
                 uprintf("Index corrupted %S\n",buf1);
         }
         sum+=drp.printstats();
@@ -790,7 +799,7 @@ void Collection::print_index_hr()
     //Timers.stop(time_indexprint);
 }
 
-const wchar_t *Collection::finddrp(const wchar_t *fnd)
+const wchar_t *Collection::finddrp(const wchar_t *fnd) const
 {
     int j;
     const wchar_t *s,*d,*n_s;
@@ -807,9 +816,9 @@ const wchar_t *Collection::finddrp(const wchar_t *fnd)
             {
                 if(*d==L'_'&&d[1]>=L'0'&&d[1]<=L'9')
                 {
-                    if(j<_wtoi_my(d+1))
+                    if(j<wtoi_my(d+1))
                     {
-                        j=_wtoi_my(d+1);
+                        j=wtoi_my(d+1);
                         n_s=s;
                     }
                     break;
@@ -1137,11 +1146,11 @@ int Driverpack::genindex()
 {
   ISzAlloc allocImp;        /* memory functions for main pool */
   ISzAlloc allocTempImp;    /* memory functions for temporary pool */
-  CFileInStream archiveStream = { 0 };
+  CFileInStream archiveStream = { nullptr };
   CLookToRead2 lookStream;
   CSzArEx db;
   SRes res;
-  UInt16 *temp = NULL;
+  UInt16 *temp = nullptr;
   ULONG_PTR tempSize = 0;
     wchar_t fullname[MAX_PATH + 1];
     WStringShort infpath;
@@ -1169,7 +1178,7 @@ int Driverpack::genindex()
   FileInStream_CreateVTable(&archiveStream);
   archiveStream.wres = 0;
   LookToRead2_CreateVTable(&lookStream, False);
-  lookStream.buf = NULL;
+  lookStream.buf = nullptr;
 
   res = SZ_OK;
 
@@ -1215,7 +1224,7 @@ int Driverpack::genindex()
       if you use external function, you can make these variable as static.
       */
       UInt32 blockIndex = 0xFFFFFFFF; /* it can have any value before first call (if outBuffer = 0) */
-      Byte *outBuffer = 0; /* it must be 0 before first call for each new archive. */
+      Byte *outBuffer = nullptr; /* it must be 0 before first call for each new archive. */
       size_t outBufferSize = 0;  /* it can have any value before first call (if outBuffer = 0) */
 
       for (i = 0; i < db.NumFiles; i++)
@@ -1227,14 +1236,14 @@ int Driverpack::genindex()
         const BoolInt isDir = SzArEx_IsDir(&db, i);
         if (isDir)
           continue;
-        len = SzArEx_GetFileNameUtf16(&db, i, NULL);
+        len = SzArEx_GetFileNameUtf16(&db, i, nullptr);
         // len = SzArEx_GetFullNameLen(&db, i);
 
         if (len > tempSize)
         {
-          SzFree(NULL, temp);
+          SzFree(nullptr, temp);
           tempSize = len;
-          temp = (UInt16 *)SzAlloc(NULL, tempSize * sizeof(temp[0]));
+          temp = (UInt16 *)SzAlloc(nullptr, tempSize * sizeof(temp[0]));
           if (!temp)
           {
             res = SZ_ERROR_MEM;
@@ -1289,7 +1298,7 @@ int Driverpack::genindex()
     {
         uprintf("ERROR with %S:%d\n",getFilename(),res);
     }
-  SzFree(NULL, temp);
+  SzFree(nullptr, temp);
   SzArEx_Free(&db, &allocImp);
   ISzAlloc_Free(&allocImp, lookStream.buf);
 
@@ -1378,10 +1387,10 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
     inffile.resize(cur_inffile_index+1);
     cur_inffile=&inffile[cur_inffile_index];
     wsprintfA(line,"%ws",drpdir);
-    cur_inffile->infpath=static_cast<ofst>(text_ind.strcpy(line));
+    cur_inffile->infpath=text_ind.strcpy(line);
     wsprintfA(line,"%ws",inffilename);
-    cur_inffile->inffilename=static_cast<ofst>(text_ind.strcpy(line));
-    cur_inffile->infsize=static_cast<ofst>(inf_len);
+    cur_inffile->inffilename=text_ind.strcpy(line);
+    cur_inffile->infsize=inf_len;
     cur_inffile->infcrc=0;
 
     WStringShort inffull;
@@ -1520,7 +1529,7 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
                         if(parse_info.parseField())
                         {
                             parse_info.readStr(&s1b,&s1e);
-                            cur_inffile->fields[i]=static_cast<ofst>(text_ind.t_memcpyz(s1b,s1e-s1b));
+                            cur_inffile->fields[i]=text_ind.t_memcpyz(s1b,s1e-s1b);
                         }
                     }
                     break;
@@ -1552,15 +1561,15 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
             cur_manuf_index=manufacturer_list.size();
             manufacturer_list.resize(cur_manuf_index+1);
             cur_manuf=&manufacturer_list[cur_manuf_index];
-            cur_manuf->inffile_index=static_cast<ofst>(cur_inffile_index);
-            cur_manuf->manufacturer=static_cast<ofst>(text_ind.t_memcpyz(s1b,s1e-s1b));
+            cur_manuf->inffile_index=cur_inffile_index;
+            cur_manuf->manufacturer=text_ind.t_memcpyz(s1b,s1e-s1b);
             cur_manuf->sections_n=0;
 
             if(parse_info.parseField())
             {
                 parse_info.readStr(&s1b,&s1e);
                 strtolower(s1b,s1e-s1b);
-                strs[cur_manuf->sections_n++]=static_cast<ofst>(text_ind.t_memcpyz(s1b,s1e-s1b));
+                strs[cur_manuf->sections_n++]=text_ind.t_memcpyz(s1b,s1e-s1b);
                 while(1)
                 {
                     if(cur_manuf->sections_n>1)
@@ -1716,17 +1725,17 @@ void Driverpack::indexinf_ansi(wchar_t const *drpdir,wchar_t const *inffilename,
                         break;
                     }
                     strtolower(s1b,s1e-s1b);
-                    strs[cur_manuf->sections_n++]=static_cast<ofst>(text_ind.t_memcpyz(s1b,s1e-s1b));
+                    strs[cur_manuf->sections_n++]=text_ind.t_memcpyz(s1b,s1e-s1b);
                 }
             }
-            cur_manuf->sections=static_cast<ofst>(text_ind.t_memcpyz((char *)strs,sizeof(int)*cur_manuf->sections_n));
+            cur_manuf->sections=text_ind.t_memcpyz((char *)strs,sizeof(int)*cur_manuf->sections_n);
         }
     }
 }
 
-void Driverpack::getdrp_drvsectionAtPos(char *buf,size_t pos,size_t manuf_index)
+void Driverpack::getdrp_drvsectionAtPos(char *buf,size_t pos,size_t manuf_index) const
 {
-    const int *rr=reinterpret_cast<const int *>(text_ind.get(manufacturer_list[manuf_index].sections));
+    const auto rr=reinterpret_cast<const int *>(text_ind.get(manufacturer_list[manuf_index].sections));
     if(pos)
     {
         strcpy(buf,text_ind.get(rr[0]));
@@ -1741,14 +1750,14 @@ Driverpack::Driverpack(wchar_t const *driverpack_path,wchar_t const *driverpack_
     type(DRIVERPACK_TYPE_PENDING_SAVE),
     col(col_v)
 {
-    drppath=static_cast<ofst>(text_ind.strcpyw(driverpack_path));
-    drpfilename=static_cast<ofst>(text_ind.strcpyw(driverpack_filename));
+    drppath=text_ind.strcpyw(driverpack_path);
+    drpfilename=text_ind.strcpyw(driverpack_filename);
     indices.reset(0);
 }
 
 unsigned int __stdcall Driverpack::loaddrp_thread(void *arg)
 {
-    drplist_t *drplist=reinterpret_cast<drplist_t *>(arg);
+    const auto drplist=reinterpret_cast<drplist_t *>(arg);
     driverpack_task data;
 
     while(drplist->wait_and_pop(data),data.drp)
@@ -1767,7 +1776,7 @@ unsigned int __stdcall Driverpack::loaddrp_thread(void *arg)
 
 unsigned int __stdcall Driverpack::indexinf_thread(void *arg)
 {
-    drplist_t *drplist=reinterpret_cast<drplist_t *>(arg);
+    const auto drplist=reinterpret_cast<drplist_t *>(arg);
     inffile_task t;
     driverpack_task data;
     WStringShort bufw2;
@@ -1777,18 +1786,18 @@ unsigned int __stdcall Driverpack::indexinf_thread(void *arg)
     {
         if(!drp_count)drp_count=1;
         bufw2.sprintf(L"%s\\%s",data.drp->getPath(),data.drp->getFilename());
-        manager_g->itembar_settext(SLOT_INDEXING,1,bufw2.Get(),drp_cur,drp_count,(drp_cur)*1000/drp_count);
+        manager_g->itembar_settext(SLOT_INDEXING,1,bufw2.Get(),drp_cur,drp_count,drp_cur*1000/drp_count);
         drp_cur++;
 
         while(1)
         {
             data.drp->objs_new->wait_and_pop(t);
-            if(last)tm+=System.GetTickCountWr()-last;
+            if(last)tm+= SystemImp::GetTickCountWr()-last;
             if(!t.adr)
             {
                 t.drp->genhashes();
                 t.drp->text_ind.shrink();
-                last=System.GetTickCountWr();
+                last= SystemImp::GetTickCountWr();
                 //vvuprintf("Trm %ws\n",data.drp->getFilename());
                 delete data.drp->objs_new;
                 break;
@@ -1801,7 +1810,7 @@ unsigned int __stdcall Driverpack::indexinf_thread(void *arg)
             delete[] t.pathinf;
             delete[] t.inffile;
             delete[] t.adr;
-            last=System.GetTickCountWr();
+            last= SystemImp::GetTickCountWr();
         }
         //vvuprintf("Fin %ws\n",data.drp->getFilename());
     }
@@ -1811,7 +1820,7 @@ unsigned int __stdcall Driverpack::indexinf_thread(void *arg)
 
 unsigned int __stdcall Driverpack::savedrp_thread(void *arg)
 {
-    drplist_t *drplist=reinterpret_cast<drplist_t *>(arg);
+    const auto drplist=reinterpret_cast<drplist_t *>(arg);
     driverpack_task data;
     WStringShort bufw2;
 
@@ -1827,7 +1836,7 @@ unsigned int __stdcall Driverpack::savedrp_thread(void *arg)
     return 0;
 }
 
-int Driverpack::checkindex()
+int Driverpack::checkindex() const
 {
     if(*Settings.drpext_dir) return 0;
 
@@ -1913,11 +1922,11 @@ void Driverpack::saveindex()
     wchar_t filename[MAX_PATH + 1];
     FILE *f;
     size_t sz;
-    int version=VERSION_INDEX;
+    const int version=VERSION_INDEX;
     char *mem,*p,*mem_pack;
 
     getindexfilename(col->getIndex_bin_dir(),L"bin",filename);
-    if(!System.canWriteFile(filename,L"wb"))
+    if(!SystemImp::canWriteFile(filename,L"wb"))
     {
         uprintf("ERROR in driverpack_saveindex(): Write-protected,'%S'\n",filename);
         return;
@@ -1982,12 +1991,12 @@ void Driverpack::genhashes()
     for(size_t i=0;i<HWID_list.size();i++)
     {
         const char *vv=text_ind.get(HWID_list[i].HWID);
-        int val=indices.gethashcode(vv,strlen(vv));
+        const int val= Hashtable::gethashcode(vv,strlen(vv));
         indices.additem(val,static_cast<int>(i));
     }
 }
 
-size_t Driverpack::printstats()
+size_t Driverpack::printstats() const
 {
     size_t sum=0;
 
@@ -2000,7 +2009,7 @@ void Driverpack::print_index_hr()
 {
     int pos;
     size_t inffile_index,manuf_index,HWID_index,desc_index;
-    size_t n=inffile.size();
+    const size_t n=inffile.size();
     Version *t;
     data_inffile_t *d_i;
     Hwidmatch hwidmatch(this,0);
@@ -2139,7 +2148,7 @@ void Driverpack::fillinfo(const char *sect,const char *hwid,unsigned start_index
     }
 }
 
-void Driverpack::getindexfilename(const wchar_t *dir,const wchar_t *ext,wchar_t *indfile)
+void Driverpack::getindexfilename(const wchar_t *dir,const wchar_t *ext,wchar_t *indfile) const
 {
     wchar_t *p;
     wchar_t buf[FILENAME_MAX];
@@ -2147,14 +2156,14 @@ void Driverpack::getindexfilename(const wchar_t *dir,const wchar_t *ext,wchar_t 
 
     // sanity checks
     wsprintf(indfile,L"");
-    size_t len=wcslen(getFilename());
+    const size_t len=wcslen(getFilename());
     if(len>FILENAME_MAX)
         return;
-    size_t plen=wcslen(getPath());
+    const size_t plen=wcslen(getPath());
     if(plen>MAX_PATH)
         return;
 
-    if(*(getPath()))
+    if(*getPath())
         wsprintf(buf+(len-3)*1,L"%s.%s",getPath()+wcslen(col->getDriverpack_dir()),ext);
     else
         wsprintf(buf+(len-3)*1,L".%s",ext);
@@ -2175,7 +2184,7 @@ void Driverpack::parsecat(wchar_t const *pathinf,wchar_t const *inffilename,cons
         char filename[MAX_PATH + 1];
         wsprintfA(filename,"%ws%ws",pathinf,inffilename);
         strtolower(filename,strlen(filename));
-        cat_list.insert({filename,static_cast<ofst>(text_ind.memcpyz_dup(bufa,strlen(bufa)))});
+        cat_list.insert({filename,(text_ind.memcpyz_dup(bufa,strlen(bufa)))});
         //vvuprintf("(%s)\n##%s\n",filename,bufa);
     }
     else
@@ -2191,7 +2200,7 @@ void Driverpack::indexinf(wchar_t const *drpdir,wchar_t const *iinfdilename,cons
     {
         size_t size=inf_len;
 
-        char *buf_out=new char[size+2];
+        const auto buf_out=new char[size+2];
         size=unicode2ansi((const unsigned char *)inf_base,buf_out,size);
         indexinf_ansi(drpdir,iinfdilename,buf_out,size);
         delete[] buf_out;

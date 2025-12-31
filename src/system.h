@@ -36,17 +36,57 @@ public:
 Event *CreateEventWr(bool manual=false);
 //}
 
-//{ ThreadAbs
+//{ Thread - Modern C++26 implementation using std::jthread
+#include <thread>
+#include <functional>
+#include <memory>
+
 typedef unsigned ( __stdcall *threadCallback)(void *arg);
 
-class ThreadAbs
+class Thread
 {
+    Thread(const Thread&) = delete;
+    Thread& operator=(const Thread&) = delete;
+
+    std::jthread m_thread;
+
 public:
-    virtual ~ThreadAbs(){}
-    virtual void start(threadCallback callback,void *arg)=0;
-    virtual void join()=0;
+    Thread() = default;
+    ~Thread() = default;
+
+    // Move operations
+    Thread(Thread&&) noexcept = default;
+    Thread& operator=(Thread&&) noexcept = default;
+
+    void start(threadCallback callback, void* arg)
+    {
+        m_thread = std::jthread([callback, arg]() -> void {
+            callback(arg);
+        });
+    }
+
+    void join()
+    {
+        if (m_thread.joinable())
+            m_thread.join();
+    }
+
+    [[nodiscard]] bool joinable() const noexcept
+    {
+        return m_thread.joinable();
+    }
+
+    // Request stop for cooperative cancellation (C++20 feature)
+    bool request_stop() noexcept
+    {
+        return m_thread.request_stop();
+    }
+
+    [[nodiscard]] std::stop_token get_stop_token() const noexcept
+    {
+        return m_thread.get_stop_token();
+    }
 };
-ThreadAbs *CreateThread();
 //}
 
 //{ RECT
@@ -76,44 +116,44 @@ public:
     SystemImp();
     ~SystemImp();
 
-    bool IsLangInstalled(int group);
-    unsigned GetTickCountWr();
+    static bool IsLangInstalled(int group);
+    static unsigned GetTickCountWr();
 
 //    int canWrite(const wchar_t *path);
-    bool canWriteFile(const wchar_t *path,const wchar_t *mode);
-    int canWriteDirectory(const wchar_t *path);
-    int run_command(const wchar_t* file,const wchar_t* cmd,int show,int wait);
-    int run_command32(const wchar_t* file,const wchar_t* cmd,int show,int wait);
-    void run_controlpanel(const wchar_t* cmd);
+    static bool canWriteFile(const wchar_t *path,const wchar_t *mode);
+    static int canWriteDirectory(const wchar_t *path);
+    static int run_command(const wchar_t* file,const wchar_t* cmd,int show,int wait);
+    static int run_command32(const wchar_t* file,const wchar_t* cmd,int show,int wait);
+    static void run_controlpanel(const wchar_t* cmd);
     void benchmark();
 
-    void deletefile(const wchar_t *filename);
-    BOOL FileAvailable(const wchar_t *path, int numRetries, int waitTime);
-    bool FileExists(const wchar_t *filename);
-    bool FileExists2(const wchar_t *spec);
-    bool DirectoryExists(const wchar_t *spec);
-    __int64 FileSize(const wchar_t *filename);
-    __int64 DirectorySize(const std::wstring directory);
-    std::wstring ExpandEnvVar(std::wstring source);
-    bool ChooseDir(wchar_t *path,const wchar_t *title);
-    bool ChooseFile(wchar_t *filename,const wchar_t *strlist,const wchar_t *ext);
-    void CreateDir(const wchar_t *filename);
-    void fileDelSpec(wchar_t *filename);
-    int DriveNumber(const wchar_t *filename);
+    static void deletefile(const wchar_t *filename);
+    static BOOL FileAvailable(const wchar_t *path, int numRetries, int waitTime);
+    static bool FileExists(const wchar_t *filename);
+    static bool FileExists2(const wchar_t *spec);
+    static bool DirectoryExists(const wchar_t *spec);
+    static __int64 FileSize(const wchar_t *filename);
+    static __int64 DirectorySize(const std::wstring directory);
+    static std::wstring ExpandEnvVar(std::wstring source);
+    static bool ChooseDir(wchar_t *path,const wchar_t *title);
+    static bool ChooseFile(wchar_t *filename,const wchar_t *strlist,const wchar_t *ext);
+    static void CreateDir(const wchar_t *filename);
+    static void fileDelSpec(wchar_t *filename);
+    static int DriveNumber(const wchar_t *filename);
 
-    int UnregisterClass_log(const wchar_t *lpClassName,const wchar_t *func,const wchar_t *obj);
+    static int UnregisterClass_log(const wchar_t *lpClassName,const wchar_t *func,const wchar_t *obj);
     int _vscwprintf_dll(const wchar_t * _Format,va_list _ArgList);
-    std::string wtoa (const std::wstring& wstr);
-    std::wstring AppPathW();
-    std::string AppPathS();
+    static std::string wtoa (const std::wstring& wstr);
+    static std::wstring AppPathW();
+    static std::string AppPathS();
     //int FindLatestExeVersion(int bit=32);
-    bool SystemProtectionEnabled(State *state);
-    int GetRestorePointCreationFrequency();
-    void SetRestorePointCreationFrequency(int freq);
+    static bool SystemProtectionEnabled(State *state);
+    static int GetRestorePointCreationFrequency();
+    static void SetRestorePointCreationFrequency(int freq);
     bool CreateRestorePoint(std::wstring desc);
-    int getver(const char *s);
-    int getcurver(const char *s);
-    bool GetNonPresentDevices();
+    static int getver(const char *s);
+    static int getcurver(const char *s);
+    static bool GetNonPresentDevices();
 };
 extern SystemImp System;
 //}

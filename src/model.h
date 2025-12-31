@@ -39,7 +39,7 @@ public:
     Bundle();
     ~Bundle();
 
-    Matcher *getMatcher(){return matcher;}
+    Matcher *getMatcher() const {return matcher;}
 
     static unsigned int __stdcall thread_loadall(void *arg);
 

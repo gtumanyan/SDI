@@ -13,6 +13,7 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "string_utils.hpp"
 #include "SDI.h"
 #include "logging.h"
 #include "system.h"
@@ -28,6 +29,8 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "enum.h"
 #include "model.h"
 
+
+
 extern Event *deviceupdate_event;
 extern volatile int deviceupdate_exitflag;
 extern int bundle_display;
@@ -36,7 +39,7 @@ extern int bundle_shadow;
 //{ Bundle
 unsigned int __stdcall Bundle::thread_scandevices(void *arg)
 {
-    State *state=static_cast<State *>(arg);
+    const auto state=static_cast<State *>(arg);
 
     if((invaidate_set&INVALIDATE_DEVICES)==0)return 0;
 
@@ -48,7 +51,7 @@ unsigned int __stdcall Bundle::thread_scandevices(void *arg)
 
 unsigned int __stdcall Bundle::thread_loadindices(void *arg)
 {
-    Collection *collection=static_cast<Collection *>(arg);
+    const auto collection=static_cast<Collection *>(arg);
 
     if(invaidate_set&INVALIDATE_INDICES)collection->updatedir();
     return 0;
@@ -56,7 +59,7 @@ unsigned int __stdcall Bundle::thread_loadindices(void *arg)
 
 unsigned int __stdcall Bundle::thread_getsysinfo(void *arg)
 {
-    State *state=static_cast<State *>(arg);
+    const auto state=static_cast<State *>(arg);
 
     if(Settings.statemode==STATEMODE_REAL&&invaidate_set&INVALIDATE_SYSINFO)
         state->getsysinfo_slow();
@@ -76,7 +79,7 @@ Bundle::~Bundle()
 
 unsigned int __stdcall Bundle::thread_loadall(void *arg)
 {
-    Bundle *bundle=static_cast<Bundle *>(arg);
+    auto bundle=static_cast<Bundle *>(arg);
 
     InitializeCriticalSection(&sync);
     CRITICAL_SECTION_ACTIVE=true;
@@ -110,7 +113,7 @@ unsigned int __stdcall Bundle::thread_loadall(void *arg)
             uprintfs("*** FINISH primary ***\n\n");
             invaidate_set&=~(INVALIDATE_DEVICES|INVALIDATE_INDICES|INVALIDATE_SYSINFO);
 
-            if((Settings.flags&FLAG_NOGUI)&&(Settings.flags&FLAG_AUTOINSTALL)==0)
+            if(Settings.flags&FLAG_NOGUI&&(Settings.flags&FLAG_AUTOINSTALL)==0)
             {
                 // NOGUI mode
                 manager_g->matcher=bundle[bundle_shadow].matcher;
@@ -155,16 +158,16 @@ void Bundle::bundle_init()
 
 void Bundle::bundle_prep()
 {
-    duprintf("Bundle::bundle_prep\n");
+    // duprintf("Bundle::bundle_prep");
     state.getsysinfo_fast();
     duprintf("Bundle::bundle_prep::complete\n");
 }
 void Bundle::bundle_load(Bundle *pbundle)
 {
     duprintf("Bundle::bundle_load\n");
-    ThreadAbs *thandle0=CreateThread();
-    ThreadAbs *thandle1=CreateThread();
-    ThreadAbs *thandle2=CreateThread();
+    Thread *thandle0 = new Thread();
+    Thread *thandle1 = new Thread();
+    Thread *thandle2 = new Thread();
 
     //Timers.start(time_test);
 

@@ -13,6 +13,7 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+// ReSharper disable CppInconsistentNaming
 #include <algorithm>
 #include <windows.h>
 #include <shellapi.h>
@@ -28,7 +29,6 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "msapi_utf8.h"
 #include "resource.h"
 #include "Settings.h"
-#include "darkmode.h"
 
 #include "7zip.h"
 #include "cli.h"
@@ -45,24 +45,25 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "model.h"
 #include "script.h"
+#include "string_utils.hpp"
 
 #include "wizards.h"
 
 static BOOL log_displayed = FALSE;
-static HWND hStart = NULL;
+static HWND hStart = nullptr;
 
 /*
  * Globals
  */
 OPENED_LIBRARIES_VARS;
 HINSTANCE hMainInstance;
-HWND hMainDialog, hMultiToolbar, hSaveToolbar, hHashToolbar, hAdvancedDeviceToolbar, hAdvancedFormatToolbar, hUpdatesDlg = NULL;
+HWND hMainDialog;
 uint16_t SDI_version[3];
-HWND hLog = NULL, hLogDialog = NULL, hProgress = NULL;
-BOOL debug = FALSE;
+HWND hLog = nullptr, hLogDialog = nullptr, hProgress = nullptr;
+static BOOL debug = FALSE;
 BOOL right_to_left_mode = FALSE;
 int dialog_showing = 0;
-char user_dir[MAX_PATH], cur_dir[MAX_PATH];
+static char user_dir[MAX_PATH];
 Manager manager_v[2];
 Manager *manager_g=&manager_v[0];
 USBWizard *USBWiz;
@@ -78,16 +79,17 @@ int manager_active=0;
 int bundle_display=1;
 int bundle_shadow=0;
 bool emptydrp;
-WinVersions winVersions;
-HMENU pSysMenu,ToolsMenu,UpdatesMenu;
-int pSysMenuCount=0;
-TORRENT_SELECTION_MODE TorrentSelectionMode=TSM_NONE;
+static WinVersions winVersions;
+static HMENU pSysMenu,ToolsMenu,UpdatesMenu;
+static int pSysMenuCount=0;
+static TORRENT_SELECTION_MODE TorrentSelectionMode=TSM_NONE;
 
 // drag/drop in elevated processess
 // https://helgeklein.com/blog/2010/03/how-to-enable-drag-and-drop-for-an-elevated-mfc-application-on-vistawindows-7/
 typedef BOOL (WINAPI *PFN_CHANGEWINDOWMESSAGEFILTER)(UINT,DWORD);
-HMODULE hModuleUser32=GetModuleHandle(TEXT("user32.dll"));
-PFN_CHANGEWINDOWMESSAGEFILTER pfnChangeWindowMessageFilter=(PFN_CHANGEWINDOWMESSAGEFILTER)GetProcAddress(hModuleUser32,"ChangeWindowMessageFilter");
+static HMODULE hModuleUser32=GetModuleHandle(TEXT("user32.dll"));
+static auto pfnChangeWindowMessageFilter = reinterpret_cast<PFN_CHANGEWINDOWMESSAGEFILTER>(GetProcAddress(
+	hModuleUser32, "ChangeWindowMessageFilter"));
 
 //}
 
@@ -98,34 +100,32 @@ Settings_t Settings;
 //}
 
 // Callback for the log window
-BOOL CALLBACK LogCallback(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+static BOOL CALLBACK LogCallback(const HWND hDlg, const UINT message, const WPARAM wParam, LPARAM lParam)
 {
-	static HFONT hf = NULL;
-	HDC hDC;
-	LONG lfHeight;
+	static HFONT hf = nullptr;
 	LONG_PTR style;
 	DWORD log_size;
-	char *log_buffer = NULL, *filepath;
-	EXT_DECL(log_ext, "SDI.log", __VA_GROUP__("*.log"), __VA_GROUP__("SDI log"));
+	char *log_buffer = nullptr;
+	EXT_DECL(log_ext, "SDI.log", VA_GROUP_("*.log"), VA_GROUP_("SDI log"));
 	switch (message) {
 	case WM_INITDIALOG:
 		hLog = GetDlgItem(hDlg, IDC_LOG_EDIT);
 
 		// Increase the size of our log textbox to MAX_LOG_SIZE (unsigned word)
 		PostMessage(hLog, EM_LIMITTEXT, MAX_LOG_SIZE , 0);
-		if (hf == NULL) {
+		if (hf == nullptr) {
 			// Set the font to Unicode so that we can display anything
-			hDC = GetDC(NULL);
-			lfHeight = -MulDiv(9, GetDeviceCaps(hDC, LOGPIXELSY), 72);
+			HDC hDC = GetDC(nullptr);
+			const LONG lfHeight = -MulDiv(9, GetDeviceCaps(hDC, LOGPIXELSY), 72);
 			safe_release_dc(NULL, hDC);
 			hf = CreateFontA(lfHeight, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 				DEFAULT_CHARSET, 0, 0, PROOF_QUALITY, 0, "Consolas");
 		}
-		SendDlgItemMessageA(hDlg, IDC_LOG_EDIT, WM_SETFONT, (WPARAM)hf, TRUE);
+		SendDlgItemMessageA(hDlg, IDC_LOG_EDIT, WM_SETFONT, reinterpret_cast<WPARAM>(hf), TRUE);
 		// Set 'Close Log' as the selected button
-		SendMessage(hDlg, WM_NEXTDLGCTL, (WPARAM)GetDlgItem(hDlg, IDCANCEL), TRUE);
+		SendMessage(hDlg, WM_NEXTDLGCTL, reinterpret_cast<WPARAM>(GetDlgItem(hDlg, IDCANCEL)), TRUE);
 
-		// Suppress any inherited RTL flags from our edit control's style. Otherwise
+		// Suppress any inherited RTL flags from our edit control's style. Otherwise,
 		// the displayed text becomes a mess due to Windows trying to interpret
 		// dots, parenthesis, columns and so on in an RTL context...
 		// We also take this opportunity to fix the scroll bar and text alignment.
@@ -133,7 +133,7 @@ BOOL CALLBACK LogCallback(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		style &= ~(WS_EX_RTLREADING | WS_EX_RIGHT | WS_EX_LEFTSCROLLBAR);
 		SetWindowLongPtr(hLog, GWL_EXSTYLE, style);
 		style = GetWindowLongPtr(hLog, GWL_STYLE);
-		style &= ~(ES_RIGHT);
+		style &= ~ES_RIGHT;
 		SetWindowLongPtr(hLog, GWL_STYLE, style);
 		break;
 	case WM_NCDESTROY:
@@ -146,7 +146,7 @@ BOOL CALLBACK LogCallback(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 			log_displayed = FALSE;
 			// Set focus to the Cancel button on the main dialog
 			// This avoids intempestive tooltip display from the log toolbar button
-			SendMessage(hMainDialog, WM_NEXTDLGCTL, (WPARAM)GetDlgItem(hMainDialog, IDCANCEL), TRUE);
+			SendMessage(hMainDialog, WM_NEXTDLGCTL, reinterpret_cast<WPARAM>(GetDlgItem(hMainDialog, IDCANCEL)), TRUE);
 			return TRUE;
 		case IDC_LOG_CLEAR:
 			SetWindowTextA(hLog, "");
@@ -155,13 +155,13 @@ BOOL CALLBACK LogCallback(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 			log_size = GetWindowTextLengthU(hLog);
 			if (log_size <= 0)
 				break;
-			log_buffer = (char*)malloc(log_size);
-			if (log_buffer != NULL) {
+			log_buffer = static_cast<char*>(malloc(log_size));
+			if (log_buffer != nullptr) {
 				log_size = GetDlgItemTextU(hDlg, IDC_LOG_EDIT, log_buffer, log_size);
 				if (log_size != 0) {
 					log_size--;	// remove NUL terminator
-					filepath =  FileDialog(TRUE, user_dir, &log_ext, NULL);
-					if (filepath != NULL)
+					char* filepath = FileDialog(TRUE, user_dir, &log_ext, nullptr);
+					if (filepath != nullptr)
 						FileIO(FILE_IO_WRITE, filepath, &log_buffer, &log_size);
 					safe_free(filepath);
 				}
@@ -175,7 +175,7 @@ BOOL CALLBACK LogCallback(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		log_displayed = FALSE;
 		// Set focus to the Cancel button on the main dialog
 		// This avoids intempestive tooltip display from the log toolbar button
-		SendMessage(hMainDialog, WM_NEXTDLGCTL, (WPARAM)GetDlgItem(hMainDialog, IDCANCEL), TRUE);
+		SendMessage(hMainDialog, WM_NEXTDLGCTL, reinterpret_cast<WPARAM>(GetDlgItem(hMainDialog, IDCANCEL)), TRUE);
 		return TRUE;
 	case UM_RESIZE_BUTTONS:
 		// Resize our buttons for low scaling factors
@@ -190,10 +190,8 @@ BOOL CALLBACK LogCallback(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 /*
  * Application Entrypoint
  */
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nShowCmd) {
-		BOOL attached_console = FALSE;
-
-		// Save instance of the application for further reference
+int WINAPI wWinMain(_In_ const HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ const LPWSTR lpCmdLine, _In_ const int nShowCmd) {
+	// Save instance of the application for further reference
 		hMainInstance = hInstance;
 
 		//Timers.start(time_total);
@@ -201,13 +199,12 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		// Determine number of CPU cores ("Logical Processors")
 		SYSTEM_INFO siSysInfo;
 		GetSystemInfo(&siSysInfo);
-		num_cores=siSysInfo.dwNumberOfProcessors;
+		num_cores=static_cast<uint8_t>(siSysInfo.dwNumberOfProcessors);
 
     // scripting
     if(Script::cmdArgIsPresent())
     {
-        Script script;
-        if(script.loadscript())
+	    if(Script script; script.loadscript())
         {
             deviceupdate_event=CreateEventWr();
             script.runscript();
@@ -253,7 +250,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     // Start device/driver scan
     bundle[bundle_display].bundle_prep();
     invalidate(INVALIDATE_DEVICES|INVALIDATE_SYSINFO|INVALIDATE_INDICES|INVALIDATE_MANAGER);
-    ThreadAbs *thr=CreateThread();
+    Thread *thr = new Thread();
     thr->start(&Bundle::thread_loadall,&bundle[0]);
 
     // Check updates
@@ -263,7 +260,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     #endif
 
     // Start folder monitors
-    Filemon *mon_drp=CreateFilemon(Settings.drp_dir,1,drp_callback);
+    const Filemon *mon_drp=CreateFilemon(Settings.drp_dir,1,drp_callback);
 
     // MAIN GUI LOOP
     MainWindow.MainLoop(nShowCmd);
@@ -293,7 +290,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     // Bring the console window back
     ShowWindow(GetConsoleWindow(),SW_SHOWNOACTIVATE);
 
-		if (attached_console) {
+		if (BOOL attached_console = FALSE) {
 				SetWindowPos(GetConsoleWindow(), HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
 				FreeConsole();
 		}
@@ -307,7 +304,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     return ret_global;
 }
 
-void MainWindow_t::AddMenuItem(HMENU parent,UINT mask,UINT id,UINT type,UINT state,HMENU hSubMenu,wchar_t* typedata)
+void MainWindow_t::AddMenuItem(const HMENU parent, const UINT mask, const UINT id, const UINT type, const UINT state, const HMENU hSubMenu,wchar_t* typedata)
 {
     MENUITEMINFO mi;
     mi.cbSize=sizeof(MENUITEMINFO);
@@ -318,16 +315,15 @@ void MainWindow_t::AddMenuItem(HMENU parent,UINT mask,UINT id,UINT type,UINT sta
     mi.dwTypeData=typedata;
     mi.hSubMenu=hSubMenu;
 
-    if (parent != NULL)
+    if (parent != nullptr)
         InsertMenuItem(parent, 0, TRUE, &mi);
 }
 
-void MainWindow_t::ModifyMenuItem(HMENU parent, UINT mask, UINT id, UINT state, wchar_t* typedata)
+void MainWindow_t::ModifyMenuItem(const HMENU parent, const UINT mask, const UINT id, const UINT state, wchar_t* typedata)
 {
-    if (parent==NULL)return;
+    if (parent== nullptr)return;
 
-    MENUITEMINFO mi;
-    memset(&mi, 0, sizeof(MENUITEMINFO));
+    MENUITEMINFO mi = {};
     mi.cbSize=sizeof(MENUITEMINFO);
     mi.fMask=mask;
 
@@ -340,7 +336,7 @@ void MainWindow_t::ModifyMenuItem(HMENU parent, UINT mask, UINT id, UINT state, 
     }
 }
 
-void MainWindow_t::LoadMenuItems()
+void MainWindow_t::LoadMenuItems() const
 {
     if(!pSysMenu)
     {
@@ -382,7 +378,6 @@ void MainWindow_t::LoadMenuItems()
     #endif // NDEBUG
     AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_LICENSE,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYST_LICENSE));
     AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_ABOUT,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYST_ABOUT));
-    AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_TRANSLATE,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYST_TRANSLATE));
     AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_USBWIZARD,0,0,nullptr,const_cast<wchar_t *>STR(STR_SYST_USBWIZARD));
     AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_DRVDIR,0,0,nullptr,const_cast<wchar_t *>STR(STR_DRVDIR));
     AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID,IDM_OPENLOGS,0,0,nullptr,const_cast<wchar_t *>STR(STR_OPENLOGS));
@@ -390,12 +385,11 @@ void MainWindow_t::LoadMenuItems()
     AddMenuItem(pSysMenu,MIIM_STRING|MIIM_ID|MIIM_SUBMENU,IDM_UPDATES,0,0,UpdatesMenu,const_cast<wchar_t *>STR(STR_UPDATES));
 }
 
-void MainWindow_t::MainLoop(int nShowCmd) {
-    if((Settings.flags&FLAG_NOGUI)&&(Settings.flags&FLAG_AUTOINSTALL)==0)return;
+void MainWindow_t::MainLoop(const int nShowCmd) {
+    if(Settings.flags&FLAG_NOGUI&&(Settings.flags&FLAG_AUTOINSTALL)==0)return;
 
     // Register classMain
-    WNDCLASSEX wcex;
-    memset(&wcex,0,sizeof(WNDCLASSEX));
+    WNDCLASSEX wcex = {};
     wcex.cbSize=         sizeof(WNDCLASSEX);
     wcex.lpfnWndProc=    WndProcMainCallback;
     wcex.hInstance=      hMainInstance;
@@ -403,7 +397,7 @@ void MainWindow_t::MainLoop(int nShowCmd) {
     wcex.hCursor=        LoadCursor(nullptr,IDC_ARROW);
     wcex.lpszClassName=  classMain;
 		// For the extended translucent frame to be visible, we need black background.
-		wcex.hbrBackground=  (HBRUSH)GetStockObject(BLACK_BRUSH);
+		wcex.hbrBackground=  static_cast<HBRUSH>(GetStockObject(BLACK_BRUSH));
     if(!RegisterClassEx(&wcex))
     {
 				uprintf("ERROR in gui(): failed to register '%S' class\n",wcex.lpszClassName);
@@ -417,7 +411,7 @@ void MainWindow_t::MainLoop(int nShowCmd) {
     if(!RegisterClassEx(&wcex))
     {
 				uprintf("ERROR in gui(): failed to register '%S' class\n",wcex.lpszClassName);
-        System.UnregisterClass_log(classMain,L"gui",L"classMain");
+				SystemImp::UnregisterClass_log(classMain,L"gui",L"classMain");
         return;
     }
 
@@ -427,8 +421,8 @@ void MainWindow_t::MainLoop(int nShowCmd) {
     if(!RegisterClassEx(&wcex))
     {
 		uprintf("ERROR in gui(): failed to register '%S' class\n",wcex.lpszClassName);
-        System.UnregisterClass_log(classMain,L"gui",L"classMain");
-        System.UnregisterClass_log(classPopup,L"gui",L"classPopup");
+		SystemImp::UnregisterClass_log(classMain,L"gui",L"classMain");
+		SystemImp::UnregisterClass_log(classPopup,L"gui",L"classPopup");
         return;
     }
 
@@ -469,7 +463,7 @@ void MainWindow_t::MainLoop(int nShowCmd) {
     if(Settings.license)
     {
         //time_test=System.GetTickCountWr()-time_total;log_times();
-        ShowWindow(hMain,(Settings.flags&FLAG_NOGUI)?SW_HIDE:nShowCmd);
+        ShowWindow(hMain,Settings.flags&FLAG_NOGUI?SW_HIDE:nShowCmd);
         int done=0;
         while(!done)
         {
@@ -482,75 +476,75 @@ void MainWindow_t::MainLoop(int nShowCmd) {
                 {
                     done=TRUE;
                     break;
-                }else
+                }
                 if(msg.message==WM_KEYDOWN)
                 {
-                    if(!(msg.lParam&(1<<30)))
-                    {
-                        if(msg.wParam==VK_CONTROL||msg.wParam==VK_SPACE)
-                        {
-                            POINT p;
-                            GetCursorPos(&p);
-                            SetCursorPos(p.x+1,p.y);
-                            SetCursorPos(p.x,p.y);
-                        }
-                        if(msg.wParam==VK_CONTROL)ctrl_down=1;
-                        if(msg.wParam==VK_SPACE)  space_down=1;
-                        if(msg.wParam==VK_SHIFT||msg.wParam==VK_LSHIFT||msg.wParam==VK_RSHIFT)  space_down=shift_down=1;
-                    }
-                    if(msg.wParam==VK_SPACE&&kbpanel)
-                    {
-                        if(kbpanel==KB_FIELD)
-                        {
-                            SendMessage(hwndFrame,WM_LBUTTONDOWN,0,0);
-                            SendMessage(hwndFrame,WM_LBUTTONUP,0,0);
-                        }
-                        else
-                        {
-                            SendMessage(hMain,WM_LBUTTONDOWN,0,0);
-                            SendMessage(hMain,WM_LBUTTONUP,0,0);
-                        }
-                    }
-                    if((msg.wParam==VK_LEFT||msg.wParam==VK_RIGHT)&&kbpanel==KB_INSTALL)
-                    {
-                        arrowsAdvance(msg.wParam==VK_LEFT?-1:1);
-                    }
-                    if((msg.wParam==VK_LEFT)&&kbpanel==KB_FIELD)
-                    {
-                        size_t index;
-                        int nop;
-                        manager_g->hitscan(0,0,&index,&nop);
-                        manager_g->expand(index,EXPAND_MODE::COLLAPSE);
-                    }
-                    if((msg.wParam==VK_RIGHT)&&kbpanel==KB_FIELD)
-                    {
-                        size_t index;
-                        int nop;
-                        manager_g->hitscan(0,0,&index,&nop);
-                        manager_g->expand(index,EXPAND_MODE::EXPAND);
-                    }
-                    if(msg.wParam==VK_UP)arrowsAdvance(-1);else
-                    if(msg.wParam==VK_DOWN)arrowsAdvance(1);
+	                if(!(msg.lParam&1<<30))
+	                {
+		                if(msg.wParam==VK_CONTROL||msg.wParam==VK_SPACE)
+		                {
+			                POINT p;
+			                GetCursorPos(&p);
+			                SetCursorPos(p.x+1,p.y);
+			                SetCursorPos(p.x,p.y);
+		                }
+		                if(msg.wParam==VK_CONTROL)ctrl_down=1;
+		                if(msg.wParam==VK_SPACE)  space_down=1;
+		                if(msg.wParam==VK_SHIFT||msg.wParam==VK_LSHIFT||msg.wParam==VK_RSHIFT)  space_down=shift_down=1;
+	                }
+	                if(msg.wParam==VK_SPACE&&kbpanel)
+	                {
+		                if(kbpanel==KB_FIELD)
+		                {
+			                SendMessage(hwndFrame,WM_LBUTTONDOWN,0,0);
+			                SendMessage(hwndFrame,WM_LBUTTONUP,0,0);
+		                }
+		                else
+		                {
+			                SendMessage(hMain,WM_LBUTTONDOWN,0,0);
+			                SendMessage(hMain,WM_LBUTTONUP,0,0);
+		                }
+	                }
+	                if((msg.wParam==VK_LEFT||msg.wParam==VK_RIGHT)&&kbpanel==KB_INSTALL)
+	                {
+		                arrowsAdvance(msg.wParam==VK_LEFT?-1:1);
+	                }
+	                if(msg.wParam==VK_LEFT&&kbpanel==KB_FIELD)
+	                {
+		                size_t index;
+		                int nop;
+		                manager_g->hitscan(0,0,&index,&nop);
+		                manager_g->expand(index,EXPAND_MODE::COLLAPSE);
+	                }
+	                if(msg.wParam==VK_RIGHT&&kbpanel==KB_FIELD)
+	                {
+		                size_t index;
+		                int nop;
+		                manager_g->hitscan(0,0,&index,&nop);
+		                manager_g->expand(index,EXPAND_MODE::EXPAND);
+	                }
+	                if(msg.wParam==VK_UP)arrowsAdvance(-1);else
+		                if(msg.wParam==VK_DOWN)arrowsAdvance(1);
 
-                    if(msg.wParam==VK_TAB&&shift_down)
-                    {
-                        tabadvance(-1);
-                    }
-                    if(msg.wParam==VK_TAB&&!shift_down)
-                    {
-                        tabadvance(1);
-                    }
+	                if(msg.wParam==VK_TAB&&shift_down)
+	                {
+		                tabadvance(-1);
+	                }
+	                if(msg.wParam==VK_TAB&&!shift_down)
+	                {
+		                tabadvance(1);
+	                }
                 }else
-                if(msg.message==WM_KEYUP)
-                {
-                    if(msg.wParam==VK_CONTROL||msg.wParam==VK_SPACE)
-                    {
-                        Popup->drawpopup(0,0,FLOATING_NONE,0,0,hwndFrame);
-                    }
-                    if(msg.wParam==VK_CONTROL)ctrl_down=0;
-                    if(msg.wParam==VK_SPACE)  space_down=0;
-                    if(msg.wParam==VK_SHIFT||msg.wParam==VK_LSHIFT||msg.wParam==VK_RSHIFT)  space_down=shift_down=0;
-                }
+	                if(msg.message==WM_KEYUP)
+	                {
+		                if(msg.wParam==VK_CONTROL||msg.wParam==VK_SPACE)
+		                {
+			                Popup->drawpopup(0,0,FLOATING_NONE,0,0,hwndFrame);
+		                }
+		                if(msg.wParam==VK_CONTROL)ctrl_down=0;
+		                if(msg.wParam==VK_SPACE)  space_down=0;
+		                if(msg.wParam==VK_SHIFT||msg.wParam==VK_LSHIFT||msg.wParam==VK_RSHIFT)  space_down=shift_down=0;
+	                }
 
                 if(!(msg.message==WM_SYSKEYDOWN&&msg.wParam==VK_MENU))
                 {
@@ -563,9 +557,9 @@ void MainWindow_t::MainLoop(int nShowCmd) {
 
     // UnregisterClass will fail if a window is still in use
     // result is application can't shut down
-    if( (System.UnregisterClass_log(classMain,L"gui",L"classMain") or
-         System.UnregisterClass_log(classPopup,L"gui",L"classPopup") or
-         System.UnregisterClass_log(classField,L"gui",L"classField")) ) {
+    if(SystemImp::UnregisterClass_log(classMain,L"gui",L"classMain") or
+	    SystemImp::UnregisterClass_log(classPopup,L"gui",L"classPopup") or
+	    SystemImp::UnregisterClass_log(classField,L"gui",L"classField") ) {
              // the ugly way to end the process
             _Exit(0);
          }
@@ -573,7 +567,7 @@ void MainWindow_t::MainLoop(int nShowCmd) {
 //}
 
 //{ Subroutes
-void drp_callback(const wchar_t *szFile,int action,int lParam)
+void drp_callback(const wchar_t *szFile, const int action, const int lParam)
 {
     UNREFERENCED_PARAMETER(action);
     UNREFERENCED_PARAMETER(lParam);
@@ -603,13 +597,13 @@ MainWindow_t::~MainWindow_t()
     delete hTheme;
 }
 
-struct TData
+static struct TData
 {
 		HWND pages[4];
 		HWND tab;
 } data;
 
-static BOOL CALLBACK DialogPage(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
+static BOOL CALLBACK DialogPage(const HWND hwnd, const UINT msg, const WPARAM wp, const LPARAM lp)
 {
 		UNREFERENCED_PARAMETER(hwnd);
 		UNREFERENCED_PARAMETER(wp);
@@ -639,8 +633,7 @@ static BOOL CALLBACK DialogPage(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
 
 				case WM_HSCROLL:
 						{
-								int n=-SendMessage(GetDlgItem(data.pages[0],IDD_P1_ZOOMI),TBM_GETPOS,0,0);
-								if(n!=Settings.scale)
+							if(const int n=-SendMessage(GetDlgItem(data.pages[0],IDD_P1_ZOOMI),TBM_GETPOS,0,0); n!=Settings.scale)
 								{
 										Settings.savedscale=Settings.scale=n;
 										PostMessage(MainWindow.hMain,WM_UPDATETHEME,0,0);
@@ -657,14 +650,14 @@ static BOOL CALLBACK DialogPage(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
 
 static void OnSelChange()
 {
-		int sel=TabCtrl_GetCurSel(data.tab);
-		ShowWindow(data.pages[0],(sel==0)?SW_SHOW:SW_HIDE);
-		ShowWindow(data.pages[1],(sel==1)?SW_SHOW:SW_HIDE);
-		ShowWindow(data.pages[2],(sel==2)?SW_SHOW:SW_HIDE);
-		ShowWindow(data.pages[3],(sel==3)?SW_SHOW:SW_HIDE);
+		const int sel=TabCtrl_GetCurSel(data.tab);
+		ShowWindow(data.pages[0],sel==0?SW_SHOW:SW_HIDE);
+		ShowWindow(data.pages[1],sel==1?SW_SHOW:SW_HIDE);
+		ShowWindow(data.pages[2],sel==2?SW_SHOW:SW_HIDE);
+		ShowWindow(data.pages[3],sel==3?SW_SHOW:SW_HIDE);
 }
 
-static BOOL CALLBACK EnumChildProcMirror(HWND hWnd, LPARAM lParam)
+static BOOL CALLBACK EnumChildProcMirror(const HWND hWnd, const LPARAM lParam)
 {
 		UNREFERENCED_PARAMETER(lParam);
 
@@ -672,8 +665,7 @@ static BOOL CALLBACK EnumChildProcMirror(HWND hWnd, LPARAM lParam)
 		if (hWnd && IsWindow(hWnd))
 		{
 				// exclude two specific controls
-				int id=GetDlgCtrlID(hWnd);
-				if(id==IDD_P1_ZOOMS||id==IDD_P1_ZOOMB)return TRUE;
+				if(const int id=GetDlgCtrlID(hWnd); id==IDD_P1_ZOOMS||id==IDD_P1_ZOOMB)return TRUE;
 				// Get the class name for the control
 				wchar_t szClassName[MAXCHAR];
 				GetClassName(hWnd, szClassName, MAXCHAR);
@@ -687,116 +679,23 @@ static BOOL CALLBACK EnumChildProcMirror(HWND hWnd, LPARAM lParam)
 		return TRUE;
 }
 
-/*
- * License callback
- */
-INT_PTR CALLBACK LicenseCallback(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
-{
-		WINDOWPOS* wpos;
-		static HBRUSH background_brush = CreateSolidBrush(GetSysColor(COLOR_BTNFACE));
-		HWND hEditBox;
-		RECT rect;
-		LPCSTR s;
-		size_t sz;
-		switch (Message) {
-		case WM_INITDIALOG:
-				get_resource(IDR_LICENSE, (void**)&s, &sz);
-				hEditBox = GetDlgItem(hwnd, IDC_LICENSE_TEXT);
-				SetWindowTextA(hEditBox, s);
-				SendMessage(hEditBox, EM_SETREADONLY, 1, 0);
-				// only show decline button on startup
-				if (GetParent(hwnd))
-				{
-						ShowWindow(GetDlgItem(hwnd, IDCANCEL), SW_HIDE);
-						SetFocus(GetDlgItem(hwnd, IDOK));
-				}
-				return TRUE;
-
-		case WM_COMMAND:
-				switch (LOWORD(wParam)) {
-				case IDOK:
-						Settings.license = 2;
-						EndDialog(hwnd, IDOK);
-						return TRUE;
-
-				case IDCANCEL:
-						if (!GetParent(hwnd))Settings.license = 0;
-						EndDialog(hwnd, IDCANCEL);
-						return TRUE;
-
-				default:
-						break;
-				}
-				break;
-		case WM_WINDOWPOSCHANGED:
-				wpos = (WINDOWPOS*)lParam;
-				{
-						int r = SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);
-						if (r && wpos->cy - rect.bottom > 0)
-						{
-								int sz1 = rect.bottom - 20 - wpos->cy;
-								wpos->y = 10;
-								wpos->cy = rect.bottom - 20;
-								MoveWindow(hwnd, wpos->x, wpos->y, wpos->cx, wpos->cy, 1);
-
-								GetRelativeCtrlRect(GetDlgItem(hwnd, IDC_LICENSE_TEXT), &rect);
-								rect.bottom += sz1;
-								MoveWindow(GetDlgItem(hwnd, IDC_LICENSE_TEXT), rect.left, rect.top, rect.right, rect.bottom, 1);
-
-								GetRelativeCtrlRect(GetDlgItem(hwnd, IDOK), &rect);
-								rect.top += sz1;
-								MoveWindow(GetDlgItem(hwnd, IDOK), rect.left, rect.top, rect.right, rect.bottom, 1);
-
-								GetRelativeCtrlRect(GetDlgItem(hwnd, IDCANCEL), &rect);
-								rect.top += sz1;
-								MoveWindow(GetDlgItem(hwnd, IDCANCEL), rect.left, rect.top, rect.right, rect.bottom, 1);
-						}
-				}
-				return TRUE;
-		case WM_CTLCOLORSTATIC:
-				hEditBox = GetDlgItem(hwnd, IDC_LICENSE_TEXT);
-				if ((HWND)lParam == hEditBox)
-				{
-						HDC hdcStatic = (HDC)wParam;
-						SetTextColor(hdcStatic, GetSysColor(COLOR_WINDOWTEXT));
-						SetBkColor(hdcStatic, GetSysColor(COLOR_WINDOW));
-						return (LRESULT)GetStockObject(HOLLOW_BRUSH);
-				}
-				else
-				{
-						HDC hdcStatic = (HDC)wParam;
-						SetBkMode(hdcStatic, TRANSPARENT);
-						return (INT_PTR)background_brush;
-				}
-		case WM_CTLCOLORDLG:
-				return (INT_PTR)background_brush;
-
-		default:
-				break;
-		}
-		return (INT_PTR)FALSE;
-}
-
-static BOOL CALLBACK SettingsDialog(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
-{
+static BOOL CALLBACK SettingsDialog(const HWND hDlg, const UINT msg, const WPARAM wp, const LPARAM lp) {
 		wchar_t num[32];
 
-		switch (msg)
-		{
+		switch (msg) {
 				case WM_INITDIALOG:
-
 						// save current window state
 						RECT rect;
 						GetWindowRect(MainWindow.hMain,&rect);
 						Settings.wndwx=rect.right-rect.left;
 						Settings.wndwy=rect.bottom-rect.top;
 
-						data.pages[0]=CreateDialog(hMainInstance,MAKEINTRESOURCE(IDD_VIEWSETTINGS),hwnd,(DLGPROC)DialogPage);
-						data.pages[1]=CreateDialog(hMainInstance,MAKEINTRESOURCE(IDD_UPDATESSETTINGS),hwnd,(DLGPROC)DialogPage);
-						data.pages[2]=CreateDialog(hMainInstance,MAKEINTRESOURCE(IDD_PATHSETTINGS),hwnd,(DLGPROC)DialogPage);
-						data.pages[3]=CreateDialog(hMainInstance,MAKEINTRESOURCE(IDD_ADVANCEDSETTINGS),hwnd,(DLGPROC)DialogPage);
+						data.pages[0]=CreateDialog(hMainInstance,MAKEINTRESOURCE(IDD_VIEWSETTINGS),hDlg,DialogPage);
+						data.pages[1]=CreateDialog(hMainInstance,MAKEINTRESOURCE(IDD_UPDATESSETTINGS),hDlg,DialogPage);
+						data.pages[2]=CreateDialog(hMainInstance,MAKEINTRESOURCE(IDD_PATHSETTINGS),hDlg,DialogPage);
+						data.pages[3]=CreateDialog(hMainInstance,MAKEINTRESOURCE(IDD_ADVANCEDSETTINGS),hDlg,DialogPage);
 
-						data.tab=GetDlgItem(hwnd,IDC_TAB1);
+						data.tab=GetDlgItem(hDlg,IDC_TAB1);
 						if(data.tab)
 						{
 								TCITEM tci;
@@ -815,7 +714,7 @@ static BOOL CALLBACK SettingsDialog(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 								POINT offset;
 								offset.x=0;
 								offset.y=0;
-								ScreenToClient(hwnd,&offset);
+								ScreenToClient(hDlg,&offset);
 								OffsetRect(&rc,offset.x,offset.y);
 
 								rc.top+=30;
@@ -828,7 +727,7 @@ static BOOL CALLBACK SettingsDialog(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 								SetWindowPos(data.pages[3],nullptr,rc.left,rc.top,rc.right-rc.left,rc.bottom-rc.top,SWP_HIDEWINDOW);
 
 								// Strings
-								SetWindowText(hwnd,STR(STR_OPTION_TITLE));
+								SetWindowText(hDlg,STR(STR_OPTION_TITLE));
 
 								SetWindowText(GetDlgItem(data.pages[0],IDD_P1_DRV),STR(STR_OPTION_DRPNAMES));
 								SetWindowText(GetDlgItem(data.pages[0],IDD_P1_DRV1),STR(STR_OPTION_HIDE_NAMES));
@@ -880,7 +779,7 @@ static BOOL CALLBACK SettingsDialog(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 
 								// windows doesn't normally show a focus rect until it first receives
 								// keyboard input but i like to see where the keyboard focus is
-								PostMessage(hwnd, WM_UPDATEUISTATE,MAKEWPARAM(UIS_CLEAR,UISF_HIDEFOCUS),0);
+								PostMessage(hDlg, WM_UPDATEUISTATE,MAKEWPARAM(UIS_CLEAR,UISF_HIDEFOCUS),0);
 								// set the keyboard focus to the selected radio button
 								SetFocus(GetDlgItem(data.pages[0],r));
 
@@ -890,13 +789,13 @@ static BOOL CALLBACK SettingsDialog(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 								str.sprintf(L"%d",Settings.hintdelay);
 								SetWindowText(GetDlgItem(data.pages[0],IDD_P1_HINTE),str.Get());
 
-								str.sprintf(L"%d",Updater->port);
+								str.sprintf(L"%d", Updater_t::port);
 								SetWindowText(GetDlgItem(data.pages[1],IDD_P2_PORTE),str.Get());
-								str.sprintf(L"%d",Updater->connections);
+								str.sprintf(L"%d", Updater_t::connections);
 								SetWindowText(GetDlgItem(data.pages[1],IDD_P2_CONE),str.Get());
-								str.sprintf(L"%d",Updater->downlimit);
+								str.sprintf(L"%d", Updater_t::downlimit);
 								SetWindowText(GetDlgItem(data.pages[1],IDD_P2_DOWNE),str.Get());
-								str.sprintf(L"%d",Updater->uplimit);
+								str.sprintf(L"%d", Updater_t::uplimit);
 								SetWindowText(GetDlgItem(data.pages[1],IDD_P2_UPE),str.Get());
 								if(!(Settings.flags&FLAG_CHECKUPDATES))SendMessage(GetDlgItem(data.pages[1],IDD_P2_UPD),BM_SETCHECK,BST_CHECKED,0);
 								if(Settings.flags&FLAG_ONLYUPDATES)SendMessage(GetDlgItem(data.pages[1],IDONLYUPDATE),BM_SETCHECK,BST_CHECKED,0);
@@ -912,16 +811,16 @@ static BOOL CALLBACK SettingsDialog(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 								SetWindowText(GetDlgItem(data.pages[3],IDD_P4_CMD3E),Settings.finish_upd);
 								if(Settings.flags&FLAG_SHOWCONSOLE)SendMessage(GetDlgItem(data.pages[3],IDD_P4_CONSL),BM_SETCHECK,BST_CHECKED,0);
 
-								SetWindowText(GetDlgItem(hwnd,IDOK),STR(STR_UPD_BTN_OK));
-								SetWindowText(GetDlgItem(hwnd,IDCANCEL),STR(STR_UPD_BTN_CANCEL));
+								SetWindowText(GetDlgItem(hDlg,IDOK),STR(STR_UPD_BTN_OK));
+								SetWindowText(GetDlgItem(hDlg,IDCANCEL),STR(STR_UPD_BTN_CANCEL));
 
 								OnSelChange();
 
 								if (right_to_left_mode)
 								{
-										setMirroring(hwnd);
+										setMirroring(hDlg);
 										// iterate all controls on the dialog
-										EnumChildWindows(hwnd, EnumChildProcMirror, 0);
+										EnumChildWindows(hDlg, EnumChildProcMirror, 0);
 										// can't find a nice way to do these two so i'll just swap the text
 										SetWindowText(GetDlgItem(data.pages[0],IDD_P1_ZOOMS),STR(STR_OPTION_SCALLING_BIG));
 										SetWindowText(GetDlgItem(data.pages[0],IDD_P1_ZOOMB),STR(STR_OPTION_SCALLING_SML));
@@ -930,15 +829,16 @@ static BOOL CALLBACK SettingsDialog(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 						}
 						break;
 
-				case WM_NOTIFY:
-						switch(((LPNMHDR)lp)->code)
-						{
-								case TCN_SELCHANGE:
-										OnSelChange();
-										break;
+				case WM_NOTIFY: {
+								const auto pnmhdr = reinterpret_cast<LPNMHDR>(lp);  // NOLINT(performance-no-int-to-ptr)
+								switch(pnmhdr->code) {
+										case TCN_SELCHANGE:
+												OnSelChange();
+												break;
 
-								default:
-										break;
+										default:
+												break;
+								}
 						}
 						break;
 
@@ -951,8 +851,7 @@ static BOOL CALLBACK SettingsDialog(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 						{
 								case IDOK:
 										{
-												int n=-SendMessage(GetDlgItem(data.pages[0],IDD_P1_ZOOMI),TBM_GETPOS,0,0);
-												if(n!=Settings.scale)
+											if(const int n=-SendMessage(GetDlgItem(data.pages[0],IDD_P1_ZOOMI),TBM_GETPOS,0,0); n!=Settings.scale)
 												{
 														Settings.savedscale=Settings.scale=n;
 														PostMessage(MainWindow.hMain,WM_UPDATETHEME,0,0);
@@ -966,16 +865,16 @@ static BOOL CALLBACK SettingsDialog(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 										MainWindow.redrawfield();
 
 										GetWindowText(GetDlgItem(data.pages[0],IDD_P1_HINTE),num,32);
-										Settings.hintdelay=_wtoi_my(num);
+										Settings.hintdelay=wtoi_my(num);
 
 										GetWindowText(GetDlgItem(data.pages[1],IDD_P2_PORTE),num,32);
-										Updater->port=_wtoi_my(num);
+										Updater_t::port=wtoi_my(num);
 										GetWindowText(GetDlgItem(data.pages[1],IDD_P2_CONE),num,32);
-										Updater->connections=_wtoi_my(num);
+										Updater_t::connections=wtoi_my(num);
 										GetWindowText(GetDlgItem(data.pages[1],IDD_P2_DOWNE),num,32);
-										Updater->downlimit=_wtoi_my(num);
+										Updater_t::downlimit=wtoi_my(num);
 										GetWindowText(GetDlgItem(data.pages[1],IDD_P2_UPE),num,32);
-										Updater->uplimit=_wtoi_my(num);
+										Updater_t::uplimit=wtoi_my(num);
 										Updater->set_torrent_params();
 
 										if(!SendMessage(GetDlgItem(data.pages[1],IDD_P2_UPD),BM_GETCHECK,0,0))
@@ -1012,11 +911,11 @@ static BOOL CALLBACK SettingsDialog(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 												log_displayed = FALSE;
 										}
 
-										EndDialog(hwnd,wp);
+										EndDialog(hDlg,IDOK);
 										break;
 
 								case IDCANCEL:
-										EndDialog(hwnd,wp);
+										EndDialog(hDlg,IDCANCEL);
 										break;
 
 								default:
@@ -1029,11 +928,9 @@ static BOOL CALLBACK SettingsDialog(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 		return FALSE;
 }
 
-
-
 void MainWindow_t::snapshot()
 {
-    if(System.ChooseFile(Settings.state_file,STR(STR_OPENSNAPSHOT),L"snp"))
+    if(SystemImp::ChooseFile(Settings.state_file,STR(STR_OPENSNAPSHOT),L"snp"))
     {
         Settings.statemode=STATEMODE_EMUL;
         invalidate(INVALIDATE_DEVICES|INVALIDATE_SYSINFO|INVALIDATE_MANAGER);
@@ -1043,10 +940,10 @@ void MainWindow_t::snapshot()
 void MainWindow_t::extractto()
 {
     wchar_t dir[MAX_PATH];
-    std::wstring path=System.AppPathW();
+    const std::wstring path= SystemImp::AppPathW();
     wcscpy(dir,path.c_str());
 
-    if(System.ChooseDir(dir,STR(STR_EXTRACTFOLDER)))
+    if(SystemImp::ChooseDir(dir,STR(STR_EXTRACTFOLDER)))
     {
         int argc;
         wchar_t **argv=CommandLineToArgvW(GetCommandLineW(),&argc);
@@ -1058,19 +955,19 @@ void MainWindow_t::extractto()
 
         wcscat(dir,L"\\drivers");
         wcscpy(extractdir,dir);
-        manager_g->install(OPENFOLDER);
+        Manager::install(OPENFOLDER);
     }
 }
 
 void MainWindow_t::selectDrpDir()
 {
-    if(System.ChooseDir(Settings.drpext_dir,STR(STR_DRVDIR)))
+    if(SystemImp::ChooseDir(Settings.drpext_dir,STR(STR_DRVDIR)))
     {
         invalidate(INVALIDATE_INDICES|INVALIDATE_MANAGER);
     }
 }
 
-void invalidate(int v)
+void invalidate(const int v)
 {
     invaidate_set|=v;
     deviceupdate_event->raise();
@@ -1078,7 +975,7 @@ void invalidate(int v)
 //}
 
 //{ Scrollbar
-void MainWindow_t::setscrollrange(int y)
+void MainWindow_t::setscrollrange(const int y)
 {
     RECT rect;
     GetClientRect(hwndFrame,&rect);
@@ -1093,7 +990,7 @@ void MainWindow_t::setscrollrange(int y)
     SetScrollInfo(hwndFrame,SB_VERT,&si,TRUE);
 }
 
-int MainWindow_t::getscrollpos()
+int MainWindow_t::getscrollpos() const
 {
     if(!hwndFrame)
     {
@@ -1109,7 +1006,7 @@ int MainWindow_t::getscrollpos()
     return si.nPos;
 }
 
-void MainWindow_t::setscrollpos(int pos)
+void MainWindow_t::setscrollpos(const int pos) const
 {
     if(!hwndFrame)
     {
@@ -1154,7 +1051,7 @@ void escapeAmp(wchar_t *buf,const wchar_t *source)
     while(*source)
     {
         *buf=*source;
-        if(*buf==L'&')*(++buf)=L'&';
+        if(*buf==L'&')*++buf=L'&';
         buf++;source++;
     }
     *buf=0;
@@ -1162,13 +1059,13 @@ void escapeAmp(wchar_t *buf,const wchar_t *source)
 //}
 
 //{ GUI Helpers
-HWND CreateWindowMF(const wchar_t *type,const wchar_t *name,HWND hwnd,intptr_t id,DWORD f)
-{
-		HINSTANCE h = GetModuleHandle(nullptr);
-		return CreateWindow(type,name,WS_CHILD|WS_VISIBLE|f,0,0,0,0,hwnd,(HMENU)(id),h,NULL);
+HWND CreateWindowMF(const wchar_t *type,const wchar_t *name, const HWND hwnd, const intptr_t id, const DWORD f) {
+
+	const HINSTANCE h = GetModuleHandle(nullptr);
+		return CreateWindow(type,name,WS_CHILD|WS_VISIBLE|f,0,0,0,0,hwnd,reinterpret_cast<HMENU>(id),h,NULL);
 }
 
-void setMirroringEdit(HWND hwnd)
+void setMirroringEdit(const HWND hwnd)
 {
 		setMirroring(hwnd);
 
@@ -1178,15 +1075,15 @@ void setMirroringEdit(HWND hwnd)
 				RECT p,r;
 				GetWindowRect(GetParent(hwnd),&p);
 				GetWindowRect(hwnd,&r);
-				MapWindowPoints(HWND_DESKTOP,GetParent(hwnd),(LPPOINT)&r, 2);
-				int w=r.right-r.left;
-				int h=r.bottom-r.top;
+				MapWindowPoints(HWND_DESKTOP,GetParent(hwnd),reinterpret_cast<LPPOINT>(&r), 2);
+				const int w=r.right-r.left;
+				const int h=r.bottom-r.top;
 				r.left=p.right-p.left-r.left-w;
 				MoveWindow(hwnd,r.left,r.top,w,h,TRUE);
 		}
 }
 
-void MainWindow_t::redrawfield()
+void MainWindow_t::redrawfield() const
 {
 		if(Settings.flags&FLAG_NOGUI)return;
 		if(!hwndFrame)
@@ -1197,7 +1094,7 @@ void MainWindow_t::redrawfield()
 		InvalidateRect(hwndFrame,nullptr,0);
 }
 
-void MainWindow_t::redrawmainwnd()
+void MainWindow_t::redrawmainwnd() const
 {
 		if(Settings.flags&FLAG_NOGUI)return;
 		if(!hMain)
@@ -1208,40 +1105,41 @@ void MainWindow_t::redrawmainwnd()
 		InvalidateRect(hMain,nullptr,0);
 }
 
-void checktimer(const wchar_t* str, long long t, int uMsg)
+static void checktimer(const wchar_t* str, const long long t, const int uMsg)
 {
-		if (System.GetTickCountWr() - t > 20 && debug)
-				uprintf("GUI lag in %S[%X]: %ld\n", str, uMsg, System.GetTickCountWr() - t);
+		if (SystemImp::GetTickCountWr() - t > 20 && debug)
+				uprintf("GUI lag in %S[%X]: %ld\n", str, uMsg, SystemImp::GetTickCountWr() - t);
 }
 
-void MainWindow_t::ShowProgressInTaskbar(bool show,long long complited,long long total)
+void MainWindow_t::ShowProgressInTaskbar(const bool show, const ULONGLONG completed, const ULONGLONG total) const
 {
-		int hres;
-		ITaskbarList3 *pTL;
-		static const IID my_CLSID_TaskbarList={0x56fdf344,0xfd6d,0x11d0,{0x95,0x8a,0x00,0x60,0x97,0xc9,0xa0,0x90}};
+	ITaskbarList3 *pTL;
+		static constexpr IID my_CLSID_TaskbarList={0x56fdf344,0xfd6d,0x11d0,{0x95,0x8a,0x00,0x60,0x97,0xc9,0xa0,0x90}};
 
-		CoInitializeEx(nullptr,COINIT_MULTITHREADED);
-		hres=CoCreateInstance(my_CLSID_TaskbarList,nullptr,CLSCTX_ALL,IID_ITaskbarList3,(LPVOID*)&pTL);
-		if(FAILED(hres))
+		if(FAILED(CoInitializeEx(nullptr,COINIT_MULTITHREADED)))
+		{
+				return;
+		}
+	if(const HRESULT hres = CoCreateInstance(my_CLSID_TaskbarList, nullptr,CLSCTX_ALL, IID_ITaskbarList3, reinterpret_cast<LPVOID*>(&pTL)); FAILED(hres))
 		{
 				CoUninitialize();
 				//printf("FAILED to create IID_ITaskbarList3 object. Error code = 0x%X\n",hres);
 				return;
 		}
-		//printf("%d,%d\n",flags,complited);
-		pTL->SetProgressValue(hMain,complited,total);
+		//printf("%d,%d\n",flags,completed);
+		pTL->SetProgressValue(hMain,completed,total);
 		pTL->SetProgressState(hMain,show?TBPF_NORMAL:TBPF_NOPROGRESS);
 		pTL->Release();
 		CoUninitialize();
 }
 
-void MainWindow_t::DownloadedTorrent(int TorrentResults)
+void MainWindow_t::DownloadedTorrent(const int TorrentResults)
 {
     // a torrent has just been downloaded
 
     // update the menu items
     ModifyMenuItem(pSysMenu,MIIM_STATE,IDM_SEED,MFS_ENABLED,nullptr);
-    UpdateTorrentItems(Updater->activetorrent);
+    UpdateTorrentItems(Updater_t::activetorrent);
 
 	// get driver count, index count, command line count
     wchar_t spec1[MAX_PATH];
@@ -1254,24 +1152,24 @@ void MainWindow_t::DownloadedTorrent(int TorrentResults)
     // torrent results
     int NewVersion=TorrentResults>>8;
     //int LatestExeVersion=System.FindLatestExeVersion();
-    int DriverPacksAvailable=TorrentResults&0xFF;
+    const int DriverPacksAvailable=TorrentResults&0xFF;
 
     if(TorrentSelectionMode==TSM_AUTO)
 	{
         // just finished downloading the first torrent after startup
         // if there are no drivers and no indices
         // and no command line then show the welcome screen
-        if(!System.FileExists2(spec1)&&!System.FileExists2(spec2)&&(argc<2))
+        if(!SystemImp::FileExists2(spec1)&&!SystemImp::FileExists2(spec2)&&argc<2)
         {
             TorrentSelectionMode=TSM_NONE;
-            DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_WELCOME), MainWindow.hMain,(DLGPROC)WelcomeCallback);
+            DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_WELCOME), MainWindow.hMain,WelcomeCallback);
         }
         // otherwise if there are updates on the current torrent then stop switching
         //else if((NewVersion>LatestExeVersion)||(DriverPacksAvailable>0))
 				else if(DriverPacksAvailable>0)
             TorrentSelectionMode=TSM_NONE;
         // no updates on this torrent so try the next one then stop
-        else if(Updater->activetorrent==1)
+        else if(Updater_t::activetorrent==1)
         {
             TorrentSelectionMode=TSM_NONE;
             ResetUpdater(2);
@@ -1279,7 +1177,7 @@ void MainWindow_t::DownloadedTorrent(int TorrentResults)
 	}
  }
 
-void MainWindow_t::ResetUpdater(int activetorrent)
+void MainWindow_t::ResetUpdater(const int activetorrent)
 {
     #ifdef USE_TORRENT
     // update the menu items
@@ -1297,7 +1195,7 @@ void MainWindow_t::ResetUpdater(int activetorrent)
     #endif // USE_TORRENT
 }
 
-void MainWindow_t::UpdateTorrentItems(int activetorrent)
+void MainWindow_t::UpdateTorrentItems(const int activetorrent)
 {
     switch (activetorrent)
     {
@@ -1316,7 +1214,7 @@ void MainWindow_t::UpdateTorrentItems(int activetorrent)
     }
 }
 
-void MainWindow_t::tabadvance(int v)
+void MainWindow_t::tabadvance(const int v) const
 {
     if(v>0)
         wPanels->NextPanel();
@@ -1337,7 +1235,7 @@ void MainWindow_t::tabadvance(int v)
 }
 
 extern int setaa;
-void MainWindow_t::arrowsAdvance(int v)
+void MainWindow_t::arrowsAdvance(const int v)
 {
     if(!kbpanel)return;
 
@@ -1375,39 +1273,38 @@ void MainWindow_t::arrowsAdvance(int v)
 //{ Txt
 size_t Txt::strcpy(const char *str)
 {
-		size_t r=text.size();
+		const size_t r=text.size();
 		text.insert(text.end(),str,str+strlen(str)+1);
 		return r;
 }
 
 size_t Txt::strcpyw(const wchar_t *str)
 {
-		size_t r=text.size();
+		const size_t r=text.size();
 		text.insert(text.end(),reinterpret_cast<const char *>(str),reinterpret_cast<const char *>(str+wcslen(str)+1));
 		return r;
 }
 
-size_t Txt::t_memcpy(const char *mem,size_t sz)
+size_t Txt::t_memcpy(const char *mem, const size_t sz)
 {
-		size_t r=text.size();
+		const size_t r=text.size();
 		text.insert(text.end(),mem,mem+sz);
 		return r;
 }
 
-size_t Txt::t_memcpyz(const char *mem,size_t sz)
+size_t Txt::t_memcpyz(const char *mem, const size_t sz)
 {
-		size_t r=text.size();
+		const size_t r=text.size();
 		text.insert(text.end(),mem,mem+sz);
 		text.insert(text.end(),0);
 		return r;
 }
 
-size_t Txt::memcpyz_dup(const char *mem,size_t sz)
+size_t Txt::memcpyz_dup(const char *mem, const size_t sz)
 {
 		std::string str(mem,sz);
-		auto it=dub.find(str);
 
-		if(it==dub.end())
+		if(const auto it=dub.find(str); it==dub.end())
 		{
 				size_t r=text.size();
 				text.insert(text.end(),mem,mem+sz);
@@ -1422,9 +1319,9 @@ size_t Txt::memcpyz_dup(const char *mem,size_t sz)
 		}
 }
 
-size_t Txt::alloc(size_t sz)
+size_t Txt::alloc(const size_t sz)
 {
-		size_t r=text.size();
+		const size_t r=text.size();
 		text.resize(r+sz);
 		return r;
 }
@@ -1435,7 +1332,7 @@ Txt::Txt()
 		text[0]=text[1]=0;
 }
 
-void Txt::reset(size_t sz)
+void Txt::reset(const size_t sz)
 {
 		text.resize(sz);
 		text.reserve(1024*1024*2); //TODO
@@ -1455,15 +1352,15 @@ unsigned Hashtable::gethashcode(const char *s, size_t sz)
 
 		while(sz--)
 		{
-				int ch=*s++;
-				h=((h<<5)+h)^ch;
+				const int ch=*s++;
+				h=(h<<5)+h^ch;
 		}
 		return h;
 }
 
-void Hashtable::reset(size_t size1)
+void Hashtable::reset(const size_t size1)
 {
-		size=(int)size1;
+		size=static_cast<int>(size1);
 		if(!size)size=1;
 		items.resize(size);
 		items.reserve(size*sizeof(int));
@@ -1490,9 +1387,9 @@ next
 		 -1: used,next is free
 	1..x : used,next is used
 */
-void Hashtable::additem(int key,int value)
+void Hashtable::additem(int key, const int value)
 {
-		int curi=gethashcode((char *)&key,sizeof(int))%size;
+		int curi=gethashcode(reinterpret_cast<char*>(&key),sizeof(int))%size;
 		Hashitem *cur=&items[curi];
 
 		int previ=-1;
@@ -1508,13 +1405,13 @@ void Hashtable::additem(int key,int value)
 		{
 				items.emplace_back(Hashitem());
 				cur=&items.back();
-				curi=(int)(items.size()-1);
+				curi=static_cast<int>(items.size() - 1);
 		}
 
 		cur->key=key;
 		cur->value=value;
 		cur->next=-1;
-		if(previ>=0)(&items[previ])->next=curi;
+		if(previ>=0)items[previ].next=curi;
 }
 
 int Hashtable::find(int key,int *isfound)
@@ -1525,8 +1422,8 @@ int Hashtable::find(int key,int *isfound)
 				return 0;
 		}
 
-		int curi=gethashcode((char *)&key,sizeof(int))%size;
-		Hashitem *cur=&items[curi];
+		int curi=gethashcode(reinterpret_cast<char*>(&key),sizeof(int))%size;
+		const Hashitem *cur=&items[curi];
 
 		if(cur->next<0)
 		{
@@ -1563,13 +1460,12 @@ int Hashtable::find(int key,int *isfound)
 
 int Hashtable::findnext(int *isfound)
 {
-		Hashitem *cur;
-		int curi=findnext_v;
+	int curi=findnext_v;
 
 		*isfound=0;
 		if(curi<=0)return 0;
 
-		cur=&items[curi];
+		Hashitem *cur;
 		do
 		{
 				cur=&items[curi];
@@ -1584,15 +1480,14 @@ int Hashtable::findnext(int *isfound)
 }
 //}
 
-LRESULT MainWindow_t::WndProcCommon(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
+LRESULT MainWindow_t::WndProcCommon(const HWND hwnd, const UINT uMsg, const WPARAM wParam, const LPARAM lParam)
 {
     UNREFERENCED_PARAMETER(wParam);
 
     RECT rect;
-    short x,y;
 
-    x=LOWORD(lParam);
-    y=HIWORD(lParam);
+    const short x = LOWORD(lParam);
+    const short y = HIWORD(lParam);
     switch(uMsg)
     {
         case WM_MOUSELEAVE:
@@ -1654,7 +1549,7 @@ LRESULT MainWindow_t::WndProcCommon(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lPa
     return 0;
 }
 
-LRESULT CALLBACK MainWindow_t::WndProcMainCallback(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
+LRESULT CALLBACK MainWindow_t::WndProcMainCallback(const HWND hwnd, const UINT uMsg, const WPARAM wParam, const LPARAM lParam)
 {
 		return MainWindow.MainCallback(hwnd,uMsg,wParam,lParam);
 }
@@ -1664,11 +1559,10 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 		static BOOL first_log_display = TRUE;
 		WINDOWPLACEMENT wndp;
 		wndp.length=sizeof(WINDOWPLACEMENT);
-		POINT Point;
 		RECT rect, rc, DialogRect, DesktopRect;
 		short x,y;
 
-		int i, nWidth, nHeight, offset;
+		int i;
 	int f;
 		int wp;
 		//long long timer=System.GetTickCountWr();
@@ -1718,7 +1612,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 						break;
 
 				case WM_CLOSE:
-						if(installmode==MODE_NONE||(Settings.flags&FLAG_AUTOCLOSE))
+						if(installmode==MODE_NONE||Settings.flags&FLAG_AUTOCLOSE)
 								DestroyWindow(hwnd);
 						else if(MessageBox(hMain,STR(STR_INST_QUIT_MSG),STR(STR_INST_QUIT_TITLE),MB_YESNO|MB_ICONQUESTION)==IDYES)
 						{
@@ -1748,7 +1642,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 						vLang->EnumFiles(hLang,L"langs",manager_g->getState()->getLocale());
 						f=vLang->AutoPick();
 						if(f<0)f=hLang->GetNumItems()-1;
-						vLang->SwitchData((int)f);
+						vLang->SwitchData(f);
 						hLang->SetCurSel(f);
 						//SendMessage(hLang,CB_SETCURSEL,f,0);
 						lang_refresh();
@@ -1759,7 +1653,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 						vTheme->EnumFiles(hTheme,L"Themes");
 						f=hTheme->FindItem(Settings.curtheme);
 						if(f==CB_ERR)f=vTheme->AutoPick();
-						vTheme->SwitchData((int)f);
+						vTheme->SwitchData(f);
 						if(Settings.wndwx)D(MAINWND_WX)=Settings.wndwx;
 						if(Settings.wndwy)D(MAINWND_WY)=Settings.wndwy;
 						hTheme->SetCurSel(f);
@@ -1794,7 +1688,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 
 				case WM_BUNDLEREADY:
 						{
-								Bundle *bb=reinterpret_cast<Bundle *>(wParam);
+								auto bb=reinterpret_cast<Bundle *>(wParam);
 								Manager *manager_prev=manager_g;
 								uprintf("{Sync");
 								if(CRITICAL_SECTION_ACTIVE)EnterCriticalSection(&sync);
@@ -1818,9 +1712,9 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 						}
 				case WM_DROPFILES:
 						{
-								wchar_t lpszFile[MAX_PATH]={0};
+								wchar_t lpszFile[FILENAME_MAX]={};
 								UINT uFile=0;
-								HDROP hDrop=(HDROP)wParam;
+								auto hDrop=reinterpret_cast<HDROP>(wParam);
 
 								uFile=DragQueryFile(hDrop,0xFFFFFFFF,nullptr,0);
 								if(uFile!=1)
@@ -1855,7 +1749,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 				case WM_WINDOWPOSCHANGING:
 						{
 								Settings.autosized=false;
-								WINDOWPOS *wpos=(WINDOWPOS*)lParam;
+								auto wpos=reinterpret_cast<WINDOWPOS*>(lParam);
 
 								rect.left=GetSystemMetrics(SM_XVIRTUALSCREEN);
 								rect.top=GetSystemMetrics(SM_YVIRTUALSCREEN);
@@ -1880,7 +1774,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 
 				case WM_SIZING:
 						{
-								RECT *r=(RECT *)lParam;
+								auto r=reinterpret_cast<RECT*>(lParam);
 								int minx=D_X(MAINWND_MINX);
 								int miny=D_X(MAINWND_MINY);
 
@@ -2017,7 +1911,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 						break;
 
 				case WM_SIZE:
-						SetLayeredWindowAttributes(hMain,0,(BYTE)D_1(MAINWND_TRANSPARENCY),LWA_ALPHA);
+						SetLayeredWindowAttributes(hMain,0,static_cast<BYTE>(D_1(MAINWND_TRANSPARENCY)),LWA_ALPHA);
 						Popup->setTransparency();
 
 						GetWindowRect(hwnd,&rect);
@@ -2038,7 +1932,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 						if(manager_g->animate())redrawfield();
 						else
 						{
-								if(wParam==2)MainWindow.ResetUpdater(Updater_t::activetorrent);
+								if(wParam==2)MainWindow_t::ResetUpdater(Updater_t::activetorrent);
 								KillTimer(hwnd,wParam);
 						}
 						break;
@@ -2066,7 +1960,11 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 										case IDC_LOG:
 												// Place the log Window to the right (or left for RTL) of our dialog on first display
 												if (first_log_display) {
-														GetClientRect(GetDesktopWindow(), &DesktopRect);
+													int offset;
+													int nHeight;
+													int nWidth;
+													POINT Point;
+													GetClientRect(GetDesktopWindow(), &DesktopRect);
 														GetWindowRect(hLogDialog, &DialogRect);
 														nWidth = DialogRect.right - DialogRect.left;
 														nHeight = DialogRect.bottom - DialogRect.top;
@@ -2097,7 +1995,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 																Point.x = std::max(Point.x, DialogRect.right - DialogRect.left + offset);
 														}
 														else {
-																Point.x = std::max((DialogRect.left < 0) ? DialogRect.left : 0, Point.x - offset - nWidth);
+																Point.x = std::max(DialogRect.left < 0 ? DialogRect.left : 0, Point.x - offset - nWidth);
 														}
 														MoveWindow(hwnd, Point.x, Point.y, nWidth, nHeight, TRUE);
 														first_log_display = FALSE;
@@ -2105,8 +2003,8 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 												// Display the log Window
 												log_displayed = !log_displayed;
 												// Set focus on the start button
-												SendMessage(hMainDialog, WM_NEXTDLGCTL, (WPARAM)FALSE, 0);
-												SendMessage(hMainDialog, WM_NEXTDLGCTL, (WPARAM)hStart, TRUE);
+												SendMessage(hMainDialog, WM_NEXTDLGCTL, FALSE, 0);
+												SendMessage(hMainDialog, WM_NEXTDLGCTL, reinterpret_cast<WPARAM>(hStart), TRUE);
 												// Must come last for the log window to get focus
 												ShowWindow(hLogDialog, log_displayed ? SW_SHOW : SW_HIDE);
 												break;
@@ -2124,76 +2022,76 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 										case IDM_UPDATES_SDI:
 												{
 														TorrentSelectionMode=TSM_NONE;
-														MainWindow.ResetUpdater(1);
+														MainWindow_t::ResetUpdater(1);
 														return 0;
 												}
 										case IDM_UPDATES_DRIVERS:
 												{
 														TorrentSelectionMode=TSM_NONE;
-														MainWindow.ResetUpdater(2);
+														MainWindow_t::ResetUpdater(2);
 														return 0;
 												}
 										case ID_COMPMNG:
 												{
 														// works on Windows XP and up
-														System.run_command(L"compmgmt.msc",nullptr,SW_SHOW,0);
+														SystemImp::run_command(L"compmgmt.msc",nullptr,SW_SHOW,0);
 														return 0;
 												}
 										case ID_DEVICEMNG:
 												{
 														// works on Windows XP and up
-														System.run_command(L"devmgmt.msc",nullptr,SW_SHOW,0);
+														SystemImp::run_command(L"devmgmt.msc",nullptr,SW_SHOW,0);
 														return 0;
 												}
 										case ID_DEVICEPRNT:
 												{
 														// works on Windows Vista and up
-														System.run_controlpanel(L"/name Microsoft.DevicesAndPrinters");
+														SystemImp::run_controlpanel(L"/name Microsoft.DevicesAndPrinters");
 														return 0;
 												}
 										case ID_SYSPROPS:
 												{
 														// works on Windows Vista and up
-														System.run_controlpanel(L"system");
+														SystemImp::run_controlpanel(L"system");
 														return 0;
 												}
 										case ID_SYSPROPS_ADV:
 												{
 														// works on Windows Vista and up
-														System.run_command32(L"SystemPropertiesAdvanced",nullptr,SW_NORMAL,0);
+														SystemImp::run_command32(L"SystemPropertiesAdvanced",nullptr,SW_NORMAL,0);
 														return 0;
 												}
 										case ID_SYSCONTROL:
 												{
 														// works on Windows XP and up
-														System.run_controlpanel(nullptr);
+														SystemImp::run_controlpanel(nullptr);
 														return 0;
 												}
 										case ID_SYSPROT:
 												{
 														// works on Windows Vista and up
-														System.run_command32(L"%windir%\\System32\\SystemPropertiesProtection.exe",nullptr,SW_NORMAL,0);
+														SystemImp::run_command32(L"%windir%\\System32\\SystemPropertiesProtection.exe",nullptr,SW_NORMAL,0);
 														return 0;
 												}
 										case ID_SYSREST:
 												{
 														// Windows XP
-														std::wstring b=System.ExpandEnvVar(L"%windir%\\system32\\restore\\rstrui.exe");
-														if(System.FileExists2(b.c_str()))
+														std::wstring b= SystemImp::ExpandEnvVar(L"%windir%\\system32\\restore\\rstrui.exe");
+														if(SystemImp::FileExists2(b.c_str()))
 														{
 																b=L"/c " + b;
-																System.run_command(L"cmd",b.c_str(),SW_HIDE,0);
+																SystemImp::run_command(L"cmd",b.c_str(),SW_HIDE,0);
 														}
 														else
 														{
 																// works on Windows Vista and up
-																System.run_command32(L"%windir%\\System32\\rstrui.exe",nullptr,SW_NORMAL,0);
+																SystemImp::run_command32(L"%windir%\\System32\\rstrui.exe",nullptr,SW_NORMAL,0);
 														}
 														return 0;
 												}
 										case IDM_DRVDIR:
 										{
-												if(System.ChooseDir(Settings.drpext_dir,STR(STR_DRVDIR)))
+												if(SystemImp::ChooseDir(Settings.drpext_dir,STR(STR_DRVDIR)))
 												{
 														invalidate(INVALIDATE_INDICES|INVALIDATE_MANAGER);
 												}
@@ -2206,12 +2104,12 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 										}
 										case IDM_WELCOME:
 										{
-												DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_WELCOME), MainWindow.hMain,(DLGPROC)WelcomeCallback);
+												DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_WELCOME), MainWindow.hMain,WelcomeCallback);
 												return 0;
 										}
 										case IDM_LICENSE:
 										{
-												DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_LICENSE),MainWindow.hMain,(DLGPROC)LicenseCallback);
+												DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_LICENSE),MainWindow.hMain,LicenseCallback);
 												return 0;
 										}
 										case IDM_USBWIZARD:
@@ -2282,11 +2180,11 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 										if(Popup->floating_itembar==SLOT_RESTORE_POINT)
 										{
 												// windows XP
-												System.run_command(L"cmd",L"/c %windir%\\system32\\restore\\rstrui.exe",SW_HIDE,0);
+												SystemImp::run_command(L"cmd",L"/c %windir%\\system32\\restore\\rstrui.exe",SW_HIDE,0);
 												// access the 64-bit version from a 32-bit app - this works only on 64-bit windows
-												System.run_command(L"cmd",L"/c %windir%\\Sysnative\\rstrui.exe",SW_HIDE,0);
+												SystemImp::run_command(L"cmd",L"/c %windir%\\Sysnative\\rstrui.exe",SW_HIDE,0);
 												// otherwise do the normal call
-												System.run_command(L"cmd",L"/c rstrui.exe",SW_HIDE,0);
+												SystemImp::run_command(L"cmd",L"/c rstrui.exe",SW_HIDE,0);
 										}
 										else
 										{
@@ -2300,7 +2198,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 										break;
 
 								case ID_DEVICEMNG:
-										System.run_command(L"devmgmt.msc",nullptr,SW_SHOW,0);
+									SystemImp::run_command(L"devmgmt.msc",nullptr,SW_SHOW,0);
 										break;
 
 								case ID_EMU_32:
@@ -2325,7 +2223,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 
 								case ID_DIS_RESTPNT:
 										Settings.flags^=FLAG_NORESTOREPOINT;
-										manager_g->itembar_setactive(SLOT_RESTORE_POINT,(Settings.flags&FLAG_NORESTOREPOINT)?0:1);
+										manager_g->itembar_setactive(SLOT_RESTORE_POINT,Settings.flags&FLAG_NORESTOREPOINT?0:1);
 										manager_g->set_rstpnt(0);
 										break;
 
@@ -2333,7 +2231,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
                     break;
             }
             // select a virtual OS from the menu
-            if(wp>=ID_OS_ITEMS&&wp<ID_OS_ITEMS+winVersions.Count())
+            if(wp>=ID_OS_ITEMS&&wp<ID_OS_ITEMS+ WinVersions::Count())
             {
                 vuprintf("Virtual OS Version: %S\n\n",winVersions.GetEntryW(wp-ID_OS_ITEMS));
                 Settings.virtual_os_version=wp;
@@ -2349,7 +2247,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
                     const wchar_t *str=manager_g->getHWIDby(id);
                     wsprintf(buf,L"https://catalog.update.microsoft.com/search.aspx?q=%s",str);
                     escapeAmpUrl(buf2,buf);
-                    System.run_command(L"open",buf2,SW_SHOW,0);
+                    SystemImp::run_command(L"open",buf2,SW_SHOW,0);
 
 								}
 								else
@@ -2370,17 +2268,17 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 						{
 								if(wp==ID_LANG)
 								{
-					LRESULT j=SendMessage((HWND)lParam,CB_GETCURSEL,0,0);
-										SendMessage((HWND)lParam,CB_GETLBTEXT,j,(LPARAM)Settings.curlang);
-										vLang->SwitchData((int)j);
+					LRESULT j=SendMessage(reinterpret_cast<HWND>(lParam),CB_GETCURSEL,0,0);
+										SendMessage(reinterpret_cast<HWND>(lParam),CB_GETLBTEXT,j,reinterpret_cast<LPARAM>(Settings.curlang));
+										vLang->SwitchData(static_cast<int>(j));
 										lang_refresh();
 								}
 
 								if(wp==ID_THEME)
 								{
-					LRESULT j=SendMessage((HWND)lParam,CB_GETCURSEL,0,0);
-										SendMessage((HWND)lParam,CB_GETLBTEXT,j,(LPARAM)Settings.curtheme);
-					vTheme->SwitchData((int)j);
+					LRESULT j=SendMessage(reinterpret_cast<HWND>(lParam),CB_GETCURSEL,0,0);
+										SendMessage(reinterpret_cast<HWND>(lParam),CB_GETLBTEXT,j,reinterpret_cast<LPARAM>(Settings.curtheme));
+					vTheme->SwitchData(static_cast<int>(j));
 					Settings.autosized=false;
 										theme_refresh(0);
 								}
@@ -2398,7 +2296,7 @@ LRESULT MainWindow_t::MainCallback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 		return 0;
 }
 
-void RestPointCheckboxCommand::RightClick(int x,int y)
+void RestPointCheckboxCommand::RightClick(const int x, const int y)
 {
 		Popup->floating_itembar=SLOT_RESTORE_POINT;
 		manager_g->contextmenu(x-Xm(D_X(DRVLIST_OFSX),D_X(DRVLIST_WX)),y-Ym(D_X(DRVLIST_OFSY)));
@@ -2412,22 +2310,22 @@ void RefreshCommand::LeftClick(bool)
 
 void SnapshotCommand::LeftClick(bool)
 {
-    MainWindow.snapshot();
+	MainWindow_t::snapshot();
 }
 
 void ExtractCommand::LeftClick(bool)
 {
-    MainWindow.extractto();
+	MainWindow_t::extractto();
 }
 
 void DrvDirCommand::LeftClick(bool)
 {
-    MainWindow.selectDrpDir();
+	MainWindow_t::selectDrpDir();
 }
 
 void DrvOptionsCommand::LeftClick(bool)
 {
-		DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_DIALOG3),MainWindow.hMain,(DLGPROC)SettingsDialog);
+		DialogBox(hMainInstance,MAKEINTRESOURCE(IDD_DIALOG3),MainWindow.hMain,SettingsDialog);
 }
 
 void InstallCommand::LeftClick(bool)
@@ -2436,7 +2334,7 @@ void InstallCommand::LeftClick(bool)
     {
         if((Settings.flags&FLAG_EXTRACTONLY)==0)
         wsprintf(extractdir,L"%s\\SDI",manager_g->getState()->textas.getw(manager_g->getState()->getTemp()));
-        manager_g->install(INSTALLDRIVERS);
+        Manager::install(INSTALLDRIVERS);
     }
 }
 
@@ -2455,21 +2353,20 @@ void SelectNoneCommand::LeftClick(bool)
 }
 //}
 
-LRESULT CALLBACK MainWindow_t::WndProcFieldCallback(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
+LRESULT CALLBACK MainWindow_t::WndProcFieldCallback(const HWND hwnd, const UINT uMsg, const WPARAM wParam, const LPARAM lParam)
 {
     return MainWindow.WndProcField(hwnd,uMsg,wParam,lParam);
 }
 
-LRESULT MainWindow_t::WndProcField(HWND hwnd,UINT message,WPARAM wParam,LPARAM lParam)
+LRESULT MainWindow_t::WndProcField(HWND hwnd, const UINT message, const WPARAM wParam, const LPARAM lParam)
 {
     SCROLLINFO si;
     RECT rect;
-    int x,y;
-    long long timer=System.GetTickCountWr();
+    const long long timer= SystemImp::GetTickCountWr();
     int i;
 
-    x=LOWORD(lParam);
-    y=HIWORD(lParam);
+    const int x = LOWORD(lParam);
+    int y = HIWORD(lParam);
     if(WndProcCommon(hwnd,message,wParam,lParam))
     switch(message)
     {
@@ -2555,7 +2452,7 @@ LRESULT MainWindow_t::WndProcField(HWND hwnd,UINT message,WPARAM wParam,LPARAM l
                 {
                     if((Settings.flags&FLAG_EXTRACTONLY)==0)
                     wsprintf(extractdir,L"%s\\SDI",manager_g->getState()->textas.getw(manager_g->getState()->getTemp()));
-                    manager_g->install(INSTALLDRIVERS);
+                    Manager::install(INSTALLDRIVERS);
                 }
                 redrawfield();
             }
@@ -2613,7 +2510,7 @@ LRESULT MainWindow_t::WndProcField(HWND hwnd,UINT message,WPARAM wParam,LPARAM l
                 else if(itembar_i==SLOT_VIRUS_HIDDEN)
                     Popup->drawpopup(itembar_i,STR_VIRUS_HIDDEN_H,FLOATING_TOOLTIP,x,y,hwndFrame);
                 else if(itembar_i==SLOT_EXTRACTING&&installmode)
-                    Popup->drawpopup(itembar_i,(instflag&INSTALLDRIVERS)?STR_HINT_STOPINST:STR_HINT_STOPEXTR,FLOATING_TOOLTIP,x,y,hwndFrame);
+                    Popup->drawpopup(itembar_i,instflag&INSTALLDRIVERS?STR_HINT_STOPINST:STR_HINT_STOPEXTR,FLOATING_TOOLTIP,x,y,hwndFrame);
                 else if(itembar_i==SLOT_RESTORE_POINT)
                     Popup->drawpopup(itembar_i,STR_RESTOREPOINT_H,FLOATING_TOOLTIP,x,y,hwndFrame);
                 else if(itembar_i==SLOT_DOWNLOAD)
@@ -2631,7 +2528,7 @@ LRESULT MainWindow_t::WndProcField(HWND hwnd,UINT message,WPARAM wParam,LPARAM l
 
         default:
 			{
-				LRESULT j=DefWindowProc(hwnd,message,wParam,lParam);
+				const LRESULT j=DefWindowProc(hwnd,message,wParam,lParam);
 				checktimer(L"ListD",timer,message);
 				return j;
 			}
@@ -2641,7 +2538,7 @@ LRESULT MainWindow_t::WndProcField(HWND hwnd,UINT message,WPARAM wParam,LPARAM l
 }
 
 
-void MainWindow_t::lang_refresh()
+void MainWindow_t::lang_refresh() const
 {
 		if(!hMain||!hwndFrame)
 		{
@@ -2665,27 +2562,29 @@ void MainWindow_t::lang_refresh()
 		LoadMenuItems();
 }
 
-std::vector<std::wstring> split(const std::wstring &s, wchar_t delim)
+std::vector<std::wstring> split(const std::wstring &s, const wchar_t delim)
 {
 		std::vector<std::wstring> elems;
 		split(s, delim, std::back_inserter(elems));
 		return elems;
 }
 
-LRESULT CALLBACK PopupProcedure(HWND hwnd,UINT message,WPARAM wParam,LPARAM lParam)
+LRESULT CALLBACK PopupProcedure(const HWND hwnd, const UINT message, const WPARAM wParam, const LPARAM lParam)
 {
+		if(!Popup)
+				return DefWindowProc(hwnd,message,wParam,lParam);
 		return Popup->PopupProcedure2(hwnd,message,wParam,lParam);
 }
 
 //{ 7-zip
-size_t encode(char *dest,size_t dest_sz,const char *src,size_t src_sz)
+size_t encode(char *dest,size_t dest_sz,const char *src, const size_t src_sz)
 {
-    Lzma86_Encode((Byte *)dest,(SizeT *)&dest_sz,(const Byte *)src,src_sz,0,1<<23,SZ_FILTER_AUTO);
+    Lzma86_Encode(reinterpret_cast<Byte*>(dest),&dest_sz,reinterpret_cast<const Byte*>(src),src_sz,0,1<<23,SZ_FILTER_AUTO);
     return dest_sz;
 }
 
 size_t decode(char *dest,size_t dest_sz,const char *src,size_t src_sz) {
-		Lzma86_Decode((Byte *)dest,(SizeT *)&dest_sz,(const Byte *)src,(SizeT *)&src_sz);
+		Lzma86_Decode(reinterpret_cast<Byte*>(dest),&dest_sz,reinterpret_cast<const Byte*>(src),&src_sz);
 		return dest_sz;
 }
 

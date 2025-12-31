@@ -27,6 +27,7 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #include "matcher.h"
 #include "resource.h"
 #include "shellapi.h"
+#include "string_utils.hpp"
 #include "theme.h"
 #include "update.h"
 
@@ -56,13 +57,13 @@ class Autoclicker_t
 		static volatile int clicker_flag;
 
 private:
-		void calcwnddata(wnddata_t *w,HWND hwnd);
-		int cmpclickdata(int *a,int *b);
+		static void calcwnddata(wnddata_t *w,HWND hwnd);
+		static int cmpclickdata(int *a,int *b);
 		static int CALLBACK EnumWindowsProc(HWND hwnd,LPARAM lParam);
 
 public:
-		void setflag(int v){clicker_flag=v;}
-		void wndclicker(int mode);
+		static void setflag(int v){clicker_flag=v;}
+		static void wndclicker(int mode);
 		static unsigned int __stdcall thread_clicker(void *arg);
 };
 
@@ -115,13 +116,13 @@ void driver_install(wchar_t *hwid,const wchar_t *inf,int *ret,int *needrb)
 		WStringShort cmd;
 		WStringShort buf;
 		void *install64bin;
-		ThreadAbs *thr=CreateThread();
+		Thread *thr = new Thread();
 		size_t size;
 		FILE *f;
 
 		*ret=1;*needrb=1;
 		cmd.sprintf(L"%s\\install64.exe",extractdir);
-		if(!System.FileExists(cmd.Get()))
+		if(!SystemImp::FileExists(cmd.Get()))
 		{
 				mkdir_r(extractdir);
 				uprintf("Dir: (%S)\n",extractdir);
@@ -137,7 +138,7 @@ void driver_install(wchar_t *hwid,const wchar_t *inf,int *ret,int *needrb)
 						uprintf("Unable to create '%S': %s",cmd.Get(), WindowsErrorString());
 		}
 
-		Autoclicker.setflag(1);
+		Autoclicker_t::setflag(1);
 		//const char* logFilePath = ToUtf8(Settings.log_dir, CP_UTF8);
   //  WriteCurrentLogToFile(logFilePath);
 		thr->start(&Autoclicker_t::thread_clicker,nullptr);
@@ -155,14 +156,14 @@ void driver_install(wchar_t *hwid,const wchar_t *inf,int *ret,int *needrb)
 				buf.sprintf(L"\"%s\" \"%s\"",hwid,inf);
 				cmd.sprintf(L"%s\\install64.exe",extractdir);
 				uprintf("'%S %S'\n",cmd.Get(),buf.Get());
-				*ret=System.run_command(cmd.Get(),buf.Get(),SW_HIDE,1);
+				*ret= SystemImp::run_command(cmd.Get(),buf.Get(),SW_HIDE,1);
 				if((*ret&0x7FFFFFFF)==1)
 				{
-						*needrb=(*ret&0x80000000)?1:0;
+						*needrb=*ret&0x80000000?1:0;
 						*ret&=~0x80000000;
 				}
 		}
-		Autoclicker.setflag(0);
+		Autoclicker_t::setflag(0);
 
 		thr->join();
 		delete thr;
@@ -207,7 +208,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 		RESTOREPOINTINFOW pRestorePtSpec;
 		STATEMGRSTATUS pSMgrStatus = { };
 		HINSTANCE hinstLib=nullptr;
-		PFN_SETRESTOREPTW WIN5f_SRSetRestorePointW = NULL;
+		PFN_SETRESTOREPTW WIN5f_SRSetRestorePointW = nullptr;
 		int failed=0,installed=0;
 
 		if(CRITICAL_SECTION_ACTIVE)EnterCriticalSection(&sync);
@@ -217,7 +218,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 
 		installmode=MODE_INSTALLING;
 		manager_g->items_list[SLOT_EXTRACTING].install_status=
-				(instflag&INSTALLDRIVERS)?STR_INST_INSTALLING:STR_EXTR_EXTRACTING;
+				instflag&INSTALLDRIVERS?STR_INST_INSTALLING:STR_EXTR_EXTRACTING;
 		manager_g->items_list[SLOT_EXTRACTING].isactive=1;
 		manager_g->setpos();
 
@@ -228,8 +229,8 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 
 		// Download driverpacks
 #ifdef USE_TORRENT
-		if((Settings.flags&(FLAG_SCRIPTMODE|FLAG_UPDATESOK)) ||
-				(!(Settings.flags&FLAG_SCRIPTMODE)))
+		if(Settings.flags&(FLAG_SCRIPTMODE|FLAG_UPDATESOK) ||
+				!(Settings.flags&FLAG_SCRIPTMODE))
 		{
 				unsigned downdrivers=0;
 				itembar=&manager_g->items_list[RES_SLOTS];
@@ -280,17 +281,17 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 #endif
 
 		// Restore point
-		bool restorePointSelected=manager_g->items_list[SLOT_RESTORE_POINT].checked;
+		const bool restorePointSelected=manager_g->items_list[SLOT_RESTORE_POINT].checked;
 		bool restorePointSucceeded=false;
 		if(restorePointSelected)
 		{
 				// get the current state of restore points
-				int restorePointFrequency=System.GetRestorePointCreationFrequency();
+				const int restorePointFrequency= SystemImp::GetRestorePointCreationFrequency();
 				// set to always create a restore point
-				System.SetRestorePointCreationFrequency(0);
+				SystemImp::SetRestorePointCreationFrequency(0);
 				// System Restore client dll
 				hinstLib=LoadLibrary(L"SrClient.dll");
-				if(hinstLib!=NULL)
+				if(hinstLib!= nullptr)
 						WIN5f_SRSetRestorePointW=(PFN_SETRESTOREPTW)GetProcAddress(hinstLib,"SRSetRestorePointW");
 
 				if(hinstLib&&WIN5f_SRSetRestorePointW)
@@ -339,7 +340,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 				MainWindow.redrawfield();
 				if(hinstLib)FreeLibrary(hinstLib);
 				// return it to the state we found it in
-				System.SetRestorePointCreationFrequency(restorePointFrequency);
+				SystemImp::SetRestorePointCreationFrequency(restorePointFrequency);
 				//
 				manager_g->set_rstpnt(0);
 				manager_g->items_list[SLOT_RESTORE_POINT].percent=0;
@@ -349,7 +350,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 		_wremove(buf);
 
 		// if restore point was selected and failed then abort at this point
-		if((restorePointSelected&&restorePointSucceeded)||(!restorePointSelected)||(Settings.flags&FLAG_NOSTOP))
+		if((restorePointSelected&&restorePointSucceeded)||!restorePointSelected||Settings.flags&FLAG_NOSTOP)
 		{
 
 		goaround:
@@ -359,7 +360,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 				{
 						int unpacked=0;
 						int limits[7];
-						Hwidmatch *hwidmatch=itembar->hwidmatch;
+						const Hwidmatch *hwidmatch=itembar->hwidmatch;
 
 						memset(limits,0,sizeof(limits));
 						itembar_act=i;
@@ -368,18 +369,18 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 						hwidmatch->print_hr();
             wsprintf(cmd,L"%s\\%S",extractdir,hwidmatch->getdrp_infpath());
 
-						manager_g->animstart=System.GetTickCountWr();
-						MainWindow.offset_target=(itembar->curpos>>16);
+						manager_g->animstart= SystemImp::GetTickCountWr();
+						MainWindow.offset_target=itembar->curpos>>16;
 						SetTimer(MainWindow.hMain,1,1000/60,nullptr);
 
 						// Extract
-						extracttime=System.GetTickCountWr();
+						extracttime= SystemImp::GetTickCountWr();
 						wsprintf(inf,L"%s\\%S%S",
 										unpacked?hwidmatch->getdrp_packpath():extractdir,
 										hwidmatch->getdrp_infpath(),
 										hwidmatch->getdrp_infname());
 						uprintf("%S\n",hwidmatch->getdrp_packname());
-						if(System.FileExists(inf))
+						if(SystemImp::FileExists(inf))
 						{
 								uprintf("Already unpacked(%S)\n",inf);
 								_7z_total(100);
@@ -410,7 +411,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
                     if(!wcsstr(cmd,buf))wcscat(cmd,buf);
 								}
 								uprintf("Extracting '%S'\n",cmd);
-								itembar->install_status=(instflag&INSTALLDRIVERS)?STR_INST_EXTRACT:STR_EXTR_EXTRACTING;
+								itembar->install_status=instflag&INSTALLDRIVERS?STR_INST_EXTRACT:STR_EXTR_EXTRACTING;
 								MainWindow.redrawfield();
 
 								// attempt extraction
@@ -420,7 +421,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 								// verify the file is available
                 wchar_t full_arch_name[MAX_PATH];
                 wsprintf(full_arch_name,L"%s\\%s",hwidmatch->getdrp_packpath(),hwidmatch->getdrp_packname());
-                bool FileOk=System.FileAvailable(full_arch_name,20,5);
+                const bool FileOk= SystemImp::FileAvailable(full_arch_name,20,5);
 								if(!FileOk)
 								{
 										uprintf("Error: %S not found. Download failed or network or storage are not accessible.\n", full_arch_name);
@@ -442,7 +443,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 												uprintf("Error, 7Zip unknown fatal error.\n");
 												uprintf("Error, checking for driverpack availability...");
 												// if the 'Drivers' path exists
-												if(System.FileExists(hwidmatch->getdrp_packpath()))break;
+												if(SystemImp::FileExists(hwidmatch->getdrp_packpath()))break;
 												uprintf("Waiting for DriverPacks to become available.");
 												do
 												{
@@ -450,7 +451,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 														Sleep(1000);
 														tries++;
 														if(!itembar->checked||installmode!=MODE_INSTALLING||tries>60)break;
-												}while(!System.FileExists(hwidmatch->getdrp_packpath())&&!hwidmatch->getdrp_packontorrent());
+												}while(!SystemImp::FileExists(hwidmatch->getdrp_packpath())&&!hwidmatch->getdrp_packontorrent());
 												uprintf("OK\n");
 										}
 										}while(FileOk&&!hwidmatch->getdrp_packontorrent());
@@ -464,7 +465,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 								//if(!itembar->checked)manager_g->items_list[SLOT_EXTRACTING].install_status=STR_INST_STOPPING;
 								//itembar->percent=manager_g->items_list[SLOT_EMPTY].percent;
 								hwidmatch=itembar->hwidmatch;
-								totalextracttime+=extracttime=System.GetTickCountWr()-extracttime;
+								totalextracttime+=extracttime= SystemImp::GetTickCountWr()-extracttime;
 								uprintf("Ret %d, %ld secs\n",FileOk,extracttime/1000);
 								if(FileOk&&itembar->install_status!=STR_INST_STOPPING)
 								{
@@ -491,14 +492,14 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 								itembar->install_status=STR_INST_INSTALL;
 								MainWindow.redrawfield();
 
-								installtime=System.GetTickCountWr();
+								installtime= SystemImp::GetTickCountWr();
 								if(CRITICAL_SECTION_ACTIVE)LeaveCriticalSection(&sync);
 								if(installmode==MODE_INSTALLING)
 										driver_install(hwid,inf,&ret,&needrb);
 								else
 										ret=1;
 								if(CRITICAL_SECTION_ACTIVE)EnterCriticalSection(&sync);
-								totalinstalltime+=installtime=System.GetTickCountWr()-installtime;
+								totalinstalltime+=installtime= SystemImp::GetTickCountWr()-installtime;
 								itembar=&manager_g->items_list[itembar_act];
 
 								if(ret==1)installed++;else failed++;
@@ -525,7 +526,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 										if(needrb)needreboot=1;
 								}
 						}
-						if(!unpacked&&(Settings.flags&FLAG_DELEXTRAINFS))removeextrainfs(inf);
+						if(!unpacked&&Settings.flags&FLAG_DELEXTRAINFS)removeextrainfs(inf);
 						if(instflag&INSTALLDRIVERS)itembar->percent=0;
 						itembar->checked=0;
 						MainWindow.redrawmainwnd();
@@ -548,7 +549,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 		if(instflag&OPENFOLDER)
 		{
 				wchar_t *p=extractdir+wcslen(extractdir);
-				while(*(--p)!='\\');
+				while(*--p!='\\');
 				*p=0;
 				uprintf("%S\n",extractdir);
 				ShellExecute(nullptr,L"explore",extractdir,nullptr,nullptr,SW_SHOW);
@@ -559,7 +560,7 @@ unsigned int __stdcall Manager::thread_install(void *arg)
 		if(instflag&INSTALLDRIVERS&&(Settings.flags&FLAG_KEEPTEMPFILES)==0)
 		{
 				wsprintf(buf,L" /c rd /s /q \"%s\"",extractdir);
-        System.run_command(L"cmd",buf,SW_HIDE,1);
+				SystemImp::run_command(L"cmd",buf,SW_HIDE,1);
 		}
 
 		manager_g->items_list[SLOT_EXTRACTING].percent=0;
@@ -689,7 +690,7 @@ const wnddata_t Autoclicker_t::clicktbl[NUM_CLICKDATA]=
 void Autoclicker_t::calcwnddata(wnddata_t *w,HWND hwnd)
 {
 		WINDOWINFO pwi,pwb;
-		HWND parent=GetParent(hwnd);
+		const HWND parent=GetParent(hwnd);
 		pwb.cbSize=pwi.cbSize=sizeof(WINDOWINFO);
 
 		GetWindowInfo(parent,&pwi);
@@ -738,7 +739,7 @@ BOOL CALLBACK Autoclicker_t::EnumWindowsProc(HWND hwnd,LPARAM lParam)
 
 		if((lParam&1)==1)
 		{
-				Autoclicker.calcwnddata(&w,hwnd);
+			Autoclicker_t::calcwnddata(&w,hwnd);
 				if(lParam&2)
 				{
 						uprintf("* MainWindow (%d,%d) (%d,%d)\n",w.wnd_wx,w.wnd_wy,w.cln_wx,w.cln_wy);
@@ -747,7 +748,7 @@ BOOL CALLBACK Autoclicker_t::EnumWindowsProc(HWND hwnd,LPARAM lParam)
 				}
 
 				if((lParam&2)==0)for(i=0;i<NUM_CLICKDATA;i++)
-						if(Autoclicker.cmpclickdata((int *)&w,(int *)&clicktbl[i]))
+						if(Autoclicker_t::cmpclickdata((int *)&w,(int *)&clicktbl[i]))
 				{
 						SwitchToThisWindow(hwnd,0);
 						GetWindowInfo(GetParent(hwnd),&pwi);
@@ -756,15 +757,15 @@ BOOL CALLBACK Autoclicker_t::EnumWindowsProc(HWND hwnd,LPARAM lParam)
 						if(IsWindow(hwnd))
 						{
 								GetWindowInfo(hwnd,&pwi);
-								Autoclicker.calcwnddata(&w,hwnd);
+								Autoclicker_t::calcwnddata(&w,hwnd);
 
-								if(Autoclicker.cmpclickdata((int *)&w,(int *)&clicktbl[i]))
+								if(Autoclicker_t::cmpclickdata((int *)&w,(int *)&clicktbl[i]))
 								{
 										GetWindowInfo(GetParent(hwnd),&pwi);
 										SetCursorPos(pwi.rcClient.left+w.btn_x+w.btn_wx/2,pwi.rcClient.top+w.btn_y+w.btn_wy/2);
-										int x=w.btn_x+w.btn_wx/2;
-										int y=w.btn_y+w.btn_wy/2;
-										int pos=(y<<16)|x;
+										const int x=w.btn_x+w.btn_wx/2;
+										const int y=w.btn_y+w.btn_wy/2;
+										const int pos=y<<16|x;
 										SendMessage(GetParent(hwnd),WM_LBUTTONDOWN,0,pos);
 										SendMessage(GetParent(hwnd),WM_LBUTTONUP,  0,pos);
 										SetActiveWindow(hwnd);
@@ -788,7 +789,7 @@ void Autoclicker_t::wndclicker(int mode)
 
 void save_wndinfo()
 {
-		Autoclicker.wndclicker(2);
+	Autoclicker_t::wndclicker(2);
 }
 
 unsigned int __stdcall Autoclicker_t::thread_clicker(void *arg)
