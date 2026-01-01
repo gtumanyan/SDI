@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "Uređaji i pisači"
 STR_SYST_SYSCONTROL           = "Upravljačka ploča"
 STR_SYST_REST                 = "Vraćanje sigurnosne kopije sustava"
 STR_SYST_USBWIZARD            = "Stvori USB pogon"
-STR_SYST_TRANSLATE            = "Alat za prevođenje"
 
 // Context menu
 STR_CONT_INSTALL              = "Zakaži vrijeme instalacije"
@@ -309,7 +308,7 @@ STR_UPD_THOUR                 = "sati"
 STR_UPD_TDAY                  = "dana"
 STR_UPD_BASEFILES             = "Aplikacija+indeksi"
 STR_UPD_APP                   = "Aplikacija"
-STR_UPD_INDEXES               = "Indeksi"
+STR_UPD_INDICES               = "Indeksi"
 STR_UPD_UPDATEHINT1           = "Savjet"
 STR_UPD_UPDATEHINT2           = "Prvo moraš nadograditi bazu za korištenje ove značajke."
 
@@ -388,8 +387,8 @@ STR_OPTION_MAX_UPLOAD         = "Maks. brzina prijenosa u KB/s (0 - neograničen
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Upravljački programi"
-STR_OPTION_DIR_INDEXES        = "Indeksi"
-STR_OPTION_DIR_INDEXESH       = "Indeksi (čitljivo ljudima)"
+STR_OPTION_DIR_INDICES        = "Indeksi"
+STR_OPTION_DIR_INDICESH       = "Indeksi (čitljivo ljudima)"
 STR_OPTION_DIR_DATA           = "Teme i prijevodi"
 STR_OPTION_DIR_LOGS           = "Dnevnici"
 
@@ -448,7 +447,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Paketi mrežnih upravljačkih programa i indeks
 STR_USBWIZ_PAGE3_SELECTED     = "Odabrani paketi upravljačkih programa i indeksi"
 STR_USBWIZ_PAGE3_NOPACKS      = "Nema vozačkih paketa"
 STR_USBWIZ_PAGE3_ADDPATH      = "Navedite dodatni direktorij upravljačkog programa"
-STR_USBWIZ_PAGE3_INDEXES      = "Uključite online indekse"
+STR_USBWIZ_PAGE3_INDICES      = "Uključite online indekse"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Environment"

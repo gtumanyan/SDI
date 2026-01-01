@@ -159,7 +159,6 @@ STR_SYST_DEVICEPRNT           = "Eszközök és nyomtatók"
 STR_SYST_SYSCONTROL           = "Kezelőpanel"
 STR_SYST_REST                 = "Rendszer-visszaállítás"
 STR_SYST_USBWIZARD            = "USB meghajtó létrehozása"
-STR_SYST_TRANSLATE            = "Fordító eszköz"
 
 // Context menu
 STR_CONT_INSTALL              = "Tervezett telepítés"

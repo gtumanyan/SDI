@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "Συσκευές και εκτυπωτές"
 STR_SYST_SYSCONTROL           = "Πίνακας ελέγχου"
 STR_SYST_REST                 = "Επαναφορά συστήματος"
 STR_SYST_USBWIZARD            = "Δημιουργήστε μια μονάδα USB"
-STR_SYST_TRANSLATE            = "Εργαλείο μετάφρασης"
 
 // Context menu
 STR_CONT_INSTALL              = "Για να προγραμματίσετε την εγκατάσταση"

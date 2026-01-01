@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "Peranti dan pencetak"
 STR_SYST_SYSCONTROL           = "Panel kontrol"
 STR_SYST_REST                 = "Mengembalikan sistem"
 STR_SYST_USBWIZARD            = "Membuat USB Drive"
-STR_SYST_TRANSLATE            = "Alat terjemahan"
 
 // Context menu
 STR_CONT_INSTALL              = "Jadwalkan pemasangan"

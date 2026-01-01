@@ -6,7 +6,6 @@ STR_LANG_NAME                 = "Português Europeu"
 STR_LANG_ID                   = "Portuguese"
 STR_LANG_GROUP                = 0x0001 // LGRPID_WESTERN_EUROPE
 STR_LANG_CODE                 = 0x816
-STR_RTL                       = 0
 
 // left panel
 STR_SHOW_SYSINFO              = "Informação do sistema"
@@ -160,7 +159,6 @@ STR_SYST_DEVICEPRNT           = "Dispositivos e impressoras"
 STR_SYST_SYSCONTROL           = "Painel de controlo"
 STR_SYST_REST                 = "Restauro do sistema"
 STR_SYST_USBWIZARD            = "Criar uma unidade USB"
-STR_SYST_TRANSLATE            = "Ferramenta de tradução"
 
 // Context menu
 STR_CONT_INSTALL              = "Agendar instalação"

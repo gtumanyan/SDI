@@ -6,7 +6,6 @@ STR_LANG_NAME                 = "Tiếng Việt"
 STR_LANG_ID                   = "Vietnamese"
 STR_LANG_GROUP                = 0xE // LGRPID_VIETNAMESE
 STR_LANG_CODE                 = 0x2A
-STR_RTL                       = 0
 
 // left panel
 STR_SHOW_SYSINFO              = ""
@@ -160,7 +159,6 @@ STR_SYST_DEVICEPRNT           = "Các thiết bị và máy in"
 STR_SYST_SYSCONTROL           = "Bảng điều khiển"
 STR_SYST_REST                 = "Khôi phục hệ thống"
 STR_SYST_USBWIZARD            = "Tạo ổ USB"
-STR_SYST_TRANSLATE            = "Công cụ dịch"
 
 // Context menu
 STR_CONT_INSTALL              = "Tiến trình cài"
@@ -309,7 +307,7 @@ STR_UPD_THOUR                 = "giờ"
 STR_UPD_TDAY                  = "ngày"
 STR_UPD_BASEFILES             = "Application+indexes"
 STR_UPD_APP                   = "Ứng dụng"
-STR_UPD_INDEXES               = "Danh mục"
+STR_UPD_INDICES               = "Danh mục"
 STR_UPD_UPDATEHINT1           = "CHú ý"
 STR_UPD_UPDATEHINT2           = "Bạn phải cập nhật cơ bản trước khi sử dụng tùy chọn này"
 
@@ -388,8 +386,8 @@ STR_OPTION_MAX_UPLOAD         = "Tốc độ tải lên tối đa KB/s (0 - khô
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Trình điều khiển"
-STR_OPTION_DIR_INDEXES        = "Các danh mục"
-STR_OPTION_DIR_INDEXESH       = "Các danh mục (human-readable)"
+STR_OPTION_DIR_INDICES        = "Các danh mục"
+STR_OPTION_DIR_INDICESH       = "Các danh mục (human-readable)"
 STR_OPTION_DIR_DATA           = "Giao diện và dịch thuật"
 STR_OPTION_DIR_LOGS           = "Bản ghi"
 
@@ -448,7 +446,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Gói trình điều khiển mạng và chỉ m�
 STR_USBWIZ_PAGE3_SELECTED     = "Các gói trình điều khiển và chỉ mục được chọn"
 STR_USBWIZ_PAGE3_NOPACKS      = "Không có gói trình điều khiển"
 STR_USBWIZ_PAGE3_ADDPATH      = "Chỉ định thư mục trình điều khiển bổ sung"
-STR_USBWIZ_PAGE3_INDEXES      = "Bao gồm các chỉ mục trực tuyến"
+STR_USBWIZ_PAGE3_INDICES      = "Bao gồm các chỉ mục trực tuyến"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Môi trường"

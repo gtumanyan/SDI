@@ -6,7 +6,6 @@ STR_LANG_NAME                 = "Lietuvių"
 STR_LANG_ID                   = "Lithuanian"
 STR_LANG_GROUP                = 0x03 // LGRPID_BALTIC
 STR_LANG_CODE                 = 0x27
-STR_RTL                       = 0
 
 // left panel
 STR_SHOW_SYSINFO              = "Sistemos informacija"
@@ -160,7 +159,6 @@ STR_SYST_DEVICEPRNT           = "Prietaisai ir spausdintuvai"
 STR_SYST_SYSCONTROL           = "Valdymo skydas"
 STR_SYST_REST                 = "Sistemos atkūrimo"
 STR_SYST_USBWIZARD            = "Sukurkite USB diską"
-STR_SYST_TRANSLATE            = "Vertimo įrankis"
 
 // Context menu
 STR_CONT_INSTALL              = "Įtraukti diegimą į tvarkaraštį"

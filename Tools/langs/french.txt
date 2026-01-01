@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "Appareils et Imprimantes"
 STR_SYST_SYSCONTROL           = "Control Panel"
 STR_SYST_REST                 = "Restauration du système"
 STR_SYST_USBWIZARD            = "Créer un lecteur USB"
-STR_SYST_TRANSLATE            = "Translation Tool"
 
 // Context menu
 STR_CONT_INSTALL              = "Planifier l'installation"

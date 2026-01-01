@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "Geräte und Drucker"
 STR_SYST_SYSCONTROL           = "Alle Systemsteuerungselemente"
 STR_SYST_REST                 = "Systemwiederherstellung"
 STR_SYST_USBWIZARD            = "USB-Laufwerk erstellen"
-STR_SYST_TRANSLATE            = "Übersetzungsassistent"
 
 // Context menu
 STR_CONT_INSTALL              = "Installation planen"

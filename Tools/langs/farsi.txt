@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "دستگاه‌ها و پرینتر"
 STR_SYST_SYSCONTROL           = "کنترل پنل"
 STR_SYST_REST                 = "منابع سیستم"
 STR_SYST_USBWIZARD            = "سایخت درایو یو‌اس‌بی"
-STR_SYST_TRANSLATE            = "ابزار ترجمه"
 
 // Context menu
 STR_CONT_INSTALL              = "نصب‌های برنامه‌ریزی‌شده"

@@ -169,7 +169,6 @@ STR_SYST_DEVICEPRNT           = "Սարքեր եւ տպիչներ"
 STR_SYST_SYSCONTROL           = "Վերահսկիչ խորհուրդը"
 STR_SYST_REST                 = "Համակարգը վերականգնելու"
 STR_SYST_USBWIZARD            = "Ստեղծեք USB Drive"
-STR_SYST_TRANSLATE            = "Թարգմանության գործիք"
 
 // Context menu
 STR_CONT_INSTALL              = "Պլանավորել տեղադրումը"

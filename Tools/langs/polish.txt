@@ -6,7 +6,6 @@ STR_LANG_NAME                 = "Polski"
 STR_LANG_ID                   = "Polish"
 STR_LANG_GROUP                = 0x0001 // LGRPID_WESTERN_EUROPE
 STR_LANG_CODE                 = 0x15
-STR_RTL                       = 0
 
 // left panel
 STR_SHOW_SYSINFO              = ""
@@ -160,7 +159,6 @@ STR_SYST_DEVICEPRNT           = "Urządzenia i drukarki"
 STR_SYST_SYSCONTROL           = "Panel sterowania"
 STR_SYST_REST                 = "Przywracanie systemu"
 STR_SYST_USBWIZARD            = "Utwórz dysk USB"
-STR_SYST_TRANSLATE            = "Narzędzie tłumaczenia"
 
 // Context menu
 STR_CONT_INSTALL              = "Zaplanuj instalację"
@@ -309,7 +307,7 @@ STR_UPD_THOUR                 = "godzin(y)"
 STR_UPD_TDAY                  = "dni"
 STR_UPD_BASEFILES             = "Aplikacja+indeksy"
 STR_UPD_APP                   = "Aplikacja"
-STR_UPD_INDEXES               = "Indeksy"
+STR_UPD_INDICES               = "Indeksy"
 STR_UPD_UPDATEHINT1           = "Wskazówka"
 STR_UPD_UPDATEHINT2           = "Aby użyć tej funkcji, należy najpierw zaktualizować bazę."
 
@@ -388,8 +386,8 @@ STR_OPTION_MAX_UPLOAD         = "Maks. prędkość wysyłania w KB/s (0 - bez li
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Sterowniki"
-STR_OPTION_DIR_INDEXES        = "Indeksy"
-STR_OPTION_DIR_INDEXESH       = "Indeksy (czytelne dla człowieka)"
+STR_OPTION_DIR_INDICES        = "Indeksy"
+STR_OPTION_DIR_INDICESH       = "Indeksy (czytelne dla człowieka)"
 STR_OPTION_DIR_DATA           = "Kompozycje i tłumaczenia"
 STR_OPTION_DIR_LOGS           = "Pliki dziennika"
 
@@ -448,7 +446,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Pakiety sterowników sieciowych i indeksy"
 STR_USBWIZ_PAGE3_SELECTED     = "Wybrane pakiety sterowników i indeksy"
 STR_USBWIZ_PAGE3_NOPACKS      = "Brak pakietów sterowników"
 STR_USBWIZ_PAGE3_ADDPATH      = "Określ dodatkowy katalog sterowników"
-STR_USBWIZ_PAGE3_INDEXES      = "Uwzględnij indeksy online"
+STR_USBWIZ_PAGE3_INDICES      = "Uwzględnij indeksy online"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Środowisko"

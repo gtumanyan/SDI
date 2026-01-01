@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "Seadmed ja printerid"
 STR_SYST_SYSCONTROL           = "Kontrollpaneel"
 STR_SYST_REST                 = "Süsteemi taastamine"
 STR_SYST_USBWIZARD            = "Loo USB-draiv"
-STR_SYST_TRANSLATE            = "Tõlke tööriist"
 
 // Context menu
 STR_CONT_INSTALL              = "Paigaldamise ajastamine"

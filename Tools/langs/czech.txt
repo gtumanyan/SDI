@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "Zařízení a tiskárny"
 STR_SYST_SYSCONTROL           = "Ovládací panel"
 STR_SYST_REST                 = "Obnovení systému"
 STR_SYST_USBWIZARD            = "Vytvořte jednotku USB"
-STR_SYST_TRANSLATE            = "Nástroj pro překlad"
 
 // Context menu
 STR_CONT_INSTALL              = "Naplánovat instalaci"

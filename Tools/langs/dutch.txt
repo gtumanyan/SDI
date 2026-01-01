@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "Apparaten en printers"
 STR_SYST_SYSCONTROL           = "Controlepaneel"
 STR_SYST_REST                 = "Systeemherstel"
 STR_SYST_USBWIZARD            = "Maak een USB-drive"
-STR_SYST_TRANSLATE            = "Vertaal tool"
 
 // Context menu
 STR_CONT_INSTALL              = "Planning van de installatie"
@@ -309,7 +308,7 @@ STR_UPD_THOUR                 = "uren"
 STR_UPD_TDAY                  = "dagen"
 STR_UPD_BASEFILES             = "Toepassing + indexen"
 STR_UPD_APP                   = "Toepassing"
-STR_UPD_INDEXES               = "Indexen"
+STR_UPD_INDICES               = "Indexen"
 STR_UPD_UPDATEHINT1           = "Hint"
 STR_UPD_UPDATEHINT2           = "U dient Base eerst bij te werken om deze functie te gebruiken."
 
@@ -388,8 +387,8 @@ STR_OPTION_MAX_UPLOAD         = "Max upload snelheid in KB/s (0 - onbeperkt)"
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Stuurprogramma's"
-STR_OPTION_DIR_INDEXES        = "Indexen"
-STR_OPTION_DIR_INDEXESH       = "Indexen (leesbaar)"
+STR_OPTION_DIR_INDICES        = "Indexen"
+STR_OPTION_DIR_INDICESH       = "Indexen (leesbaar)"
 STR_OPTION_DIR_DATA           = "Thema's en vertalingen"
 STR_OPTION_DIR_LOGS           = "Log bestanden"
 
@@ -448,7 +447,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Netwerk driver packs en indexen"
 STR_USBWIZ_PAGE3_SELECTED     = "Geselecteerde driver pakketten en indexen"
 STR_USBWIZ_PAGE3_NOPACKS      = "Geen bestuurderspakketten"
 STR_USBWIZ_PAGE3_ADDPATH      = "Geef extra stuurprogramma's op"
-STR_USBWIZ_PAGE3_INDEXES      = "Inclusief online indexen"
+STR_USBWIZ_PAGE3_INDICES      = "Inclusief online indexen"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Omgeving"

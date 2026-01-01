@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "デバイスとプリンター"
 STR_SYST_SYSCONTROL           = "コントロールパネル"
 STR_SYST_REST                 = "システムの復元"
 STR_SYST_USBWIZARD            = "USBドライブを作成する"
-STR_SYST_TRANSLATE            = "翻訳ツール"
 
 // Context menu
 STR_CONT_INSTALL              = "インストールのスケジュール"

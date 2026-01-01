@@ -169,7 +169,6 @@ STR_SYST_DEVICEPRNT           = "Устройства и принтери"
 STR_SYST_SYSCONTROL           = "Контролен панел"
 STR_SYST_REST                 = "Възстановяване на системата"
 STR_SYST_USBWIZARD            = "Създайте USB устройство"
-STR_SYST_TRANSLATE            = "Инструмент за превод"
 
 // Context menu
 STR_CONT_INSTALL              = "Насрочи инсталация"

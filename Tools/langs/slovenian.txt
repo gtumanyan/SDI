@@ -6,7 +6,6 @@ STR_LANG_NAME               = "Slovenščina"
 STR_LANG_ID                 = "Slovenian"
 STR_LANG_GROUP              = 0x01 // LGRPID_WESTERN_EUROPE
 STR_LANG_CODE               = 0x24
-STR_RTL                     = 0
 
 // left panel
 STR_SHOW_SYSINFO            = ""
@@ -169,7 +168,6 @@ STR_SYST_DEVICEPRNT         = "Naprave in tiskalniki"
 STR_SYST_SYSCONTROL         = "Nadzorna plošča"
 STR_SYST_REST               = "Obnovitev sistema"
 STR_SYST_USBWIZARD          = "Ustvari pogon USB"
-STR_SYST_TRANSLATE          = "Orodje za prevajanje"
 
 // Context menu
 STR_CONT_INSTALL            = "Načrtuj namestitev"
@@ -318,7 +316,7 @@ STR_UPD_THOUR               = "ur"
 STR_UPD_TDAY                = "dni"
 STR_UPD_BASEFILES           = "Aplikacija+indeksi"
 STR_UPD_APP                 = "Aplikacija"
-STR_UPD_INDEXES             = "Indeksi"
+STR_UPD_INDICES             = "Indeksi"
 STR_UPD_UPDATEHINT1         = "Namig"
 STR_UPD_UPDATEHINT2         = "Za uporabo te funkcije morate najprej posodobiti osnovo."
 
@@ -397,8 +395,8 @@ STR_OPTION_MAX_UPLOAD       = "Največja hitrost nalaganja v KB/s (0 - neomejeno
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS      = "Gonilniki"
-STR_OPTION_DIR_INDEXES      = "Indeksi"
-STR_OPTION_DIR_INDEXESH     = "Indeksi (človeško berljivo)"
+STR_OPTION_DIR_INDICES      = "Indeksi"
+STR_OPTION_DIR_INDICESH     = "Indeksi (človeško berljivo)"
 STR_OPTION_DIR_DATA         = "Teme in prevodi"
 STR_OPTION_DIR_LOGS         = "Dnevniške datoteke"
 
@@ -453,7 +451,7 @@ STR_USBWIZ_PAGE3_NETWORK    = "Paketi in indeksi omrežnih gonilnikov"
 STR_USBWIZ_PAGE3_SELECTED   = "Izbrani paketi gonilnikov in indeksi"
 STR_USBWIZ_PAGE3_NOPACKS    = "Ni paketov gonilnikov"
 STR_USBWIZ_PAGE3_ADDPATH    = "Določite dodatno mapo gonilnikov"
-STR_USBWIZ_PAGE3_INDEXES    = "Vključi spletne indekse"
+STR_USBWIZ_PAGE3_INDICES    = "Vključi spletne indekse"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE      = "Okolje"

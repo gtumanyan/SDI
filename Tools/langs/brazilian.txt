@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "Dispositivos e Impressoras"
 STR_SYST_SYSCONTROL           = "Painel de Controle"
 STR_SYST_REST                 = "Restauração do Sistema"
 STR_SYST_USBWIZARD            = "Criar um Drive USB"
-STR_SYST_TRANSLATE            = "Ferramenta de Tradução"
 
 // Context menu
 STR_CONT_INSTALL              = "Agendar instalação"
@@ -309,7 +308,7 @@ STR_UPD_THOUR                 = "horas"
 STR_UPD_TDAY                  = "dias"
 STR_UPD_BASEFILES             = "Aplicativo + índices"
 STR_UPD_APP                   = "Aplicativo"
-STR_UPD_INDEXES               = "Índices"
+STR_UPD_INDICES               = "Índices"
 STR_UPD_UPDATEHINT1           = "Dica"
 STR_UPD_UPDATEHINT2           = "Você deve atualizar a base primeiro pra usar esta função."
 
@@ -388,8 +387,8 @@ STR_OPTION_MAX_UPLOAD         = "Velocidade máxima de upload em KBs/s (0 - ilim
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Drivers"
-STR_OPTION_DIR_INDEXES        = "Índices"
-STR_OPTION_DIR_INDEXESH       = "Índices (legível por humanos)"
+STR_OPTION_DIR_INDICES        = "Índices"
+STR_OPTION_DIR_INDICESH       = "Índices (legível por humanos)"
 STR_OPTION_DIR_DATA           = "Temas e traduções"
 STR_OPTION_DIR_LOGS           = "Arquivos de registro"
 
@@ -448,7 +447,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Pacotes dos drivers e índices de rede"
 STR_USBWIZ_PAGE3_SELECTED     = "Pacotes dos drivers e índices selecionados"
 STR_USBWIZ_PAGE3_NOPACKS      = "Sem pacotes dos drivers"
 STR_USBWIZ_PAGE3_ADDPATH      = "Especificar o diretório do driver adicional"
-STR_USBWIZ_PAGE3_INDEXES      = "Incluir os índices online"
+STR_USBWIZ_PAGE3_INDICES      = "Incluir os índices online"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Ambiente"

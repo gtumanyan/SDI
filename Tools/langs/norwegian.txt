@@ -6,7 +6,6 @@ STR_LANG_NAME                 = "Norsk"
 STR_LANG_ID                   = "Norwegian"
 STR_LANG_GROUP                = 0x03 // LGRPID_BALTIC
 STR_LANG_CODE                 = 0x14
-STR_RTL                       = 0
 
 // left panel
 STR_SHOW_SYSINFO              = "Systeminformasjon"
@@ -160,7 +159,6 @@ STR_SYST_DEVICEPRNT           = "Enheter og skrivere"
 STR_SYST_SYSCONTROL           = "Kontrollpanel"
 STR_SYST_REST                 = "Systemgjenoppretting"
 STR_SYST_USBWIZARD            = "Opprett en USB-stasjon"
-STR_SYST_TRANSLATE            = "Oversettelsesverktøy"
 
 // Context menu
 STR_CONT_INSTALL              = "Planlegge installasjon"
@@ -309,7 +307,7 @@ STR_UPD_THOUR                 = "timer"
 STR_UPD_TDAY                  = "dager"
 STR_UPD_BASEFILES             = "Applikasjon+indekser"
 STR_UPD_APP                   = "Applikasjon"
-STR_UPD_INDEXES               = "Indekser"
+STR_UPD_INDICES               = "Indekser"
 STR_UPD_UPDATEHINT1           = "Hint"
 STR_UPD_UPDATEHINT2           = "Du må oppdatere basefilene først for å bruke denne funksjonen."
 
@@ -388,8 +386,8 @@ STR_OPTION_MAX_UPLOAD         = "Maks opplastingshastighet i KB/s (0 - ubegrense
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Drivere"
-STR_OPTION_DIR_INDEXES        = "Indekser"
-STR_OPTION_DIR_INDEXESH       = "Indekser (lesbare)"
+STR_OPTION_DIR_INDICES        = "Indekser"
+STR_OPTION_DIR_INDICESH       = "Indekser (lesbare)"
 STR_OPTION_DIR_DATA           = "Temaer og oversettelser"
 STR_OPTION_DIR_LOGS           = "Loggfiler"
 
@@ -448,7 +446,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Nettverksdriverpakker og indekser"
 STR_USBWIZ_PAGE3_SELECTED     = "Valgte driverpakker og indekser"
 STR_USBWIZ_PAGE3_NOPACKS      = "Ingen driverpakker"
 STR_USBWIZ_PAGE3_ADDPATH      = "Spesifiser ytterligere driverkatalog"
-STR_USBWIZ_PAGE3_INDEXES      = "Inkluder online indekser"
+STR_USBWIZ_PAGE3_INDICES      = "Inkluder online indekser"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Miljø"

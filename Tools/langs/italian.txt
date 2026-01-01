@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "Periferiche e stampanti"
 STR_SYST_SYSCONTROL           = "Pannello di controllo"
 STR_SYST_REST                 = "Ripristino del sistema"
 STR_SYST_USBWIZARD            = "Creare una pennetta USB"
-STR_SYST_TRANSLATE            = "Strumento di traduzione"
 
 // Context menu
 STR_CONT_INSTALL              = "Installazione programmata"

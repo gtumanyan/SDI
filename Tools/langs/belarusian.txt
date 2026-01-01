@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "Прылады і прынтэры"
 STR_SYST_SYSCONTROL           = "Панэль кіравання"
 STR_SYST_REST                 = "Аднаўленне сістэмы"
 STR_SYST_USBWIZARD            = "Стварыць USB-назапашвальнік"
-STR_SYST_TRANSLATE            = "пераклад інструмент"
 
 // Context menu
 STR_CONT_INSTALL              = "Запланаваць усталёўку"

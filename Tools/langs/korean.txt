@@ -169,7 +169,6 @@ STR_SYST_DEVICEPRNT           = "장치 및 프린터"
 STR_SYST_SYSCONTROL           = "제어판"
 STR_SYST_REST                 = "시스템 복원"
 STR_SYST_USBWIZARD            = "USB 드라이브 만들기"
-STR_SYST_TRANSLATE            = "번역 도구"
 
 // Context menu
 STR_CONT_INSTALL              = "설치 예약"

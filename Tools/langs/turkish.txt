@@ -6,7 +6,6 @@ STR_LANG_NAME                 = "Türkçe"
 STR_LANG_ID                   = "Turkish"
 STR_LANG_GROUP                = 0x06 // LGRPID_TURKIC
 STR_LANG_CODE                 = 0x1F
-STR_RTL                       = 0
 
 // left panel
 STR_SHOW_SYSINFO              = "Sistem Bilgisi"
@@ -160,7 +159,6 @@ STR_SYST_DEVICEPRNT           = "Cihazlar ve yazıcılar"
 STR_SYST_SYSCONTROL           = "Kontrol Paneli"
 STR_SYST_REST                 = "Sistem Geri Yükleme"
 STR_SYST_USBWIZARD            = "Bir USB Sürücüsü Yarat"
-STR_SYST_TRANSLATE            = "Çeviri Aracı"
 
 // Context menu
 STR_CONT_INSTALL              = "Kurulum için seç"
@@ -309,7 +307,7 @@ STR_UPD_THOUR                 = "saat"
 STR_UPD_TDAY                  = "gün"
 STR_UPD_BASEFILES             = "Uygulama+indeksler"
 STR_UPD_APP                   = "Uygulama"
-STR_UPD_INDEXES               = "İndeksler"
+STR_UPD_INDICES               = "İndeksler"
 STR_UPD_UPDATEHINT1           = "İpucu"
 STR_UPD_UPDATEHINT2           = "Bu özelliği kullanabilmek için önce güncelleştirmeniz gerekir."
 
@@ -388,8 +386,8 @@ STR_OPTION_MAX_UPLOAD         = "En fazla gönderme hızı KB/s (0 - sınırsız
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Sürücü paketleri"
-STR_OPTION_DIR_INDEXES        = "İndeksler"
-STR_OPTION_DIR_INDEXESH       = "İndeksler (okunabilir biçim)"
+STR_OPTION_DIR_INDICES        = "İndeksler"
+STR_OPTION_DIR_INDICESH       = "İndeksler (okunabilir biçim)"
 STR_OPTION_DIR_DATA           = "Temalar ve dil dosyaları"
 STR_OPTION_DIR_LOGS           = "Günlük dosyaları"
 
@@ -448,7 +446,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Ağ sürücü paketleri ve dizinler"
 STR_USBWIZ_PAGE3_SELECTED     = "Seçili sürücü paketleri ve dizinler"
 STR_USBWIZ_PAGE3_NOPACKS      = "Sürücü paketi yok"
 STR_USBWIZ_PAGE3_ADDPATH      = "Ek sürücü dizini belirtin"
-STR_USBWIZ_PAGE3_INDEXES      = "Çevrimiçi indeksleri dahil et"
+STR_USBWIZ_PAGE3_INDICES      = "Çevrimiçi indeksleri dahil et"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "çevre"

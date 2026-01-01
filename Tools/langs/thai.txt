@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "อุปกรณ์และเครื่�
 STR_SYST_SYSCONTROL           = "แผงควบคุม"
 STR_SYST_REST                 = "ระบบการเรียกคืน"
 STR_SYST_USBWIZARD            = "สร้างไดรฟ์ USB"
-STR_SYST_TRANSLATE            = "เครื่องมือแปลภาษา"
 
 // Context menu
 STR_CONT_INSTALL              = "ตารางเวลาการติดตั้ง"

@@ -169,7 +169,6 @@ STR_SYST_DEVICEPRNT           = "裝置和打印機"
 STR_SYST_SYSCONTROL           = "控制面板"
 STR_SYST_REST                 = "系統還原"
 STR_SYST_USBWIZARD            = "建立USB驅動器"
-STR_SYST_TRANSLATE            = "翻譯工具"
 
 // Context menu
 STR_CONT_INSTALL              = "排程安裝"
@@ -318,7 +317,7 @@ STR_UPD_THOUR                 = "小時"
 STR_UPD_TDAY                  = "天"
 STR_UPD_BASEFILES             = "應用程式＋索引"
 STR_UPD_APP                   = "應用程式"
-STR_UPD_INDEXES               = "索引"
+STR_UPD_INDICES               = "索引"
 STR_UPD_UPDATEHINT1           = "提示"
 STR_UPD_UPDATEHINT2           = "必須先更新基底來使用這功能"
 
@@ -397,8 +396,8 @@ STR_OPTION_MAX_UPLOAD         = "最大上傳速率，每秒幾KB（0為無限�
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "驅動程式"
-STR_OPTION_DIR_INDEXES        = "索引"
-STR_OPTION_DIR_INDEXESH       = "索引（可讀格式）"
+STR_OPTION_DIR_INDICES        = "索引"
+STR_OPTION_DIR_INDICESH       = "索引（可讀格式）"
 STR_OPTION_DIR_DATA           = "佈景主題及翻譯"
 STR_OPTION_DIR_LOGS           = "紀錄檔"
 
@@ -457,7 +456,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "網絡驅動程式包和索引"
 STR_USBWIZ_PAGE3_SELECTED     = "所選的驅動程式包和索引"
 STR_USBWIZ_PAGE3_NOPACKS      = "沒有驅動程式包"
 STR_USBWIZ_PAGE3_ADDPATH      = "指定其他驅動程式目錄"
-STR_USBWIZ_PAGE3_INDEXES      = "包括線上索引"
+STR_USBWIZ_PAGE3_INDICES      = "包括線上索引"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "環境"

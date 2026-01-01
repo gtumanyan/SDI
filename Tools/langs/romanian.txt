@@ -7,7 +7,6 @@ STR_LANG_NAME                 = "Română"
 STR_LANG_ID                   = "Romanian"
 STR_LANG_GROUP                = 0x0001 // LGRPID_WESTERN_EUROPE
 STR_LANG_CODE                 = 0x18
-STR_RTL                       = 0
 
 // left panel
 STR_SHOW_SYSINFO              = "Informații sistem"
@@ -161,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "Dispozitive și imprimante"
 STR_SYST_SYSCONTROL           = "Panou de control"
 STR_SYST_REST                 = "Restaurarea sistemului"
 STR_SYST_USBWIZARD            = "Creați o unitate USB"
-STR_SYST_TRANSLATE            = "Instrumentul de traducere"
 
 // Context menu
 STR_CONT_INSTALL              = "Programați instalare"
@@ -310,7 +308,7 @@ STR_UPD_THOUR                 = "ore"
 STR_UPD_TDAY                  = "zile"
 STR_UPD_BASEFILES             = "Aplicație+indecși"
 STR_UPD_APP                   = "Aplicație"
-STR_UPD_INDEXES               = "Indecși"
+STR_UPD_INDICES               = "Indecși"
 STR_UPD_UPDATEHINT1           = "Pont"
 STR_UPD_UPDATEHINT2           = "Trebuie actualizată baza de date mai întâi."
 
@@ -389,8 +387,8 @@ STR_OPTION_MAX_UPLOAD         = "Viteza maximă de încărcare în KB/s (0 - nel
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Conducătorii auto"
-STR_OPTION_DIR_INDEXES        = "Indici ai"
-STR_OPTION_DIR_INDEXESH       = "Indici (citiți de om)"
+STR_OPTION_DIR_INDICES        = "Indici ai"
+STR_OPTION_DIR_INDICESH       = "Indici (citiți de om)"
 STR_OPTION_DIR_DATA           = "Teme și traduceri"
 STR_OPTION_DIR_LOGS           = "Fișierele jurnal"
 
@@ -445,7 +443,7 @@ STR_USBWIZ_PAGE3_NETWORK      = "Pachete și indexuri de drivere de rețea"
 STR_USBWIZ_PAGE3_SELECTED     = "Pachete și indexuri de drivere selectate"
 STR_USBWIZ_PAGE3_NOPACKS      = "Fără pachete de șoferi"
 STR_USBWIZ_PAGE3_ADDPATH      = "Specificați directorul de drivere suplimentar"
-STR_USBWIZ_PAGE3_INDEXES      = "Includeți indexuri online"
+STR_USBWIZ_PAGE3_INDICES      = "Includeți indexuri online"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE        = "Mediu inconjurator"

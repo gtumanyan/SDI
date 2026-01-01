@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "الأجهزة والطابعات"
 STR_SYST_SYSCONTROL           = "لوحة التحكم"
 STR_SYST_REST                 = "استعادة النظام"
 STR_SYST_USBWIZARD            = "إنشاء محرك أقراص أوسب"
-STR_SYST_TRANSLATE            = "أداة الترجمة"
 
 // Context menu
 STR_CONT_INSTALL              = "تثبيت باستخدام الجدول"

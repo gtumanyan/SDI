@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "Ierīces un printeri"
 STR_SYST_SYSCONTROL           = "Vadības panelis"
 STR_SYST_REST                 = "Sistēmas atjaunošana"
 STR_SYST_USBWIZARD            = "Izveidojiet USB disku"
-STR_SYST_TRANSLATE            = "Tulkošanas rīks"
 
 // Context menu
 STR_CONT_INSTALL              = "Ieplānot uzstādīšanu"

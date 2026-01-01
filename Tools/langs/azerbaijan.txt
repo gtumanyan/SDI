@@ -169,7 +169,6 @@ STR_SYST_DEVICEPRNT           = "Cihazlar və Yazıcılar"
 STR_SYST_SYSCONTROL           = "İdarə paneli"
 STR_SYST_REST                 = "Sistem bərpa"
 STR_SYST_USBWIZARD            = "USB Sürücü yarat"
-STR_SYST_TRANSLATE            = "Tərcümə Aracı"
 
 // Context menu
 STR_CONT_INSTALL              = "Quraşdırılmanı planlaşdırmaq"

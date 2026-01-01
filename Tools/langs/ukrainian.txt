@@ -6,7 +6,6 @@ STR_LANG_NAME                 = "Українська"
 STR_LANG_ID                   = "Ukrainian"
 STR_LANG_GROUP                = 0x05 // LGRPID_CYRILLIC
 STR_LANG_CODE                 = 0x22
-STR_RTL                       = 0
 
 // left panel
 STR_SHOW_SYSINFO              = "Інформація про систему"
@@ -160,7 +159,6 @@ STR_SYST_DEVICEPRNT           = "Пристрої та принтери"
 STR_SYST_SYSCONTROL           = "Панель управління"
 STR_SYST_REST                 = "Відновлення системи"
 STR_SYST_USBWIZARD            = "Створити USB-диск"
-STR_SYST_TRANSLATE            = "Інструмент перекладу"
 
 // Context menu
 STR_CONT_INSTALL              = "Запланувати установку"
@@ -309,7 +307,7 @@ STR_UPD_THOUR                 = "год"
 STR_UPD_TDAY                  = "дн"
 STR_UPD_BASEFILES             = "Програма+індекси"
 STR_UPD_APP                   = "Програма"
-STR_UPD_INDEXES               = "Індекси нових паків"
+STR_UPD_INDICES               = "Індекси нових паків"
 STR_UPD_UPDATEHINT1           = "Порада"
 STR_UPD_UPDATEHINT2           = "Ви повинні спочатку оновити програму з індексами."
 
@@ -388,8 +386,8 @@ STR_OPTION_MAX_UPLOAD         = "Максимальна швидкість ві�
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "Драйвери"
-STR_OPTION_DIR_INDEXES        = "Індекси нових паків"
-STR_OPTION_DIR_INDEXESH       = "Індекси у вигляді тексту"
+STR_OPTION_DIR_INDICES        = "Індекси нових паків"
+STR_OPTION_DIR_INDICESH       = "Індекси у вигляді тексту"
 STR_OPTION_DIR_DATA           = "Переклади і теми"
 STR_OPTION_DIR_LOGS           = "Журнали"
 

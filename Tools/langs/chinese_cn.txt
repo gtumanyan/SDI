@@ -169,7 +169,6 @@ STR_SYST_DEVICEPRNT           = "设备和打印机"
 STR_SYST_SYSCONTROL           = "控制面板"
 STR_SYST_REST                 = "系统还原"
 STR_SYST_USBWIZARD            = "建立USB驱动器"
-STR_SYST_TRANSLATE            = "翻译工具"
 
 // Context menu
 STR_CONT_INSTALL              = "计划安装"
@@ -317,7 +316,7 @@ STR_UPD_THOUR                 = "小时"
 STR_UPD_TDAY                  = "天"
 STR_UPD_BASEFILES             = "应用程序+索引"
 STR_UPD_APP                   = "应用程序"
-STR_UPD_INDEXES               = "索引"
+STR_UPD_INDICES               = "索引"
 STR_UPD_UPDATEHINT1           = "提示"
 STR_UPD_UPDATEHINT2           = "您必须先更新基础版本，才能使用此功能。"
 
@@ -396,8 +395,8 @@ STR_OPTION_MAX_UPLOAD         = "最大上传速度 KB/s（0表示无限制）"
 
 // Paths tab
 STR_OPTION_DIR_DRIVERS        = "驱动程序"
-STR_OPTION_DIR_INDEXES        = "索引"
-STR_OPTION_DIR_INDEXESH       = "索引（人类可读）"
+STR_OPTION_DIR_INDICES        = "索引"
+STR_OPTION_DIR_INDICESH       = "索引（人类可读）"
 STR_OPTION_DIR_DATA           = "主题和翻译"
 STR_OPTION_DIR_LOGS           = "日志文件"
 
@@ -457,7 +456,7 @@ STR_USBWIZ_PAGE3_NETWORK       = "网络驱动程序包和索引"
 STR_USBWIZ_PAGE3_SELECTED      = "选择的驱动程序包和索引"
 STR_USBWIZ_PAGE3_NOPACKS       = "没有驱动程序包"
 STR_USBWIZ_PAGE3_ADDPATH       = "指定其他驱动程序目录"
-STR_USBWIZ_PAGE3_INDEXES       = "包括在线索引"
+STR_USBWIZ_PAGE3_INDICES       = "包括在线索引"
 
 // USB Wizard - page 4
 STR_USBWIZ_PAGE4_TITLE         = "环境"

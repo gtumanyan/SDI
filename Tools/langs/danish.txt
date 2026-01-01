@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "Enheder og printere"
 STR_SYST_SYSCONTROL           = "Kontrolpanel"
 STR_SYST_REST                 = "Systemgendannelse"
 STR_SYST_USBWIZARD            = "Opret et USB-drev"
-STR_SYST_TRANSLATE            = "Oversættelsesværktøj"
 
 // Context menu
 STR_CONT_INSTALL              = "Planlæg installation"

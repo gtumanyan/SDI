@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "მოწყობილობები და 
 STR_SYST_SYSCONTROL           = "Მართვის პანელი"
 STR_SYST_REST                 = "Სისტემის აღდგენა"
 STR_SYST_USBWIZARD            = "შექმენით USB დისკი"
-STR_SYST_TRANSLATE            = "თარგმანის ინსტრუმენტი"
 
 // Context menu
 STR_CONT_INSTALL              = "განრიგი დაყენება"

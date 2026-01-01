@@ -160,7 +160,6 @@ STR_SYST_DEVICEPRNT           = "מכשירים ומדפסות"
 STR_SYST_SYSCONTROL           = "לוח בקרה"
 STR_SYST_REST                 = "שחזור מערכת"
 STR_SYST_USBWIZARD            = "צור כונן USB"
-STR_SYST_TRANSLATE            = "כלי התרגום"
 
 // Context menu
 STR_CONT_INSTALL              = "התקנה מתוזמנת"
