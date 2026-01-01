@@ -29,7 +29,7 @@ class wFont
 {
 public:
     static wFont *Create();
-    virtual ~wFont(){}
+    virtual ~wFont() = default;
     virtual void SetFont(const wchar_t *name,int size,bool bold=false)=0;
 };
 //}
@@ -48,7 +48,7 @@ public:
     ClipRegion();
     ClipRegion(int x1,int y1,int x2,int y2);
     ClipRegion(int x1,int y1,int x2,int y2,int r);
-    void setRegion(int x1,int y1,int x2,int y2);
+    void setRegion(int x1,int y1,int x2,int y2) const;
     ~ClipRegion();
 };
 //}
@@ -57,7 +57,7 @@ public:
 class Combobox
 {
 public:
-    virtual ~Combobox(){}
+    virtual ~Combobox() = default;
 
     virtual void Clear()=0;
     virtual void AddItem(const wchar_t *str)=0;
@@ -93,28 +93,28 @@ public:
         ASPECT  = 16,
     };
 
-    virtual ~Image(){}
+    virtual ~Image() = default;
     virtual void Load(int strid)=0;
     virtual void MakeCopy(ImageImp &t)=0;
 };
 //}
 
-//{ ImageStorange
-class ImageStorange
+//{ ImageStorage
+class ImageStorage
 {
 public:
-    virtual ~ImageStorange(){}
+    virtual ~ImageStorage() = default;
     virtual Image *GetImage(size_t n)=0;
     virtual void LoadAll()=0;
 };
-ImageStorange *CreateImageStorange(size_t n,const int *ind,int add_=0);
+ImageStorage *CreateImageStorage(size_t n,const int *ind,int add_=0);
 //}
 
 //{ Canvas
 class Canvas
 {
 public:
-    virtual ~Canvas(){}
+    virtual ~Canvas() = default;
 
     virtual void CopyCanvas(Canvas *source,int x1,int y1)=0;
     virtual void begin(p_wnd_handle_type hwnd,int x,int y,bool mirror=true)=0;

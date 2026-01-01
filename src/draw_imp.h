@@ -13,6 +13,8 @@ You should have received a copy of the GNU General Public License along with
 Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <vector>
+
 //{ wFont
 class wFontImp:public wFont
 {
@@ -92,19 +94,18 @@ public:
 };
 //}
 
-//{ ImageStorange
-class ImageStorangeImp:public ImageStorange
+//{ ImageStorage
+class ImageStorageImp:public ImageStorage
 {
-    ImageImp *a;
-    size_t num;
+    std::vector<ImageImp> a;
     int add;
     const int *index;
 
 public:
-    ImageStorangeImp(size_t n,const int *ind,int add_=0);
-    ~ImageStorangeImp();
-    Image *GetImage(size_t n);
-    void LoadAll();
+    ImageStorageImp(size_t n,const int *ind,int add_=0);
+    ~ImageStorageImp() override = default;
+    Image *GetImage(size_t n) override;
+    void LoadAll() override;
 };
 //}
 
