@@ -30,8 +30,8 @@ STR_REFRESH                   = "刷新"
 STR_REFRESH_H                 = "刷新驱动程序列表"
 STR_UPDATES                   = "更新"
 STR_UPDATES_H                 = "选择更新源"
-STR_UPDATES_SDIO              = "选择SDIO更新"
-STR_UPDATES_SDIO_H            = "选择标准SDIO更新"
+STR_UPDATES_SDI              = "选择SDI更新"
+STR_UPDATES_SDI_H            = "选择标准SDI更新"
 STR_UPDATES_DRIVERS           = "选择驱动程序包更新"
 STR_UPDATES_DRIVERS_H         = "选择最新的驱动程序包更新"
 STR_TOOLS                     = "工具"
@@ -167,7 +167,7 @@ STR_SYST_COMPMNG              = "计算机管理"
 STR_SYST_SYSPROT              = "系统保护"
 STR_SYST_DEVICEPRNT           = "设备和打印机"
 STR_SYST_SYSCONTROL           = "控制面板"
-STR_SYST_REST                 = "系统还原"
+STR_SYST_SYSREST                 = "系统还原"
 STR_SYST_USBWIZARD            = "建立USB驱动器"
 
 // Context menu
@@ -408,10 +408,10 @@ STR_OPTION_CMD_FINISHRB       = "安装后（需要重新启动）"
 STR_OPTION_CMD_FINISHDN       = "下载后"
 STR_OPTION_CONSOLE            = "显示控制台窗口"
 
-// Patreon
-STR_PATREON1             	= "SDI由志愿者利用业余时间开发。如果您喜欢这个软件，请在Patreon支持我们。"
-STR_PATREON2             	= "(点击这里打开Patreon页面)"
-STR_PATREON_H            	= "点击这里打开Patreon页面"
+// BOOSTY
+STR_BOOSTY1             	= "SDI由志愿者利用业余时间开发。如果您喜欢这个软件，请在BOOSTY支持我们。"
+STR_BOOSTY2             	= "(点击这里打开BOOSTY页面)"
+STR_BOOSTY_H            	= "点击这里打开BOOSTY页面"
 
 // Welcome
 STR_WELCOME_TITLE			 = "Snappy Driver Installer"

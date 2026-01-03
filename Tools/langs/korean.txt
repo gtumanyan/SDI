@@ -167,7 +167,7 @@ STR_SYST_COMPMNG              = "컴퓨터 관리"
 STR_SYST_SYSPROT              = "시스템 보호"
 STR_SYST_DEVICEPRNT           = "장치 및 프린터"
 STR_SYST_SYSCONTROL           = "제어판"
-STR_SYST_REST                 = "시스템 복원"
+STR_SYST_SYSREST              = "시스템 복원"
 STR_SYST_USBWIZARD            = "USB 드라이브 만들기"
 
 // Context menu
@@ -410,10 +410,10 @@ STR_OPTION_CMD_FINISHRB       = "설치 후 (재부팅 필요)"
 STR_OPTION_CMD_FINISHDN       = "다운로드 후"
 STR_OPTION_CONSOLE            = "콘솔 창 보기"
 
-// Patreon
-STR_PATREON1             = "SDI는 여가 시간에 자원 봉사자들에 의해 개발되고 있습니다. 이 소프트웨어가 마음에 들 경우, Patreon으로 우리에 지원해 주시기 바랍니다."
-STR_PATREON2             = "(Patreon 페이지를 열려면 여기를 클릭하세요)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "SDI는 여가 시간에 자원 봉사자들에 의해 개발되고 있습니다. 이 소프트웨어가 마음에 들 경우, BOOSTY으로 우리에 지원해 주시기 바랍니다."
+STR_BOOSTY2             = "(BOOSTY 페이지를 열려면 여기를 클릭하세요)"
+STR_BOOSTY_H            = ""
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Snappy Driver Installer 에 오신 것을 환영합니다."

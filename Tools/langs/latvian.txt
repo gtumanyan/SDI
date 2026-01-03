@@ -158,7 +158,7 @@ STR_SYST_COMPMNG              = "Datoru vadība"
 STR_SYST_SYSPROT              = "Sistēmas aizsardzība"
 STR_SYST_DEVICEPRNT           = "Ierīces un printeri"
 STR_SYST_SYSCONTROL           = "Vadības panelis"
-STR_SYST_REST                 = "Sistēmas atjaunošana"
+STR_SYST_SYSREST              = "Sistēmas atjaunošana"
 STR_SYST_USBWIZARD            = "Izveidojiet USB disku"
 
 // Context menu

@@ -157,7 +157,7 @@ STR_SYST_COMPMNG              = "Управління комп'ютером"
 STR_SYST_SYSPROT              = "Захист системи"
 STR_SYST_DEVICEPRNT           = "Пристрої та принтери"
 STR_SYST_SYSCONTROL           = "Панель управління"
-STR_SYST_REST                 = "Відновлення системи"
+STR_SYST_SYSREST              = "Відновлення системи"
 STR_SYST_USBWIZARD            = "Створити USB-диск"
 
 // Context menu
@@ -399,10 +399,10 @@ STR_OPTION_CMD_FINISHRB       = "Після установки (потрібне
 STR_OPTION_CMD_FINISHDN       = "Після закачування драйверпаків"
 STR_OPTION_CONSOLE            = "Відображати консольне вікно"
 
-// Patreon
-STR_PATREON1             = "Ви можете підтримати розвиток програми через систему Patreon"
-STR_PATREON2             = "(Клікніть тут, щоб відкрити сторінку в браузері)"
-STR_PATREON_H            = "Регулярные обновления требуют регулярной работы. Финансово поддержите нашу инициативу через систему ежемесячных дотаций Patreon!"
+// BOOSTY
+STR_BOOSTY1             = "Ви можете підтримати розвиток програми через систему BOOSTY"
+STR_BOOSTY2             = "(Клікніть тут, щоб відкрити сторінку в браузері)"
+STR_BOOSTY_H            = "Регулярные обновления требуют регулярной работы. Финансово поддержите нашу инициативу через систему ежемесячных дотаций BOOSTY!"
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Ласкаво просимо до Snappy Driver Installer"

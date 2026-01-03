@@ -158,7 +158,7 @@ STR_SYST_COMPMNG              = "إدارة الكمبيوتر"
 STR_SYST_SYSPROT              = "حماية النظام"
 STR_SYST_DEVICEPRNT           = "الأجهزة والطابعات"
 STR_SYST_SYSCONTROL           = "لوحة التحكم"
-STR_SYST_REST                 = "استعادة النظام"
+STR_SYST_SYSREST                 = "استعادة النظام"
 STR_SYST_USBWIZARD            = "إنشاء محرك أقراص أوسب"
 
 // Context menu
@@ -401,10 +401,10 @@ STR_OPTION_CMD_FINISHRB       = "بعد التثبيت (تحتاج الي إعا
 STR_OPTION_CMD_FINISHDN       = "بعد التحميل"
 STR_OPTION_CONSOLE            = "إظهار نافذة وحدة التحكم"
 
-// Patreon
-STR_PATREON1             = "تم تطوير SDI من قبل متطوعين في أوقات فراغهم. إذا أعجبك هذا البرنامج, يرجي تقديم الدعم لنا علي Patreon."
-STR_PATREON2             = "(أضغط هنا لفتح صفحة الـPatreon)"
-STR_PATREON_H                 = "أضغط هنا لفتح صفحة الـPatreon"
+// BOOSTY
+STR_BOOSTY1             = "تم تطوير SDI من قبل متطوعين في أوقات فراغهم. إذا أعجبك هذا البرنامج, يرجي تقديم الدعم لنا علي BOOSTY."
+STR_BOOSTY2             = "(أضغط هنا لفتح صفحة الـBOOSTY)"
+STR_BOOSTY_H                 = "أضغط هنا لفتح صفحة الـBOOSTY"
 // Welcome
 STR_WELCOME_TITLE             = "مثبت سائق المثبت المنشأ"
 STR_WELCOME_SUBTITLE          = "مرحبا بكم في المثبت سائق المثبت المنشأ"

@@ -158,7 +158,7 @@ STR_SYST_COMPMNG              = "مدیریت کامپوتر"
 STR_SYST_SYSPROT              = "محافظت از سیستم"
 STR_SYST_DEVICEPRNT           = "دستگاه‌ها و پرینتر"
 STR_SYST_SYSCONTROL           = "کنترل پنل"
-STR_SYST_REST                 = "منابع سیستم"
+STR_SYST_SYSREST                 = "منابع سیستم"
 STR_SYST_USBWIZARD            = "سایخت درایو یو‌اس‌بی"
 
 // Context menu
@@ -401,10 +401,10 @@ STR_OPTION_CMD_FINISHRB       = "پس از نصب(نیاز به راه اندا�
 STR_OPTION_CMD_FINISHDN       = "پس از دانلود"
 STR_OPTION_CONSOLE            = "نمایش پنجره کنسول"
 
-// Patreon
-STR_PATREON1             = "SDI توسط داوطلبان توسعه می یابد. اگر این نرم افزار را دوست دارید، لطفا از ما در Patreon حمایت کنید."
-STR_PATREON2             = "(برای باز کردن صفحه Patreon اینجا را کلیک کنید.)"
-STR_PATREON_H                 = "Snappy Driver Installer توسط داوطلبان در زمان آزاد خود توسعه داده می‌شود. اگر آن را دوست دارید، ما را در Patreon حمایت کنید"
+// BOOSTY
+STR_BOOSTY1             = "SDI توسط داوطلبان توسعه می یابد. اگر این نرم افزار را دوست دارید، لطفا از ما در BOOSTY حمایت کنید."
+STR_BOOSTY2             = "(برای باز کردن صفحه BOOSTY اینجا را کلیک کنید.)"
+STR_BOOSTY_H                 = "Snappy Driver Installer توسط داوطلبان در زمان آزاد خود توسعه داده می‌شود. اگر آن را دوست دارید، ما را در BOOSTY حمایت کنید"
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "به مبدا نصب درایور Snappy خوش آمدید"

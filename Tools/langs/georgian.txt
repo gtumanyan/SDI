@@ -30,8 +30,8 @@ STR_REFRESH                   = "განახლება"
 STR_REFRESH_H                 = "განახლების მძღოლის სია"
 STR_UPDATES                   = "განახლებები"
 STR_UPDATES_H                 = "აირჩიეთ განახლების წყარო"
-STR_UPDATES_SDIO              = "აირჩიეთ SDI განახლებები"
-STR_UPDATES_SDIO_H            = "აირჩიეთ სტანდარტული SDI განახლებები"
+STR_UPDATES_SDI              = "აირჩიეთ SDI განახლებები"
+STR_UPDATES_SDI_H            = "აირჩიეთ სტანდარტული SDI განახლებები"
 STR_UPDATES_DRIVERS           = "აირჩიეთ მძღოლის პაკეტების განახლება"
 STR_UPDATES_DRIVERS_H         = "აირჩიეთ უახლესი მძღოლის პაკეტის განახლებები"
 STR_TOOLS                     = "ინსტრუმენტები"
@@ -158,7 +158,7 @@ STR_SYST_COMPMNG              = "Კომპიუტერის მართ�
 STR_SYST_SYSPROT              = "სისტემის დაცვა"
 STR_SYST_DEVICEPRNT           = "მოწყობილობები და პრინტერები"
 STR_SYST_SYSCONTROL           = "Მართვის პანელი"
-STR_SYST_REST                 = "Სისტემის აღდგენა"
+STR_SYST_SYSREST                 = "Სისტემის აღდგენა"
 STR_SYST_USBWIZARD            = "შექმენით USB დისკი"
 
 // Context menu
@@ -401,10 +401,10 @@ STR_OPTION_CMD_FINISHRB       = "ინსტალაციის შემდ�
 STR_OPTION_CMD_FINISHDN       = "დრაივერპაკების ჩამოტვირთვის შემდეგ"
 STR_OPTION_CONSOLE            = "კონსოლის ფანჯარას ჩვენება"
 
-// Patreon
-STR_PATREON1             = "თქვენ შეგიძლიათ პროგრამის განვითარების მხარდაჭერა Patreon სისტემას მეშვეობით"
-STR_PATREON2             = "(დააჭირეთ აქ, რათა გახსნას ბრაუზერის გვერდი)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "თქვენ შეგიძლიათ პროგრამის განვითარების მხარდაჭერა BOOSTY სისტემას მეშვეობით"
+STR_BOOSTY2             = "(დააჭირეთ აქ, რათა გახსნას ბრაუზერის გვერდი)"
+STR_BOOSTY_H            = ""
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "მოგესალმებით Snappy მძღოლის ინსტალერის წარმოშობის შესახებ"

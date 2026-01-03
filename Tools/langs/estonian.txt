@@ -158,7 +158,7 @@ STR_SYST_COMPMNG              = "Arvutihaldus"
 STR_SYST_SYSPROT              = "Süsteemi kaitse"
 STR_SYST_DEVICEPRNT           = "Seadmed ja printerid"
 STR_SYST_SYSCONTROL           = "Kontrollpaneel"
-STR_SYST_REST                 = "Süsteemi taastamine"
+STR_SYST_SYSREST                 = "Süsteemi taastamine"
 STR_SYST_USBWIZARD            = "Loo USB-draiv"
 
 // Context menu
@@ -401,10 +401,10 @@ STR_OPTION_CMD_FINISHRB       = "Peale paigaldamist (taaskäivitus vajalik)"
 STR_OPTION_CMD_FINISHDN       = "Peale allalaadimist"
 STR_OPTION_CONSOLE            = "Näita konsooli"
 
-// Patreon
-STR_PATREON1             = "SDI on loodud vabatahtlike poolt vabal ajal. Kui teile meeldib tarkvara palun toetage meid Patreon'is."
-STR_PATREON2             = "(Vajutage siia, et avada Patreoni lehekülg)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "SDI on loodud vabatahtlike poolt vabal ajal. Kui teile meeldib tarkvara palun toetage meid BOOSTY'is."
+STR_BOOSTY2             = "(Vajutage siia, et avada BOOSTYi lehekülg)"
+STR_BOOSTY_H            = ""
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Tere tulemast Snappy Driver Installeri algusesse"

@@ -158,7 +158,7 @@ STR_SYST_COMPMNG              = "Správa počítače"
 STR_SYST_SYSPROT              = "Ochrana systému"
 STR_SYST_DEVICEPRNT           = "Zařízení a tiskárny"
 STR_SYST_SYSCONTROL           = "Ovládací panel"
-STR_SYST_REST                 = "Obnovení systému"
+STR_SYST_SYSREST                 = "Obnovení systému"
 STR_SYST_USBWIZARD            = "Vytvořte jednotku USB"
 
 // Context menu
@@ -401,10 +401,10 @@ STR_OPTION_CMD_FINISHRB       = "Po instalaci (vyžadující restart)"
 STR_OPTION_CMD_FINISHDN       = "Po stažení"
 STR_OPTION_CONSOLE            = "Zobrazit okno konzole"
 
-// Patreon
-STR_PATREON1             = "SDI vývojáři programují ve svém volném čase. Pokud se vám aplikace líbí, podpořte nás prosím na Patreonu."
-STR_PATREON2             = "(Klikněte zde pro otevření stránky Patreon)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "SDI vývojáři programují ve svém volném čase. Pokud se vám aplikace líbí, podpořte nás prosím na BOOSTYu."
+STR_BOOSTY2             = "(Klikněte zde pro otevření stránky BOOSTY)"
+STR_BOOSTY_H            = ""
 
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"

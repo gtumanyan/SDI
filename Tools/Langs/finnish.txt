@@ -169,7 +169,7 @@ STR_SYST_COMPMNG              = "Tietokoneen hallinta"
 STR_SYST_SYSPROT              = "Järjestelmän suojaus"
 STR_SYST_DEVICEPRNT           = "Laitteet ja tulostimet"
 STR_SYST_SYSCONTROL           = "Ohjauspaneeli"
-STR_SYST_REST                 = "Järjestelmän palautus"
+STR_SYST_SYSREST                 = "Järjestelmän palautus"
 STR_SYST_USBWIZARD            = "Luo käynnistettävä USB-asema"
 
 // Context menu

@@ -166,7 +166,7 @@ STR_SYST_COMPMNG        = "Computer Management"
 STR_SYST_SYSPROT        = "System Protection"
 STR_SYST_DEVICEPRNT     = "Devices and Printers"
 STR_SYST_SYSCONTROL     = "Control Panel"
-STR_SYST_REST           = "System Restore"
+STR_SYST_SYSREST        = "System Restore"
 STR_SYST_USBWIZARD      = "Create A USB Drive"
 
 // Context menu

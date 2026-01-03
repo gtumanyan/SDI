@@ -29,8 +29,8 @@ STR_REFRESH                   = "Frissítés"
 STR_REFRESH_H                 = "Driver lista frissítése"
 STR_UPDATES                   = "Frissítések"
 STR_UPDATES_H                 = "Válassza ki a forrás-frissítést"
-STR_UPDATES_SDIO              = "Válassza ki az SDI frissítéseket"
-STR_UPDATES_SDIO_H            = "Válassza ki a standard SDI frissítéseket"
+STR_UPDATES_SDI              = "Válassza ki az SDI frissítéseket"
+STR_UPDATES_SDI_H            = "Válassza ki a standard SDI frissítéseket"
 STR_UPDATES_DRIVERS           = "Válassza ki az illesztőprogram-frissítéseket"
 STR_UPDATES_DRIVERS_H         = "Válassza ki a legújabb illesztőprogram-csomagok frissítéseit"
 STR_TOOLS                     = "Eszközök"
@@ -157,7 +157,7 @@ STR_SYST_COMPMNG              = "Számítógép-kezelés"
 STR_SYST_SYSPROT              = "Rendszervédelem"
 STR_SYST_DEVICEPRNT           = "Eszközök és nyomtatók"
 STR_SYST_SYSCONTROL           = "Kezelőpanel"
-STR_SYST_REST                 = "Rendszer-visszaállítás"
+STR_SYST_SYSREST              = "Rendszer-visszaállítás"
 STR_SYST_USBWIZARD            = "USB meghajtó létrehozása"
 
 // Context menu
@@ -400,10 +400,10 @@ STR_OPTION_CMD_FINISHRB       = "A telepítés után  (újraindítás szüksége
 STR_OPTION_CMD_FINISHDN       = "A letöltés után"
 STR_OPTION_CONSOLE            = "Konzol megjelenítése"
 
-// Patreon
-STR_PATREON1             = "Látogassa meg Patreon oldalunkat további információkért, tippekért és a projekt fejlesztés támogatásához."
-STR_PATREON2             = "(Patreon Weboldalunk megnyitásához klikkeljen ide)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "Látogassa meg BOOSTY oldalunkat további információkért, tippekért és a projekt fejlesztés támogatásához."
+STR_BOOSTY2             = "(BOOSTY Weboldalunk megnyitásához klikkeljen ide)"
+STR_BOOSTY_H            = ""
 // Welcome
 STR_WELCOME_TITLE        = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE     = "Üdvözöli a Snappy Driver Installer"

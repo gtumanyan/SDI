@@ -167,7 +167,7 @@ STR_SYST_COMPMNG              = "電腦管理"
 STR_SYST_SYSPROT              = "系統保護"
 STR_SYST_DEVICEPRNT           = "裝置和打印機"
 STR_SYST_SYSCONTROL           = "控制面板"
-STR_SYST_REST                 = "系統還原"
+STR_SYST_SYSREST                 = "系統還原"
 STR_SYST_USBWIZARD            = "建立USB驅動器"
 
 // Context menu
@@ -409,10 +409,10 @@ STR_OPTION_CMD_FINISHRB       = "安裝後（須重開機）"
 STR_OPTION_CMD_FINISHDN       = "下載後"
 STR_OPTION_CONSOLE            = "顯示console視窗"
 
-// Patreon
-STR_PATREON1             = "SDI是由志願者使用閒餘時間開發. 如果你喜歡這套軟體, 請在Patreon支持我們."
-STR_PATREON2             = "(點這裡打開Patreon頁面)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "SDI是由志願者使用閒餘時間開發. 如果你喜歡這套軟體, 請在BOOSTY支持我們."
+STR_BOOSTY2             = "(點這裡打開BOOSTY頁面)"
+STR_BOOSTY_H            = ""
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "歡迎使用Snappy Driver Installer"

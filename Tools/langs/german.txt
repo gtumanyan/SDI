@@ -30,8 +30,8 @@ STR_REFRESH                   = "Aktualisieren"
 STR_REFRESH_H                 = "Treiberliste aktualisieren"
 STR_UPDATES                   = "Aktualisierungen"
 STR_UPDATES_H                 = "Aktualisierungsquelle wählen"
-STR_UPDATES_SDIO              = "SDI-Aktualisierungen auswählen"
-STR_UPDATES_SDIO_H            = "Standard SDI-Aktualisierungen auswählen"
+STR_UPDATES_SDI              = "SDI-Aktualisierungen auswählen"
+STR_UPDATES_SDI_H            = "Standard SDI-Aktualisierungen auswählen"
 STR_UPDATES_DRIVERS           = "Aktualisierte Treiberpakete auswählen"
 STR_UPDATES_DRIVERS_H         = "Die aktuellsten Treiberpakete auswählen"
 STR_TOOLS                     = "Dienstprogramme"
@@ -158,7 +158,7 @@ STR_SYST_COMPMNG              = "Computerverwaltung"
 STR_SYST_SYSPROT              = "Computerschutz"
 STR_SYST_DEVICEPRNT           = "Geräte und Drucker"
 STR_SYST_SYSCONTROL           = "Alle Systemsteuerungselemente"
-STR_SYST_REST                 = "Systemwiederherstellung"
+STR_SYST_SYSREST                 = "Systemwiederherstellung"
 STR_SYST_USBWIZARD            = "USB-Laufwerk erstellen"
 
 // Context menu
@@ -401,10 +401,10 @@ STR_OPTION_CMD_FINISHRB       = "Nach der Installation (Systemneustart erforderl
 STR_OPTION_CMD_FINISHDN       = "Nach dem Herunterladen"
 STR_OPTION_CONSOLE            = "Eingabeaufforderungskonsole anzeigen"
 
-// Patreon
-STR_PATREON1             = "SDI wird von Freiwilligen in ihrer Freizeit entwickelt. Bitte unterstützen Sie uns auf Patreon."
-STR_PATREON2             = "(Hier klicken, um die Patreon Webseite zu besuchen)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "SDI wird von Freiwilligen in ihrer Freizeit entwickelt. Bitte unterstützen Sie uns auf BOOSTY."
+STR_BOOSTY2             = "(Hier klicken, um die BOOSTY Webseite zu besuchen)"
+STR_BOOSTY_H            = ""
 // Welcome
 STR_WELCOME_TITLE 		     = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE     	= "Willkommen zu Snappy Driver Installer"

@@ -158,7 +158,7 @@ STR_SYST_COMPMNG              = "ניהול מחשב"
 STR_SYST_SYSPROT              = "הגנת מערכת"
 STR_SYST_DEVICEPRNT           = "מכשירים ומדפסות"
 STR_SYST_SYSCONTROL           = "לוח בקרה"
-STR_SYST_REST                 = "שחזור מערכת"
+STR_SYST_SYSREST              = "שחזור מערכת"
 STR_SYST_USBWIZARD            = "צור כונן USB"
 
 // Context menu
@@ -400,10 +400,10 @@ STR_OPTION_CMD_FINISH         = "אחרי ההתקנה"
 STR_OPTION_CMD_FINISHRB       = "אחרי ההתקנה (דרוש הפעלה מחדש)"
 STR_OPTION_CMD_FINISHDN       = "אחרי ההורדה"
 STR_OPTION_CONSOLE            = "הצג צג מסוף"
-// Patreon
-STR_PATREON1             = "SDI מפותח על ידי מתנדבים בזמנם החופשי. אם אתה אוהב את התוכנה הזו, בבקשה תמוך בנו באתר Patreon."
-STR_PATREON2             = "(לחץ כאן כדי לפתוח את דף Patreon)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "SDI מפותח על ידי מתנדבים בזמנם החופשי. אם אתה אוהב את התוכנה הזו, בבקשה תמוך בנו באתר BOOSTY."
+STR_BOOSTY2             = "(לחץ כאן כדי לפתוח את דף BOOSTY)"
+STR_BOOSTY_H            = ""
 
 // Welcome
 STR_WELCOME_TITLE             = "מתקין מנהל התקן"

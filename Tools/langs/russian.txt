@@ -20,7 +20,7 @@ STR_SELECT_NONE               = "Снять выделение"
 STR_SELECT_NONE_H             = "Ctrl+N"
 
 STR_LANG                      = "Язык (Language)"
-STR_LANG_H              	  	= "Выберите язык"
+STR_LANG_H              	  = "Выберите язык"
 STR_THEME                     = "Тема"
 STR_THEME_H                   = "Выберите тему"
 STR_EXPERT                    = "Режим эксперта"
@@ -30,8 +30,8 @@ STR_REFRESH                   = "Обновить"
 STR_REFRESH_H                 = "Обновить список драйверов"
 STR_UPDATES                   = "Обновления"
 STR_UPDATES_H                 = "Выбор источника обновлений"
-STR_UPDATES_SDI				  			= "Обновление SDI"
-STR_UPDATES_SDI_H       	  	= "Стандартное обновление SDI"
+STR_UPDATES_SDI				  = "Обновление SDI"
+STR_UPDATES_SDI_H       	  = "Стандартное обновление SDI"
 STR_UPDATES_DRIVERS           = "Обновление Драйвер-Паков"
 STR_UPDATES_DRIVERS_H         = "Последние обновления Драйвер-Паков"
 STR_TOOLS                     = "Инструменты"
@@ -71,7 +71,7 @@ STR_SHOW_NF_UNKNOWN_H         = "Отображать устройства, ко
 STR_SHOW_NF_STANDARD          = "Стандартные"
 STR_SHOW_NF_STANDARD_H        = "Отображать устройства, которые имеют стандартный драйвер от Microsoft.\n\nОбычно эти драйверы не требуют обновления."
 
-STR_SHOW_DISPLAY        			= "Показ"
+STR_SHOW_DISPLAY			  = "Показ"
 STR_SHOW_DISPLAY_H            = "Фильтры отображения"
 STR_SHOW_ONE                  = "Только оптимальные"
 STR_SHOW_ONE_H                = "Предлагать к установке только самые подходящие драйверы на каждое устройство.\n\nКогда галка снята, то отображается более длинный список драйверов, отсортированный, начиная с наиболее подходящих к менее подходящим."
@@ -158,7 +158,7 @@ STR_SYST_COMPMNG              = "Управление компьютером"
 STR_SYST_SYSPROT              = "Защита системы"
 STR_SYST_DEVICEPRNT           = "Устройства и принтеры"
 STR_SYST_SYSCONTROL           = "Панель управления"
-STR_SYST_REST                 = "Восстановление системы"
+STR_SYST_SYSREST              = "Восстановление системы"
 STR_SYST_USBWIZARD            = "Создание USB-диска"
 
 // Context menu
@@ -404,7 +404,8 @@ STR_OPTION_CONSOLE            = "Отображать консольное ок�
 // BOOSTY
 STR_BOOSTY1             			= "Вы можете поддержать развитие программы через систему Boosty"
 STR_BOOSTY2										= "(Кликните здесь, чтобы открыть страницу в браузере)"
-STR_BOOSTY_H            			= "Регулярные обновления требуют регулярной работы. Финансово поддержите нашу инициативу через систему ежемесячных дотаций Patreon!"
+STR_BOOSTY_H            			= "Регулярные обновления требуют регулярной работы. Финансово поддержите нашу инициативу через систему ежемесячных дотаций Boosty!"
+
 // Welcome
 STR_WELCOME_TITLE        			= "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE     			= "Добро пожаловать в Snappy Driver Installer"

@@ -163,7 +163,7 @@ STR_SYST_COMPMNG              = "Компьютерийн удирдлага"
 STR_SYST_SYSPROT              = "Системийн хамгаалалт"
 STR_SYST_DEVICEPRNT           = "Төхөөрөмж ба принтерүүд"
 STR_SYST_SYSCONTROL           = "Удирдлагын самбар"
-STR_SYST_REST                 = "Системийг сэргээх"
+STR_SYST_SYSREST              = "Системийг сэргээх"
 STR_SYST_USBWIZARD            = "USB диск үүсгэх"
 
 // Context menu

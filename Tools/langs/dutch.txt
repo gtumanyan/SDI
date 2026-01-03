@@ -158,7 +158,7 @@ STR_SYST_COMPMNG              = "Computer Beheer"
 STR_SYST_SYSPROT              = "Systeem beveiliging"
 STR_SYST_DEVICEPRNT           = "Apparaten en printers"
 STR_SYST_SYSCONTROL           = "Controlepaneel"
-STR_SYST_REST                 = "Systeemherstel"
+STR_SYST_SYSREST                 = "Systeemherstel"
 STR_SYST_USBWIZARD            = "Maak een USB-drive"
 
 // Context menu
@@ -400,10 +400,10 @@ STR_OPTION_CMD_FINISHRB       = "Na installatie (U dient te rebooten)"
 STR_OPTION_CMD_FINISHDN       = "Na downloaden"
 STR_OPTION_CONSOLE            = "Toon consolevenster"
 
-// Patreon
-STR_PATREON1             = "SDI is ontwikkeld door vrijwilligers in hun vrije tijd. Gelieve ons te steunen op Patreon."
-STR_PATREON2             = "(Klik hier om de Patreon pagina te openen)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "SDI is ontwikkeld door vrijwilligers in hun vrije tijd. Gelieve ons te steunen op BOOSTY."
+STR_BOOSTY2             = "(Klik hier om de BOOSTY pagina te openen)"
+STR_BOOSTY_H            = ""
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Welkom bij Snappy Driver Installer"

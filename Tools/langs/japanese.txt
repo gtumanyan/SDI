@@ -158,7 +158,7 @@ STR_SYST_COMPMNG              = "コンピュータマネジメント"
 STR_SYST_SYSPROT              = "システム保護"
 STR_SYST_DEVICEPRNT           = "デバイスとプリンター"
 STR_SYST_SYSCONTROL           = "コントロールパネル"
-STR_SYST_REST                 = "システムの復元"
+STR_SYST_SYSREST                 = "システムの復元"
 STR_SYST_USBWIZARD            = "USBドライブを作成する"
 
 // Context menu
@@ -401,10 +401,10 @@ STR_OPTION_CMD_FINISHRB       = "インストール後 (再起動が必要)"
 STR_OPTION_CMD_FINISHDN       = "ダウンロード後"
 STR_OPTION_CONSOLE            = "コンソール ウィンドウを表示"
 
-// Patreon
-STR_PATREON1             = "このツールを気に入ってもらえたら Patreon で私達をサポートしてください。"
-STR_PATREON2             = "(ここをクリックで Patreon ページを開く)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "このツールを気に入ってもらえたら BOOSTY で私達をサポートしてください。"
+STR_BOOSTY2             = "(ここをクリックで BOOSTY ページを開く)"
+STR_BOOSTY_H            = ""
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Snappy Driver Installerへようこそ"

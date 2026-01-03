@@ -158,7 +158,7 @@ STR_SYST_COMPMNG              = "Gestió de l'equip"
 STR_SYST_SYSPROT        	  = "Protecció del sistema"
 STR_SYST_DEVICEPRNT     	  = "Dispositius i impressores"
 STR_SYST_SYSCONTROL     	  = "Panell de control"
-STR_SYST_REST           	  = "Restauració del sistema"
+STR_SYST_SYSREST           	  = "Restauració del sistema"
 STR_SYST_USBWIZARD      	  = "Crear una unitat USB"
 
 // Context menu
@@ -403,10 +403,10 @@ STR_OPTION_CMD_FINISHRB 	  = "Després d'instal·lar (cal reiniciar)"
 STR_OPTION_CMD_FINISHDN       = "Després de baixar"
 STR_OPTION_CONSOLE            = "Mostrar finestre de la consola"
 
-// Patreon
-STR_PATREON1 				  = "SDI està desenvolupat per voluntaris al seu temps lliure. Si t'agrada, dóna'ns suport a Patreon"
-STR_PATREON2             = "(Fes clic per obrir la pàgina de Patreon)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1 				  = "SDI està desenvolupat per voluntaris al seu temps lliure. Si t'agrada, dóna'ns suport a BOOSTY"
+STR_BOOSTY2             = "(Fes clic per obrir la pàgina de BOOSTY)"
+STR_BOOSTY_H            = ""
 
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"

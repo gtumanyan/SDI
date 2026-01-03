@@ -157,7 +157,7 @@ STR_SYST_COMPMNG              = "Bilgisayar yönetimi"
 STR_SYST_SYSPROT              = "Sistem koruması"
 STR_SYST_DEVICEPRNT           = "Cihazlar ve yazıcılar"
 STR_SYST_SYSCONTROL           = "Kontrol Paneli"
-STR_SYST_REST                 = "Sistem Geri Yükleme"
+STR_SYST_SYSREST              = "Sistem Geri Yükleme"
 STR_SYST_USBWIZARD            = "Bir USB Sürücüsü Yarat"
 
 // Context menu
@@ -399,10 +399,10 @@ STR_OPTION_CMD_FINISHRB       = "Kurulumdan sonra (yeniden başlatmaya ihtiyaç 
 STR_OPTION_CMD_FINISHDN       = "İndirmeden sonra"
 STR_OPTION_CONSOLE            = "Konsol penceresini göster"
 
-// Patreon
-STR_PATREON1             = "SDI gönüllüler tarafından geliştirilmektedir. Eğer beğeniyorsanız lütfen Patreon üzerinden destek olun."
-STR_PATREON2             = "(Patreon sitesini açmak için tıklayın)"
-STR_PATREON_H            = "Patreon sitesini açmak için tıklayın"
+// BOOSTY
+STR_BOOSTY1             = "SDI gönüllüler tarafından geliştirilmektedir. Eğer beğeniyorsanız lütfen BOOSTY üzerinden destek olun."
+STR_BOOSTY2             = "(BOOSTY sitesini açmak için tıklayın)"
+STR_BOOSTY_H            = "BOOSTY sitesini açmak için tıklayın"
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Snappy Sürücüsünün Kurulumuna Hoş Geldiniz"

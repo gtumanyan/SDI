@@ -167,7 +167,7 @@ STR_SYST_COMPMNG              = "Управление на компютъра"
 STR_SYST_SYSPROT              = "Защита на системата"
 STR_SYST_DEVICEPRNT           = "Устройства и принтери"
 STR_SYST_SYSCONTROL           = "Контролен панел"
-STR_SYST_REST                 = "Възстановяване на системата"
+STR_SYST_SYSREST                 = "Възстановяване на системата"
 STR_SYST_USBWIZARD            = "Създайте USB устройство"
 
 // Context menu
@@ -410,10 +410,10 @@ STR_OPTION_CMD_FINISHRB       = "След инсталацията (изискв
 STR_OPTION_CMD_FINISHDN       = "След изтегляне на драйверите"
 STR_OPTION_CONSOLE            = "Покажи конзолата"
 
-// Patreon
-STR_PATREON1             = "SDI се разработва от доброволци. Ако харесвате този софтуер, моля подкрепете ни в Patreon."
-STR_PATREON2             = "(Натиснете тук за да отворите страницата ни в Patreon)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "SDI се разработва от доброволци. Ако харесвате този софтуер, моля подкрепете ни в BOOSTY."
+STR_BOOSTY2             = "(Натиснете тук за да отворите страницата ни в BOOSTY)"
+STR_BOOSTY_H            = ""
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Добре дошли в Snappy Driver Installer"

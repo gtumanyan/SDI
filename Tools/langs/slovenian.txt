@@ -166,7 +166,7 @@ STR_SYST_COMPMNG            = "Upravljanje računalnika"
 STR_SYST_SYSPROT            = "Zaščita sistema"
 STR_SYST_DEVICEPRNT         = "Naprave in tiskalniki"
 STR_SYST_SYSCONTROL         = "Nadzorna plošča"
-STR_SYST_REST               = "Obnovitev sistema"
+STR_SYST_SYSREST            = "Obnovitev sistema"
 STR_SYST_USBWIZARD          = "Ustvari pogon USB"
 
 // Context menu

@@ -167,7 +167,7 @@ STR_SYST_COMPMNG              = "Համակարգչային կառավարում
 STR_SYST_SYSPROT              = "Համակարգի պաշտպանություն"
 STR_SYST_DEVICEPRNT           = "Սարքեր եւ տպիչներ"
 STR_SYST_SYSCONTROL           = "Վերահսկիչ խորհուրդը"
-STR_SYST_REST                 = "Համակարգը վերականգնելու"
+STR_SYST_SYSREST                 = "Համակարգը վերականգնելու"
 STR_SYST_USBWIZARD            = "Ստեղծեք USB Drive"
 
 // Context menu
@@ -410,10 +410,10 @@ STR_OPTION_CMD_FINISHRB       = "Տեղադրումից հետո(հարկավո�
 STR_OPTION_CMD_FINISHDN       = "Բեռնումից հետո"
 STR_OPTION_CONSOLE            = "Ցուցադրել կոնսոլի պատուհանը"
 
-// Patreon
-STR_PATREON1             = "Ծրագրի զարգացման համար, կարող եք օգնել Patreon համակարգի միջոցով"
-STR_PATREON2             = "(Սեղմեք այստեղ, որպեսի էջը բացվի դիտարկիչում)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "Ծրագրի զարգացման համար, կարող եք օգնել BOOSTY համակարգի միջոցով"
+STR_BOOSTY2             = "(Սեղմեք այստեղ, որպեսի էջը բացվի դիտարկիչում)"
+STR_BOOSTY_H            = ""
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer- ի ծագումը"
 STR_WELCOME_SUBTITLE          = "Բարի գալուստ Snappy Driver Installer- ում"

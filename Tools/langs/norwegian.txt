@@ -157,7 +157,7 @@ STR_SYST_COMPMNG              = "Datamaskinstyring"
 STR_SYST_SYSPROT              = "Systembeskyttelse"
 STR_SYST_DEVICEPRNT           = "Enheter og skrivere"
 STR_SYST_SYSCONTROL           = "Kontrollpanel"
-STR_SYST_REST                 = "Systemgjenoppretting"
+STR_SYST_SYSREST              = "Systemgjenoppretting"
 STR_SYST_USBWIZARD            = "Opprett en USB-stasjon"
 
 // Context menu
@@ -399,10 +399,10 @@ STR_OPTION_CMD_FINISHRB       = "Etter installasjon (trenger omstart)"
 STR_OPTION_CMD_FINISHDN       = "Etter nedlasting"
 STR_OPTION_CONSOLE            = "Vis konsollvindu"
 
-// Patreon
-STR_PATREON1             = "SDI er utviklet av frivillige på fritiden. Hvis du liker programvaren, vennligst støtt oss på Patreon."
-STR_PATREON2             = "(Klikk her for å åpne Patreon i nettleseren)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "SDI er utviklet av frivillige på fritiden. Hvis du liker programvaren, vennligst støtt oss på BOOSTY."
+STR_BOOSTY2             = "(Klikk her for å åpne BOOSTY i nettleseren)"
+STR_BOOSTY_H            = ""
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Velkommen til Snappy Driver Installer"

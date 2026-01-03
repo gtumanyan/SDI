@@ -158,7 +158,7 @@ STR_SYST_COMPMNG              = "Gestionarea computerelor"
 STR_SYST_SYSPROT              = "Protecția sistemului"
 STR_SYST_DEVICEPRNT           = "Dispozitive și imprimante"
 STR_SYST_SYSCONTROL           = "Panou de control"
-STR_SYST_REST                 = "Restaurarea sistemului"
+STR_SYST_SYSREST              = "Restaurarea sistemului"
 STR_SYST_USBWIZARD            = "Creați o unitate USB"
 
 // Context menu

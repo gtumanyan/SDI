@@ -157,7 +157,7 @@ STR_SYST_COMPMNG              = "Kompiuterio valdymas"
 STR_SYST_SYSPROT              = "Sistemos apsauga"
 STR_SYST_DEVICEPRNT           = "Prietaisai ir spausdintuvai"
 STR_SYST_SYSCONTROL           = "Valdymo skydas"
-STR_SYST_REST                 = "Sistemos atkūrimo"
+STR_SYST_SYSREST              = "Sistemos atkūrimo"
 STR_SYST_USBWIZARD            = "Sukurkite USB diską"
 
 // Context menu
@@ -314,7 +314,7 @@ STR_UPD_UPDATEHINT2           = "Pirmiausia turite atnaujinti bazę, kad būtų 
 
 // Update hint
 STR_UPD_CHECKING              = "Tikrinama, ar yra naujinių"
-STR_UPD_AVAIL1                = "Naujinimai yra prieinami: SDIO R%d"
+STR_UPD_AVAIL1                = "Naujinimai yra prieinami: SDI R%d"
 STR_UPD_AVAIL2                = "Naujinimai yra prieinami: %d driverpacks"
 STR_UPD_AVAIL3                = "Naujinimai yra prieinami: SDI R%d ir %d driverpacks"
 STR_UPD_START                 = "(Spustelėkite čia, norėdami atsisiųsti)"
@@ -400,10 +400,10 @@ STR_OPTION_CMD_FINISHRB       = "Po įdiegimo (reikia perkrauti)"
 STR_OPTION_CMD_FINISHDN       = "Po atsisiuntimo"
 STR_OPTION_CONSOLE            = "Rodyti konsolės langą"
 
-// Patreon
-STR_PATREON1             = "SDI yra sukurtas savanorių. Jei Jums patinka ši programinė įranga, prašome paremti mus Patreon."
-STR_PATREON2             = "(Spustelėkite čia, jei norite atidaryti Patreon puslapį)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "SDI yra sukurtas savanorių. Jei Jums patinka ši programinė įranga, prašome paremti mus BOOSTY."
+STR_BOOSTY2             = "(Spustelėkite čia, jei norite atidaryti BOOSTY puslapį)"
+STR_BOOSTY_H            = ""
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Sveiki atvykę į „Snappy Driver Installer“ kilmę"

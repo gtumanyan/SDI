@@ -158,7 +158,7 @@ STR_SYST_COMPMNG              = "кіраванне кампутарам"
 STR_SYST_SYSPROT              = "сістэма абароны"
 STR_SYST_DEVICEPRNT           = "Прылады і прынтэры"
 STR_SYST_SYSCONTROL           = "Панэль кіравання"
-STR_SYST_REST                 = "Аднаўленне сістэмы"
+STR_SYST_SYSREST                 = "Аднаўленне сістэмы"
 STR_SYST_USBWIZARD            = "Стварыць USB-назапашвальнік"
 
 // Context menu
@@ -400,10 +400,10 @@ STR_OPTION_CMD_FINISH         = "Пасля ўсталёўкі (перазагр
 STR_OPTION_CMD_FINISHRB       = "Пасля ўсталёўкі (патрабуецца перазагрузка)"
 STR_OPTION_CMD_FINISHDN       = "Пасля запампоўкі драйверпакаў"
 STR_OPTION_CONSOLE            = "Адлюстроўваць кансольнае акно"
-// Patreon
-STR_PATREON1             = "Вы можаце падтрымаць развіццё праграмы праз сістэму Patreon"
-STR_PATREON2             = "(Клікніце тут, каб адкрыць старонку ў браўзары)"
-STR_PATREON_H            = ""
+// BOOSTY
+STR_BOOSTY1             = "Вы можаце падтрымаць развіццё праграмы праз сістэму BOOSTY"
+STR_BOOSTY2             = "(Клікніце тут, каб адкрыць старонку ў браўзары)"
+STR_BOOSTY_H            = ""
 
 // Welcome
 STR_WELCOME_TITLE             = "Паходжанне ўстаноўкі Snappy Driver"

@@ -157,7 +157,7 @@ STR_SYST_COMPMNG              = "Quản lý máy tính"
 STR_SYST_SYSPROT              = "Bảo vệ hệ thống"
 STR_SYST_DEVICEPRNT           = "Các thiết bị và máy in"
 STR_SYST_SYSCONTROL           = "Bảng điều khiển"
-STR_SYST_REST                 = "Khôi phục hệ thống"
+STR_SYST_SYSREST              = "Khôi phục hệ thống"
 STR_SYST_USBWIZARD            = "Tạo ổ USB"
 
 // Context menu
@@ -399,10 +399,10 @@ STR_OPTION_CMD_FINISHRB       = "Sau khi cài ( cần khởi động lại)"
 STR_OPTION_CMD_FINISHDN       = "Sau khi tải"
 STR_OPTION_CONSOLE            = "Hiện cửa sổ kiểm soát"
 
-// Patreon
-STR_PATREON1             = "SDI được các tình nguyện viên thiết kế. Nếu bạn thích hãy hỗ trợ chúng tôi trên Patreon."
-STR_PATREON2                  = "(CHọn đây để vào trang Patreon)"
-STR_PATREON_H                 = "Nhấp vào đây để mở trang Patreon"
+// BOOSTY
+STR_BOOSTY1             = "SDI được các tình nguyện viên thiết kế. Nếu bạn thích hãy hỗ trợ chúng tôi trên BOOSTY."
+STR_BOOSTY2                  = "(CHọn đây để vào trang BOOSTY)"
+STR_BOOSTY_H                 = "Nhấp vào đây để mở trang BOOSTY"
 // Welcome
 STR_WELCOME_TITLE             = "Snappy Driver Installer"
 STR_WELCOME_SUBTITLE          = "Chào mừng bạn đến Snappy Driver Installer"
