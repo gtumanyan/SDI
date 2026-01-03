@@ -6,7 +6,7 @@ STR_LANG_NAME                 = "한국어"
 STR_LANG_ID                   = "Korean"
 STR_LANG_GROUP                = 8 // LGRPID_KOREAN
 STR_LANG_CODE                 = 0x12
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO              = "시스템 정보"

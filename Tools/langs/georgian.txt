@@ -6,7 +6,7 @@ STR_LANG_NAME                 = "ქართული"
 STR_LANG_ID                   = "Georgian"
 STR_LANG_GROUP                = LGRPID_GEORGIAN
 STR_LANG_CODE                 = 0x37
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO              = "სისტემის ინფორმაცია"

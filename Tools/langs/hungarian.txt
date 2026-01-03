@@ -5,7 +5,7 @@ STR_LANG_NAME                 = "Magyar"
 STR_LANG_ID                   = "Hungarian"
 STR_LANG_GROUP                = 0x0001 // LGRPID_WESTERN_EUROPE
 STR_LANG_CODE                 = 0x0E
-STR_RTL                       = 0
+
 
 // left panel
 STR_SHOW_SYSINFO              = "Rendszerinformáció"
