@@ -1,14 +1,16 @@
 /// JSN: Trying to do a minimalistic, modern, and Windows-y theme that is informative while being easy on the eyes.
-// Author: Jacob
 // URL: https://github.com/Flygenring/sdio-theme
-// Modified: 2019-03-27
+// Modified: 2026-01-05
 THEME_NAME = "JSN"
 
 /// Font
 FONT_NAME = "Segoe UI"
 FONT_SIZE = 12
 
-/// Check-boxes on left panel
+
+
+/// Images and their associated display settings
+// Checkboxes on left panel
 CHKBOX_TEXT_COLOR			= 0x000000
 CHKBOX_TEXT_COLOR_H			= 0xEF7900
 CHKBOX_SIZE					= 18
@@ -17,7 +19,7 @@ BUTTON_BITMAP_CHECKED_H		= "jsn\checkbox_checked_hover.webp"
 BUTTON_BITMAP_UNCHECKED		= "jsn\checkbox_unchecked.webp"
 BUTTON_BITMAP_UNCHECKED_H	= "jsn\checkbox_unchecked_hover.webp"
 
-/// Driver list item icons
+// Driver list item icons
 ITEM_CHECKBOX_SIZE			= 25
 // ITEM_CHECKBOX_OFS_X		= 0
 // ITEM_CHECKBOX_OFS_Y		= 0
@@ -30,7 +32,7 @@ ITEM_BITMAP_CHECKED_H		= "jsn\checkbox_item_checked_hover.webp"
 ITEM_BITMAP_UNCHECKED		= "jsn\checkbox_item_unchecked.webp"
 ITEM_BITMAP_UNCHECKED_H		= "jsn\checkbox_item_unchecked_hover.webp"
 
-/// Application images
+// Application images
 MAINWND_BITMAP_FILENAME		= "" // Main window background image ("jsn\background.webp")
 MAINWND_BITMAP_ANCHOR		= center
 MAINWND_BITMAP_FILL			= hstr_vstr
@@ -49,14 +51,42 @@ PANEL11_BITMAP_FILENAME_H	= "" // Button "select none" hover
 PANEL13_BITMAP_FILENAME		= "" // Application logo resource ("RES_211")
 
 
+
+/// Sizes and background colours for the interface sections
+
 // Main window
+MAINWND_TEXT_COLOR		= 0x000000
 MAINWND_WX				= 1024
 MAINWND_WY				= 729
 MAINWND_MINX			= 900
 MAINWND_MINY			= 520
 MAINWND_INSIDE_COLOR	= 0xE6E6E6
 
-// Panel elements, generic (default: 21)
+
+// Progress bar (active)
+PROGR_OUTLINE_ROUND		= 0
+
+// Popup
+POPUP_OFSX = 6
+POPUP_OFSY = 4
+POPUP_WX = 450
+POPUP_WY = 13
+POPUP_FONT_SIZE = 12
+POPUP_TRANSPARENCY = 250
+POPUP_TEXT_COLOR = 0x222222
+POPUP_INSIDE_COLOR = 0xE0FFFF
+POPUP_OUTLINE_COLOR = 0x888888
+POPUP_OUTLINE_WIDTH = 1
+POPUP_OUTLINE_ROUND = 0
+
+
+
+
+// Panel, generic
+PANEL_OUTLINE_ROUND		= 0
+PANEL_OUTLINE_WIDTH		= 0
+
+// Panel elements, generic height (deafult: 21)
 PNLITEM_WY				= 22
 
 // Panel, sysinfo
@@ -74,6 +104,7 @@ PANEL2_OFSY				= 0
 PANEL2_WX				= 430
 PANEL2_WY				= 28
 PANEL2_INSIDE_COLOR		= 0xFFFFFF
+PANEL2_OUTLINE_WIDTH	= 0
 
 // Panel, lang_theme
 PANEL3_OFSX				= 0
@@ -84,19 +115,25 @@ PANEL3_INSIDE_COLOR		= 0xFF987654
 
 // Panel, actions
 PANEL4_OFSY				= 120
-PANEL4_OFSX				= 4
+PANEL4_OFSX				= 0
+PANEL4_WX				= 180
+PANEL4_WY				= 22
 PANEL4_INSIDE_COLOR		= 0xFF000000
-
-// Panel, filters (found)
-PANEL5_OFSY				= 225
-PANEL5_OFSX				= 4
-
-// Panel, filters (not found)
-PANEL6_OFSY				= 385
-PANEL6_OFSX				= 4
+PANEL4_INSIDE_COLOR_H	= 0xFF000000
+PANEL4_OUTLINE_COLOR	= 0xE6E6E6
+PANEL4_OUTLINE_COLOR_H	= 0xE6E6E6
 
 // Panel, filters (special)
-PANEL7_OFSY				= 617
+PANEL7_OFSY				= 225
+
+// Panel, filters (found)
+PANEL5_OFSY				= 300
+PANEL5_OFSX				= 10
+PANEL5_INSIDE_COLOR		= 0xFF000000
+
+// Panel, filters (not found)
+PANEL6_OFSY				= 460
+PANEL6_OFSX				= 10
 
 // Panel, revision
 PANEL8_OFSX				= 97
@@ -149,6 +186,7 @@ PANEL13_WX				= 0
 PANEL13_WY				= 0
 PANEL13_INSIDE_COLOR	= 0xFF000000
 PANEL13_OUTLINE_COLOR	= 0xFF000000
+PANEL13_OUTLINE_WIDTH	= 0
 
 // Buttons on left panel
 BUTTON_INSIDE_COLOR		= 0xFF000000
@@ -169,8 +207,7 @@ DRVLIST_OUTLINE_COLOR	= 0xFFFFFF
 DRVLIST_OUTLINE_WIDTH	= 5
 DRVLIST_OUTLINE_ROUND	= 3
 
-
-/// Driver items
+// Driver items
 DRVITEM_WX				= -3
 DRVITEM_WY				= 40
 DRVITEM_OFSX			= 7
@@ -182,7 +219,7 @@ DRVITEM_LINE_INTEND		= 30	// Indentation of subitems
 DRVITEM_LINE_COLOR		= 0xCCCCCC
 DRVITEM_LINE_WIDTH		= 2
 
-/// Driver item content
+// Driver item content
 // ITEM_ICON_OFS_X
 // ITEM_ICON_OFS_Y
 // ITEM_ICON_SIZE
@@ -190,24 +227,32 @@ DRVITEM_LINE_WIDTH		= 2
 // ITEM_TEXT_OFS_Y
 ITEM_TEXT_DIST_Y		= 17
 
+
+
+/// Specific customisation of the driver list items
+
 /// Driver item (generic style)
+DRVITEM_OUTLINE_ROUND	= 0
 DRVITEM_INSIDE_COLOR	= 0xFFFFFF
 DRVITEM_INSIDE_COLOR_H	= 0xE5E5E5
 DRVITEM_OUTLINE_COLOR	= 0xCCCCCC
 DRVITEM_OUTLINE_COLOR_H	= 0xCCCCCC
 DRVITEM_OUTLINE_WIDTH	= -1
-// DRVITEM_TEXT1_COLOR
-// DRVITEM_TEXT2_COLOR
+DRVITEM_TEXT1_COLOR = 0x222222 // Primary text, i.e. driver name
+DRVITEM_TEXT2_COLOR = 0x996633 // Secondary text, i.e. 	"(Click here to hide installed drivers)"
 
 /// SUCCESS: Driver installed
 DRVITEM_INSIDE_COLOR_D1		= 0x79EF00
 DRVITEM_INSIDE_COLOR_D1_H	= 0x99FF00
+DRVITEM_TEXT1_COLOR_D1		= 0x000000
+DRVITEM_TEXT2_COLOR_D1		= 0x000000
 DRVITEM_OUTLINE_COLOR_D1	= 0x00CC00
 DRVITEM_OUTLINE_COLOR_D1_H	= 0x00CC00
 
 /// WARN: Updates banner (click here to start the download)
 DRVITEM_INSIDE_COLOR_IU		= 0x79EFEF
 DRVITEM_INSIDE_COLOR_IU_H	= 0x99FFFF
+DRVITEM_TEXT1_COLOR_IU		= 0x000000
 DRVITEM_TEXT2_COLOR_IU		= 0x000000
 DRVITEM_OUTLINE_COLOR_IU	= 0x00CCCC
 DRVITEM_OUTLINE_COLOR_IU_H	= 0x00CCCC
@@ -249,9 +294,10 @@ DRVITEM_TEXT2_COLOR_D0		= DRVITEM_TEXT2_COLOR_IF
 DRVITEM_OUTLINE_COLOR_D0	= DRVITEM_OUTLINE_COLOR_IF
 DRVITEM_OUTLINE_COLOR_D0_H	= DRVITEM_OUTLINE_COLOR_IF_H
 
-/// PackName
+/// Packname
 DRVITEM_INSIDE_COLOR_PN		= 0xFF987654
-DRVITEM_TEXT1_COLOR_PN		= 0x987654
+DRVITEM_TEXT_COLOR_PN		= 0x987654
+DRVITEM_TEXT2_COLOR_PN		= 0x000000
 
 /// Driver suitability hinting
 // Success
