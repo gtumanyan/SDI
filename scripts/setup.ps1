@@ -4,6 +4,14 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   throw
 }
 
+## Check winget
+Write-Host "Checking Winget installation..." -ForegroundColor Green
+try {winget update}
+catch {
+    Write-Host "Installing Winget..." -ForegroundColor Yellow
+    irm https://raw.githubusercontent.com/gtumanyan/windows-tools/master/tools/Winget_LTSC_Installer.ps1 | iex
+}
+
 ## Install Git
 Write-Host "Checking Git installation..." -ForegroundColor Green
 try {
@@ -21,9 +29,16 @@ Write-Host "`nChecking Visual Studio 2026 installation..." -ForegroundColor Gree
 # Uncomment the following line to auto-install VS 2026 Insiders
 winget install Microsoft.VisualStudio.Community.Insiders --silent --override "--config `"$PSScriptRoot\..\.vs\.vsconfig`" --locale en-US --passive --wait --allowUnsignedExtensions"
 
+## Initialize Main repo
+git init
+git remote add upstream https://github.com/gtumanyan/SDI.git
+git fetch upstream
+git reset upstream/dev
 ## Initialize submodules
 Push-Location "$PSScriptRoot\..\ext"
-git submodule update --init libwebp libtorrent boost
+git clone --depth=1 https://github.com/boostorg/boost.git
+git clone https://github.com/arvidn/libtorrent
+git clone https://github.com/webmproject/libwebp 
 ### Initialize libtorrent's nested submodules (try_signal is required for build)
 cd libtorrent
 git submodule update --init deps/try_signal
@@ -47,8 +62,8 @@ $libs = @(
   'libs/regex', 'libs/tokenizer', 'libs/lexical_cast', 'libs/container',
   'libs/exception', 'libs/algorithm', 'libs/function_types', 'libs/type_index'
 )
-git submodule update --init $libs
-
+git submodule update -j12 --init -f $libs
+ 
 ## Install boost
     Write-Host "Configuring MSVC build environment..." -ForegroundColor Green
     # Use vswhere.exe to find Visual Studio with C++ tools
