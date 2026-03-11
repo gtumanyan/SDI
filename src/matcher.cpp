@@ -53,6 +53,7 @@ Windows 11 25H2 10.0.26200
 
 Windows 10        10.0.10240
 Windows 10 (1511) 10.0.10586
+Windows 10 (1607) 10.0.14310
 Windows 10 (1607) 10.0.14393
 Windows 10 (1703) 10.0.15063
 Windows 10 (1709) 10.0.16299
@@ -78,58 +79,66 @@ Invalid:
 */
 // following matches the optional architecture field in the [Manufacturer]
 // section of the inf file
-const char *nts[NUM_DECS]=
+const char *nts[num_decs]=
 {
-    "nt.5",    "ntx86.5",     "ntamd64.5"  ,   "ntia64.5",     "ntarm.5",     "ntarm64.5",   // 2000
-    "nt.5.0",  "ntx86.5.0",   "ntamd64.5.0",   "ntia64.5.0",   "ntarm.5.0",   "ntarm64.5.0", // 2000
-    "nt.5.1",  "ntx86.5.1",   "ntamd64.5.1",   "ntia64.5.1",   "ntarm.5.1",   "ntarm64.5.1", // XP
-    "nt.5.2",  "ntx86.5.2",   "ntamd64.5.2",   "ntia64.5.2",   "ntarm.5.2",   "ntarm64.5.2", // XP x64 / Server 2003
-    "nt.6",    "ntx86.6",     "ntamd64.6"  ,   "ntia64.6",     "ntarm.6",     "ntarm64.6",   // Vista / Server 2008
-    "nt.6.0",  "ntx86.6.0",   "ntamd64.6.0",   "ntia64.6.0",   "ntarm.6.0",   "ntarm64.6.0", // Vista / Server 2008
-    "nt.6.1",  "ntx86.6.1",   "ntamd64.6.1",   "ntia64.6.1",   "ntarm.6.1",   "ntarm64.6.1", // 7 / Server 2008 R2
-    "nt.6.2",  "ntx86.6.2",   "ntamd64.6.2",   "ntia64.6.2",   "ntarm.6.2",   "ntarm64.6.2", // 8 / Server 2012
-    "nt.6.3",  "ntx86.6.3",   "ntamd64.6.3",   "ntia64.6.3",   "ntarm.6.3",   "ntarm64.6.3", // 8.1 / Server 2012 R2
-    "nt.10",   "ntx86.10",    "ntamd64.10",    "ntia64.10",    "ntarm.10",    "ntarm64.10",  // 10
-    "nt.10.0", "ntx86.10.0",  "ntamd64.10.0",  "ntia64.10.0",  "ntarm.10.0",  "ntarm64.10.0",// 10 / Server 2016+
-    // https://en.wikipedia.org/wiki/List_of_Microsoft_Windows_versions                                                                             client              server
-    "nt.10.0...10240",  "ntx86.10.0...10240",  "ntamd64.10.0...10240",  "ntia64.10.0...10240",  "ntarm.10.0...10240",  "ntarm64.10.0...10240", //   Win 10 v1507
-    "nt.10.0...10586",  "ntx86.10.0...10586",  "ntamd64.10.0...10586",  "ntia64.10.0...10586",  "ntarm.10.0...10586",  "ntarm64.10.0...10586", //   Win 10 v1511        Server 2016 TP4
-    "nt.10.0...14393",  "ntx86.10.0...14393",  "ntamd64.10.0...14393",  "ntia64.10.0...14393",  "ntarm.10.0...14393",  "ntarm64.10.0...14393", //   Win 10 v1607        Server 2016
-    "nt.10.0...15063",  "ntx86.10.0...15063",  "ntamd64.10.0...15063",  "ntia64.10.0...15063",  "ntarm.10.0...15063",  "ntarm64.10.0...15063", //   Win 10 v1703
-    "nt.10.0...16209",  "ntx86.10.0...16209",  "ntamd64.10.0...16209",  "ntia64.10.0...16209",  "ntarm.10.0...16209",  "ntarm64.10.0...16209", //   Win 10 creators update
-    "nt.10.0...16273",  "ntx86.10.0...16273",  "ntamd64.10.0...16273",  "ntia64.10.0...16273",  "ntarm.10.0...16273",  "ntarm64.10.0...16273", //   Win 10 insider preview
-    "nt.10.0...16288",  "ntx86.10.0...16288",  "ntamd64.10.0...16288",  "ntia64.10.0...16288",  "ntarm.10.0...16288",  "ntarm64.10.0...16288", //   Win 10 insider preview
-    "nt.10.0...16299",  "ntx86.10.0...16299",  "ntamd64.10.0...16299",  "ntia64.10.0...16299",  "ntarm.10.0...16299",  "ntarm64.10.0...16299", //   Win 10 v1709        Server 2016
-    "nt.10.0...17134",  "ntx86.10.0...17134",  "ntamd64.10.0...17134",  "ntia64.10.0...17134",  "ntarm.10.0...17134",  "ntarm64.10.0...17134", //   Win 10 v1803        Server 2016
-    "nt.10.0...17735",  "ntx86.10.0...17735",  "ntamd64.10.0...17735",  "ntia64.10.0...17735",  "ntarm.10.0...17735",  "ntarm64.10.0...17735", //   Win 10 insider preview
-    "nt.10.0...17763",  "ntx86.10.0...17763",  "ntamd64.10.0...17763",  "ntia64.10.0...17763",  "ntarm.10.0...17763",  "ntarm64.10.0...17763", //   Win 10 v1809        Server 2019
-    "nt.10.0...18362",  "ntx86.10.0...18362",  "ntamd64.10.0...18362",  "ntia64.10.0...18362",  "ntarm.10.0...18362",  "ntarm64.10.0...18362", //   Win 10 v1903        Server 2019
-    "nt.10.0...18363",  "ntx86.10.0...18363",  "ntamd64.10.0...18363",  "ntia64.10.0...18363",  "ntarm.10.0...18363",  "ntarm64.10.0...18363", //   Win 10 v1909        Server 2019
-    "nt.10.0...19041",  "ntx86.10.0...19041",  "ntamd64.10.0...19041",  "ntia64.10.0...19041",  "ntarm.10.0...19041",  "ntarm64.10.0...19041", //   Win 10 v2004/20H1   Server 2019
-    "nt.10.0...19042",  "ntx86.10.0...19042",  "ntamd64.10.0...19042",  "ntia64.10.0...19042",  "ntarm.10.0...19042",  "ntarm64.10.0...19042", //   Win 10 v20H2        Server 2019
-    "nt.10.0...19043",  "ntx86.10.0...19043",  "ntamd64.10.0...19043",  "ntia64.10.0...19043",  "ntarm.10.0...19043",  "ntarm64.10.0...19043", //   Win 10 v21H1
-    "nt.10.0...19044",  "ntx86.10.0...19044",  "ntamd64.10.0...19044",  "ntia64.10.0...19044",  "ntarm.10.0...19044",  "ntarm64.10.0...19044", //   Win 10 v21H2
-    "nt.10.0...19045",  "ntx86.10.0...19045",  "ntamd64.10.0...19045",  "ntia64.10.0...19045",  "ntarm.10.0...19045",  "ntarm64.10.0...19045", //   Win 10 v22H2
-		// https://betawiki.net/wiki/Windows_11
-    "nt.10.0...20190",  "ntx86.10.0...20190",  "ntamd64.10.0...20190",  "ntia64.10.0...20190",  "ntarm.10.0...20190",  "ntarm64.10.0...20190", //   Win 11 Timebomb	2021-01-31	Server 2022
-    "nt.10.0...20348",  "ntx86.10.0...20348",  "ntamd64.10.0...20348",  "ntia64.10.0...20348",  "ntarm.10.0...20348",  "ntarm64.10.0...20348", //                       Server 2022
-    "nt.10.0...21262",  "ntx86.10.0...21262",  "ntamd64.10.0...21262",  "ntia64.10.0...21262",  "ntarm.10.0...21262",  "ntarm64.10.0...21262", //   Win 11 Timebomb	2021-01-31
-    //
-    "nt.10.0...22000",  "ntx86.10.0...22000",  "ntamd64.10.0...22000",  "ntia64.10.0...22000",  "ntarm.10.0...22000",  "ntarm64.10.0...22000", //   Win 11 v21H2
-    "nt.10.0...22621",  "ntx86.10.0...22621",  "ntamd64.10.0...22621",  "ntia64.10.0...22621",  "ntarm.10.0...22621",  "ntarm64.10.0...22621", //   Win 11 v22H2
-    "nt.10.0...22631",  "ntx86.10.0...22631",  "ntamd64.10.0...22631",  "ntia64.10.0...22631",  "ntarm.10.0...22631",  "ntarm64.10.0...22631", //   Win 11 v23H2
-    "nt.10.0...25952",  "ntx86.10.0...25952",  "ntamd64.10.0...25952",  "ntia64.10.0...25952",  "ntarm.10.0...25952",  "ntarm64.10.0...25952", // 	Win 11 v24H2 Preview
-    "nt.10.0...26052",  "ntx86.10.0...26052",  "ntamd64.10.0...26052",  "ntia64.10.0...26052",  "ntarm.10.0...26052",  "ntarm64.10.0...26052", //   Win 11 2024	Timebomb	2024-09-15	Server 2025
-    "nt.10.0...26063",  "ntx86.10.0...26063",  "ntamd64.10.0...26063",  "ntia64.10.0...26063",  "ntarm.10.0...26063",  "ntarm64.10.0...26063", //   Win 11 Timebomb	2024-09-15	Server 2025
-    "nt.10.0...26080",  "ntx86.10.0...26080",  "ntamd64.10.0...26080",  "ntia64.10.0...26080",  "ntarm.10.0...26080",  "ntarm64.10.0...26080", //   Win 11 Timebomb	2024-09-15	Server 2025
-    "nt.10.0...26100",  "ntx86.10.0...26100",  "ntamd64.10.0...26100",  "ntia64.10.0...26100",  "ntarm.10.0...26100",  "ntarm64.10.0...26100", //   Win 11 v24H2        Server 2025
-    "nt.10.0...26200",  "ntx86.10.0...26200",  "ntamd64.10.0...26200",  "ntia64.10.0...26200",  "ntarm.10.0...26200",  "ntarm64.10.0...26200", //   Win 11 v25H2
-    //
-    "nt",    "ntx86",    "ntamd64",    "ntia64",    "ntarm",    "ntarm64",              // NT specifies Win 2000 and later
-    "nt..",  "ntx86..",  "ntamd64..",  "ntia64..",  "ntarm..",  "ntarm64..",
+		// https://betawiki.net/wiki/Windows_11                                                                                              // CLIENT                   SERVER
+        "nt.5",            "ntx86.5",            "ntamd64.5",            "ntia64.5",            "ntarm.5",            "ntarm64.5",           // 2000  
+        "nt.5.0",          "ntx86.5.0",          "ntamd64.5.0",          "ntia64.5.0",          "ntarm.5.0",          "ntarm64.5.0",         // 2000
+        "nt.5.1",          "ntx86.5.1",          "ntamd64.5.1",          "ntia64.5.1",          "ntarm.5.1",          "ntarm64.5.1",         // XP
+        "nt.5.2",          "ntx86.5.2",          "ntamd64.5.2",          "ntia64.5.2",          "ntarm.5.2",          "ntarm64.5.2",         // XP x64                 Server 2003
+        "nt.6",            "ntx86.6",            "ntamd64.6",            "ntia64.6",            "ntarm.6",            "ntarm64.6",           // Vista                  Server 2008
+        "nt.6.0",          "ntx86.6.0",          "ntamd64.6.0",          "ntia64.6.0",          "ntarm.6.0",          "ntarm64.6.0",         // Vista                  Server 2008
+        "nt.6.1",          "ntx86.6.1",          "ntamd64.6.1",          "ntia64.6.1",          "ntarm.6.1",          "ntarm64.6.1",         // 7                      Server 2008 R2
+        "nt.6.2",          "ntx86.6.2",          "ntamd64.6.2",          "ntia64.6.2",          "ntarm.6.2",          "ntarm64.6.2",         // 8                      Server 2012
+        "nt.6.3",          "ntx86.6.3",          "ntamd64.6.3",          "ntia64.6.3",          "ntarm.6.3",          "ntarm64.6.3",         // 8.1                    Server 2012 R2
+        "nt.6.4",          "ntx86.6.4",          "ntamd64.6.4",          "ntia64.6.4",          "ntarm.6.4",          "ntarm64.6.4",         // 10                     
+        "nt.10",           "ntx86.10",           "ntamd64.10",           "ntia64.10",           "ntarm.10",           "ntarm64.10",          // 10                     
+        "nt.10.0",         "ntx86.10.0",         "ntamd64.10.0",         "ntia64.10.0",         "ntarm.10.0",         "ntarm64.10.0",        // 10                     Server 2016                                                                                           
+        "nt.10.0...10240", "ntx86.10.0...10240", "ntamd64.10.0...10240", "ntia64.10.0...10240", "ntarm.10.0...10240", "ntarm64.10.0...10240", //Win 10 v1507           
+        "nt.10.0...10586", "ntx86.10.0...10586", "ntamd64.10.0...10586", "ntia64.10.0...10586", "ntarm.10.0...10586", "ntarm64.10.0...10586", //Win 10 v1511           Server 2016 TP4
+        "nt.10.0...14310", "ntx86.10.0...14310", "ntamd64.10.0...14310", "ntia64.10.0...14310", "ntarm.10.0...14310", "ntarm64.10.0...14310", //Win 10 v1607		   Server 2016
+        "nt.10.0...14393", "ntx86.10.0...14393", "ntamd64.10.0...14393", "ntia64.10.0...14393", "ntarm.10.0...14393", "ntarm64.10.0...14393", //Win 10 v1607           Server 2016
+        "nt.10.0...15063", "ntx86.10.0...15063", "ntamd64.10.0...15063", "ntia64.10.0...15063", "ntarm.10.0...15063", "ntarm64.10.0...15063", //Win 10 v1703              
+        "nt.10.0...16209", "ntx86.10.0...16209", "ntamd64.10.0...16209", "ntia64.10.0...16209", "ntarm.10.0...16209", "ntarm64.10.0...16209", //Win 10 v1709 EEAP         
+        "nt.10.0...16273", "ntx86.10.0...16273", "ntamd64.10.0...16273", "ntia64.10.0...16273", "ntarm.10.0...16273", "ntarm64.10.0...16273", //Win 10 v1709 preview   Server 1709
+        "nt.10.0...16288", "ntx86.10.0...16288", "ntamd64.10.0...16288", "ntia64.10.0...16288", "ntarm.10.0...16288", "ntarm64.10.0...16288", //Win 10 v1709 preview   
+        "nt.10.0...16299", "ntx86.10.0...16299", "ntamd64.10.0...16299", "ntia64.10.0...16299", "ntarm.10.0...16299", "ntarm64.10.0...16299", //Win 10 v1709           Server 2016
+        "nt.10.0...17134", "ntx86.10.0...17134", "ntamd64.10.0...17134", "ntia64.10.0...17134", "ntarm.10.0...17134", "ntarm64.10.0...17134", //Win 10 v1803           Server 2016
+        "nt.10.0...17704", "ntx86.10.0...17704", "ntamd64.10.0...17704", "ntia64.10.0...17704", "ntarm.10.0...17704", "ntarm64.10.0...17704", //Win 10 v1809 preview   Server 2019
+        "nt.10.0...17735", "ntx86.10.0...17735", "ntamd64.10.0...17735", "ntia64.10.0...17735", "ntarm.10.0...17735", "ntarm64.10.0...17735", //Win 10 v1809 preview   Server 2019
+        "nt.10.0...17763", "ntx86.10.0...17763", "ntamd64.10.0...17763", "ntia64.10.0...17763", "ntarm.10.0...17763", "ntarm64.10.0...17763", //Win 10 v1809           Server 2019
+        "nt.10.0...18362", "ntx86.10.0...18362", "ntamd64.10.0...18362", "ntia64.10.0...18362", "ntarm.10.0...18362", "ntarm64.10.0...18362", //Win 10 v1903           Server 2019
+        "nt.10.0...18363", "ntx86.10.0...18363", "ntamd64.10.0...18363", "ntia64.10.0...18363", "ntarm.10.0...18363", "ntarm64.10.0...18363", //Win 10 v1909           Server 2019
+        "nt.10.0...18900", "ntx86.10.0...18900", "ntamd64.10.0...18900", "ntia64.10.0...18900", "ntarm.10.0...18900", "ntarm64.10.0...18900", //Win 10 v20H1 preview   
+        "nt.10.0...19041", "ntx86.10.0...19041", "ntamd64.10.0...19041", "ntia64.10.0...19041", "ntarm.10.0...19041", "ntarm64.10.0...19041", //Win 10 v2004/20H1      Server 2019
+        "nt.10.0...19042", "ntx86.10.0...19042", "ntamd64.10.0...19042", "ntia64.10.0...19042", "ntarm.10.0...19042", "ntarm64.10.0...19042", //Win 10 v20H2           Server 2019
+        "nt.10.0...19043", "ntx86.10.0...19043", "ntamd64.10.0...19043", "ntia64.10.0...19043", "ntarm.10.0...19043", "ntarm64.10.0...19043", //Win 10 v21H1         
+        "nt.10.0...19044", "ntx86.10.0...19044", "ntamd64.10.0...19044", "ntia64.10.0...19044", "ntarm.10.0...19044", "ntarm64.10.0...19044", //Win 10 v21H2         
+        "nt.10.0...19045", "ntx86.10.0...19045", "ntamd64.10.0...19045", "ntia64.10.0...19045", "ntarm.10.0...19045", "ntarm64.10.0...19045", //Win 10 v22H2         
+        "nt.10.0...19586", "ntx86.10.0...19586", "ntamd64.10.0...19586", "ntia64.10.0...19586", "ntarm.10.0...19586", "ntarm64.10.0...19586", //Win 11 preview       
+        "nt.10.0...20190", "ntx86.10.0...20190", "ntamd64.10.0...20190", "ntia64.10.0...20190", "ntarm.10.0...20190", "ntarm64.10.0...20190", //Win 11 preview	 	   Server 2022
+        "nt.10.0...20348", "ntx86.10.0...20348", "ntamd64.10.0...20348", "ntia64.10.0...20348", "ntarm.10.0...20348", "ntarm64.10.0...20348", //                       Server 2022
+        "nt.10.0...21250", "ntx86.10.0...21250", "ntamd64.10.0...21250", "ntia64.10.0...21250", "ntarm.10.0...21250", "ntarm64.10.0...21250", //Win 11 preview         
+        "nt.10.0...21262", "ntx86.10.0...21262", "ntamd64.10.0...21262", "ntia64.10.0...21262", "ntarm.10.0...21262", "ntarm64.10.0...21262", //Win 11 Cobalt          
+        "nt.10.0...22000", "ntx86.10.0...22000", "ntamd64.10.0...22000", "ntia64.10.0...22000", "ntarm.10.0...22000", "ntarm64.10.0...22000", //Win 11 v21H2           
+        "nt.10.0...22621", "ntx86.10.0...22621", "ntamd64.10.0...22621", "ntia64.10.0...22621", "ntarm.10.0...22621", "ntarm64.10.0...22621", //Win 11 v22H2           
+        "nt.10.0...22631", "ntx86.10.0...22631", "ntamd64.10.0...22631", "ntia64.10.0...22631", "ntarm.10.0...22631", "ntarm64.10.0...22631", //Win 11 v23H2           
+        "nt.10.0...22635", "ntx86.10.0...22635", "ntamd64.10.0...22635", "ntia64.10.0...22635", "ntarm.10.0...22635", "ntarm64.10.0...22635", //Win 11 v23H2           
+        "nt.10.0...25216", "ntx86.10.0...25216", "ntamd64.10.0...25216", "ntia64.10.0...25216", "ntarm.10.0...25216", "ntarm64.10.0...25216", //Win 11 v24H2 Preview   Server 2025
+        "nt.10.0...25398", "ntx86.10.0...25398", "ntamd64.10.0...25398", "ntia64.10.0...25398", "ntarm.10.0...25398", "ntarm64.10.0...25398", //Win 11				   Server 23H2
+        "nt.10.0...25952", "ntx86.10.0...25952", "ntamd64.10.0...25952", "ntia64.10.0...25952", "ntarm.10.0...25952", "ntarm64.10.0...25952", //Win 11 v24H2 Preview   
+        "nt.10.0...26052", "ntx86.10.0...26052", "ntamd64.10.0...26052", "ntia64.10.0...26052", "ntarm.10.0...26052", "ntarm64.10.0...26052", //Win 11 v24H2 Preview   Server 2025
+        "nt.10.0...26063", "ntx86.10.0...26063", "ntamd64.10.0...26063", "ntia64.10.0...26063", "ntarm.10.0...26063", "ntarm64.10.0...26063", //Win 11 v24H2 PreSSE4.2 Server 2025
+        "nt.10.0...26080", "ntx86.10.0...26080", "ntamd64.10.0...26080", "ntia64.10.0...26080", "ntarm.10.0...26080", "ntarm64.10.0...26080", //Win 11 v24H2 Dev	   Server 2025
+        "nt.10.0...26100", "ntx86.10.0...26100", "ntamd64.10.0...26100", "ntia64.10.0...26100", "ntarm.10.0...26100", "ntarm64.10.0...26100", //Win 11 v24H2           Server 2025
+        "nt.10.0...26200", "ntx86.10.0...26200", "ntamd64.10.0...26200", "ntia64.10.0...26200", "ntarm.10.0...26200", "ntarm64.10.0...26200", //Win 11 v25H2
+        "nt",              "ntx86",              "ntamd64",              "ntia64",              "ntarm",              "ntarm64",              // NT specifies Win 2000 and later
+        "nt..",            "ntx86..",            "ntamd64..",            "ntia64..",            "ntarm..",            "ntarm64.."             
 };
 
-const int nts_version[NUM_DECS]=
+// this represents the inf file target version = major * 10 + minor
+// where win11 = 10.0.22000 or later
+const int nts_version[num_decs]=
 {
     50,    50,    50,    50,    50,   50, // 2000
     50,    50,    50,    50,    50,   50, // 2000
@@ -140,10 +149,13 @@ const int nts_version[NUM_DECS]=
     61,    61,    61,    61,    61,   61, // 7
     62,    62,    62,    62,    62,   62, // 8
     63,    63,    63,    63,    63,   63, // 8.1
+    64,    64,    64,    64,    64,   64, // 10
+   100,   100,   100,   100,   100,  100, // 10
    100,   100,   100,   100,   100,  100, // 10
    //
    100,   100,   100,   100,   100,  100, // 10 (1507)
    100,   100,   100,   100,   100,  100, // 10 (1511)
+   100,   100,   100,   100,   100,  100, // 10 (1607) (14310)
    100,   100,   100,   100,   100,  100, // 10 (1607)
    100,   100,   100,   100,   100,  100, // 10 (1703)
    100,   100,   100,   100,   100,  100, // 10 (creators update)
@@ -151,35 +163,105 @@ const int nts_version[NUM_DECS]=
    100,   100,   100,   100,   100,  100, // 10 (insider preview)
    100,   100,   100,   100,   100,  100, // 10 (1709)
    100,   100,   100,   100,   100,  100, // 10 (1803)
+   100,   100,   100,   100,   100,  100, // 10 (1803)
    100,   100,   100,   100,   100,  100, // 10 (insider preview)
    100,   100,   100,   100,   100,  100, // 10 (1809)
    100,   100,   100,   100,   100,  100, // 10 (1903)
+   100,   100,   100,   100,   100,  100, // 10 (1909)
    100,   100,   100,   100,   100,  100, // 10 (1909)
    100,   100,   100,   100,   100,  100, // 10 (20H1)
    100,   100,   100,   100,   100,  100, // 10 (20H2)
    100,   100,   100,   100,   100,  100, // 10 (21H1)
    100,   100,   100,   100,   100,  100, // 10 (21H2)
    100,   100,   100,   100,   100,  100, // 10 (22H2)
-   100,   100,   100,   100,   100,  100, // 10 (Timebomb	2021-01-31)
+   100,   100,   100,   100,   100,  100, // 10 (?)
+   100,   100,   100,   100,   100,  100, // 10 (insider preview)
    100,   100,   100,   100,   100,  100, // 10 (Server 2022)
-   100,   100,   100,   100,   100,  100, // Pre-Windows 11 (Timebomb	2021-01-31)
+   100,   100,   100,   100,   100,  100, // 10 (?)
+   100,   100,   100,   100,   100,  100, // 10 (insider preview)
    //
-   110,   110,   110,   110,   110,  110, // 11 (21H2)
-   110,   110,   110,   110,   110,  110, // 11 (22H2)
-   110,   110,   110,   110,   110,  110, // 11 (23H2)
-   110,   110,   110,   110,   110,  110, // 11 (v24H2 Preview)
-   110,   110,   110,   110,   110,  110, // 11 (Timebomb	2024-09-15)
-   110,   110,   110,   110,   110,  110, // 11 (Timebomb	2024-09-15)
-   110,   110,   110,   110,   110,  110, // 11 (Timebomb	2024-09-15)
-   110,   110,   110,   110,   110,  110, // 11 (24H2 - Server 2025)
-   110,   110,   110,   110,   110,  110, // 11 (25H2)
+   100,   100,   100,   100,   100,  100, // 11 (21H2)
+   100,   100,   100,   100,   100,  100, // 11 (22H2)
+   100,   100,   100,   100,   100,  100, // 11 (23H2)
+   100,   100,   100,   100,   100,  100, // 11
+   100,   100,   100,   100,   100,  100, // 11
+   100,   100,   100,   100,   100,  100, // 11 (?)
+   100,   100,   100,   100,   100,  100, // 11 (?)
+   100,   100,   100,   100,   100,  100, // 11 (insider preview)
+   100,   100,   100,   100,   100,  100, // 11 (insider preview)
+   100,   100,   100,   100,   100,  100, // 11 (insider preview)
+   100,   100,   100,   100,   100,  100, // 11 (24H2 - Server 2025)
+   100,   100,   100,   100,   100,  100, // 11 (25H2)
    //
      0,     0,     0,     0,     0,    0,
      0,     0,     0,     0,     0,    0,
+   //
+//     -1,
+};
+
+const int nts_build[num_decs]=
+{
+    0,    0,    0,    0,    0,   0, // 2000
+    0,    0,    0,    0,    0,   0, // 2000
+    0,    0,    0,    0,    0,   0, // XP
+    0,    0,    0,    0,    0,   0, // Server 2003
+    0,    0,    0,    0,    0,   0, // Vista
+    0,    0,    0,    0,    0,   0, // Vista
+    0,    0,    0,    0,    0,   0, // 7
+    0,    0,    0,    0,    0,   0, // 8
+    0,    0,    0,    0,    0,   0, // 8.1
+    0,    0,    0,    0,    0,   0, // 10
+    0,    0,    0,    0,    0,   0, // 10
+    0,    0,    0,    0,    0,   0, // 10
+   //
+       0,       0,       0,       0,       0,      0, // 10 (1507)
+       0,       0,       0,       0,       0,      0, // 10 (1511)
+   14310,   14310,   14310,   14310,   14310,  14310, // 10 (1607) (14310)
+   14393,   14393,   14393,   14393,   14393,  14393, // 10 (1607)
+   15063,   15063,   15063,   15063,   15063,  15063, // 10 (1703)
+   16209,   16209,   16209,   16209,   16209,  16209, // 10 (creators update)
+   16273,   16273,   16273,   16273,   16273,  16273, // 10 (insider preview)
+   16288,   16288,   16288,   16288,   16288,  16288, // 10 (insider preview)
+   16299,   16299,   16299,   16299,   16299,  16299, // 10 (1709)
+   17134,   17134,   17134,   17134,   17134,  17134, // 10 (1803)
+   17704,   17704,   17704,   17704,   17704,  17704, // 10 (1803)
+   17735,   17735,   17735,   17735,   17735,  17735, // 10 (insider preview)
+   17763,   17763,   17763,   17763,   17763,  17763, // 10 (1809)
+   18362,   18362,   18362,   18362,   18362,  18362, // 10 (1903)
+   18363,   18363,   18363,   18363,   18363,  18363, // 10 (1909)
+   18900,   18900,   18900,   18900,   18900,  18900, // 10
+   19041,   19041,   19041,   19041,   19041,  19041, // 10 (20H1)
+   19042,   19042,   19042,   19042,   19042,  19042, // 10 (20H2)
+   19043,   19043,   19043,   19043,   19043,  19043, // 10 (21H1)
+   19044,   19044,   19044,   19044,   19044,  19044, // 10 (21H2)
+   19045,   19045,   19045,   19045,   19045,  19045, // 10 (22H2)
+   19586,   19586,   19586,   19586,   19586,  19586, // 10 (?)
+   20190,   20190,   20190,   20190,   20190,  20190, // 10 (insider preview)
+   20348,   20348,   20348,   20348,   20348,  20348, // 10 (Server 2022)
+   21250,   21250,   21250,   21250,   21250,  21250, // 10 (?)
+   21262,   21262,   21262,   21262,   21262,  21262, // 10 (insider preview)
+   //
+   22000,   22000,   22000,   22000,   22000,  22000, // 11 (21H2)
+   22621,   22621,   22621,   22621,   22621,  22621, // 11 (22H2)
+   22631,   22631,   22631,   22631,   22631,  22631, // 11 (23H2)
+   22635,   22635,   22635,   22635,   22635,  22635, // 11 (23H2)
+   25216,   25216,   25216,   25216,   25216,  25216, // 11 (?)
+   25398,   25398,   25398,   25398,   25398,  25398, // 11 (?)
+   25952,   25952,   25952,   25952,   25952,  25952, // 11 (?)
+   26052,   26052,   26052,   26052,   26052,  26052, // 11 (insider preview)
+   26063,   26063,   26063,   26063,   26063,  26063, // 11 (insider preview)
+   26080,   26080,   26080,   26080,   26080,  26080, // 11 (insider preview)
+   26100,   26100,   26100,   26100,   26100,  26100, // 11 (24H2 - Server 2025)
+   26200,   26200,   26200,   26200,   26200,  26200, // 11 (25H2)
+   //
+   0,   0,   0,   0,   0,  0,
+   0,   0,   0,   0,   0,  0,
+   //
+//   -1,
 };
 
 // 0=unknown/don't care/ignore, 1=x86, 2=amd64, 3=ia64, 4=arm, 5=arm64
-const int nts_arch[NUM_DECS]=
+const int nts_arch[num_decs]=
 {
     0,  1,  2,  3,  4,  5, // 2000
     0,  1,  2,  3,  4,  5, // 2000
@@ -192,9 +274,11 @@ const int nts_arch[NUM_DECS]=
     0,  1,  2,  3,  4,  5, // 8.1
     0,  1,  2,  3,  4,  5, // 10
     0,  1,  2,  3,  4,  5, // 10
+    0,  1,  2,  3,  4,  5, // 10
     //
     0,  1,  2,  3,  4,  5, // 10 (1507)
     0,  1,  2,  3,  4,  5, // 10 (1511)
+    0,  1,  2,  3,  4,  5, // 10 (1607)
     0,  1,  2,  3,  4,  5, // 10 (1607)
     0,  1,  2,  3,  4,  5, // 10 (1703)
     0,  1,  2,  3,  4,  5, // 10 (creators update)
@@ -202,86 +286,105 @@ const int nts_arch[NUM_DECS]=
     0,  1,  2,  3,  4,  5, // 10 (insider preview)
     0,  1,  2,  3,  4,  5, // 10 (1709)
     0,  1,  2,  3,  4,  5, // 10 (1803)
+    0,  1,  2,  3,  4,  5, // 10 (1803)
     0,  1,  2,  3,  4,  5, // 10 (insider preview)
     0,  1,  2,  3,  4,  5, // 10 (1809)
     0,  1,  2,  3,  4,  5, // 10 (1903)
     0,  1,  2,  3,  4,  5, // 10 (1909)
+    0,  1,  2,  3,  4,  5, // 10
     0,  1,  2,  3,  4,  5, // 10 (20H1)
     0,  1,  2,  3,  4,  5, // 10 (20H2)
     0,  1,  2,  3,  4,  5, // 10 (21H1)
     0,  1,  2,  3,  4,  5, // 10 (21H2)
     0,  1,  2,  3,  4,  5, // 10 (22H2)
-
-    0,  1,  2,  3,  4,  5, // 11 (Timebomb	2021-01-31)
+    0,  1,  2,  3,  4,  5, // 10 (?)
+    0,  1,  2,  3,  4,  5, // 10 (insider preview)
     0,  1,  2,  3,  4,  5, // 10 (Server 2022)
-    0,  1,  2,  3,  4,  5, // 11 (Timebomb	2021-01-31)
+    0,  1,  2,  3,  4,  5, // 10 (?)
+    0,  1,  2,  3,  4,  5, // 10 (insider preview)
     //
     0,  1,  2,  3,  4,  5, // 11 (21H2)
     0,  1,  2,  3,  4,  5, // 11 (22H2)
     0,  1,  2,  3,  4,  5, // 11 (23H2)
-    0,  1,  2,  3,  4,  5, // 11 (24H2 Preview)
-    0,  1,  2,  3,  4,  5, // 11 (Timebomb	2024-09-15)
-    0,  1,  2,  3,  4,  5, // 11 (Timebomb	2024-09-15)
+    0,  1,  2,  3,  4,  5, // 11
+    0,  1,  2,  3,  4,  5, // 11
+    0,  1,  2,  3,  4,  5, // 11 (?)
+    0,  1,  2,  3,  4,  5, // 11 (?)
+    0,  1,  2,  3,  4,  5, // 11 (insider preview)
+    0,  1,  2,  3,  4,  5, // 11 (insider preview)
+    0,  1,  2,  3,  4,  5, // 11 (insider preview)
     0,  1,  2,  3,  4,  5, // 11 (24H2 - Server 2025)
     0,  1,  2,  3,  4,  5, // 11 (25H2)
     //
     0,  1,  2,  3,  4,  5,
     0,  1,  2,  3,  4,  5,
+    //
+//    -1,
 };
 
 // d: 0=x86, 1=amd64, 2=ia64, 3=arm, 4=arm64, -1=ignore
-const int nts_score[NUM_DECS]=
+const int nts_score[num_decs]=
 {
-    50,   150,   150,   150,  150,  150, // 2000
-    50,   150,   150,   150,  150,  150, // 2000
-    51,   151,   151,   151,  151,  151, // XP
-    52,   152,   152,   152,  152,  152, // Server 2003
-    60,   160,   160,   160,  160,  160, // Vista
-    60,   160,   160,   160,  160,  160, // Vista
-    61,   161,   161,   161,  161,  161, // 7
-    62,   162,   162,   162,  162,  162, // 8
-    63,   163,   163,   163,  163,  163, // 8.1
-    64,   164,   164,   164,  164,  164, // 10
-    64,   164,   164,   164,  164,  164, // 10
+    50,   150,   150,   150,   150,  150, // 2000
+    50,   150,   150,   150,   150,  150, // 2000
+    51,   151,   151,   151,   151,  151, // XP
+    52,   152,   152,   152,   152,  152, // Server 2003
+    60,   160,   160,   160,   160,  160, // Vista
+    60,   160,   160,   160,   160,  160, // Vista
+    61,   161,   161,   161,   161,  161, // 7
+    62,   162,   162,   162,   162,  162, // 8
+    63,   163,   163,   163,   163,  163, // 8.1
+    64,   164,   164,   164,   164,  164, // 10
+    64,   164,   164,   164,   164,  164, // 10
+    64,   164,   164,   164,   164,  164, // 10
     //
-    64,   164,   164,   164,  164,  164, // 10 (1507)
-    64,   164,   164,   164,  164,  164, // 10 (1511)
-    64,   164,   164,   164,  164,  164, // 10 (1607)
-    64,   164,   164,   164,  164,  164, // 10 (1703)
-    64,   164,   164,   164,  164,  164, // 10 (creators update)
-    64,   164,   164,   164,  164,  164, // 10 (insider preview)
-    64,   164,   164,   164,  164,  164, // 10 (insider preview)
-    64,   164,   164,   164,  164,  164, // 10 (1803)
-    64,   164,   164,   164,  164,  164, // 10 (1709)
-    64,   164,   164,   164,  164,  164, // 10 (insider preview)
-    64,   164,   164,   164,  164,  164, // 10 (1809)
-    64,   164,   164,   164,  164,  164, // 10 (1903)
-    64,   164,   164,   164,  164,  164, // 10 (1909)
-    64,   164,   164,   164,  164,  164, // 10 (20H1)
-    64,   164,   164,   164,  164,  164, // 10 (20H2)
-    64,   164,   164,   164,  164,  164, // 10 (21H1)
-    64,   164,   164,   164,  164,  164, // 10 (21H2)
-    64,   164,   164,   164,  164,  164, // 10 (22H2)
-    64,   164,   164,   164,  164,  164, // 10 (?)
-    64,   164,   164,   164,  164,  164, // 10 (Server 2022)
-    64,   164,   164,   164,  164,  164, // 10 (?)
-    64,   164,   164,   164,  164,  164, // 10 (insider preview)
+    64,   164,   164,   164,   164,  164, // 10 (1507)
+    64,   164,   164,   164,   164,  164, // 10 (1511)
+    64,   164,   164,   164,   164,  164, // 10 (1607) (14310)
+    64,   164,   164,   164,   164,  164, // 10 (1607)
+    64,   164,   164,   164,   164,  164, // 10 (1703)
+    64,   164,   164,   164,   164,  164, // 10 (creators update)
+    64,   164,   164,   164,   164,  164, // 10 (insider preview)
+    64,   164,   164,   164,   164,  164, // 10 (insider preview)
+    64,   164,   164,   164,   164,  164, // 10 (1709)
+    64,   164,   164,   164,   164,  164, // 10 (1803)
+    64,   164,   164,   164,   164,  164, // 10 (1803)
+    64,   164,   164,   164,   164,  164, // 10 (insider preview)
+    64,   164,   164,   164,   164,  164, // 10 (1809)
+    64,   164,   164,   164,   164,  164, // 10 (1903)
+    64,   164,   164,   164,   164,  164, // 10 (1909)
+    64,   164,   164,   164,   164,  164, // 10
+    64,   164,   164,   164,   164,  164, // 10 (20H1)
+    64,   164,   164,   164,   164,  164, // 10 (20H2)
+    64,   164,   164,   164,   164,  164, // 10 (21H1)
+    64,   164,   164,   164,   164,  164, // 10 (21H2)
+    64,   164,   164,   164,   164,  164, // 10 (22H2)
+    64,   164,   164,   164,   164,  164, // 10 (?)
+    64,   164,   164,   164,   164,  164, // 10 (insider preview)
+    64,   164,   164,   164,   164,  164, // 10 (Server 2022)
+    64,   164,   164,   164,   164,  164, // 10 (?)
+    64,   164,   164,   164,   164,  164, // 10 (insider preview)
     //
-    65,   165,   165,   165,  165,  165, // 11 (21H2)
-    65,   165,   165,   165,  165,  165, // 11 (22H2)
-    65,   165,   165,   165,  165,  165, // 11 (23H2)
-    65,   165,   165,   165,  165,  165, // 11 (?)
-    65,   165,   165,   165,  165,  165, // 11 (insider preview)
-    65,   165,   165,   165,  165,  165, // 11 (insider preview)
-    65,   165,   165,   165,  165,  165, // 11 (insider preview)
-    65,   165,   165,   165,  165,  165, // 11 (24H2 - Server 2025)
-    65,   165,   165,   165,  165,  165, // 11 (25H2)
+    65,   165,   165,   165,   165,  165, // 11 (21H2)
+    65,   165,   165,   165,   165,  165, // 11 (22H2)
+    65,   165,   165,   165,   165,  165, // 11 (23H2)
+    65,   165,   165,   165,   165,  165, // 11
+    65,   165,   165,   165,   165,  165, // 11
+    65,   165,   165,   165,   165,  165, // 11 (?)
+    65,   165,   165,   165,   165,  165, // 11 (?)
+    65,   165,   165,   165,   165,  165, // 11 (insider preview)
+    65,   165,   165,   165,   165,  165, // 11 (insider preview)
+    65,   165,   165,   165,   165,  165, // 11 (insider preview)
+    65,   165,   165,   165,   165,  165, // 11 (24H2 - Server 2025)
+    65,   165,   165,   165,   165,  165, // 11 (25H2)
     //
-    10,   100,   100,   100,  100,  100,
-    10,   100,   100,   100,  100,  100,
+    10,   100,   100,   100,   100,  100,
+    10,   100,   100,   100,   100,  100,
+    //
+//    -1,
 };
 
-const markers_t markers[NUM_MARKERS]=
+const markers_t markers[num_markers]=
 {
     // Exact x86
     {"5x86",    5, 1, 0},
@@ -385,6 +488,7 @@ const markers_t markers[NUM_MARKERS]=
     {"x64\\",   -1, -1, 1},
 
     {"winall", -1,-1,-1},
+//    ("", -1,-1,-1),
 };
 
 char marker[MAX_INF_STRING_LENGTH];
@@ -417,7 +521,7 @@ void State::genmarker()
     static const wchar_t *Filter_21[]={L"OEM",L"twinhead",L"durabook",nullptr};
     static const wchar_t *Filter_22[]={L"NEC",L"Nec_brand",L"nec",nullptr};
 
-    static const wchar_t **filter_list[NUM_FILTERS]=
+    static const wchar_t **filter_list[num_filters]=
     {
         Filter_1, Filter_2, Filter_3, Filter_4, Filter_5, Filter_6, Filter_7,
         Filter_8, Filter_9, Filter_10,Filter_11,Filter_12,Filter_13,Filter_14,
@@ -429,34 +533,63 @@ void State::genmarker()
     const wchar_t *str=getManuf();
     if(!str)return;
 
-    for(size_t i=0;i<NUM_FILTERS;i++)
+    for(size_t i=0;i<num_filters;i++)
     for(size_t j=1;filter_list[i][j];j++)
         if(StrStrIW(str,filter_list[i][j]))
             wsprintfA(marker,"%S_nb",filter_list[i][0]);
 
-    uprintf("Marker: '%s'\n",marker);
+    Log.print_con("Marker: '%s'\n",marker);
 }
 
 int calc_secttype(const char *s)
 {
     char buf[MAX_INF_SECTION_NAME_LENGTH];
-    char *p=buf;
+//    char *p=buf;
 
     s=StrStrIA(s,".nt");
     if(!s)return -1;
-
+/*
     strcpy(buf,s);
+    // looking for a match in nts[]
 
-    // count the number of dots in the string '.ntamd64.10.0...10240'
     if((p=strchr(p+1,'.')))
         if((p=strchr(p+1,'.')))
             if((p=strchr(p+1,'.')))
                 if((p=strchr(p+1,'.')))
                     if((p=strchr(p+1,'.')))
                         if((p=strchr(p+1,'.')))*p=0;
+*/
 
-    for(int i=0;i<NUM_DECS;i++)if(!_strcmpi(buf+3,nts[i]+2))
-        return i;
+    // in order to get a match in nts[]
+    // i need to ignore the ProductType and SuiteMask fields
+    // but include the BuildNumber field
+    // NT[Architecture][.[OSMajorVersion][.[OSMinorVersion][.[ProductType][.[SuiteMask][.[BuildNumber]]]]]
+    std::string ss=s;
+    std::string sections[7];
+    std::string del=".";
+    int ndx=0;
+    auto pos=ss.find(del);
+    while(pos!=std::string::npos && ndx<7)
+    {
+        sections[ndx]=ss.substr(0,pos);
+        ss.erase(0,pos+del.length());
+        pos=ss.find(del);
+        ndx++;
+    }
+    if(ndx<7)sections[ndx]=ss;
+    ss="";
+    if(sections[1].size()>0)        // Architecture
+        ss+="."+sections[1];
+    if(sections[2].size()>0)        // OSMajorVersion
+        ss+="."+sections[2];
+    if(sections[3].size()>0)        // OSMinorVersion
+        ss+="."+sections[3];
+    if(sections[6].size()>0)        // BuildNumber
+        ss+="..."+sections[6];
+
+    strcpy(buf,ss.c_str());
+
+    for(int i=0;i<num_decs;i++)if(!_strcmpi(buf+3,nts[i]+2))return i;
     return -1;
 }
 
@@ -465,15 +598,29 @@ int Hwidmatch::calc_decorscore(int id,const State *state)
 {
     int major,
         minor,
+        build,
         arch=state->getArchitecture()+1;
-    state->getWinVer(&major,&minor);
+    state->getWinVer(&major,&minor,&build);
 
-    // id is the index into the nts, nts_version, nts_arch,nts_score arrays
+    // id is the index into the nts, nts_version, nts_build, nts_arch, nts_score arrays
     if(id<0)return 1;
-    // if the inf win version is greater than required then fail
+
+    // for the purposes of matching with the inf file decorator then 11 = 10
+    if(major==11)major=10;
+
+    // if the inf win version is greater than current os then fail
     if(nts_version[id]&&major*10+minor<nts_version[id])return 0;
-    // if the inf win architecture is not what is required then fail
+    // if the inf win architecture is not current os then fail
     if(nts_arch[id]&&arch!=nts_arch[id])return 0;
+
+    // starting with 10.0.14310, if major and minor match exactly
+    // then nts_build is the minimum build number
+    // https://learn.microsoft.com/en-us/windows-hardware/drivers/install/inf-manufacturer-section
+    if(nts_version[id]&&nts_version[id]>=100&&nts_build[id]>=14310)
+    {
+        if(major*10+minor==nts_version[id]&&nts_build[id]>build)return 0;
+    }
+
     // return the assigned score
     return nts_score[id];
 }
@@ -483,16 +630,17 @@ int Hwidmatch::calc_markerscore(const State *state,const char *path)
     char buf[MAX_PATH];
     int majver,
         minver,
+        build,
         arch=state->getArchitecture(),
         curmaj=-1,curmin=-1,curarch=-1;
     int i;
     int score_l=0;
-    state->getWinVer(&majver,&minver);
+    state->getWinVer(&majver,&minver,&build);
 
     strcpy(buf,path);
     strtolower(buf,strlen(buf));
 
-    for(i=0;i<NUM_MARKERS;i++)
+    for(i=0;i<num_markers;i++)
     {
         if(StrStrIA(buf,markers[i].name))
         {
@@ -569,19 +717,30 @@ Matcher *CreateMatcher()
 
 void MatcherImp::findHWIDs(Devicematch *devicematch,const wchar_t *hwidv,int dev_pos,int ishw)
 {
+    // this searches the driver packs for the given hwid
+    // each index has it's own HashTable
+    // which will handle hash collisions within an index
+    // but there is no accounting for possible hash collisions across indices
+    // so: it's possible for the same hash to show up in different
+    // indices for different device HWIDs with no collision handling
+
     char hwid[MAX_DEVICE_ID_LEN];
     wsprintfA(hwid,"%ws",hwidv);
 
+    // calc hash from hwid
 	size_t sz = strlen(hwid);
     strtoupper(hwid,sz);
 	int code = Hashtable::gethashcode(hwid, sz);
 
+	// iterate the driver packs
     for(auto &drp:*col->getList())
     {
         int isfound;
+        // look for the hash
         int val=drp.find((int)code,&isfound);
         while(isfound)
         {
+            // found a match - add it to a list
             hwidmatch_list.push_back(Hwidmatch(&drp,val,dev_pos,ishw,state,devicematch));
             devicematch->num_matches++;
             val=drp.findnext(&isfound);
@@ -682,14 +841,14 @@ int MatcherImp::write_device_list(wchar_t *filename)
 {
     if(!System.canWriteFile(filename,L"wt"))
     {
-        uprintf("ERROR in write_device_list(): Unwriteable,'%S'\n",filename);
+        Log.print_err("ERROR in write_device_list(): Unwriteable,'%S'\n",filename);
         return 1;
     }
 
     FILE *f=_wfopen(filename,L"wt");
     if(!f)
     {
-        uprintf("ERROR in write_device_list(): Failed to open file,'%S'\n",filename);
+        Log.print_err("ERROR in write_device_list(): Failed to open file,'%S'\n",filename);
         return 1;
     }
 
@@ -781,20 +940,26 @@ Devicematch::Devicematch(Device *cur_device,const Driver *cur_driver,size_t item
     device(cur_device),
     driver(cur_driver)
 {
+    // this looks for a matching hardware id in the driver packs
+
     State *state=matcher->getState();
 
     if(device->getHardwareID())
     {
+        // p is the PBYTE pointing to a REG_MULTI_SZ
         const wchar_t *p=state->textas.getw(device->getHardwareID());
         int dev_pos=0;
+        // iterate the null terminated strings contained in the REG_MULTI_SZ
         while(*p)
         {
+            // look for this hwid string in the index
             matcher->findHWIDs(this,p,dev_pos,1);
             p+=wcslen(p)+1;
             dev_pos++;
         }
     }
 
+    // do the same for CompatibleIDs
     if(device->getCompatibleIDs())
     {
         const wchar_t *p=state->textas.getw(device->getCompatibleIDs());
@@ -857,8 +1022,8 @@ int Hwidmatch::isblacklisted(const State *state,const wchar_t *hwid,const char *
 int Hwidmatch::isvalid_ver(const State *state)
 {
     Version *v;
-    int major,minor;
-    state->getWinVer(&major,&minor);
+    int major,minor,build;
+    state->getWinVer(&major,&minor,&build);
 
     v=getdrp_drvversion();
     switch(v->GetV1())
@@ -925,7 +1090,7 @@ int Hwidmatch::calc_altsectscore(const State *state,int curscore)
             }
             s++;
         }
-        //vvuprintf("%S: %d\n",getdrp_packname(),v);
+        //Log.print_con("%S: %d\n",getdrp_packname(),v);
         if(v&&v>16073)
         {
             intel2="intel_sdi_2nd\\";
@@ -1078,26 +1243,26 @@ void Hwidmatch::print_tbl(const int *limits)
     v->str_date(date,true);
     v->str_version(vers);
 
-    uprintf("  %d |",      altsectscore);
-    uprintf(" %08X |",     score);
-    uprintf(" %S |",       date.Get());
-    uprintf(" %3d |",      decorscore);
-    uprintf(" %2d |",      markerscore);
-    uprintf(" %3X |",      status);
-    getdrp_drvsection(buf);
-    uprintf(" %-*s |",limits[0],buf);
+    Log.print_file("  %d |",      altsectscore);
+    Log.print_file(" %08X |",     score);
+    Log.print_file(" %S |",       date.Get());
+    Log.print_file(" %3d |",      decorscore);
+    Log.print_file(" %2d |",      markerscore);
+    Log.print_file(" %3X |",      status);
+        getdrp_drvsection(buf);
+    Log.print_file(" %-*s |",limits[0],buf);
 
-    wsprintfA(buf,"%ws\\%ws", getdrp_packpath(),getdrp_packname());
-    uprintf(" %-*s |",     limits[1],buf);
-    uprintf(" %8X|",       getdrp_infcrc());
-    wsprintfA(buf,"%s%s",  getdrp_infpath(),getdrp_infname());
-    uprintf(" %-*s |",     limits[2],buf);
-    uprintf(" %-*s |",     limits[3],getdrp_drvmanufacturer());
-    wsprintfA(buf,"%ws",   vers.Get());
-    uprintf(" %*s |",      limits[4],buf);
-    uprintf(" %-*s |",     limits[5],getdrp_drvHWID());
-    uprintf(" %-*s",       limits[6],getdrp_drvdesc());
-    uprintfs("\n");
+    wsprintfA(buf,"%ws\\%ws",     getdrp_packpath(),getdrp_packname());
+    Log.print_file(" %-*s |",     limits[1],buf);
+    Log.print_file(" %8X|",       getdrp_infcrc());
+    wsprintfA(buf,"%s%s",         getdrp_infpath(),getdrp_infname());
+    Log.print_file(" %-*s |",     limits[2],buf);
+    Log.print_file(" %-*s |",     limits[3],    getdrp_drvmanufacturer());
+    wsprintfA(buf,"%ws",          vers.Get());
+    Log.print_file(" %*s |",      limits[4],buf);
+    Log.print_file(" %-*s |",     limits[5],    getdrp_drvHWID());
+    Log.print_file(" %-*s",       limits[6],      getdrp_drvdesc());
+    Log.print_file("\n");
 }
 
 void Hwidmatch::print_hr()
@@ -1115,17 +1280,17 @@ void Hwidmatch::print_hr()
     log_file("  CRC:  %8X%\n",              getdrp_infcrc(this));
     log_file("  Marker %d\n",                markerscore);
     log_file("  Status %3X\n",               status);*/
-    uprintf("  Pack:     %S\\%S\n", getdrp_packpath(),getdrp_packname());
+    Log.print_file("  Pack:     %S\\%S\n",       getdrp_packpath(),getdrp_packname());
 
-    uprintf("  Name:     %s\n",     getdrp_drvdesc());
-    uprintf("  Provider: %s\n",     getdrp_drvmanufacturer());
-    uprintf("  Date:     %S\n",     date.Get());
-    uprintf("  Version:  %S\n",     vers.Get());
-    uprintf("  HWID:     %s\n",     getdrp_drvHWID());
+    Log.print_file("  Name:     %s\n",     getdrp_drvdesc());
+    Log.print_file("  Provider: %s\n",     getdrp_drvmanufacturer());
+    Log.print_file("  Date:     %S\n",     date.Get());
+    Log.print_file("  Version:  %S\n",     vers.Get());
+    Log.print_file("  HWID:     %s\n",     getdrp_drvHWID());
     getdrp_drvsection(buf);
-    uprintf("  inf:      %s%s,%s\n",getdrp_infpath(),getdrp_infname(),buf);
-    uprintf("  Score:    %08X\n",   score);
-    uprintfs("\n");
+    Log.print_file("  inf:      %s%s,%s\n",getdrp_infpath(),getdrp_infname(),buf);
+    Log.print_file("  Score:    %08X\n",   score);
+    Log.print_file("\n");
 }
 
 void Hwidmatch::popup_driverline(int *limits,Canvas &canvas,int y,int mode,size_t index)
@@ -1158,16 +1323,14 @@ void Hwidmatch::popup_driverline(int *limits,Canvas &canvas,int y,int mode,size_
     td.TextOutP(L"| %s",date.Get());
     td.TextOutP(L"| %3d",decorscore);
     td.TextOutP(L"| %d",markerscore);
-    td.TextOutP(L"| %3X",status);
-    getdrp_drvsection(buf);
+    td.TextOutP(L"| %3X",status);getdrp_drvsection(buf);
     td.TextOutP(L"| %S",buf);
     td.TextOutP(L"| %s\\%s",getdrp_packpath(),getdrp_packname());
     td.TextOutP(L"| %08X",getdrp_infcrc());
     td.TextOutP(L"| %S%S",getdrp_infpath(),getdrp_infname());
     td.TextOutP(L"| %S",getdrp_drvmanufacturer());
     td.TextOutP(L"| %s",vers.Get());
-    td.TextOutP(L"| %S",getdrp_drvHWID());
-    wsprintf(bufw,L"%S",getdrp_drvdesc());
+    td.TextOutP(L"| %S",getdrp_drvHWID());wsprintf(bufw,L"%S",getdrp_drvdesc());
     td.TextOutP(L"| %s",bufw);
 }
 
@@ -1218,27 +1381,16 @@ int Hwidmatch::isvalidcat(const State *state)
     char bufa[8];
     int n=pickcat(state);
     const char *s=getdrp_drvcat(n);
-    const std::string m=getdrp_infmarker();
-
-    int major,minor;
-    state->getWinVer(&major,&minor);
-    wsprintfA(bufa,"2:%d.%d",major,minor);
     if(!*s)return 0;
-    int res=strstr(s,bufa)?1:0;
 
-    // windows 11 - this assumes 2:10.0 is valid for win11
-    // because all drivers that claim to target win11 still quote 2:10.0 in the catalog
-    // see also enum.cpp line 468
-    if(res==0&&major==11&&minor==0)
-    {
-        wsprintfA(bufa,"2:%d.%d",10,0);
-        res=strstr(s,bufa)?1:0;
-        // if catalog reports 2:10.0 then confirm with inf marker
-        if(res==1&&m.find("11")==0)
-            res=1;
-        else
-            res=0;
-    }
+    int major,minor,build;
+    state->getWinVer(&major,&minor,&build);
+
+    // for the purposes of matching with the inf file then 11 = 10
+    if(major==11)major=10;
+
+    wsprintfA(bufa,"2:%d.%d",major,minor);
+    int res=strstr(s,bufa)?1:0;
     return res;
 }
 
@@ -1321,7 +1473,7 @@ std::string Hwidmatch::getdrp_infmarker()
     // make it lower case
     std::transform(path.begin(), path.end(),path.begin(), ::tolower);
     // iterate my list of known markers
-    for(int i=0;i<NUM_MARKERS;i++)
+    for(int i=0;i<num_markers;i++)
     {
         // wrap it in backslashes
         buf=markers[i].name;

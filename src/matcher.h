@@ -16,9 +16,12 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef MATCHER_H
 #define MATCHER_H
 
-#define NUM_DECS 46*6
-#define NUM_MARKERS 85
-#define NUM_FILTERS 22
+enum
+{
+    num_decs = 52*6,
+    num_markers = 85,
+    num_filters = 22
+};
 
 enum DRIVER_STATUS
 {
@@ -53,8 +56,8 @@ struct markers_t
     const char *name;
     int major,minor,arch;
 };
-extern const char *nts[NUM_DECS];
-extern const markers_t markers[NUM_MARKERS];
+extern const char *nts[num_decs];
+extern const markers_t markers[num_markers];
 
 // Misc
 int cmpunsigned(unsigned a,unsigned b);
