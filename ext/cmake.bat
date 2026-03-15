@@ -1,0 +1,2 @@
+cd libtorrent
+cmake . -Dstatic_runtime=1 -DBUILD_SHARED_LIBS=0 -Ddeprecated-functions=0 -Dencryption=0 -Dbuild_tests=0 -Dexceptions=0 -Dextensions=0 -Di2p=0 -Dlogging=0 -Dmutable-torrents=0 -Dstreaming=0 -Dbuild_examples=1 -DCMAKE_CONFIGURATION_TYPES=Debug;Release
