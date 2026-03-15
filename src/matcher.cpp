@@ -14,15 +14,16 @@ Snappy Driver Installer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <cstdio>
+#include <unordered_map>
 #include <windows.h>
 #include <Shlwapi.h>
 
-#include "logging.h"
+#include "SDI.h"
 #include "version.h"
+#include "logging.h"
 #include "system.h"
 #include "Settings.h"
 #include "indexing.h"
-#include "SDI.h"
 #include "matcher.h"
 #include "theme.h"
 #include "gui.h"
@@ -82,7 +83,7 @@ Invalid:
 const char *nts[num_decs]=
 {
 		// https://betawiki.net/wiki/Windows_11                                                                                              // CLIENT                   SERVER
-        "nt.5",            "ntx86.5",            "ntamd64.5",            "ntia64.5",            "ntarm.5",            "ntarm64.5",           // 2000  
+        "nt.5",            "ntx86.5",            "ntamd64.5",            "ntia64.5",            "ntarm.5",            "ntarm64.5",           // 2000
         "nt.5.0",          "ntx86.5.0",          "ntamd64.5.0",          "ntia64.5.0",          "ntarm.5.0",          "ntarm64.5.0",         // 2000
         "nt.5.1",          "ntx86.5.1",          "ntamd64.5.1",          "ntia64.5.1",          "ntarm.5.1",          "ntarm64.5.1",         // XP
         "nt.5.2",          "ntx86.5.2",          "ntamd64.5.2",          "ntia64.5.2",          "ntarm.5.2",          "ntarm64.5.2",         // XP x64                 Server 2003
@@ -91,17 +92,17 @@ const char *nts[num_decs]=
         "nt.6.1",          "ntx86.6.1",          "ntamd64.6.1",          "ntia64.6.1",          "ntarm.6.1",          "ntarm64.6.1",         // 7                      Server 2008 R2
         "nt.6.2",          "ntx86.6.2",          "ntamd64.6.2",          "ntia64.6.2",          "ntarm.6.2",          "ntarm64.6.2",         // 8                      Server 2012
         "nt.6.3",          "ntx86.6.3",          "ntamd64.6.3",          "ntia64.6.3",          "ntarm.6.3",          "ntarm64.6.3",         // 8.1                    Server 2012 R2
-        "nt.6.4",          "ntx86.6.4",          "ntamd64.6.4",          "ntia64.6.4",          "ntarm.6.4",          "ntarm64.6.4",         // 10                     
-        "nt.10",           "ntx86.10",           "ntamd64.10",           "ntia64.10",           "ntarm.10",           "ntarm64.10",          // 10                     
-        "nt.10.0",         "ntx86.10.0",         "ntamd64.10.0",         "ntia64.10.0",         "ntarm.10.0",         "ntarm64.10.0",        // 10                     Server 2016                                                                                           
-        "nt.10.0...10240", "ntx86.10.0...10240", "ntamd64.10.0...10240", "ntia64.10.0...10240", "ntarm.10.0...10240", "ntarm64.10.0...10240", //Win 10 v1507           
+        "nt.6.4",          "ntx86.6.4",          "ntamd64.6.4",          "ntia64.6.4",          "ntarm.6.4",          "ntarm64.6.4",         // 10
+        "nt.10",           "ntx86.10",           "ntamd64.10",           "ntia64.10",           "ntarm.10",           "ntarm64.10",          // 10
+        "nt.10.0",         "ntx86.10.0",         "ntamd64.10.0",         "ntia64.10.0",         "ntarm.10.0",         "ntarm64.10.0",        // 10                     Server 2016
+        "nt.10.0...10240", "ntx86.10.0...10240", "ntamd64.10.0...10240", "ntia64.10.0...10240", "ntarm.10.0...10240", "ntarm64.10.0...10240", //Win 10 v1507
         "nt.10.0...10586", "ntx86.10.0...10586", "ntamd64.10.0...10586", "ntia64.10.0...10586", "ntarm.10.0...10586", "ntarm64.10.0...10586", //Win 10 v1511           Server 2016 TP4
         "nt.10.0...14310", "ntx86.10.0...14310", "ntamd64.10.0...14310", "ntia64.10.0...14310", "ntarm.10.0...14310", "ntarm64.10.0...14310", //Win 10 v1607		   Server 2016
         "nt.10.0...14393", "ntx86.10.0...14393", "ntamd64.10.0...14393", "ntia64.10.0...14393", "ntarm.10.0...14393", "ntarm64.10.0...14393", //Win 10 v1607           Server 2016
-        "nt.10.0...15063", "ntx86.10.0...15063", "ntamd64.10.0...15063", "ntia64.10.0...15063", "ntarm.10.0...15063", "ntarm64.10.0...15063", //Win 10 v1703              
-        "nt.10.0...16209", "ntx86.10.0...16209", "ntamd64.10.0...16209", "ntia64.10.0...16209", "ntarm.10.0...16209", "ntarm64.10.0...16209", //Win 10 v1709 EEAP         
+        "nt.10.0...15063", "ntx86.10.0...15063", "ntamd64.10.0...15063", "ntia64.10.0...15063", "ntarm.10.0...15063", "ntarm64.10.0...15063", //Win 10 v1703
+        "nt.10.0...16209", "ntx86.10.0...16209", "ntamd64.10.0...16209", "ntia64.10.0...16209", "ntarm.10.0...16209", "ntarm64.10.0...16209", //Win 10 v1709 EEAP
         "nt.10.0...16273", "ntx86.10.0...16273", "ntamd64.10.0...16273", "ntia64.10.0...16273", "ntarm.10.0...16273", "ntarm64.10.0...16273", //Win 10 v1709 preview   Server 1709
-        "nt.10.0...16288", "ntx86.10.0...16288", "ntamd64.10.0...16288", "ntia64.10.0...16288", "ntarm.10.0...16288", "ntarm64.10.0...16288", //Win 10 v1709 preview   
+        "nt.10.0...16288", "ntx86.10.0...16288", "ntamd64.10.0...16288", "ntia64.10.0...16288", "ntarm.10.0...16288", "ntarm64.10.0...16288", //Win 10 v1709 preview
         "nt.10.0...16299", "ntx86.10.0...16299", "ntamd64.10.0...16299", "ntia64.10.0...16299", "ntarm.10.0...16299", "ntarm64.10.0...16299", //Win 10 v1709           Server 2016
         "nt.10.0...17134", "ntx86.10.0...17134", "ntamd64.10.0...17134", "ntia64.10.0...17134", "ntarm.10.0...17134", "ntarm64.10.0...17134", //Win 10 v1803           Server 2016
         "nt.10.0...17704", "ntx86.10.0...17704", "ntamd64.10.0...17704", "ntia64.10.0...17704", "ntarm.10.0...17704", "ntarm64.10.0...17704", //Win 10 v1809 preview   Server 2019
@@ -109,31 +110,31 @@ const char *nts[num_decs]=
         "nt.10.0...17763", "ntx86.10.0...17763", "ntamd64.10.0...17763", "ntia64.10.0...17763", "ntarm.10.0...17763", "ntarm64.10.0...17763", //Win 10 v1809           Server 2019
         "nt.10.0...18362", "ntx86.10.0...18362", "ntamd64.10.0...18362", "ntia64.10.0...18362", "ntarm.10.0...18362", "ntarm64.10.0...18362", //Win 10 v1903           Server 2019
         "nt.10.0...18363", "ntx86.10.0...18363", "ntamd64.10.0...18363", "ntia64.10.0...18363", "ntarm.10.0...18363", "ntarm64.10.0...18363", //Win 10 v1909           Server 2019
-        "nt.10.0...18900", "ntx86.10.0...18900", "ntamd64.10.0...18900", "ntia64.10.0...18900", "ntarm.10.0...18900", "ntarm64.10.0...18900", //Win 10 v20H1 preview   
+        "nt.10.0...18900", "ntx86.10.0...18900", "ntamd64.10.0...18900", "ntia64.10.0...18900", "ntarm.10.0...18900", "ntarm64.10.0...18900", //Win 10 v20H1 preview
         "nt.10.0...19041", "ntx86.10.0...19041", "ntamd64.10.0...19041", "ntia64.10.0...19041", "ntarm.10.0...19041", "ntarm64.10.0...19041", //Win 10 v2004/20H1      Server 2019
         "nt.10.0...19042", "ntx86.10.0...19042", "ntamd64.10.0...19042", "ntia64.10.0...19042", "ntarm.10.0...19042", "ntarm64.10.0...19042", //Win 10 v20H2           Server 2019
-        "nt.10.0...19043", "ntx86.10.0...19043", "ntamd64.10.0...19043", "ntia64.10.0...19043", "ntarm.10.0...19043", "ntarm64.10.0...19043", //Win 10 v21H1         
-        "nt.10.0...19044", "ntx86.10.0...19044", "ntamd64.10.0...19044", "ntia64.10.0...19044", "ntarm.10.0...19044", "ntarm64.10.0...19044", //Win 10 v21H2         
-        "nt.10.0...19045", "ntx86.10.0...19045", "ntamd64.10.0...19045", "ntia64.10.0...19045", "ntarm.10.0...19045", "ntarm64.10.0...19045", //Win 10 v22H2         
-        "nt.10.0...19586", "ntx86.10.0...19586", "ntamd64.10.0...19586", "ntia64.10.0...19586", "ntarm.10.0...19586", "ntarm64.10.0...19586", //Win 11 preview       
+        "nt.10.0...19043", "ntx86.10.0...19043", "ntamd64.10.0...19043", "ntia64.10.0...19043", "ntarm.10.0...19043", "ntarm64.10.0...19043", //Win 10 v21H1
+        "nt.10.0...19044", "ntx86.10.0...19044", "ntamd64.10.0...19044", "ntia64.10.0...19044", "ntarm.10.0...19044", "ntarm64.10.0...19044", //Win 10 v21H2
+        "nt.10.0...19045", "ntx86.10.0...19045", "ntamd64.10.0...19045", "ntia64.10.0...19045", "ntarm.10.0...19045", "ntarm64.10.0...19045", //Win 10 v22H2
+        "nt.10.0...19586", "ntx86.10.0...19586", "ntamd64.10.0...19586", "ntia64.10.0...19586", "ntarm.10.0...19586", "ntarm64.10.0...19586", //Win 11 preview
         "nt.10.0...20190", "ntx86.10.0...20190", "ntamd64.10.0...20190", "ntia64.10.0...20190", "ntarm.10.0...20190", "ntarm64.10.0...20190", //Win 11 preview	 	   Server 2022
         "nt.10.0...20348", "ntx86.10.0...20348", "ntamd64.10.0...20348", "ntia64.10.0...20348", "ntarm.10.0...20348", "ntarm64.10.0...20348", //                       Server 2022
-        "nt.10.0...21250", "ntx86.10.0...21250", "ntamd64.10.0...21250", "ntia64.10.0...21250", "ntarm.10.0...21250", "ntarm64.10.0...21250", //Win 11 preview         
-        "nt.10.0...21262", "ntx86.10.0...21262", "ntamd64.10.0...21262", "ntia64.10.0...21262", "ntarm.10.0...21262", "ntarm64.10.0...21262", //Win 11 Cobalt          
-        "nt.10.0...22000", "ntx86.10.0...22000", "ntamd64.10.0...22000", "ntia64.10.0...22000", "ntarm.10.0...22000", "ntarm64.10.0...22000", //Win 11 v21H2           
-        "nt.10.0...22621", "ntx86.10.0...22621", "ntamd64.10.0...22621", "ntia64.10.0...22621", "ntarm.10.0...22621", "ntarm64.10.0...22621", //Win 11 v22H2           
-        "nt.10.0...22631", "ntx86.10.0...22631", "ntamd64.10.0...22631", "ntia64.10.0...22631", "ntarm.10.0...22631", "ntarm64.10.0...22631", //Win 11 v23H2           
-        "nt.10.0...22635", "ntx86.10.0...22635", "ntamd64.10.0...22635", "ntia64.10.0...22635", "ntarm.10.0...22635", "ntarm64.10.0...22635", //Win 11 v23H2           
+        "nt.10.0...21250", "ntx86.10.0...21250", "ntamd64.10.0...21250", "ntia64.10.0...21250", "ntarm.10.0...21250", "ntarm64.10.0...21250", //Win 11 preview
+        "nt.10.0...21262", "ntx86.10.0...21262", "ntamd64.10.0...21262", "ntia64.10.0...21262", "ntarm.10.0...21262", "ntarm64.10.0...21262", //Win 11 Cobalt
+        "nt.10.0...22000", "ntx86.10.0...22000", "ntamd64.10.0...22000", "ntia64.10.0...22000", "ntarm.10.0...22000", "ntarm64.10.0...22000", //Win 11 v21H2
+        "nt.10.0...22621", "ntx86.10.0...22621", "ntamd64.10.0...22621", "ntia64.10.0...22621", "ntarm.10.0...22621", "ntarm64.10.0...22621", //Win 11 v22H2
+        "nt.10.0...22631", "ntx86.10.0...22631", "ntamd64.10.0...22631", "ntia64.10.0...22631", "ntarm.10.0...22631", "ntarm64.10.0...22631", //Win 11 v23H2
+        "nt.10.0...22635", "ntx86.10.0...22635", "ntamd64.10.0...22635", "ntia64.10.0...22635", "ntarm.10.0...22635", "ntarm64.10.0...22635", //Win 11 v23H2
         "nt.10.0...25216", "ntx86.10.0...25216", "ntamd64.10.0...25216", "ntia64.10.0...25216", "ntarm.10.0...25216", "ntarm64.10.0...25216", //Win 11 v24H2 Preview   Server 2025
         "nt.10.0...25398", "ntx86.10.0...25398", "ntamd64.10.0...25398", "ntia64.10.0...25398", "ntarm.10.0...25398", "ntarm64.10.0...25398", //Win 11				   Server 23H2
-        "nt.10.0...25952", "ntx86.10.0...25952", "ntamd64.10.0...25952", "ntia64.10.0...25952", "ntarm.10.0...25952", "ntarm64.10.0...25952", //Win 11 v24H2 Preview   
+        "nt.10.0...25952", "ntx86.10.0...25952", "ntamd64.10.0...25952", "ntia64.10.0...25952", "ntarm.10.0...25952", "ntarm64.10.0...25952", //Win 11 v24H2 Preview
         "nt.10.0...26052", "ntx86.10.0...26052", "ntamd64.10.0...26052", "ntia64.10.0...26052", "ntarm.10.0...26052", "ntarm64.10.0...26052", //Win 11 v24H2 Preview   Server 2025
         "nt.10.0...26063", "ntx86.10.0...26063", "ntamd64.10.0...26063", "ntia64.10.0...26063", "ntarm.10.0...26063", "ntarm64.10.0...26063", //Win 11 v24H2 PreSSE4.2 Server 2025
         "nt.10.0...26080", "ntx86.10.0...26080", "ntamd64.10.0...26080", "ntia64.10.0...26080", "ntarm.10.0...26080", "ntarm64.10.0...26080", //Win 11 v24H2 Dev	   Server 2025
         "nt.10.0...26100", "ntx86.10.0...26100", "ntamd64.10.0...26100", "ntia64.10.0...26100", "ntarm.10.0...26100", "ntarm64.10.0...26100", //Win 11 v24H2           Server 2025
         "nt.10.0...26200", "ntx86.10.0...26200", "ntamd64.10.0...26200", "ntia64.10.0...26200", "ntarm.10.0...26200", "ntarm64.10.0...26200", //Win 11 v25H2
         "nt",              "ntx86",              "ntamd64",              "ntia64",              "ntarm",              "ntarm64",              // NT specifies Win 2000 and later
-        "nt..",            "ntx86..",            "ntamd64..",            "ntia64..",            "ntarm..",            "ntarm64.."             
+        "nt..",            "ntx86..",            "ntamd64..",            "ntia64..",            "ntarm..",            "ntarm64.."
 };
 
 // this represents the inf file target version = major * 10 + minor
@@ -1179,10 +1180,21 @@ Hwidmatch::Hwidmatch(Driverpack *drp1,int HWID_index1,int dev_pos,int ishw,State
 
     getdrp_drvsection(buf);
 
+    // Extension INF detection: if the INF section name contains
+    // "deviceextension" (e.g. "deviceextensions.ntamd64"), this is
+    // a Windows Extension INF (class GUID {e2f84ce7-8efa-411c-aa69-97454ca4cb57}).
+    // Extension INFs do NOT replace the base function driver - they install
+    // in parallel as supplementary extensions. SDI cannot properly track their
+    // installation status because the base driver (e.g. pci.inf) remains
+    // unchanged after the extension is installed, causing SDI to endlessly
+    // re-offer the same "update". Mark these as invalid (altsectscore=0)
+    // so they are hidden by default and not auto-installed.
+    bool isExtensionINF = (StrStrIA(buf, "deviceextension") != nullptr);
+
     identifierscore=calc_identifierscore(dev_pos,ishw,drp->HWID_list[HWID_index].inf_pos);
     decorscore=calc_decorscore(calc_secttype(buf),state);
     markerscore=calc_markerscore(state,getdrp_infpath());
-    altsectscore=calc_altsectscore(state,decorscore);
+    altsectscore=isExtensionINF ? 0 : calc_altsectscore(state,decorscore);
     score=calc_score(calc_catalogfile(),getdrp_drvfeature(),
         identifierscore,state,StrStrIA(getdrp_drvinstallPicked(),".nt")?1:0);
     status=calc_status(state);
@@ -1214,7 +1226,7 @@ void Hwidmatch::calclen(int *limits)
 {
     Version *v;
     char buf[FILENAME_MAX];
-    WStringShort vers;
+    wstring_short vers;
 
     getdrp_drvsection(buf);
     v=getdrp_drvversion();
@@ -1236,8 +1248,8 @@ void Hwidmatch::print_tbl(const int *limits)
 {
     char buf[FILENAME_MAX];
     Version *v;
-    WStringShort date;
-    WStringShort vers;
+    wstring_short date;
+    wstring_short vers;
 
     v=getdrp_drvversion();
     v->str_date(date,true);
@@ -1269,8 +1281,8 @@ void Hwidmatch::print_hr()
 {
     char buf[FILENAME_MAX];
     Version *v;
-    WStringShort date;
-    WStringShort vers;
+    wstring_short date;
+    wstring_short vers;
 
     v=getdrp_drvversion();
     v->str_date(date,true);
@@ -1311,8 +1323,8 @@ void Hwidmatch::popup_driverline(int *limits,Canvas &canvas,int y,int mode,size_
         td.col=D_C(POPUP_TEXT_COLOR);
     }
 
-    WStringShort date;
-    WStringShort vers;
+    wstring_short date;
+    wstring_short vers;
 
     v->str_date(date);
     v->str_version(vers);
@@ -1436,7 +1448,7 @@ const wchar_t *Hwidmatch::getdrp_packname()const
 {
     return drp->getFilename();
 }
-void Hwidmatch::getdrp_packnameVirtual(WStringShort &s)const
+void Hwidmatch::getdrp_packnameVirtual(wstring_short &s)const
 {
     const wchar_t *t=drp->getFilename();
 
