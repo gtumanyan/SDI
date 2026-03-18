@@ -1,4 +1,5 @@
-   
+# В связи с нарушением лицензии проекта паковщиком драйверпаков SamLab разработка приостановлена.
+
   # SDI is a Snappy Driver Installer  
   <img align=right src=../.github/logo.webp width=220 alt=SDI logo />
    
